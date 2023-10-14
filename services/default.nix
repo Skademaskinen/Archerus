@@ -12,5 +12,6 @@
       ./vnc.nix
       ./nextcloud.nix
       ./supertuxkart.nix
+      ./ssh.nix
   ];
 }
