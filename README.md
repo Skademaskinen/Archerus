@@ -1,0 +1,2 @@
+# skadenix
+NixOS config - Skademaskinen
