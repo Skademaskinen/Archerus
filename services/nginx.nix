@@ -20,11 +20,14 @@
         #root = "/mnt/raid";
         #proxyWebsockets = true;
       };
-      locations."/nextcloud/.well-known/carddav" = {
-        return = "301 $scheme://$host/remote.php/dav";
-      };
-      locations."/nextcloud/.well-known/caldav" = {
-        return = "301 $scheme://$host/remote.php/dav";
+      #locations."/nextcloud/.well-known/carddav" = {
+      #  return = "301 $scheme://$host/remote.php/dav";
+      #};
+      #locations."/nextcloud/.well-known/caldav" = {
+      #  return = "301 $scheme://$host/remote.php/dav";
+      #};
+      locations."home" = {
+        root="/opt/nginx";
       };
       sslCertificate = "/opt/SSL/domain.cert.pem";
       sslCertificateKey = "/opt/SSL/private.key.pem";
