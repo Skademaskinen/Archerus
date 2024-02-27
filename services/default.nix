@@ -13,5 +13,7 @@
       ./nextcloud.nix
       ./supertuxkart.nix
       ./ssh.nix
+      ./wordcount.nix
+      ./website.nix
   ];
 }

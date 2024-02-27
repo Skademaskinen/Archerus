@@ -5,5 +5,6 @@
     ./packages.nix
     ./locale.nix
     ./security.nix
+    ./symlinks.nix
   ];
 }

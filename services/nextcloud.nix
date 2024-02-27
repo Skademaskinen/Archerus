@@ -1,19 +1,21 @@
 { config, lib, pkgs, modulesPath, ... }: {
   services.nextcloud = {
     enable = true;
-    home = "/mnt/raid/nextcloud";
-    hostName = "skademaskinen.win";
+    package = pkgs.nextcloud27;
+    home = "/mnt/raid/webroot/nextcloud";
+    hostName = "localhost";
     https = false;
     config = {
-      adminpassFile = "/mnt/raid/nextcloud/adminpassFile";
+      adminpassFile = "/mnt/raid/webroot/nextcloud/adminpassFile";
     };
     extraOptions = {
-      overwritewebroot = "";
-      port = 11034;
-      #overwritehost = "skademaskinen.win:11034";
-      #overwriteprotocol = "https";
-      "overwrite.cli.url" = "https://skademaskinen.win:11034";
+      overwritewebroot = "/nextcloud";
+      port = 80;
+      overwritehost = "localhost";
+      overwriteprotocol = "http";
+      "overwrite.cli.url" = "http://localhost/nextcloud";
       loglevel = 0;
+      "htaccess.RewriteBase" = "/nextcloud";
     };
     nginx.recommendedHttpHeaders = true;
   };
