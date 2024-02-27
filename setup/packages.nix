@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     vim 
+    (import ../packages/backend.nix {})
     openvpn
     mdadm
     mariadb_1011
