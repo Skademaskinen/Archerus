@@ -14,12 +14,12 @@
     };
     installPhase = ''
         mkdir -p $out/bin
-        mkdir -p $out/usr/share/Putricide
+        mkdir -p $out/share/Putricide
 
         mv *.jar ppbot.jar
 
-        cp ./* $out/usr/share/Putricide -r
-        echo "${pkgs.jdk21}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
+        cp ./* $out/share/Putricide -r
+        echo "${pkgs.jdk21}/bin/java -jar $out/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
         chmod +x $out/bin/skademaskinen-putricide
     '';
 }

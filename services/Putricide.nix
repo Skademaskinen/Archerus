@@ -1,16 +1,17 @@
-{ config, lib, pkgs, modulesPath, ... }: {
+{ config, lib, pkgs, modulesPath, ... }: let
+    env = pkgs.callPackage ../packages/putricide.nix {};
+in {
 
-  systemd.services.Putricide = {
-    description = "Putricide service";
-    serviceConfig = {
-      WorkingDirectory = "/home/mast3r/bots/Putricide";
-      User = "mast3r";
-      ExecStart = "${pkgs.jdk}/bin/java -jar /home/mast3r/bots/Putricide/ppbot.jar --disable-teams";
+    systemd.services.Putricide = {
+        description = "Putricide service";
+        serviceConfig = {
+            User = "mast3r";
+            ExecStart = "${env}/bin/skademaskinen-putricide --config /mnt/raid/bots/Putricide --source ${env}/share/Putricide --disable-teams";
+        };
+        wantedBy = [ "default.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
     };
-    wantedBy = [ "default.target" ];
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-  };
 
-  systemd.services.Putricide.enable = true;
+    systemd.services.Putricide.enable = true;
 }
