@@ -6,8 +6,8 @@
     src = pkgs.fetchFromGitHub {
         owner = "Skademaskinen";
         repo = "Putricide";
-        rev = "dc7422c874d513326ee963796ad38c2ea8b15455";
-        sha256 = "sha256-gQWY8+66V3jxUXWtVlkRzv59k/LwKkRKZ56dTSV0U1Q=";
+        rev = "15240e905e17173990c9057432a8532879244cb3";
+        sha256 = "sha256-InYSJlR4Q84vZdXV1oFnDlMR3vQNevuRrxSYW5jqtLI=";
     };
     installPhase = ''
         mkdir -p $out/bin
