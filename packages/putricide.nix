@@ -3,28 +3,24 @@
         jdk21
         maven
     ];
-in pkgs.stdenv.mkDerivation {
+in pkgs.maven.buildMavenPackage {
     name = "putricide";
     pname = "putricide";
+    version = "3.38a";
 
     src = pkgs.fetchFromGitHub {
         owner = "Skademaskinen";
         repo = "Putricide";
-        rev = "1d1ed002e1486a9cd6984edf99f8da04a7de2c32";
-        sha256 = "sha256-ve40IH0VJWBE2QfZGaC6lYHkqB3KdeafslU99ojP4Wg=";
+        rev = "dc7422c874d513326ee963796ad38c2ea8b15455";
+        sha256 = "sha256-gQWY8+66V3jxUXWtVlkRzv59k/LwKkRKZ56dTSV0U1Q=";
     };
-
     installPhase = ''
         mkdir -p $out/bin
         mkdir -p $out/usr/share/Putricide
 
-
-        ${env.maven}/bin/mvn compile package -f ppbot
-        ${env.maven}/bin/mvn clean -f ppbot
         mv *.jar ppbot.jar
 
         cp ./* $out/usr/share/Putricide -r
         echo "${env.jdk21}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
     '';
-    
 }
