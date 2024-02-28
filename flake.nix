@@ -2,7 +2,7 @@
     description = "Skademaskinen configuration";
 
     inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+        nixpkgs.url = "nixpkgs/nixos-23.11";
     };
 
     outputs = { self, nixpkgs }: 
