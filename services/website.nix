@@ -1,7 +1,7 @@
 {pkgs, ...}: 
 
 let
-    env = import pkgs { overlays = [ ../packages/backend.nix ]; };
+    env = pkgs.callPackage ../packages/backend.nix {};
 in {
   systemd.services.mast3r_website = {
     enable = true;
@@ -13,7 +13,7 @@ in {
     serviceConfig = {
       User = "mast3r";
       WorkingDirectory = "/mnt/raid/webroot/admin/Backend";
-      ExecStart = "${env}/bin/skademaskinen-backend -db /mnt/raid/webroot/admin/db.db3 --hostname localhost --port 12345 --keyfile /mnt/raid/webroot/admin/keyfile";
+      ExecStart = "${pkgs.bash}/bin/bash ${env}/bin/skademaskinen-backend -db /mnt/raid/webroot/admin/db.db3 --hostname localhost --port 12345 --keyfile /mnt/raid/webroot/admin/keyfile";
       Restart = "on-failure";
     };
     wantedBy = ["default.target"];
