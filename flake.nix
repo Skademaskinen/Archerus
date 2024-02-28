@@ -9,15 +9,29 @@
     
     let
         system = "x86_64-linux";
+        home-system = "aarch64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
+        home-pkgs = nixpkgs.legacyPackages.${home-system};
     in {
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = [
-                    ./default.nix
+                    ./systems/skademaskinen.nix
                 ];
             };
+            laptop = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = [ ./systems/laptop.nix ];
+            };
         };
+
+        devShells.home = home-pkgs.mkShell {
+            system = home-system;
+            buildInputs = [
+                (home-pkgs.callPackage ./packages/backend.nix {})
+            ];
+        };
+        packages.legacyPackages.${system}.backend = pkgs.callPackage ./packages/backend.nix {};
     };
 }
