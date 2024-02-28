@@ -8,25 +8,11 @@
     zsh
     zsh-syntax-highlighting
     zsh-autosuggestions
-    nginx
-    xrdp
-    konsole
     nix-index
     ghc
-    ihaskell
-    mesa.drivers
-    i3
-    xorg.xinit.out
     feh
-    picom
     nextcloud27
     zulu
-    sqlite-interactive
-    (python311.withPackages(ps: with ps; [
-      ipython
-      requests
-      sqlite
-    ]))
   ];
   hardware.opengl.enable = true;
 
