@@ -15,7 +15,7 @@
         ../services/ssh.nix
         ../services/vpn.nix
         ../services/website.nix
-        ../services/wordcount.nix
+        ../services/rp-utils.nix
 
         ../setup/systemd-boot.nix
         ../setup/locale.nix
