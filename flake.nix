@@ -22,7 +22,9 @@
             };
             laptop = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = [ ./systems/laptop.nix ];
+                modules = [ 
+                    ./systems/laptop.nix 
+                ];
             };
         };
 
