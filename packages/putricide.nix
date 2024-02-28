@@ -1,7 +1,5 @@
-{pkgs,}:{
-
-}: let
-    env = pkgs: with pkgs; [
+{pkgs,}:let
+    env = with pkgs; [
         jdk21
         maven
     ];
@@ -26,6 +24,7 @@ in pkgs.stdenv.mkDerivation {
         mv *.jar ppbot.jar
 
         cp ./* $out/usr/share/Putricide -r
-        echo "${env}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
+        echo "${env.jdk21}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
     '';
+    
 }
