@@ -11,6 +11,6 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in {
     
-        packages.x86_64-linux.skademaskinen-backend = pkgs.callPackage ./packages/backend.nix {};
+        packages.x86_64-linux.backend = pkgs.callPackage ./packages/backend.nix {};
     };
 }
