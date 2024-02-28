@@ -1,6 +1,6 @@
 {
-  security.sudo.wheelNeedsPassword = false;
+    security.sudo.wheelNeedsPassword = false;
 
-  nix.settings.allowed-users = ["root" "@wheel"];
-  nix.settings.trusted-users = ["root" "@wheel"];
+    nix.settings.allowed-users = ["root" "@wheel"];
+    nix.settings.trusted-users = ["root" "@wheel"];
 }
