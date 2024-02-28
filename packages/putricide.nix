@@ -1,9 +1,4 @@
-{pkgs,}:let
-    env = with pkgs; [
-        jdk21
-        maven
-    ];
-in pkgs.maven.buildMavenPackage {
+{pkgs,}: pkgs.maven.buildMavenPackage {
     name = "putricide";
     pname = "putricide";
     version = "3.38a";
@@ -21,6 +16,6 @@ in pkgs.maven.buildMavenPackage {
         mv *.jar ppbot.jar
 
         cp ./* $out/usr/share/Putricide -r
-        echo "${env.jdk21}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
+        echo "${pkgs.jdk21}/bin/java -jar $out/usr/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
     '';
 }
