@@ -1,4 +1,4 @@
-{lib, modulesPath, config, ...}: {
+{pkgs, lib, modulesPath, config, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
         ../users/mast3r.nix
@@ -6,6 +6,7 @@
         ../setup/packages.nix
         ../setup/locale.nix
         ../setup/grub.nix
+        ../setup/networking.nix
 
         ../services/graphical.nix
         ../services/virtual-machines.nix
@@ -38,5 +39,21 @@
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+
+    environment.systemPackages = with pkgs; [
+        vim 
+        source-code-pro
+        openvpn
+        htop
+        zsh
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        nix-index
+        ghc
+        feh
+    ];
+
+    networking.hostName = "laptop";
 
 }

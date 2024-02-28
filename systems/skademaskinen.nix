@@ -1,8 +1,8 @@
-{
+{pkgs, config, lib, modulesPath, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
-        ../users/mast3r
-        ../users/taoshi
+        ../users/mast3r.nix
+        ../users/taoshi.nix
 
         ../services/jupyter.nix
         ../services/lavalink.nix
@@ -50,4 +50,36 @@
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+
+    environment.systemPackages = with pkgs; [
+        vim 
+        openvpn
+        mdadm
+        mariadb_1011
+        htop
+        zsh
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        nix-index
+        ghc
+        feh
+        nextcloud27
+        zulu
+    ];
+
+    system.autoUpgrade = {
+        enable = true;
+        flags = [
+            "--update-input"
+            "nixpkgs"
+            "-I"
+            "nixos-config=/etc/nixos"
+        ];
+        dates = "02:00";
+        allowReboot = true;
+    };
+
+    
+    networking.hostName = "Skademaskinen";
 }

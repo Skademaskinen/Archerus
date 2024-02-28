@@ -1,6 +1,5 @@
 {lib, ...}: {
     networking = {
-        hostName = "Skademaskinen";
         networkmanager = {
             enable = true;
         };
