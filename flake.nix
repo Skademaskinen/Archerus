@@ -8,9 +8,16 @@
     outputs = { self, nixpkgs }: 
     
     let
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        system = "x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
     in {
-    
-        packages.x86_64-linux.backend = pkgs.callPackage ./packages/backend.nix {};
+        nixosConfigurations = {
+            Skademaskinen = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = [
+                    ./default.nix
+                ];
+            };
+        };
     };
 }
