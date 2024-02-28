@@ -6,7 +6,7 @@ in {
         description = "Putricide service";
         serviceConfig = {
             User = "mast3r";
-            ExecStart = "${env}/bin/skademaskinen-putricide --config /mnt/raid/bots/Putricide --source ${env}/share/Putricide --disable-teams";
+            ExecStart = "${pkgs.bash}/bin/bash ${env}/bin/skademaskinen-putricide --config /mnt/raid/bots/Putricide --source ${env}/share/Putricide --disable-teams";
         };
         wantedBy = [ "default.target" ];
         after = [ "network-online.target" ];
