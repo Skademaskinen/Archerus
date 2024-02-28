@@ -3,6 +3,9 @@
     pname = "putricide";
     version = "3.38a";
 
+    mvnParameters = "-f ppbot";
+    mvnHash = "sha256-cuJvC/yYEC9ok2991y0VjGhycNBnaDOPv1SxZj6lrjA=";
+
     src = pkgs.fetchFromGitHub {
         owner = "Skademaskinen";
         repo = "Putricide";
