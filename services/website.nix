@@ -3,7 +3,7 @@
 let
     env = pkgs.callPackage ../packages/backend.nix {};
 in {
-  systemd.services.mast3r_website = {
+  systemd.services.backend = {
     enable = true;
     description = "mast3r_waf1z website database server";
 		environment = {
