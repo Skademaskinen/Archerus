@@ -34,6 +34,10 @@
                 (home-pkgs.callPackage ./packages/backend.nix {})
             ];
         };
-        packages.legacyPackages.${system}.backend = pkgs.callPackage ./packages/backend.nix {};
+        packages.legacyPackages.${system} = {
+            backend = pkgs.callPackage ./packages/backend.nix {};
+            putricide = pkgs.callPackage ./packages/putricide.nix {};
+            rp-utils = pkgs.callPackage ./packages/rp-utils.nix {};
+        };
     };
 }
