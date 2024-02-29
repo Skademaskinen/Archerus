@@ -23,6 +23,19 @@ in pkgs.stdenv.mkDerivation {
         cp ./* $out/share/Backend -r
         echo "${py.interpreter} $out/share/Backend/skademaskinen/Backend.py \$@" > $out/bin/skademaskinen-backend
         chmod +x $out/bin/skademaskinen-backend
+
+        cat > $out/bin/skademaskinen-backend-db << "EOF"
+            if [[ "$1" == "" ]]; then
+                db="/tmp/db.db3"
+            else
+                db="$1"
+            fi
+            for table in $(${pkgs.sqlite-interactive}/bin/sqlite3 $db '.tables'); do
+                echo "Content of table: $table"
+                ${pkgs.sqlite-interactive}/bin/sqlite3 $db "select * from $table" -box
+            done
+        EOF
+        chmod +x $out/bin/skademaskinen-backend-db
     '';
         
 }
