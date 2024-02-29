@@ -12,8 +12,8 @@ in pkgs.stdenv.mkDerivation {
     src = pkgs.fetchFromGitHub {
         owner = "Skademaskinen";
         repo = "Backend";
-        rev = "9adb49bb193d4a5013bf8ee326193757fcd38b83";
-        sha256 = "sha256-25jcUMSSHH9X2FXi9/yH+JStFIpmF83iK932DOiosSM=";
+        rev = "407210e43017de4fd6ce8acb4b8d7afa6c5fe9a9";
+        sha256 = "sha256-VUVb9fx8ICiCWt2Iv0rK47mgEA1rc8OUuHIIxq/2eBM=";
     };
 
     installPhase = ''
