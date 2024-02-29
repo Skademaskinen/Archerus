@@ -18,10 +18,10 @@ in pkgs.stdenv.mkDerivation {
 
     installPhase = ''
         mkdir -p $out/bin
-        mkdir -p $out/usr/share/Backend
+        mkdir -p $out/share/Backend
         
-        cp ./* $out/usr/share/Backend -r
-        echo "${py.interpreter} $out/usr/share/Backend/skademaskinen/Backend.py \$@" > $out/bin/skademaskinen-backend
+        cp ./* $out/share/Backend -r
+        echo "${py.interpreter} $out/share/Backend/skademaskinen/Backend.py \$@" > $out/bin/skademaskinen-backend
         chmod +x $out/bin/skademaskinen-backend
     '';
         
