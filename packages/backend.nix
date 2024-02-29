@@ -21,7 +21,7 @@ in pkgs.stdenv.mkDerivation {
         mkdir -p $out/share/Backend
         
         cp ./* $out/share/Backend -r
-        echo "${py.interpreter} $out/share/Backend/skademaskinen/Backend.py \$@" > $out/bin/skademaskinen-backend
+        echo "${py.interpreter} $out/share/Backend/skademaskinen/main.py \$@" > $out/bin/skademaskinen-backend
         chmod +x $out/bin/skademaskinen-backend
 
         cat > $out/bin/skademaskinen-backend-db << "EOF"
