@@ -39,5 +39,8 @@
             putricide = pkgs.callPackage ./packages/putricide.nix {};
             rp-utils = pkgs.callPackage ./packages/rp-utils.nix {};
         };
+        packages.legacyPackages.${home-system} = {
+            backend = pkgs.callPackage ./packages/backend.nix {};
+        };
     };
 }
