@@ -24,7 +24,6 @@
     
     console.keyMap = "dk-latin1";
 
-    system.stateVersion = "23.05";
 
     programs.zsh = {
         enable = true;

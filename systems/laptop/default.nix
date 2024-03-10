@@ -1,16 +1,16 @@
 {pkgs, lib, modulesPath, config, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
-        ../users/mast3r.nix
+        ../../users/mast3r.nix
 
-        ../setup/packages.nix
-        ../setup/locale.nix
-        ../setup/grub.nix
-        ../setup/networking.nix
-
-        ../services/graphical.nix
-        ../services/virtual-machines.nix
-        ../services/ssh.nix
+        ../../setup/packages.nix
+        ../../setup/locale.nix
+        ../../setup/grub.nix
+        ../../setup/networking.nix
+        
+        ../../modules/sway.nix
+        ../../modules/virtualisation.nix
+        ../../modules/ssh.nix
     ];
     
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -54,8 +54,42 @@
         nix-index
         ghc
         feh
+        swayfx
+        dunst
+        eww-wayland
+        bottles
+        grim
+        wl-clipboard
+        slurp
+        libsForQt5.plasma-workspace
+        swaybg
+        firefox
+        discord
+        jdk21
+        font-awesome
+        gtklock
+        libreoffice
+        vscode
+        libnotify
+        direnv
+        spotify
+        haskell-language-server
+        gimp
+        zotero
+        alsa-utils
+        maven
+        ghc
+        unzip
+        pfetch
+        tmux
+        nmap
+        gradle
+        gnumake
+        gcc
     ];
 
     networking.hostName = "laptop";
+
+    system.stateVersion = "23.05";
 
 }
