@@ -28,13 +28,6 @@
             swaybg
             git
             neofetch
-            swayfx
-            dunst
-            eww-wayland
-            bottles
-            grim
-            wl-clipboard
-            slurp
             vscode
             libnotify
             direnv

@@ -1,4 +1,4 @@
-{modulesPath, lib, config, ...}: {
+{modulesPath, lib, config, pkgs, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
         ../../users/mast3r.nix
@@ -37,4 +37,11 @@
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
     system.stateVersion = "24.05";
+
+    
+    networking.hostName = "desktop";
+
+    environment.systemPackages = with pkgs; [
+
+    ];
 }

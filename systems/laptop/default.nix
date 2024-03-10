@@ -51,10 +51,17 @@
         nix-index
         ghc
         feh
+        swayfx
+        dunst
+        eww-wayland
+        bottles
+        grim
+        wl-clipboard
+        slurp
     ];
 
     networking.hostName = "laptop";
-    
+
     system.stateVersion = "23.05";
 
 }
