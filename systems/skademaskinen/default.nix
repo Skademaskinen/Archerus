@@ -3,6 +3,7 @@
         (modulesPath + "/installer/scan/not-detected.nix")
         ../../users/mast3r.nix
         ../../users/taoshi.nix
+        
         ../../modules/jupyter.nix
         ../../modules/lavalink.nix
         ../../modules/minecraft.nix
@@ -15,6 +16,7 @@
         ../../modules/vpn.nix
         ../../modules/website.nix
         ../../modules/rp-utils.nix
+
         ../../setup/systemd-boot.nix
         ../../setup/locale.nix
         ../../setup/networking.nix

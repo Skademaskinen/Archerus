@@ -7,8 +7,9 @@
         ../../setup/locale.nix
         ../../setup/grub.nix
         ../../setup/networking.nix
+        
         ../../modules/sway.nix
-        ../../modules/virtual-machines.nix
+        ../../modules/virtualisation.nix
     ];
     
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -58,6 +59,31 @@
         grim
         wl-clipboard
         slurp
+        libsForQt5.plasma-workspace
+        swaybg
+        firefox
+        discord
+        jdk21
+        font-awesome
+        gtklock
+        libreoffice
+        vscode
+        libnotify
+        direnv
+        spotify
+        haskell-language-server
+        gimp
+        zotero
+        alsa-utils
+        maven
+        ghc
+        unzip
+        pfetch
+        tmux
+        nmap
+        gradle
+        gnumake
+        gcc
     ];
 
     networking.hostName = "laptop";

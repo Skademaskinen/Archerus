@@ -2,10 +2,13 @@
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
         ../../users/mast3r.nix
+        
         ../../setup/grub.nix
         ../../setup/locale.nix
         ../../setup/packages.nix
+
         ../../modules/plasma.nix
+        ../../modules/virtualisation.nix
     ];
 
     fileSystems = {
@@ -42,6 +45,6 @@
     networking.hostName = "desktop";
 
     environment.systemPackages = with pkgs; [
-
+        bottles
     ];
 }
