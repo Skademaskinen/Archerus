@@ -12,17 +12,30 @@ in pkgs.stdenv.mkDerivation {
     src = pkgs.fetchFromGitHub {
         owner = "Skademaskinen";
         repo = "Backend";
-        rev = "9444f35173129916a0dd227c2184ffc69bb8f6bb";
-        sha256 = "sha256-QeCqdSIImMFe21o6t4Xhc4PxMhNc1TzukTvugy9c0Kk=";
+        rev = "1b152e2c083ec2e53d81a5c5904e0c263c8cb85d";
+        sha256 = "sha256-7KFlz4V7fqKqMBJ0OyESCuAyZVMY7WH1N6uMzMs82V4=";
     };
 
     installPhase = ''
         mkdir -p $out/bin
-        mkdir -p $out/usr/share/Backend
+        mkdir -p $out/share/Backend
         
-        cp ./* $out/usr/share/Backend -r
-        echo "${py.interpreter} $out/usr/share/Backend/skademaskinen/Backend.py \$@" > $out/bin/skademaskinen-backend
+        cp ./* $out/share/Backend -r
+        echo "${py.interpreter} $out/share/Backend/skademaskinen/main.py \$@" > $out/bin/skademaskinen-backend
         chmod +x $out/bin/skademaskinen-backend
+
+        cat > $out/bin/skademaskinen-backend-db << "EOF"
+            if [[ "$1" == "" ]]; then
+                db="/tmp/db.db3"
+            else
+                db="$1"
+            fi
+            for table in $(${pkgs.sqlite-interactive}/bin/sqlite3 $db '.tables'); do
+                echo "Content of table: $table"
+                ${pkgs.sqlite-interactive}/bin/sqlite3 $db "select * from $table" -box
+            done
+        EOF
+        chmod +x $out/bin/skademaskinen-backend-db
     '';
         
 }

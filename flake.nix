@@ -26,6 +26,10 @@
                 inherit system;
                 modules = [ ./systems/desktop ];
             };
+            rpiZero2w = nixpkgs.lib.nixosSystem {
+                system = home-system;
+                modules = [ ./systems/rpi.nix ];
+            };
         };
 
         devShells.home = home-pkgs.mkShell {
@@ -38,6 +42,9 @@
             backend = pkgs.callPackage ./packages/backend.nix {};
             putricide = pkgs.callPackage ./packages/putricide.nix {};
             rp-utils = pkgs.callPackage ./packages/rp-utils.nix {};
+        };
+        packages.legacyPackages.${home-system} = {
+            backend = pkgs.callPackage ./packages/backend.nix {};
         };
     };
 }
