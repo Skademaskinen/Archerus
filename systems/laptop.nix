@@ -10,6 +10,7 @@
 
         ../services/graphical.nix
         ../services/virtual-machines.nix
+        ../services/ssh.nix
     ];
     
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -40,6 +41,7 @@
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     environment.systemPackages = with pkgs; [
         vim 

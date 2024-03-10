@@ -82,7 +82,7 @@
                     set nowrap
                     syntax on
                     set mouse=a
-                    colorscheme slate
+                    colorscheme soruby
                     hi Normal guibg=NONE cterm=NONE
                     set sidescroll=1
                     set cursorline
@@ -100,9 +100,9 @@
                     nmap <silent> <C-Right> :tabnext<CR>
                     nmap <silent> <cr> :$tabnew<CR>
                     nmap <silent> <Tab> :NERDTree<CR>
-                    nmap <silent> <C-Q> :q<CR>
-                    nmap <silent> <C-W> :w<CR>
-                    nmap <silent> <C-X> :x<CR>
+                    "nmap <silent> <C-Q> :q<CR>
+                    "nmap <silent> <C-W> :w<CR>
+                    "nmap <silent> <C-X> :x<CR>
                     nmap <silent> <C-T> :bot term<CR>
                     nmap <silent> <C-S-Up> :wincmd k<CR>
                     nmap <silent> <C-S-Down> :wincmd j<CR>
@@ -111,7 +111,6 @@
                     tnoremap <silent> <C-S-Up> <c-\><c-n> 
                     set backspace=indent,eol,start
                 '';
-
             })
         ];
     };

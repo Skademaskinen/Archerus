@@ -26,6 +26,10 @@
                     ./systems/laptop.nix 
                 ];
             };
+            rpiZero2w = nixpkgs.lib.nixosSystem {
+                system = home-system;
+                modules = [ ./systems/rpi.nix ];
+            };
         };
 
         devShells.home = home-pkgs.mkShell {
