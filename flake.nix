@@ -3,10 +3,10 @@
 
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-23.11";
+        nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     };
 
-    outputs = { self, nixpkgs }: 
-    
+    outputs = { self, nixpkgs, nixpkgs-unstable }: 
     let
         system = "x86_64-linux";
         home-system = "aarch64-linux";
@@ -16,15 +16,15 @@
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = [
-                    ./systems/skademaskinen.nix
-                ];
+                modules = [ ./systems/skademaskinen ];
             };
             laptop = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = [ 
-                    ./systems/laptop.nix 
-                ];
+                modules = [ ./systems/laptop ];
+            };
+            desktop = nixpkgs-unstable.lib.nixosSystem {
+                inherit system;
+                modules = [ ./systems/desktop ];
             };
         };
 

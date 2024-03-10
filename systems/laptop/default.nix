@@ -1,15 +1,14 @@
 {pkgs, lib, modulesPath, config, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
-        ../users/mast3r.nix
+        ../../users/mast3r.nix
 
-        ../setup/packages.nix
-        ../setup/locale.nix
-        ../setup/grub.nix
-        ../setup/networking.nix
-
-        ../services/graphical.nix
-        ../services/virtual-machines.nix
+        ../../setup/packages.nix
+        ../../setup/locale.nix
+        ../../setup/grub.nix
+        ../../setup/networking.nix
+        ../../modules/sway.nix
+        ../../modules/virtual-machines.nix
     ];
     
     boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -55,5 +54,7 @@
     ];
 
     networking.hostName = "laptop";
+    
+    system.stateVersion = "23.05";
 
 }

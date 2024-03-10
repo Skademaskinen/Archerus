@@ -1,27 +1,25 @@
 {pkgs, config, lib, modulesPath, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
-        ../users/mast3r.nix
-        ../users/taoshi.nix
-
-        ../services/jupyter.nix
-        ../services/lavalink.nix
-        ../services/minecraft.nix
-        ../services/mysql.nix
-        ../services/nextcloud.nix
-        ../services/nginx.nix
-        ../services/Putricide.nix
-        ../services/SketchBot.nix
-        ../services/ssh.nix
-        ../services/vpn.nix
-        ../services/website.nix
-        ../services/rp-utils.nix
-
-        ../setup/systemd-boot.nix
-        ../setup/locale.nix
-        ../setup/networking.nix
-        ../setup/packages.nix
-        ../setup/security.nix
+        ../../users/mast3r.nix
+        ../../users/taoshi.nix
+        ../../modules/jupyter.nix
+        ../../modules/lavalink.nix
+        ../../modules/minecraft.nix
+        ../../modules/mysql.nix
+        ../../modules/nextcloud.nix
+        ../../modules/nginx.nix
+        ../../modules/Putricide.nix
+        ../../modules/SketchBot.nix
+        ../../modules/ssh.nix
+        ../../modules/vpn.nix
+        ../../modules/website.nix
+        ../../modules/rp-utils.nix
+        ../../setup/systemd-boot.nix
+        ../../setup/locale.nix
+        ../../setup/networking.nix
+        ../../setup/packages.nix
+        ../../setup/security.nix
     ];
 
     boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -82,4 +80,6 @@
 
     
     networking.hostName = "Skademaskinen";
+
+    system.stateVersion = "23.05";
 }
