@@ -24,8 +24,8 @@
             device = "/dev/disk/by-label/GAMES"; 
             fsType = "ext4";
         };
-        "/files" = { 
-            device = "/dev/disk/by-label/FILES"; 
+        "/home/mast3r" = { 
+            device = "/dev/disk/by-label/HOME"; 
             fsType = "ext4";
         };
         swapDevices = [];
@@ -46,5 +46,6 @@
 
     environment.systemPackages = with pkgs; [
         bottles
+        steam
     ];
 }
