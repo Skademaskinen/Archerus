@@ -17,7 +17,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nix-channel
-        run: nix-channel --add https://nixos.org/channels/nixos-23.11 && nix-channel --update
+        run: sudo nix-channel --add https://nixos.org/channels/nixos-23.11 && sudo nix-channel --update
         
       - name: build-backend
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
