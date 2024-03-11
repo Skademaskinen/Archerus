@@ -9,7 +9,7 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: start
-        run: systemctl start nix-daemon
+        run: sudo systemctl start nix-daemon
       - name: build
         run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
   test-putricide:
@@ -18,7 +18,7 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: start
-        run: systemctl start nix-daemon
+        run: sudo systemctl start nix-daemon
       - name: build
         run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
   test-skademaskinen:
@@ -27,7 +27,7 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: start
-        run: systemctl start nix-daemon
+        run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
         run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
   test-laptop:
@@ -36,7 +36,7 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: start
-        run: systemctl start nix-daemon
+        run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
         run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
   test-desktop:
@@ -45,6 +45,6 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: start
-        run: systemctl start nix-daemon
+        run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
         run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
