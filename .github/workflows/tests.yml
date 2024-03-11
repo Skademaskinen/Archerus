@@ -13,9 +13,14 @@ jobs:
       - uses: actions/checkout@v4.1.1
       
       - name: prepare
-        run: sudo sh <(curl -L https://nixos.org/nix/install) --daemon
-      - name: nix-channel
-        run: sudo nix-channel --add https://nixos.org/channels/nixos-23.11 && sudo nix-channel --update
+        run: sudo apt install nix
+      - name: nix-daemon
+        run: sudo systemctl enable --now nix-daemon
+      - name: nix-channel-add
+        run: sudo nix-channel --add https://nixos.org/channels/nixos-23.11
+        
+      - name: nix-channel-update
+        run: sudo nix-channel --update
         
       - name: build-backend
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
