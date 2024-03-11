@@ -1,0 +1,40 @@
+name: Test NixOS configuration
+
+on: push
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare
+        run: apt install nix
+      - name: build
+        run: nix build -f ./packages/backend.nix
+  test-putricide:
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare
+        run: apt install nix
+      - name: build
+        run: nix build -f ./packages/putricide.nix
+  test-skademaskinen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare
+        run: apt install nix
+      - name: nixos-rebuild
+        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
+  test-laptop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare
+        run: apt install nix
+      - name: nixos-rebuild
+        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
+  test-desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare
+        run: apt install nix
+      - name: nixos-rebuild
+        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
