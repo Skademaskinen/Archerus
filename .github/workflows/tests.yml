@@ -29,7 +29,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm --flake .#Skademaskinen"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
   test-laptop:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm --flake .#laptop"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
   test-desktop:
     runs-on: ubuntu-latest
     steps:
@@ -47,4 +47,4 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm --flake .#desktop"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
