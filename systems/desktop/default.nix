@@ -24,8 +24,12 @@
             device = "/dev/disk/by-label/GAMES"; 
             fsType = "ext4";
         };
-        "/home/mast3r" = { 
-            device = "/dev/disk/by-label/HOME"; 
+        "/files" = { 
+            device = "/dev/disk/by-label/FILES"; 
+            fsType = "ext4";
+        };
+        "/home/mast3r" = {
+            devices = "/dev/disk/by-label/HOME";
             fsType = "ext4";
         };
         swapDevices = [];
