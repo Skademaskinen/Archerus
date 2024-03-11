@@ -11,16 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
+
+      - uses: cachix/install-nix-action@v22
+        with:
+          nix_path: nixpkgs=channel:nixos-23.11
       
-      - name: prepare
-        run: sudo apt install nix
-      - name: nix-daemon
-        run: sudo systemctl enable --now nix-daemon
-      - name: nix-channel-add
-        run: sudo nix-channel --add https://nixos.org/channels/nixos-23.11
-        
-      - name: nix-channel-update
-        run: sudo nix-channel --update
       - name: build-backend
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
         env: 
