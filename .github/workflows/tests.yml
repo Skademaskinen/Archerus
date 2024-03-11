@@ -1,0 +1,28 @@
+name: Test NixOS configuration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - uses: cachix/install-nix-action@v25
+        with:
+          nix_path: nixpkgs=channel:nixos-23.11
+      
+      - name: build-backend
+        run: nix build -f ./packages/backend.nix
+      - name: build-putricide
+        run: nix build -f ./packages/putricide.nix
+      #- name: build-skademaskinen
+      #  run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
+      #- name: build-laptop
+      #  run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
+      #- name: build-desktop
+      #  run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
