@@ -17,22 +17,12 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.11
       
       - name: build-backend
-        run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
-        env: 
-          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
+        run: nix build -f ./packages/backend.nix
       - name: build-putricide
-        run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
-        env: 
-          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
+        run: nix build -f ./packages/putricide.nix
       - name: build-skademaskinen
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
-        env: 
-          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
+        run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
       - name: build-laptop
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
-        env: 
-          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
+        run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
       - name: build-desktop
-        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
-        env: 
-          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
+        run: nix shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
