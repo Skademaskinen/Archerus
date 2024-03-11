@@ -58,4 +58,4 @@ in {
     
     systemd.sockets = makeSockets ["survival" "hub" "creative" "paradox"];
     
-}   
+}

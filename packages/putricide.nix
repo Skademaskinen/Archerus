@@ -1,4 +1,4 @@
-{pkgs,}: pkgs.maven.buildMavenPackage {
+{pkgs ? import <nixpkgs> {}, ...}: pkgs.maven.buildMavenPackage {
     name = "putricide";
     pname = "putricide";
     version = "3.38a";
