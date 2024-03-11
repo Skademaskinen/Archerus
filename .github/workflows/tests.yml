@@ -1,11 +1,17 @@
 name: Test NixOS configuration
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test-backend:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
+      
       - name: prepare
         run: sudo apt install nix
       - name: start
@@ -15,6 +21,8 @@ jobs:
   test-putricide:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
+      
       - name: prepare
         run: sudo apt install nix
       - name: start
@@ -24,6 +32,8 @@ jobs:
   test-skademaskinen:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
+      
       - name: prepare
         run: sudo apt install nix
       - name: start
@@ -33,6 +43,8 @@ jobs:
   test-laptop:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
+      
       - name: prepare
         run: sudo apt install nix
       - name: start
@@ -42,6 +54,8 @@ jobs:
   test-desktop:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.1
+      
       - name: prepare
         run: sudo apt install nix
       - name: start
