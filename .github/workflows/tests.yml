@@ -13,9 +13,7 @@ jobs:
       - uses: actions/checkout@v4.1.1
       
       - name: prepare
-        run: sudo apt install nix
-      - name: start
-        run: sudo systemctl start nix-daemon
+        run: sudo sh <(curl -L https://nixos.org/nix/install) --daemon
       - name: nix-channel
         run: sudo nix-channel --add https://nixos.org/channels/nixos-23.11 && sudo nix-channel --update
         
