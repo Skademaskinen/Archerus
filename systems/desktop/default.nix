@@ -26,7 +26,7 @@
         };
         "/files" = { 
             device = "/dev/disk/by-label/FILES"; 
-            fsType = "ext4";
+            fsType = "ntfs";
         };
         "/home/mast3r" = {
             devices = "/dev/disk/by-label/HOME";
