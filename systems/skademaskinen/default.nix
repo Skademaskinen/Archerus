@@ -84,4 +84,6 @@
     networking.hostName = "Skademaskinen";
 
     system.stateVersion = "23.05";
+    virtualisation.vmVariant.virtualisation.memorySize = 8192;
+    virtualisation.vmVariant.virtualisation.cores = 4;
 }

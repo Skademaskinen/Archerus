@@ -86,6 +86,7 @@
         gradle
         gnumake
         gcc
+        steam
     ];
 
     networking.hostName = "laptop";

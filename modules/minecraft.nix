@@ -9,6 +9,7 @@
         sha256 = "sha256-PSdqP1f4UDx+VIhZ0PxrxBfZZyEW2fp+6wD3YQcH1vo=";
     };
 
+
     makeServer = {waterfall ? false, name}: {
         enable = true;
         description = "Minecraft ${name} Service";
@@ -25,7 +26,12 @@
         };
         wantedBy = [ "default.target" ];
     };
-    makeSocket = {name}: {
+    makeServers = (names: lib.listToAttrs (lib.concatLists [
+        (map (name: { name = "minecraft-${name}"; value = makeServer { name = name; }; }) names) 
+        [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }]
+    ]));
+
+    makeSocket = name: {
         enable = true;
         description = "Minecraft ${name} STDIN socket";
         socketConfig = {
@@ -34,6 +40,10 @@
             User = "minecraft";
         };
     };
+    makeSockets = (names: lib.listToAttrs (lib.concatLists [
+        (map (name: { name = "minecraft-${name}"; value = makeSocket name; }) names)
+        [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }]
+    ]));
 
 in {
     users.users.minecraft = {
@@ -44,20 +54,8 @@ in {
     };
     users.groups.minecraft = { };
 
-    systemd.services = {
-        minecraft-waterfall =   makeServer { waterfall = true; name = "waterfall"; };
-        minecraft-survival =    makeServer { name = "survival"; };
-        minecraft-hub =         makeServer { name = "hub"; };
-        minecraft-creative =    makeServer { name = "creative"; };
-        minecraft-paradox =     makeServer { name = "paradox"; };
-    };
-    systemd.sockets = {
-        minecraft-waterfall =   makeSocket { name = "waterfall"; };
-        minecraft-survival =    makeSocket { name = "survival"; };
-        minecraft-hub =         makeSocket { name = "hub"; };
-        minecraft-creative =    makeSocket { name = "creative"; };
-        minecraft-paradox =     makeSocket { name = "paradox"; };
-
-    };
+    systemd.services = makeServers ["survival" "hub" "creative" "paradox"];
+    
+    systemd.sockets = makeSockets ["survival" "hub" "creative" "paradox"];
     
 }   
