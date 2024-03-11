@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-backend:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
@@ -16,49 +16,16 @@ jobs:
         run: sudo apt install nix
       - name: start
         run: sudo systemctl start nix-daemon
-      - name: build
+      - name: nix-channel
+        run: nix-channel --add nixpkgs/nixos-23.11 && nix-channel --update
+        
+      - name: build-backend
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
-  test-putricide:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.1
-      
-      - name: prepare
-        run: sudo apt install nix
-      - name: start
-        run: sudo systemctl start nix-daemon
-      - name: build
+      - name: build-putricide
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
-  test-skademaskinen:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.1
-      
-      - name: prepare
-        run: sudo apt install nix
-      - name: start
-        run: sudo systemctl start nix-daemon
-      - name: nixos-rebuild
+      - name: build-skademaskinen
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
-  test-laptop:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.1
-      
-      - name: prepare
-        run: sudo apt install nix
-      - name: start
-        run: sudo systemctl start nix-daemon
-      - name: nixos-rebuild
+      - name: build-laptop
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
-  test-desktop:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.1
-      
-      - name: prepare
-        run: sudo apt install nix
-      - name: start
-        run: sudo systemctl start nix-daemon
-      - name: nixos-rebuild
+      - name: build-desktop
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
