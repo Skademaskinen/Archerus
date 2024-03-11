@@ -11,7 +11,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: build
-        run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
+        run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
   test-putricide:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: build
-        run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
+        run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
   test-skademaskinen:
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
   test-laptop:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,7 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
   test-desktop:
     runs-on: ubuntu-latest
     steps:
@@ -47,4 +47,4 @@ jobs:
       - name: start
         run: sudo systemctl start nix-daemon
       - name: nixos-rebuild
-        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
+        run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
