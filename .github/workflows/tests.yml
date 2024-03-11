@@ -24,20 +24,20 @@ jobs:
       - name: build-backend
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
         env: 
-          NIX_PATH: ~/.nix
+          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
       - name: build-putricide
         run: sudo nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
         env: 
-          NIX_PATH: ~/.nix
+          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
       - name: build-skademaskinen
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#Skademaskinen
         env: 
-          NIX_PATH: ~/.nix
+          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
       - name: build-laptop
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#laptop
         env: 
-          NIX_PATH: ~/.nix
+          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
       - name: build-desktop
         run: sudo nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command nixos-rebuild build-vm --flake .#desktop
         env: 
-          NIX_PATH: ~/.nix
+          NIX_PATH: nixpkgs=/nix/var/nix/profiles/per-user/root/channels
