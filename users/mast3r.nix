@@ -32,6 +32,7 @@
             lynx
             termshark
             texliveFull
+            font-awesome
             ((vim_configurable.override{}).customize{
                 name = "vim";
                 vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
