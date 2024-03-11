@@ -9,32 +9,32 @@ jobs:
       - name: prepare
         run: sudo apt install nix
       - name: build
-        run: nix build -f ./packages/backend.nix
+        run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/backend.nix
   test-putricide:
     runs-on: ubuntu-latest
     steps:
       - name: prepare
         run: sudo apt install nix
       - name: build
-        run: nix build -f ./packages/putricide.nix
+        run: nix --extra-experimental-features "nix-command flakes" build -f ./packages/putricide.nix
   test-skademaskinen:
     runs-on: ubuntu-latest
     steps:
       - name: prepare
         run: sudo apt install nix
       - name: nixos-rebuild
-        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
+        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#Skademaskinen"
   test-laptop:
     runs-on: ubuntu-latest
     steps:
       - name: prepare
         run: sudo apt install nix
       - name: nixos-rebuild
-        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
+        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#laptop"
   test-desktop:
     runs-on: ubuntu-latest
     steps:
       - name: prepare
         run: sudo apt install nix
       - name: nixos-rebuild
-        run: nix shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
+        run: nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nixos-rebuild --command "nixos-rebuild build-vm .#desktop"
