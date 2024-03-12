@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, config, ...}:let
+    banner = pkgs.callPackage ../packages/banner.nix { name = config.networking.hostName; };
+in {
     time.timeZone = "Europe/Copenhagen";
 
     i18n.defaultLocale = "en_DK.UTF-8";
@@ -15,7 +17,7 @@
         LC_TIME = "da_DK.UTF-8";
     };
     
-    users.motd = builtins.readFile ../files/motd.txt;
+    users.motd = "${builtins.readFile banner}";
 
     services.xserver = {
         layout = "dk";

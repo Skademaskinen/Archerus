@@ -9,6 +9,7 @@
 
         ../../modules/plasma.nix
         ../../modules/virtualisation.nix
+        ../../modules/ssh.nix
     ];
 
     fileSystems = {
