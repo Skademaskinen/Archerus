@@ -1,4 +1,4 @@
-{pkgs ? import <nixpkgs> {}, config, name ? "test", ...}: pkgs.stdenv.mkDerivation {
+{pkgs ? import <nixpkgs> {}, name ? "test", ...}: pkgs.stdenv.mkDerivation {
     name = "banner";
     pname = "banner";
     src = null;
