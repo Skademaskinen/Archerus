@@ -3,7 +3,7 @@
         (modulesPath + "/installer/scan/not-detected.nix") 
         ../../users/mast3r.nix
         
-        ../../setup/grub.nix
+        ../../setup/systemd-boot.nix
         ../../setup/locale.nix
         ../../setup/packages.nix
 
@@ -29,27 +29,41 @@
             fsType = "ntfs";
         };
         "/home" = {
-            devices = "/dev/disk/by-label/HOME";
+            device = "/dev/disk/by-label/HOME";
             fsType = "ext4";
         };
-        swapDevices = [];
-    };  
+	};
+    swapDevices = []; 
     
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
     boot.initrd.kernelModules = [ ];
     boot.kernelModules = [ "kvm-amd" ];
     boot.extraModulePackages = [ ];
+
+    services.xserver.videoDrivers = [ "amdgpu" ];
     
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
     system.stateVersion = "24.05";
 
+
     
     networking.hostName = "desktop";
 
+
     environment.systemPackages = with pkgs; [
         bottles
-        steam
+        firefox
+        vesktop
+        spotify
+        gimp
+        yakuake
+        inkscape
+        vulkan-tools
+        kdePackages.plasma-pa
     ];
+
+    programs.steam.enable = true;
+
 }
