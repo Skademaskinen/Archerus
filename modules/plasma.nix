@@ -10,6 +10,10 @@
                     };
                 };
                 defaultSession = "plasma";
+                autoLogin = {
+                    enable = true;
+                    user = "mast3r";
+                };
             };
             desktopManager = {
                 plasma6 = {

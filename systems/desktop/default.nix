@@ -41,6 +41,8 @@
     boot.kernelModules = [ "kvm-amd" ];
     boot.extraModulePackages = [ ];
 
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+
     services.xserver.videoDrivers = [ "amdgpu" ];
     
     hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -51,6 +53,8 @@
 
     
     networking.hostName = "desktop";
+    networking.interfaces.enp39s0.wakeOnLan.enable = true;
+    networking.networkmanager.enable = true;
 
 
     environment.systemPackages = with pkgs; [
@@ -65,6 +69,14 @@
         kdePackages.plasma-pa
     ];
 
+    environment.variables = {
+        XCURSOR_SIZE="48";
+    };
+
+    hardware.ckb-next.enable = true;
+
     programs.steam.enable = true;
+    programs.gamescope.enable = true;
+    programs.gamemode.enable = true;
 
 }
