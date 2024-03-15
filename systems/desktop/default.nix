@@ -29,10 +29,6 @@
             device = "/dev/disk/by-label/FILES"; 
             fsType = "ntfs";
         };
-        "/home" = {
-            device = "/dev/disk/by-label/HOME";
-            fsType = "ext4";
-        };
 	};
     swapDevices = []; 
     
@@ -61,12 +57,20 @@
         bottles
         firefox
         vesktop
+        discord
         spotify
         gimp
         yakuake
         inkscape
         vulkan-tools
         kdePackages.plasma-pa
+        direnv
+        vscode
+        python311Packages.evdev
+        teams-for-linux
+        gcc
+        cmake
+        (pkgs.callPackage ../../packages/warcraftlogsuploader.nix {})
     ];
 
     environment.variables = {
