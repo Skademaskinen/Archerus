@@ -22,3 +22,5 @@ jobs:
         run: nix build -f ./packages/putricide.nix
       - name: build-banner
         run: nix build -f ./packages/banner.nix
+      - name: build-warcraftlogsuploader
+        run: nix build -f ./packages/warcraftlogsuploader.nix
