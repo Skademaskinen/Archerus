@@ -18,9 +18,13 @@
                 inherit system;
                 modules = [ ./systems/skademaskinen ];
             };
-            laptop = nixpkgs.lib.nixosSystem {
+            laptop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
-                modules = [ ./systems/laptop ];
+                modules = [ ./systems/laptop ./systems/laptop/modules/free.nix ];
+            };
+            laptop-proprietary = nixpkgs-unstable.lib.nixosSystem {
+                inherit system;
+                modules = [ ./systems/laptop ./systems/laptop/modules/proprietary.nix ];
             };
             desktop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
