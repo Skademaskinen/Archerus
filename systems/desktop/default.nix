@@ -1,4 +1,8 @@
-{pkgs, config, lib, ...}: {
+{pkgs, config, lib, modulesPath, ...}: {
+    imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+        ./packages.nix
+    ];
 
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
     boot.initrd.kernelModules = [ ];

@@ -28,7 +28,7 @@
     };
     makeServers = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeServer { name = name; }; }) names) 
-        [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }]
+        (if names != [] then [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }] else [])
     ]));
 
     makeSocket = name: {
@@ -42,7 +42,7 @@
     };
     makeSockets = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeSocket name; }) names)
-        [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }]
+        (if names != [] then [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }] else [])
     ]));
 
 in {

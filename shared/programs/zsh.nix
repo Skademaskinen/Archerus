@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
     programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -6,7 +6,10 @@
         syntaxHighlighting.enable = true;
 
         shellAliases = {
-            update = "sudo nixos-rebuild switch";
+            switch = "sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch";
+            boot = "sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot";
+            build-vm = "${pkgs.nixos-rebuild}/bin/nixos-rebuild build-vm";
+            edit = "vim /skademaskinen/Server-Config";
         };
         promptInit = "PROMPT=\"%F{#55AAFF}[%F{#FF5500}%n%f@%F{#FF5500}%m%F{#55AAFF}] %F{#888888}%~ %F{#55AAFF}> %f\"";
     };

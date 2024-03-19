@@ -1,7 +1,8 @@
-{lib, config, ...}: let
+{lib, config, modulesPath, ...}: let
     storage = "/mnt/raid";
 in {
     imports = [
+        (modulesPath + "/installer/scan/not-detected.nix") 
         ./packages.nix
     ];
 

@@ -16,6 +16,7 @@
             ./shared/locale.nix
             ./shared/networking.nix
             ./shared/programs/nix.nix
+            ./shared/programs/git.nix
         ];
     in {
         nixosConfigurations = {
@@ -24,6 +25,7 @@
                 modules = builtins.concatLists [defconfig [ 
                     ./systems/skademaskinen 
 
+                    ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
                     ./shared/users/taoshi.nix
                 ]];
@@ -34,6 +36,7 @@
                     ./systems/laptop 
                     ./systems/laptop/free.nix 
 
+                    ./shared/bootloader/grub.nix
                     ./shared/programs/sway.nix
                     ./shared/users/mast3r.nix
                 ]];
@@ -44,6 +47,7 @@
                     ./systems/laptop 
                     ./systems/laptop/proprietary.nix 
 
+                    ./shared/bootloader/grub.nix
                     ./shared/programs/plasma.nix
                     ./shared/users/mast3r.nix
                 ]];
@@ -53,6 +57,7 @@
                 modules = builtins.concatLists [defconfig [ 
                     ./systems/desktop 
 
+                    ./shared/bootloader/systemd-boot.nix
                     ./shared/programs/plasma.nix
                     ./shared/users/mast3r.nix
                 ]];
