@@ -3,5 +3,8 @@
         bottles
         discord
         spotify
+        vscode
+        firefox
+        yakuake
     ];
 }
