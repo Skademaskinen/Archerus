@@ -1,5 +1,5 @@
 {pkgs, config, ...}: let
-    banner = builtins.readFile (pkgs.callPackage ../../packages/banner.nix { name = config.networking.hostName; });
+    banner = builtins.readFile (pkgs.callPackage ../packages/banner.nix { name = config.networking.hostName; });
 in {
     time.timeZone = "Europe/Copenhagen";
 

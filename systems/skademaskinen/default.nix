@@ -2,13 +2,7 @@
     storage = "/mnt/raid";
 in {
     imports = [
-        ../../modules
-
         ./packages.nix
-        ./locale.nix
-
-        ../../shared/users/mast3r.nix
-        ../../shared/users/taoshi.nix
     ];
 
     # hardware

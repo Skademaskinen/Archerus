@@ -36,12 +36,12 @@ in {
             SQLITE3_PATH = "${pkgs.sqlite-interactive}/bin/sqlite3";
             LSBLK_PATH = "${pkgs.util-linux}/bin/lsblk";
         };
-        serviceConfig = {
+        serviceConfig = if config.skademaskinen.website.enable then {
             User = "mast3r";
             WorkingDirectory = config.skademaskinen.website.root;
             ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.website.databasePath} --hostname ${config.skademaskinen.website.hostname} --port ${builtins.toString config.skademaskinen.website.port} --keyfile ${config.skademaskinen.website.keyfile}";
             Restart = "on-failure";
-        };
+        } else {};
         wantedBy = ["default.target"];
     };
 }

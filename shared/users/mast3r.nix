@@ -1,6 +1,7 @@
 {pkgs, ...}: let
     vim = import ../programs/vim.nix { pkgs = pkgs; };
 in {
+    imports = [../programs/zsh.nix];
     users.users.mast3r = {
         isNormalUser = true;
         description = "mast3r";

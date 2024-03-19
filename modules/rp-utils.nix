@@ -20,11 +20,11 @@
                 SQLITE3_PATH = "${pkgs.sqlite}/bin/sqlite3";
                 PYTHON_EXE_PATH = "${pkgs.python3}/bin/python";
             };
-            serviceConfig = {
+            serviceConfig = if config.skademaskinen.rp-utils.enable then {
                 WorkingDirectory = config.skademaskinen.rp-utils.root;
                 User = "mast3r";
                 ExecStart = "${pkgs.gradle}/bin/gradle run -Dorg.gradle.java.home=${pkgs.jdk21}/lib/openjdk";
-            };
+            } else {};
             wantedBy = ["default.target"];
             after = ["network-online.target"];
             wants = ["network-online.target"];
