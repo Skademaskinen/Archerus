@@ -5,7 +5,7 @@
     };
     config.services.jupyterhub = {
         enable = true;
-        host = "${config.skademaskinen.domain}";
+        host = "localhost";
         port = config.skademaskinen.jupyter.port;
         extraConfig = ''
             c.Spawner.notebook_dir = "${config.skademaskinen.storage}/jupyter"
