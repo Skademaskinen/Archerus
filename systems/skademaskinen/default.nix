@@ -12,6 +12,7 @@ in {
     boot.initrd.kernelModules = [ ];
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
+    boot.swraid.enable = true;
 
     fileSystems = {
         "/" = { 
