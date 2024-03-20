@@ -56,6 +56,9 @@ in {
 
     users.mutableUsers = false;
 
+    # VPN CONFIG
+    services.openvpn.servers.VPN.config = "config ${storage}/VPN/windscribe.conf";
+
     # custom module settings
     skademaskinen = {
         storage = storage;
