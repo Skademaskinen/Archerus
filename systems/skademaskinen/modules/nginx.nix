@@ -16,10 +16,15 @@
             forceSSL = true;
             root = "/.";
             locations."/*".index = "${pkgs.writeText "index.html" ''
-                <a href="http://jupyter.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Jupyter</a><br>
-                <a href="http://nextcloud.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Nextcloud</a><br>
-                <a href="http://website.${config.skademaskinen.domain}:${builtins.toString config.skademaskinen.website.port}">Mast3r website</a><br>
-                <a href="http://taoshi.${config.skademaskinen.domain}:${builtins.toString config.skademaskinen.taoshi.website.port}">Taoshi website</a><br>
+                <script>
+                    function reroute(location){
+                        window.location.href = "https://"+location+"."+window.location.host
+                    }
+                </script>
+                <button onclick="reroute(\'jupyter\')">Jupyter</button><br>
+                <button onclick="reroute(\'nextcloud\')">Nextcloud</button><br>
+                <button onclick="reroute(\'mast3r\')">Mast3r website</button><br>
+                <button onclick="reroute(\'taoshi\')">Taoshi website</button><br>
             ''}";
         };
         virtualHosts."document.${config.skademaskinen.domain}" = {
