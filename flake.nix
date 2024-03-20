@@ -9,42 +9,67 @@
     outputs = { self, nixpkgs, nixpkgs-unstable }: 
     let
         system = "x86_64-linux";
-        home-system = "aarch64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
-        home-pkgs = nixpkgs.legacyPackages.${home-system};
+        defconfig = [
+            ./modules
+            
+            ./shared/locale.nix
+            ./shared/networking.nix
+            ./shared/programs/nix.nix
+            ./shared/programs/git.nix
+        ];
     in {
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = [ ./systems/skademaskinen ];
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/skademaskinen 
+
+                    ./shared/bootloader/systemd-boot.nix
+                    ./shared/users/mast3r.nix
+                    ./shared/users/taoshi.nix
+                ]];
             };
-            laptop = nixpkgs.lib.nixosSystem {
+            laptop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
-                modules = [ ./systems/laptop ];
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/laptop 
+                    ./systems/laptop/free.nix 
+
+                    ./shared/bootloader/grub.nix
+                    ./shared/programs/sway.nix
+                    ./shared/programs/plasma.nix
+                    ./shared/users/mast3r.nix
+                ]];
+            };
+            laptop-proprietary = nixpkgs-unstable.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/laptop 
+                    ./systems/laptop/proprietary.nix 
+
+                    ./shared/bootloader/grub.nix
+                    ./shared/programs/sway.nix
+                    ./shared/programs/plasma.nix
+                    ./shared/users/mast3r.nix
+                ]];
             };
             desktop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
-                modules = [ ./systems/desktop ];
-            };
-            rpiZero2w = nixpkgs.lib.nixosSystem {
-                system = home-system;
-                modules = [ ./systems/rpi.nix ];
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/desktop 
+
+                    ./shared/bootloader/systemd-boot.nix
+                    ./shared/programs/plasma.nix
+                    ./shared/users/mast3r.nix
+                ]];
             };
         };
 
-        devShells.home = home-pkgs.mkShell {
-            system = home-system;
-            buildInputs = [
-                (home-pkgs.callPackage ./packages/backend.nix {})
-            ];
-        };
         packages.legacyPackages.${system} = {
             backend = pkgs.callPackage ./packages/backend.nix {};
             putricide = pkgs.callPackage ./packages/putricide.nix {};
             rp-utils = pkgs.callPackage ./packages/rp-utils.nix {};
-        };
-        packages.legacyPackages.${home-system} = {
-            backend = pkgs.callPackage ./packages/backend.nix {};
         };
     };
 }

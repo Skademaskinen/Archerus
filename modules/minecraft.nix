@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: let
+{lib, pkgs, config, ... }: let
     prefix = "/mnt/raid/minecraft";
     paperSource = pkgs.fetchurl {
         url = "https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/450/downloads/paper-1.20.4-450.jar";
@@ -28,7 +28,7 @@
     };
     makeServers = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeServer { name = name; }; }) names) 
-        [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }]
+        (if names != [] then [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }] else [])
     ]));
 
     makeSocket = name: {
@@ -42,20 +42,27 @@
     };
     makeSockets = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeSocket name; }) names)
-        [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }]
+        (if names != [] then [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }] else [])
     ]));
 
 in {
-    users.users.minecraft = {
-        isSystemUser = true;
-        description = "minecraft server manager";
-        group = "minecraft";
-        packages = with pkgs; [ openjdk screen wget ];
+    options = {
+        skademaskinen.minecraft-servers = lib.mkOption {
+            type = pkgs.lib.types.listOf pkgs.lib.types.str;
+            default = [];
+        };
     };
-    users.groups.minecraft = { };
+    config = {
+        users.users.minecraft = {
+            isSystemUser = true;
+            description = "minecraft server manager";
+            group = "minecraft";
+            packages = with pkgs; [ openjdk screen wget ];
+        };
+        users.groups.minecraft = { };
 
-    systemd.services = makeServers ["survival" "hub" "creative" "paradox"];
-    
-    systemd.sockets = makeSockets ["survival" "hub" "creative" "paradox"];
+        systemd.services = makeServers config.skademaskinen.minecraft-servers;
+        systemd.sockets = makeSockets config.skademaskinen.minecraft-servers;
+    };
     
 }

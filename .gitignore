@@ -2,3 +2,4 @@ configuration.nix
 __pycache__
 result
 *.qcow2
+.vscode
