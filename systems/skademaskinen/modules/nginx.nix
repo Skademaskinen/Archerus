@@ -15,7 +15,7 @@
             inherit sslCertificateKey;
             forceSSL = true;
             root = "/.";
-            locations."/*".index = "${pkgs.writeText "index.html" ''
+            locations."/".index = "${pkgs.writeText "index.html" ''
                 <script>
                     function reroute(location){
                         window.location.href = "https://"+location+"."+window.location.host
