@@ -29,10 +29,10 @@
             fsType = "ext4";
         };
 
-        swapDevices = [{ 
-            device = "/dev/disk/by-uuid/8a5eb8dd-89c7-4a8d-a12e-71e32d025acf"; 
-        }];
     };
+    swapDevices = [{ 
+        device = "/dev/disk/by-uuid/8a5eb8dd-89c7-4a8d-a12e-71e32d025acf"; 
+    }];
 
     networking.hostName = "laptop";
 
@@ -49,4 +49,5 @@
 
 
     # custom options
+    globalEnvs.python.enable = true;
 }

@@ -1,17 +1,24 @@
 {pkgs, ...}: {
     imports = [./pipewire.nix];
 
-    services.xserver.displayManager.defaultSession = "sway";
-    services.xserver.desktopManager.plasma5.enable = true;
-
     programs.sway = {
         enable = true;
+        package = pkgs.swayfx;
         extraPackages = with pkgs; [
             gtklock
             konsole
+            hack-font
             dunst
             swaybg
-            mvpaper
+            mpvpaper
+            font-awesome
+            eww
+            grim
+            wl-clipboard
+            slurp
+            source-code-pro
+            jq
+            alsa-utils
         ];
     };
 }

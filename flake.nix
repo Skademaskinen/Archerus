@@ -38,6 +38,7 @@
 
                     ./shared/bootloader/grub.nix
                     ./shared/programs/sway.nix
+                    ./shared/programs/plasma.nix
                     ./shared/users/mast3r.nix
                 ]];
             };
@@ -48,6 +49,7 @@
                     ./systems/laptop/proprietary.nix 
 
                     ./shared/bootloader/grub.nix
+                    ./shared/programs/sway.nix
                     ./shared/programs/plasma.nix
                     ./shared/users/mast3r.nix
                 ]];
