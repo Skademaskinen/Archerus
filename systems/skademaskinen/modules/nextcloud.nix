@@ -7,7 +7,7 @@
         enable = true;
         package = pkgs.nextcloud27;
         home = "${config.skademaskinen.storage}/nextcloud";
-        hostName = "${config.skademaskinen.domain}";
+        hostName = "nextcloud.${config.skademaskinen.domain}";
         https = false;
         config.adminpassFile = "${config.skademaskinen.storage}/nextcloud/adminpassFile";
         extraOptions = {

@@ -48,6 +48,10 @@ in {
 
         users.users.root.password = "1234";
         services.getty.autologinUser = "root";
+        virtualisation.forwardPorts = [
+            { from = "host"; host.port = 2222; guest.port = 22; }
+            { from = "host"; host.port = 8888; guest.port = 80; }
+        ];
     };
 
     users.mutableUsers = false;
@@ -70,11 +74,11 @@ in {
 
         website = {
             enable = true;
-            root = "${storage}/webroot/admin/Backend";
-            databasePath = "${storage}/webroot/admin/db.db3";
+            root = "${storage}/website/Backend";
+            databasePath = "${storage}/website/db.db3";
             hostname = "localhost";
             port = 8000;
-            keyfile = "${storage}/webroot/admin/keyfile";
+            keyfile = "${storage}/website/keyfile";
         };
         taoshi.website = {
             enable = true;

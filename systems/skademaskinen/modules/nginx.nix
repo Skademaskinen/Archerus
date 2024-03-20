@@ -15,8 +15,12 @@
             inherit listen;
             inherit sslCertificate;
             inherit sslCertificateKey;
+            root = "/.";
             locations."/".index = "${pkgs.writeText "index.html" ''
-                hi :)
+                <a href="http://jupyter.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Jupyter</a><br>
+                <a href="http://nextcloud.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Nextcloud</a><br>
+                <a href="http://website.${config.skademaskinen.domain}:${builtins.toString config.skademaskinen.website.port}">Mast3r website</a><br>
+                <a href="http://taoshi.${config.skademaskinen.domain}:${builtins.toString config.skademaskinen.taoshi.website.port}">Taoshi website</a><br>
             ''}";
         };
         virtualHosts."document.${config.skademaskinen.domain}" = {
