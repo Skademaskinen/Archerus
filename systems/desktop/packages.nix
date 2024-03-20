@@ -6,5 +6,6 @@
         vscode
         firefox
         yakuake
+        vesktop
     ];
 }
