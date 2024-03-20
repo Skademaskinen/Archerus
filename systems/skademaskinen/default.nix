@@ -4,6 +4,7 @@ in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
         ./packages.nix
+        ./modules
     ];
 
     # hardware
@@ -53,6 +54,8 @@ in {
 
     # custom module settings
     skademaskinen = {
+        storage = storage;
+        domain = "localhost";
         putricide = {
             enable = true;
             config = "${storage}/bots/Putricide";
@@ -70,8 +73,14 @@ in {
             root = "${storage}/webroot/admin/Backend";
             databasePath = "${storage}/webroot/admin/db.db3";
             hostname = "localhost";
-            port = 12345;
+            port = 8000;
             keyfile = "${storage}/webroot/admin/keyfile";
         };
+        taoshi.website = {
+            enable = true;
+            port = 8001;
+        };
+        jupyter.port = 8002;
+        nextcloud.port = 8003;
     };
 }
