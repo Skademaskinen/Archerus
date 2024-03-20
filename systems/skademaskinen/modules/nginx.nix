@@ -21,10 +21,10 @@
                         window.location.href = "https://"+location+"."+window.location.host
                     }
                 </script>
-                <button onclick="reroute(\'jupyter\')">Jupyter</button><br>
-                <button onclick="reroute(\'nextcloud\')">Nextcloud</button><br>
-                <button onclick="reroute(\'mast3r\')">Mast3r website</button><br>
-                <button onclick="reroute(\'taoshi\')">Taoshi website</button><br>
+                <button onclick="reroute('jupyter')">Jupyter</button><br>
+                <button onclick="reroute('nextcloud')">Nextcloud</button><br>
+                <button onclick="reroute('mast3r')">Mast3r website</button><br>
+                <button onclick="reroute('taoshi')">Taoshi website</button><br>
             ''}";
         };
         virtualHosts."document.${config.skademaskinen.domain}" = {
