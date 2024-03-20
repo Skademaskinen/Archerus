@@ -26,7 +26,7 @@
                 <button onclick="reroute('mast3r')">Mast3r website</button><br>
                 <button onclick="reroute('taoshi')">Taoshi website</button><br>
             ''}";
-            locations."/admin".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.website.port}";
+            locations."/admin".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
         };
         virtualHosts."document.${config.skademaskinen.domain}" = {
             inherit sslCertificate;
@@ -50,7 +50,7 @@
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.website.port}";
+            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
         };      
         virtualHosts."taoshi.${config.skademaskinen.domain}" = {
             inherit sslCertificate;

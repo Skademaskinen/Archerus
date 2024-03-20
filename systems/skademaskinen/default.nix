@@ -53,8 +53,9 @@ in {
         virtualisation.forwardPorts = [
             { from = "host"; host.port = 2222; guest.port = 22; }
             { from = "host"; host.port = 8888; guest.port = 80; }
+            { from = "host"; host.port = 4443; guest.port = 443; }
         ];
-        environment.etc."nextcloud-admin-password" = "1234";
+        environment.etc."nextcloud-admin-password".text = "1234";
     };
 
     users.mutableUsers = false;
@@ -78,7 +79,7 @@ in {
             root = "${storage}/bots/rp-utils";
         };
 
-        website = {
+        mast3r.website = {
             enable = true;
             root = "${storage}/website/Backend";
             databasePath = "${storage}/website/db.db3";
@@ -89,6 +90,10 @@ in {
         taoshi.website = {
             enable = true;
             port = 8001;
+        };
+        sketch-bot = {
+            enable = true;
+            root = "${config.users.users.taoshi.home}/SketchBot";
         };
         jupyter.port = 8002;
         nextcloud.port = 8003;
