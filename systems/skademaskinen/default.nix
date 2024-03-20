@@ -54,6 +54,7 @@ in {
             { from = "host"; host.port = 2222; guest.port = 22; }
             { from = "host"; host.port = 8888; guest.port = 80; }
         ];
+        environment.etc."nextcloud-admin-password" = "1234";
     };
 
     users.mutableUsers = false;

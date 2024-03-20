@@ -15,7 +15,7 @@
             inherit sslCertificateKey;
             forceSSL = true;
             root = "/.";
-            locations."/".index = "${pkgs.writeText "index.html" ''
+            locations."/*".index = "${pkgs.writeText "index.html" ''
                 <a href="http://jupyter.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Jupyter</a><br>
                 <a href="http://nextcloud.${config.skademaskinen.domain}:${builtins.toString config.services.jupyterhub.port}">Nextcloud</a><br>
                 <a href="http://website.${config.skademaskinen.domain}:${builtins.toString config.skademaskinen.website.port}">Mast3r website</a><br>
@@ -26,31 +26,31 @@
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:8123";
+            locations."/*".proxyPass = "http://localhost:8123";
         };
         virtualHosts."jupyter.${config.skademaskinen.domain}" = {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.services.jupyterhub.port}";
+            locations."/*".proxyPass = "http://localhost:${builtins.toString config.services.jupyterhub.port}";
         };
         virtualHosts."nextcloud.${config.skademaskinen.domain}" = {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
+            locations."/*".proxyPass = "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
         };
         virtualHosts."website.${config.skademaskinen.domain}" = {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.website.port}";
+            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.website.port}";
         };      
         virtualHosts."taoshi.${config.skademaskinen.domain}" = {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
+            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
         };
     };
 }
