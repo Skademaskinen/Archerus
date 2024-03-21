@@ -14,7 +14,7 @@
         enable = true;
         port = config.skademaskinen.jupyter.port;
         extraConfig = ''
-            c.Spawner.notebook_dir = ${config.skademaskinen.storage}/jupyter
+            c.Spawner.notebook_dir = '${config.skademaskinen.storage}/jupyter'
         '';
 
     };
