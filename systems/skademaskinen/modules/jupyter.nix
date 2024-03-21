@@ -12,7 +12,7 @@
             c.NotebookApp.port = ${builtins.toString config.skademaskinen.jupyter.port}
             c.NotebookApp.allow_remote_access = True
             c.NotebookApp.trust_xheaders = True
-            c.JupyterHub.base_url = '/jupyter'
+            c.Spawner.notebook_dir = "/mnt/raid/jupyter"
         '';
         kernels.python311 = let
             env = (pkgs.python311.withPackages (py: with py; [
