@@ -65,7 +65,7 @@ in {
 
     services.mysql.enable = true;
     services.mysql.dataDir = "/mnt/raid/mysql";
-    services.mysql.package = pkgs.mysql
+    services.mysql.package = pkgs.mysql;
 
     # custom module settings
     skademaskinen = {
