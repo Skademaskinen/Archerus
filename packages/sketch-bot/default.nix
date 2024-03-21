@@ -1,4 +1,4 @@
-{pkgs}: let
+{pkgs ? import <nixpkgs> {}}: let
     name = "SketchBot";
 in pkgs.buildDotnetModule {
     name = name;
@@ -6,10 +6,11 @@ in pkgs.buildDotnetModule {
     src = pkgs.fetchFromGitHub {
         owner = "Taoshix";
         repo = name;
-        rev = "ec25283f78ee91b7ee787119f9c0aca0b1f8dd3a";
-        sha256 = "sha256-mqkruofitvf2qXrd/tSUBYQaNbrZ+QokyN9iVmzUFGY=";
+        rev = "8013adbf744cc79639c6a9ee341d6ae0af19379e";
+        sha256 = "sha256-F221KPsd6qbOyEsAYFSwTNPETnjBxblYxDoPu8klRrM=";
     };
     dotnet-sdk = pkgs.dotnet-sdk_8;
+    dotnet-runtime = pkgs.dotnet-runtime_8;
     nugetDeps = ./deps.nix;
 
     projectFile = "${name}/${name}.csproj";

@@ -24,3 +24,5 @@ jobs:
         run: nix build .#banner
       - name: build-warcraftlogsuploader
         run: nix build .#warcraftlogsuploader
+      - name: build-sketch-bot
+        run: nix build .#sketch-bot

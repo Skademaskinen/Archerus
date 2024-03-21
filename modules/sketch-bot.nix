@@ -29,8 +29,9 @@
         enable = true;
         description = "Lavalink service";
         serviceConfig = {
+            WorkingDirectory = "${lavalink}/share/lavalink";
             User = "taoshi";
-            ExecStart = "${pkgs.jdk}/bin/java -jar ${lavalink}";
+            ExecStart = "${pkgs.jdk}/bin/java -jar ${lavalink}/bin/lavalink";
         };
         wantedBy = [ "default.target" ];
     } else {};

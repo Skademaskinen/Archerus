@@ -82,6 +82,7 @@
             rp-utils = pkgs.callPackage ./packages/rp-utils {};
             warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
             banner = pkgs.callPackage ./packages/banner {};
+            sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
         };
     };

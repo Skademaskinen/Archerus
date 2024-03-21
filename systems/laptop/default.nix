@@ -47,6 +47,8 @@
 
     hardware.ckb-next.enable = true;
 
+    programs.steam.enable = true;
+
 
     # custom options
     globalEnvs.python.enable = true;
