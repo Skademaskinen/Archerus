@@ -8,6 +8,7 @@
             inherit sslCertificateKey;
             forceSSL = true;
             locations.${path}.proxyPass = location;
+            locations.${path}.proxyWebsockets = true;
         };
     in {
         enable = true;
