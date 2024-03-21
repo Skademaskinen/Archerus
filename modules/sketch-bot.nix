@@ -19,5 +19,7 @@
             ExecStart = "${pkgs.dotnet-sdk_8}/bin/dotnet run";
         };
         wantedBy = [ "default.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
     } else {};
 }
