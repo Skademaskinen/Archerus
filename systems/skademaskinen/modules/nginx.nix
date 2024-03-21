@@ -9,18 +9,22 @@
             forceSSL = true;
             locations."/*".proxyPass = location;
         };
-        
     in {
         enable = true;
         recommendedProxySettings = true;
         recommendedGzipSettings = true;
         recommendedTlsSettings = true;
 
+        virtualHosts."document.${config.skademaskinen.domain}" = makeProxy "http://localhost:8123";
+        virtualHosts."jupyter.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.jupyterhub.port}";
+        virtualHosts."nextcloud.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
+        virtualHosts."website.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
+        virtualHosts."taoshi.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
         virtualHosts."${config.skademaskinen.domain}" = {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            root = "/.";
+            default = true;
             locations."/".index = "${pkgs.writeText "index.html" ''
                 <script>
                     function reroute(location){
@@ -34,10 +38,5 @@
             ''}";
             locations."/admin".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
         };
-        virtualHosts."document.${config.skademaskinen.domain}" = makeProxy "http://localhost:8123";
-        virtualHosts."jupyter.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.jupyterhub.port}";
-        virtualHosts."nextcloud.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
-        virtualHosts."website.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
-        virtualHosts."taoshi.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
     };
 }
