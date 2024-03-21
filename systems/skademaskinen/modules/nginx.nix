@@ -25,7 +25,7 @@
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/" = {
+            locations."/*" = {
                 proxyPass = "http://localhost:${builtins.toString config.services.jupyterhub.port}";
                 proxyWebsockets = true;
                 extraConfig = ''
