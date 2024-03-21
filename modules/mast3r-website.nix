@@ -1,7 +1,7 @@
 {pkgs, lib, config, ...}: 
 
 let
-        backend = pkgs.callPackage ../packages/backend.nix {};
+        backend = pkgs.callPackage ../packages/backend {};
 in {
     options.skademaskinen.mast3r.website = {
         enable = lib.mkOption {

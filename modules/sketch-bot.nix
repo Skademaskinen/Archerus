@@ -1,5 +1,5 @@
 {pkgs, lib, config, ...}: let
-    pkg = pkgs.callPackage ../packages/sketch-bot.nix {};
+    pkg = pkgs.callPackage ../packages/sketch-bot {};
 in{
     options.skademaskinen.sketch-bot = {
         enable = lib.mkOption {

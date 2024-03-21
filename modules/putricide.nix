@@ -1,5 +1,5 @@
 {lib, pkgs, config, ... }: let
-    env = pkgs.callPackage ../packages/putricide.nix {};
+    env = pkgs.callPackage ../packages/putricide {};
 in {
     options.skademaskinen.putricide = {
         enable = lib.mkOption {
