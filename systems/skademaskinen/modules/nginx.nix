@@ -7,8 +7,10 @@
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations.${path}.proxyPass = location;
-            locations.${path}.proxyWebsockets = true;
+            locations.${path} = {
+                proxyPass = location;
+                proxyWebsockets = true;
+            };
         };
     in {
         enable = true;
