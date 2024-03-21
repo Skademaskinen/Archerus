@@ -1,6 +1,4 @@
-{pkgs, lib, config, ...}: let
-    pkg = pkgs.callPackage ../packages/sketch-bot {};
-in{
+{pkgs, lib, config, ...}: {
     options.skademaskinen.sketch-bot = {
         enable = lib.mkOption {
             type = lib.types.bool;
@@ -10,13 +8,16 @@ in{
             type = lib.types.str;
         };
     };
-    config.systemd.services.sketch-bot = if config.skademaskinen.sketch-bot.enable then {
-        enable = config.skademaskinen.sketch-bot.enable;
+    config.systemd.services.sketch-bot = if config.skademaskinen.sketch-bot.enable then let
+        #pkg = pkgs.callPackage ../packages/sketch-bot {};
+    in {
+        enable = true;
         description = "SketchBot service";
         serviceConfig = {
             WorkingDirectory = config.skademaskinen.sketch-bot.root;
             User = "taoshi";
-            ExecStart = "${pkgs.bash}/bin/bash ${pkg}/bin/sketch-bot";
+            ExecStart = "${pkgs.dotnet-sdk_8}/bin/dotnet run";
         };
+        wantedBy = [ "default.target" ];
     } else {};
 }
