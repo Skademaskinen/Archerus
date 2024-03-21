@@ -93,7 +93,7 @@ in {
         };
         sketch-bot = {
             enable = true;
-            root = "${config.users.users.taoshi.home}/SketchBot";
+            root = "${config.users.users.taoshi.home}/SketchBot/SketchBot";
         };
         jupyter.port = 8002;
         nextcloud.port = 8003;
