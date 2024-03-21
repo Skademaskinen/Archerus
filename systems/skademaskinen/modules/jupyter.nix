@@ -3,32 +3,17 @@
         type = lib.types.int;
         default = 30000;
     };
-    config.services.jupyterhub = {
+
+    config.users.users.jupyter = {
+        isSystemUser = true;
+        group = "jupyter";
+    };
+
+    config.services.jupyter = {
         enable = true;
-        host = "localhost";
+        notebookDir = "${config.skademaskinen.storage}/jupyter";
         port = config.skademaskinen.jupyter.port;
-        extraConfig = ''
-            c.NotebookApp.allow_origin = '*'
-            c.NotebookApp.port = ${builtins.toString config.skademaskinen.jupyter.port}
-            c.NotebookApp.allow_remote_access = True
-            c.NotebookApp.trust_xheaders = True
-            c.Spawner.notebook_dir = "/mnt/raid/jupyter"
-        '';
-        kernels.python311 = let
-            env = (pkgs.python311.withPackages (py: with py; [
-                ipykernel
-                jupyterhub
-            ]));
-        in {
-            displayName = "Custom python311 env";
-            argv = [
-                "${env.interpreter}"
-                "-m" "ipykernel_launcher"
-                "-f" "{connection_file}"
-            ];
-            language = "python";
-            logo32 = "${env}/${env.sitePackages}/ipykernel/resources/logo-32x32.png";
-            logo64 = "${env}/${env.sitePackages}/ipykernel/resources/logo-64x64.png";
-        };
+        password = "'$6$0uh7dpBCT0SdcFRU$nAEFSbj0WAqlbrlJHSnXislC6TERXuZj0hHqCH9zai3henKMvGjTpdcHDQUQqS1YZ/vfZ3H9XcZogolneS9Jf0'";
+
     };
 }
