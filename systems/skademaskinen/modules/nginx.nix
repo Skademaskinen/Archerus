@@ -3,6 +3,12 @@
     services.nginx = let 
         sslCertificate = "/opt/SSL/domain.cert.pem";
         sslCertificateKey = "/opt/SSL/private.key.pem";
+        makeProxy = location: {
+            inherit sslCertificate;
+            inherit sslCertificateKey;
+            forceSSL = true;
+            locations."/*".proxyPass = location;
+        };
         
     in {
         enable = true;
@@ -28,35 +34,10 @@
             ''}";
             locations."/admin".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
         };
-        virtualHosts."document.${config.skademaskinen.domain}" = {
-            inherit sslCertificate;
-            inherit sslCertificateKey;
-            forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:8123";
-        };
-        virtualHosts."jupyter.${config.skademaskinen.domain}" = {
-            inherit sslCertificate;
-            inherit sslCertificateKey;
-            forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:${builtins.toString config.services.jupyterhub.port}";
-        };
-        virtualHosts."nextcloud.${config.skademaskinen.domain}" = {
-            inherit sslCertificate;
-            inherit sslCertificateKey;
-            forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
-        };
-        virtualHosts."website.${config.skademaskinen.domain}" = {
-            inherit sslCertificate;
-            inherit sslCertificateKey;
-            forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
-        };      
-        virtualHosts."taoshi.${config.skademaskinen.domain}" = {
-            inherit sslCertificate;
-            inherit sslCertificateKey;
-            forceSSL = true;
-            locations."/*".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
-        };
+        virtualHosts."document.${config.skademaskinen.domain}" = makeProxy "http://localhost:8123";
+        virtualHosts."jupyter.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.jupyterhub.port}";
+        virtualHosts."nextcloud.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
+        virtualHosts."website.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
+        virtualHosts."taoshi.${config.skademaskinen.domain}" = makeProxy "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
     };
 }

@@ -66,7 +66,7 @@ in {
     # custom module settings
     skademaskinen = {
         storage = storage;
-        domain = "skademaskinen.win"; # change to localhost on tests
+        domain = "localhost"; # change to localhost on tests
         putricide = {
             enable = true;
             config = "${storage}/bots/Putricide";
