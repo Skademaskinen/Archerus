@@ -9,11 +9,12 @@
         group = "jupyter";
     };
 
-    config.services.jupyter = {
+    config.services.jupyterhub = {
         enable = true;
-        notebookDir = "${config.skademaskinen.storage}/jupyter";
         port = config.skademaskinen.jupyter.port;
-        password = "'$6$0uh7dpBCT0SdcFRU$nAEFSbj0WAqlbrlJHSnXislC6TERXuZj0hHqCH9zai3henKMvGjTpdcHDQUQqS1YZ/vfZ3H9XcZogolneS9Jf0'";
+        extraConfig = ''
+            c.Spawner.notebook_dir = ${config.skademaskinen.storage}/jupyter
+        '';
 
     };
 }
