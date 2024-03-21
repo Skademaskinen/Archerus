@@ -22,4 +22,16 @@
         after = [ "network-online.target" ];
         wants = [ "network-online.target" ];
     } else {};
+
+    config.systemd.services.lavalink = if config.skademaskinen.sketch-bot.enable then let
+        lavalink = pkgs.callPackage ../packages/lavalink {};
+    in {
+        enable = true;
+        description = "Lavalink service";
+        serviceConfig = {
+            User = "taoshi";
+            ExecStart = "${pkgs.jdk}/bin/java -jar ${lavalink}";
+        };
+        wantedBy = [ "default.target" ];
+    } else {};
 }
