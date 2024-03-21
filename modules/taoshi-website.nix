@@ -15,7 +15,7 @@
         enable = config.skademaskinen.taoshi.website.enable;
         serviceConfig = {
             WorkingDirectory = "${config.users.users.taoshi.home}/Nodejs";
-            ExecStart = "${pkgs.nodejs}/bin/node server.js";
+            ExecStart = "${pkgs.nodejs}/bin/node server.js ${builtins.toString config.skademaskinen.taoshi.website.port}";
             User = "taoshi";
         };
         wantedBy = [ "default.target" ];
