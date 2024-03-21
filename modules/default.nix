@@ -18,6 +18,10 @@
             type = lib.types.str;
             default = "localhost";
         };
+        test = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+        };
     };
 
 }
