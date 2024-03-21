@@ -14,5 +14,6 @@
             port = config.skademaskinen.nextcloud.port;
         };
         nginx.recommendedHttpHeaders = true;
+        config.dbtype = "mysql";
     };
 }
