@@ -92,7 +92,7 @@ in {
         };
         taoshi.website = {
             enable = true;
-            port = 8001;
+            port = 8004;
         };
         sketch-bot = {
             enable = true;
