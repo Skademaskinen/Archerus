@@ -1,4 +1,4 @@
-{lib, config, modulesPath, ...}: let
+{pkgs, lib, config, modulesPath, ...}: let
     storage = "/mnt/raid";
 in {
     imports = [
