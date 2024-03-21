@@ -23,7 +23,17 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen 
+                    ./systems/skademaskinen { skademaskinen.domain = "skademaskinen.win"; }
+
+                    ./shared/bootloader/systemd-boot.nix
+                    ./shared/users/mast3r.nix
+                    ./shared/users/taoshi.nix
+                ]];
+            };
+            Skademaskinen-test = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/skademaskinen { skademaskinen.domain = "localhost"; }
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
