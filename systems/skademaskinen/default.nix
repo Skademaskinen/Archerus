@@ -63,6 +63,10 @@ in {
     # VPN CONFIG
     services.openvpn.servers.VPN.config = "config ${storage}/VPN/windscribe.conf";
 
+    services.mysql.enable = true;
+    services.mysql.dataDir = "/mnt/raid/mysql";
+    services.mysql.package = pkgs.mysql
+
     # custom module settings
     skademaskinen = {
         storage = storage;
@@ -88,7 +92,7 @@ in {
         };
         taoshi.website = {
             enable = true;
-            port = 8001;
+            port = 8004;
         };
         sketch-bot = {
             enable = true;
