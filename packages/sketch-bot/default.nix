@@ -6,8 +6,8 @@ in pkgs.buildDotnetModule {
     src = pkgs.fetchFromGitHub {
         owner = "Taoshix";
         repo = name;
-        rev = "8f6c2b951adc3659ba192d0a5463acce046f499d";
-        sha256 = "1gg1q72r25pyipf5q3v9p6vammwkyy7g2ny9fw79mlbsxyniswf1";
+        rev = "e0c2db3c137fcea394fd77c78da8083f13196971";
+        sha256 = "19nfdni8chqixa5vjzgwhfar7sjkkq0bzyjwkk1jd37fl311n7b7";
     };
     dotnet-sdk = pkgs.dotnet-sdk_8;
     dotnet-runtime = pkgs.dotnet-runtime_8;
