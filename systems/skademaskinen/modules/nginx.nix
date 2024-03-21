@@ -24,7 +24,6 @@
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            default = true;
             locations."/".index = "${pkgs.writeText "index.html" ''
                 <script>
                     function reroute(location){
