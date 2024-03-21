@@ -1,4 +1,4 @@
-{pkgs,}: pkgs.stdenv.mkDerivation {
+{pkgs}: pkgs.stdenv.mkDerivation {
     pname = "rp-utils";
     name = "rp-utils";
 

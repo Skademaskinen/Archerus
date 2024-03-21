@@ -17,10 +17,10 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.11
       
       - name: build-backend
-        run: nix build -f ./packages/backend.nix
+        run: nix build .#backend
       - name: build-putricide
-        run: nix build -f ./packages/putricide.nix
+        run: nix build .#putricide
       - name: build-banner
-        run: nix build -f ./packages/banner.nix
+        run: nix build .#banner
       - name: build-warcraftlogsuploader
-        run: nix build -f ./packages/warcraftlogsuploader.nix
+        run: nix build .#warcraftlogsuploader

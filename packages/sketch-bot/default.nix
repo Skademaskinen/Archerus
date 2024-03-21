@@ -1,4 +1,4 @@
-{pkgs ? import <nixpkgs> {}, ...}: let
+{pkgs}: let
     name = "SketchBot";
 in pkgs.buildDotnetModule {
     name = name;
