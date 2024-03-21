@@ -33,7 +33,7 @@
             Skademaskinen-test = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen { skademaskinen.domain = "localhost"; }
+                    ./systems/skademaskinen { skademaskinen.domain = "localhost"; skademaskinen.test = true; }
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
@@ -82,6 +82,8 @@
             rp-utils = pkgs.callPackage ./packages/rp-utils {};
             warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
             banner = pkgs.callPackage ./packages/banner {};
+            sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
+            lavalink = pkgs.callPackage ./packages/lavalink {};
         };
     };
 }

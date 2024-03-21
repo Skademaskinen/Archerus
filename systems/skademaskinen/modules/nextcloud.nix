@@ -8,7 +8,7 @@
         package = pkgs.nextcloud27;
         home = "${config.skademaskinen.storage}/nextcloud";
         hostName = "nextcloud.${config.skademaskinen.domain}";
-        https = true;
+        https = !(config.skademaskinen.test);
         config.adminpassFile = "/etc/nextcloud-admin-password";
         extraOptions = {
             port = config.skademaskinen.nextcloud.port;
