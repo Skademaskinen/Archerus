@@ -8,6 +8,7 @@
         isSystemUser = true;
         group = "jupyter";
     };
+    config.users.groups.jupyter = {};
 
     config.services.jupyterhub = {
         enable = true;
