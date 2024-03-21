@@ -5,9 +5,15 @@
     };
     config.services.jupyterhub = {
         enable = true;
-        host = "${config.skademaskinen.domain}";
+        host = "localhost";
         port = config.skademaskinen.jupyter.port;
-        extraConfig = "c.Spawner.notebook_dir = \"${config.skademaskinen.storage}/jupyter\"";
+        extraConfig = ''
+            c.Spawner.notebook_dir = "${config.skademaskinen.storage}/jupyter"
+            c.JupyterHub.hub_ip = '127.0.0.1'
+            c.JupyterHub.hub_port = ${builtins.toString (config.skademaskinen.jupyter.port + 1000)}
+            c.JupyterHub.ip = '0.0.0.0'
+            c.JupyterHub.port = ${builtins.toString config.skademaskinen.jupyter.port}
+        '';
         kernels.python311 = let
             env = (pkgs.python311.withPackages (py: with py; [
                 ipykernel

@@ -1,4 +1,4 @@
-{pkgs ? import <nixpkgs> {}, ...}: let
+{pkgs}: let
 
 in pkgs.stdenv.mkDerivation rec {
     name = "warcraftlogsuploader";

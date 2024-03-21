@@ -23,7 +23,17 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen 
+                    ./systems/skademaskinen { skademaskinen.domain = "skademaskinen.win"; }
+
+                    ./shared/bootloader/systemd-boot.nix
+                    ./shared/users/mast3r.nix
+                    ./shared/users/taoshi.nix
+                ]];
+            };
+            Skademaskinen-test = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [ 
+                    ./systems/skademaskinen { skademaskinen.domain = "localhost"; }
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
@@ -66,10 +76,12 @@
             };
         };
 
-        packages.legacyPackages.${system} = {
-            backend = pkgs.callPackage ./packages/backend.nix {};
-            putricide = pkgs.callPackage ./packages/putricide.nix {};
-            rp-utils = pkgs.callPackage ./packages/rp-utils.nix {};
+        packages.${system} = {
+            backend = pkgs.callPackage ./packages/backend {};
+            putricide = pkgs.callPackage ./packages/putricide {};
+            rp-utils = pkgs.callPackage ./packages/rp-utils {};
+            warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
+            banner = pkgs.callPackage ./packages/banner {};
         };
     };
 }

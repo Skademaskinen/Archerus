@@ -1,9 +1,9 @@
 {pkgs, lib, config, ...}: 
 
 let
-        backend = pkgs.callPackage ../packages/backend.nix {};
+        backend = pkgs.callPackage ../packages/backend {};
 in {
-    options.skademaskinen.website = {
+    options.skademaskinen.mast3r.website = {
         enable = lib.mkOption {
             type = lib.types.bool;
             default = false;
@@ -30,16 +30,16 @@ in {
     };
 
     config.systemd.services.backend = {
-        enable = config.skademaskinen.website.enable;
+        enable = config.skademaskinen.mast3r.website.enable;
         description = "mast3r_waf1z website database server";
         environment = {
             SQLITE3_PATH = "${pkgs.sqlite-interactive}/bin/sqlite3";
             LSBLK_PATH = "${pkgs.util-linux}/bin/lsblk";
         };
-        serviceConfig = if config.skademaskinen.website.enable then {
+        serviceConfig = if config.skademaskinen.mast3r.website.enable then {
             User = "mast3r";
-            WorkingDirectory = config.skademaskinen.website.root;
-            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.website.databasePath} --hostname ${config.skademaskinen.website.hostname} --port ${builtins.toString config.skademaskinen.website.port} --keyfile ${config.skademaskinen.website.keyfile}";
+            WorkingDirectory = config.skademaskinen.mast3r.website.root;
+            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.mast3r.website.databasePath} --hostname ${config.skademaskinen.mast3r.website.hostname} --port ${builtins.toString config.skademaskinen.mast3r.website.port} --keyfile ${config.skademaskinen.mast3r.website.keyfile}";
             Restart = "on-failure";
         } else {};
         wantedBy = ["default.target"];
