@@ -1,6 +1,7 @@
 {pkgs, ...}:{
     environment.systemPackages = with pkgs; [
         lynx
+        sqlite-interactive
     ];
     system.autoUpgrade = {
         enable = true;
