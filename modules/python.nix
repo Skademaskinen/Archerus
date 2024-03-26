@@ -11,5 +11,8 @@
             };
         };
     };
-        config.environment.systemPackages = if config.globalEnvs.python.enable then [pkgs.python311] else [];
+        config.environment.systemPackages = if config.globalEnvs.python.enable then [(pkgs.python311.withPackages (py: with py; [
+            bash_kernel
+            pytest
+        ]))] else [];
 }

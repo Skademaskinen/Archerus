@@ -3,6 +3,9 @@
         discord
         vscode
         yakuake
+        direnv
+        kmail
     ];
+
     programs.firefox.enable = true;
 }

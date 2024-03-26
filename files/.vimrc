@@ -31,5 +31,6 @@ nmap <silent> <C-S-Up> :wincmd k<CR>
 nmap <silent> <C-S-Down> :wincmd j<CR>
 nmap <silent> <C-S-Left> :wincmd h<CR>
 nmap <silent> <C-S-Right> :wincmd l<CR>
+nmap <silent> <C-p> :w<CR>:!pdflatex main.tex<CR>
 tnoremap <silent> <C-S-Up> <c-\><c-n> 
 set backspace=indent,eol,start

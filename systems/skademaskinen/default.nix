@@ -106,4 +106,5 @@ in {
         jupyter.port = 8002;
         nextcloud.port = 8003;
     };
+    globalEnvs.python.enable = true;
 }

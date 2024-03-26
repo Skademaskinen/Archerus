@@ -1,4 +1,4 @@
-{config, lib, modulesPath, ...}: {
+{pkgs, config, lib, modulesPath, ...}: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
         ./packages.nix
@@ -52,4 +52,19 @@
 
     # custom options
     globalEnvs.python.enable = true;
+    services.jupyter.enable = true;
+    users.users.jupyter.group = "jupyter";
+    users.groups.jupyter = {};
+    services.jupyter.password = "1234";
+    services.jupyter.kernels = let
+        env = (pkgs.python311.withPackages (py: with py; [
+            bash_kernel
+            ipykernel
+        ]));
+    in {
+        "bash" = {
+            language = "bash";
+            argv = ["${env.interpreter}" "-m" "bash_kernel" "-f" "{connection_file}"];
+        };
+    };
 }
