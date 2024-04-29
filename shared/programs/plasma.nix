@@ -4,4 +4,7 @@
     environment.systemPackages = with pkgs.kdePackages; [
         plasma-pa
     ];
+    xdg.portal.extraPortals = [
+        pkgs.xdg-desktop-portal-kde
+    ];
 }

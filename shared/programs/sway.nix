@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, home-manager, ...}: {
     imports = [./pipewire.nix];
 
     programs.sway = {
@@ -6,6 +6,7 @@
         package = pkgs.swayfx;
         extraPackages = with pkgs; [
             gtklock
+            rofi
             konsole
             hack-font
             dunst
@@ -21,4 +22,6 @@
             alsa-utils
         ];
     };
+    xdg.portal.wlr.enable = true;
+
 }

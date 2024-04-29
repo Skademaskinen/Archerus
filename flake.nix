@@ -4,9 +4,11 @@
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-23.11";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+        home-manager.url = "github:nix-community/home-manager";
+        home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable }: 
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -30,33 +32,11 @@
                     ./shared/users/taoshi.nix
                 ]];
             };
-            Skademaskinen-test = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen { skademaskinen.domain = "localhost"; skademaskinen.test = true; }
-
-                    ./shared/bootloader/systemd-boot.nix
-                    ./shared/users/mast3r.nix
-                    ./shared/users/taoshi.nix
-                ]];
-            };
             laptop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
                     ./systems/laptop 
                     ./systems/laptop/free.nix 
-
-                    ./shared/bootloader/grub.nix
-                    ./shared/programs/sway.nix
-                    ./shared/programs/plasma.nix
-                    ./shared/users/mast3r.nix
-                ]];
-            };
-            laptop-proprietary = nixpkgs-unstable.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [ 
-                    ./systems/laptop 
-                    ./systems/laptop/proprietary.nix 
 
                     ./shared/bootloader/grub.nix
                     ./shared/programs/sway.nix
