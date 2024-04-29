@@ -59,7 +59,7 @@
                     proxy_set_header Host $host;
                 '';
             };
-            locations."/_matrix/" = {
+            locations."/*" = {
                 proxyPass = "http://localhost:${builtins.toString config.skademaskinen.matrix.port}";
                 proxyWebsockets = true;
                 extraConfig = ''
