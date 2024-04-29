@@ -8,6 +8,7 @@
         ./python.nix
         ./taoshi-website.nix
         ./sketch-bot.nix
+        ./matrix.nix
     ];
     options.skademaskinen = {
         storage = lib.mkOption {

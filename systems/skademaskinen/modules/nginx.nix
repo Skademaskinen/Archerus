@@ -39,6 +39,34 @@
         virtualHosts."nextcloud.${config.skademaskinen.domain}" = makeProxy "/*" "http://localhost:${builtins.toString config.services.nextcloud.extraOptions.port}";
         virtualHosts."api.${config.skademaskinen.domain}" = makeProxy "/" "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
         virtualHosts."taoshi.${config.skademaskinen.domain}" = makeProxy "/" "http://localhost:${builtins.toString config.skademaskinen.taoshi.website.port}";
+        virtualHosts."matrix.${config.skademaskinen.domain}" = if config.skademaskinen.test then {
+            locations."/" = {
+                proxyPass = "http://localhost:${builtins.toString config.skademaskinen.matrix.port}";
+                proxyWebsockets = true;
+            };
+            locations."/_matrix/" = {
+                proxyPass = "http://localhost:${builtins.toString config.skademaskinen.matrix.port}";
+                proxyWebsockets = true;
+            };
+        } else {
+            inherit sslCertificate;
+            inherit sslCertificateKey;
+            forceSSL = true;
+            locations."/" = {
+                proxyPass = "http://localhost:${builtins.toString config.skademaskinen.matrix.port}";
+                proxyWebsockets = true;
+                extraConfig = ''
+                    proxy_set_header Host $host;
+                '';
+            };
+            locations."/_matrix/" = {
+                proxyPass = "http://localhost:${builtins.toString config.skademaskinen.matrix.port}";
+                proxyWebsockets = true;
+                extraConfig = ''
+                    proxy_set_header Host $host;
+                '';
+            };
+        };
         virtualHosts."${config.skademaskinen.domain}" = if config.skademaskinen.test then {
             root = "/.";
             locations."/".index = "${pkgs.writeText "index.html" index}";
