@@ -5,5 +5,6 @@
         alsa.support32Bit = true;
         pulse.enable = true;
         systemWide = true;
-    };
+        wireplumber.enable = true;
+    }; 
 }

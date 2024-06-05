@@ -14,7 +14,14 @@ in {
         spotify
         obs-studio
         print
+        comic-mono
+        thunderbird
+        protonmail-bridge
+        pass
     ];
-
+    nixpkgs.config.allowUnfree = true;
     programs.firefox.enable = true;
+
+    nix.settings.trusted-users = [ "root" "mast3r" ];
+    services.cachix-agent.enable = true;
 }

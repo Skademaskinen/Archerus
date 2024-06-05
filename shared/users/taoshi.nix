@@ -1,7 +1,8 @@
-{pkgs, ...}: let
-    vim = import ../programs/vim.nix { pkgs = pkgs; };
-in {
-    imports = [../programs/zsh.nix];
+{pkgs, ...}: {
+    imports = [
+        ../programs/zsh.nix
+        ../programs/vim.nix
+    ];
     users.users.taoshi = {
         isNormalUser = true;
         description = "taoshi";

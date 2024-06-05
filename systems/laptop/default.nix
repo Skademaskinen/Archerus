@@ -68,4 +68,20 @@
             argv = ["${env.interpreter}" "-m" "bash_kernel" "-f" "{connection_file}"];
         };
     };
+
+    fonts.packages = with pkgs; [
+        comic-mono
+        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    ];
+
+    systemd.services.protonmail-bridge = {
+        enable = true;
+        serviceConfig = {
+            ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --no-window --noninteractive";
+            User = "mast3r";
+        };
+        wantedBy = ["default.target"];
+    };
+    services.gnome.gnome-keyring.enable = true;
+
 }
