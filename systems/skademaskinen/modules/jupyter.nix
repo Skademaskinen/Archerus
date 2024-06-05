@@ -16,6 +16,34 @@
         extraConfig = ''
             c.Spawner.notebook_dir = '${config.skademaskinen.storage}/jupyter'
         '';
+        kernels.haskell = let
+            env = pkgs.ghc.withPackages (hs: with hs; [
+                ihaskell
+            ]);
+        in {
+            displayName = "haskell environment";
+            argv = [
+                "${env}/bin/ihaskell"
+                "kernel"
+                "{connection_file}"
+            ];
+            language = "haskell";
+            
+        };
+
+        kernels.bash = let
+            env = pkgs.python311.withPackages (py: with py; [bash_kernel]);
+        in {
+            displayName = "bash env";
+            argv = [
+                "${env.interpreter}"
+                "-m"
+                "bash_kernel"
+                "-f"
+                "{connection_file}"
+            ];
+            language = "bash";
+        };
 
     };
 }

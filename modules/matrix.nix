@@ -13,8 +13,9 @@
     config.services.matrix-conduit = {
         enable = config.skademaskinen.matrix.enable;
         settings.global.port = config.skademaskinen.matrix.port;
-        settings.global.server_name = config.skademaskinen.domain;
-        settings.global.database_backend = "sqlite";
-        #settings.global.proxy.global.url = "https://matrix.skademaskinen.win:11034";
+        settings.global.server_name = "matrix.${config.skademaskinen.domain}";
+        settings.global.database_backend = "rocksdb";
+        settings.global.allow_registration = true;
+        settings.global.trusted_servers = ["matrix.org"];
     };
 }

@@ -13,8 +13,8 @@
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-23.11";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-        home-manager.url = "github:nix-community/home-manager";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+        #home-manager.url = "github:nix-community/home-manager";
+        #home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }: 
@@ -34,11 +34,19 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen { skademaskinen.domain = "skademaskinen.win"; }
+                    ./systems/skademaskinen { skademaskinen.domain = "skade.dev"; }
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
                     ./shared/users/taoshi.nix
+                ]];
+            };
+
+            router = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [
+                    ./systems/router
+                    ./shared/users/mast3r.nix
                 ]];
             };
             laptop = nixpkgs-unstable.lib.nixosSystem {
@@ -73,6 +81,7 @@
             banner = pkgs.callPackage ./packages/banner {};
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
+            p8 = pkgs.callPackage ./packages/p8 {};
         };
     };
 }

@@ -12,4 +12,6 @@
             "nixos-config=/etc/nixos"
         ];
     };
+
+    services.cachix-agent.enable = true;
 }

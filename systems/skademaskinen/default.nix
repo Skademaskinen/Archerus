@@ -1,5 +1,6 @@
 {pkgs, lib, config, modulesPath, ...}: let
     storage = "/mnt/raid";
+    version = "23.11";
 in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
@@ -33,7 +34,7 @@ in {
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    system.stateVersion = "23.11";
+    system.stateVersion = version;
 
     # security
     security.sudo.wheelNeedsPassword = false;
@@ -66,11 +67,43 @@ in {
     users.mutableUsers = false;
 
     # VPN CONFIG
-    services.openvpn.servers.VPN.config = "config ${storage}/VPN/windscribe.conf";
+    #services.openvpn.servers.VPN.config = "config ${storage}/VPN/windscribe.conf";
+
+    networking.wireguard.interfaces = {
+        wg0 = {
+            ips = ["10.200.200.2/32"];
+            listenPort = 51820;
+            privateKeyFile = "${storage}/vpn/client.key";
+            peers = [{
+                publicKey = "fOPhWd+No02Doi2hvf3uXmAHYF+nyeOcmEBFWkzBRAk=";
+                allowedIPs = ["10.200.200.0/24"];
+                endpoint = "185.51.76.92:51820";
+                persistentKeepalive = 25;
+            }];
+        };
+    };
 
     services.mysql.enable = true;
     services.mysql.dataDir = "/mnt/raid/mysql";
     services.mysql.package = pkgs.mysql;
+
+    # simple-nixos-mailserver
+    #mailserver = {
+    #    enable = true;
+    #    fqdn = "mail.${config.skademaskinen.domain}";
+    #    domains = [config.skademaskinen.domain];
+    #    loginAccounts."mast3r@${config.skademaskinen.domain}" = {
+    #        hashedPasswordFile = ../../files/passwd/mast3r.pw;
+    #        aliases = ["admin@${config.skademaskinen.domain}" "postmaster@${config.skademaskinen.domain}"];
+    #    };
+    #    enablePop3Ssl = true;
+    #
+    #    certificateScheme = "acme-nginx";
+    #};
+    #security.acme = {
+    #    acceptTerms = true;
+    #    defaults.email = "security@${config.skademaskinen.domain}";
+    #};
 
     # custom module settings
     skademaskinen = {
@@ -108,6 +141,13 @@ in {
 
         matrix.enable = true;
         matrix.port = 8005;
+
+        p8.enable = true;
+        p8.port = 8006;
+        p8.test.enable = true;
+        p8.test.port = 8007;
+        
+
     };
     globalEnvs.python.enable = true;
 }
