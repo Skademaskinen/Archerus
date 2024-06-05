@@ -41,6 +41,14 @@
                     ./shared/users/taoshi.nix
                 ]];
             };
+
+            router = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [
+                    ./systems/router
+                    ./shared/users/mast3r.nix
+                ]];
+            };
             laptop = nixpkgs-unstable.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
