@@ -9,6 +9,7 @@
         ./taoshi-website.nix
         ./sketch-bot.nix
         ./matrix.nix
+        ./p8.nix
     ];
     options.skademaskinen = {
         storage = lib.mkOption {

@@ -1,11 +1,20 @@
 {
     description = "Skademaskinen configuration";
+    
+    nixConfig = {
+        extra-substituters = [
+            "https://nix-community.cachix.org"
+        ];
+        extra-trusted-public-keys = [
+            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+    };
 
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-23.11";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-        home-manager.url = "github:nix-community/home-manager";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+        #home-manager.url = "github:nix-community/home-manager";
+        #home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }: 
@@ -25,7 +34,7 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen { skademaskinen.domain = "skademaskinen.win"; }
+                    ./systems/skademaskinen { skademaskinen.domain = "skade.dev"; }
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
@@ -64,6 +73,7 @@
             banner = pkgs.callPackage ./packages/banner {};
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
+            p8 = pkgs.callPackage ./packages/p8 {};
         };
     };
 }
