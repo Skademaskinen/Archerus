@@ -29,7 +29,7 @@
             ./shared/programs/nix.nix
             ./shared/programs/git.nix
         ];
-    in {
+    in rec {
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
@@ -82,6 +82,7 @@
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
+            skademaskinen = nixosConfigurations.Skademaskinen.config.system.build.vm;
         };
     };
 }

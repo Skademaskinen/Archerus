@@ -1,12 +1,12 @@
-{lib, pkgs, config, ... }: let
-    prefix = "/mnt/raid/minecraft";
-    paperSource = pkgs.fetchurl {
-        url = "https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/450/downloads/paper-1.20.4-450.jar";
-        sha256 = "sha256-SHqHHe0+utxdv2wfZOeikBNATfcHVJ5fMEL4jPXmopU=";
+{config, lib, pkgs, ... }: let
+    prefix = "${config.skademaskinen.storage}/minecraft";
+    paper = pkgs.fetchurl {
+        url = "https://api.papermc.io/v2/projects/paper/versions/1.21/builds/109/downloads/paper-1.21-109.jar";
+        sha256 = "sha256-dsYGExSUEl8GTcLtQBuUbUoS4IvwzNvzLtqgi2Yzwwo=";
     };
-    waterfallSource = pkgs.fetchurl {
-        url = "https://api.papermc.io/v2/projects/waterfall/versions/1.20/builds/565/downloads/waterfall-1.20-565.jar";
-        sha256 = "sha256-PSdqP1f4UDx+VIhZ0PxrxBfZZyEW2fp+6wD3YQcH1vo=";
+    velocity = pkgs.fetchurl {
+        url = "https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/412/downloads/velocity-3.3.0-SNAPSHOT-412.jar";
+        sha256 = "sha256-KOBsdASYlUxf2np87DK3KnSHFM5hMjPqdYD2Ati8yIQ=";
     };
 
 
@@ -16,8 +16,8 @@
         serviceConfig = {
             WorkingDirectory = "${prefix}/${name}";
             ExecStart = if waterfall
-                then "${pkgs.jdk}/bin/java -jar ${waterfallSource}"
-                else "${pkgs.jdk}/bin/java -jar ${paperSource}";
+                then "${pkgs.jdk21}/bin/java -jar ${velocity}"
+                else "${pkgs.jdk21}/bin/java -jar ${paper}";
             Restart = "on-failure";
             StandardInput = "socket";
             StandardOutput = "journal";
@@ -28,7 +28,7 @@
     };
     makeServers = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeServer { name = name; }; }) names) 
-        (if names != [] then [{name = "minecraft-waterfall"; value = makeServer {name = "waterfall"; waterfall = true;}; }] else [])
+        (if names != [] then [{name = "minecraft-velocity"; value = makeServer {name = "velocity"; waterfall = true;}; }] else [])
     ]));
 
     makeSocket = name: {
@@ -42,7 +42,7 @@
     };
     makeSockets = (names: lib.listToAttrs (lib.concatLists [
         (map (name: { name = "minecraft-${name}"; value = makeSocket name; }) names)
-        (if names != [] then [{ name = "minecraft-waterfall"; value = makeSocket "waterfall"; }] else [])
+        (if names != [] then [{ name = "minecraft-velocity"; value = makeSocket "velocity"; }] else [])
     ]));
 
 in {

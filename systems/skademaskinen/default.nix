@@ -51,16 +51,10 @@ in {
 
         users.users.root.password = "1234";
         services.getty.autologinUser = "root";
-        #virtualisation.forwardPorts = [
-        #    { from = "host"; host.port = 2222; guest.port = 22; }
-        #    { from = "host"; host.port = 8888; guest.port = 80; }
-        #    { from = "host"; host.port = 4443; guest.port = 443; }
-        #    { from = "host"; host.port = 8000; guest.port = 8000; }
-        #    { from = "host"; host.port = 8001; guest.port = 8001; }
-        #    { from = "host"; host.port = 8002; guest.port = 8002; }
-        #    { from = "host"; host.port = 8003; guest.port = 8003; }
-        #    { from = "host"; host.port = 8004; guest.port = 8004; }
-        #];
+        virtualisation.forwardPorts = [
+            { from = "host"; host.port = 2222; guest.port = 22; }
+            { from = "host"; host.port = 25565; guest.port = 25565; }
+        ];
         environment.etc."nextcloud-admin-password".text = "1234";
     };
 
