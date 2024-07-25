@@ -97,7 +97,16 @@ in {
             config = "${storage}/bots/Putricide";
             args = [ "--disable-teams" ];
         };
-        minecraft.servers = ["survival" "hub" "creative" "paradox"];
+        minecraft.servers = {
+            hub = {
+                server-port = 25566;
+                force-gamemode = true;
+                gamemode = "adventure";
+            };
+            survival.server-port = 25567;
+            creative.server-port = 25568;
+            paradox.server-port = 25569;
+        };
         minecraft.fallback = "hub";
 
         rp-utils = {

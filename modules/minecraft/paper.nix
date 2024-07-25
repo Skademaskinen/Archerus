@@ -1,145 +1,134 @@
 {config, pkgs, ...}: let
     cfg = config.skademaskinen.minecraft;
     prefix = "${config.skademaskinen.storage}/minecraft";
+    tools = import ./options/tools.nix { lib = pkgs.lib; };
 
     paper = pkgs.fetchurl {
         url = "https://api.papermc.io/v2/projects/paper/versions/1.21/builds/109/downloads/paper-1.21-109.jar";
         sha256 = "sha256-dsYGExSUEl8GTcLtQBuUbUoS4IvwzNvzLtqgi2Yzwwo=";
     };
     
-    getIndex = xs: x: i: if i > (builtins.length xs) then 
-        i
-    else if builtins.elemAt xs i == x then 
-        i
-    else 
-        getIndex xs x (i+1);
-
-    paper-wrapped = name: pkgs.stdenv.mkDerivation {
-        name = "paper-wrapped-${name}";
+    paper-wrapped = server: pkgs.stdenv.mkDerivation {
+        name = "paper-wrapped-${server.name}";
         src = ./.;
-        installPhase = ''
+        installPhase = let
+            pg = server.paper-global;
+            s = server.spigot;
+            b = server.bukkit;
+        in with tools; ''
             mkdir -p $out/{bin,share}
             cat > $out/share/eula.txt << EOF
                 eula=true
             EOF
 
             cat > $out/share/server.properties << EOF
-                accepts-transfers=false
-                allow-flight=false
-                allow-nether=true
-                broadcast-console-to-ops=true
-                broadcast-rcon-to-ops=true
-                bug-report-link=
-                debug=false
-                difficulty=easy
-                enable-command-block=false
-                enable-jmx-monitoring=false
-                enable-query=false
-                enable-rcon=false
-                enable-status=true
-                enforce-secure-profile=false
-                enforce-whitelist=false
-                entity-broadcast-range-percentage=100
-                force-gamemode=false
-                function-permission-level=2
-                gamemode=survival
-                generate-structures=true
-                generator-settings={}
-                hardcore=false
-                hide-online-players=false
-                initial-disabled-packs=
-                initial-enabled-packs=vanilla
-                level-name=world
-                level-seed=
-                level-type=minecraft\:normal
-                log-ips=true
-                max-chained-neighbor-updates=1000000
-                max-players=20
-                max-tick-time=60000
-                max-world-size=29999984
-                motd=A Minecraft Server
-                network-compression-threshold=256
-                online-mode=false
-                op-permission-level=4
-                player-idle-timeout=0
-                prevent-proxy-connections=false
-                pvp=true
-                query.port=25566
-                rate-limit=0
-                rcon.password=
-                rcon.port=25575
-                region-file-compression=deflate
-                require-resource-pack=false
-                resource-pack=
-                resource-pack-id=
-                resource-pack-prompt=
-                resource-pack-sha1=
-                server-ip=
-                server-port=${builtins.toString (cfg.port-range-start + (getIndex cfg.servers name 0) + 1)}
-                simulation-distance=10
-                spawn-animals=true
-                spawn-monsters=true
-                spawn-npcs=true
-                spawn-protection=16
-                sync-chunk-writes=true
-                text-filtering-config=
-                use-native-transport=true
-                view-distance=10
-                white-list=false
+                accepts-transfers=${parseValue server.accepts-transfers}
+                allow-flight=${parseValue server.allow-flight}
+                allow-nether=${parseValue server.allow-nether}
+                broadcast-console-to-ops=${parseValue server.broadcast-console-to-ops}
+                broadcast-rcon-to-ops=${parseValue server.broadcast-rcon-to-ops}
+                debug=${parseValue server.debug}
+                difficulty=${server.difficulty}
+                enable-command-block=${parseValue server.enable-command-block}
+                enable-jmx-monitoring=${parseValue server.enable-jmx-monitoring}
+                enable-query=${parseValue server.enable-query}
+                enable-rcon=${parseValue server.enable-rcon}
+                enable-status=${parseValue server.enable-status}
+                enforce-secure-profile=${parseValue server.enforce-secure-profile}
+                enforce-whitelist=${parseValue server.enforce-whitelist}
+                entity-broadcast-range-percentage=${parseValue server.entity-broadcast-range-percentage}
+                force-gamemode=${parseValue server.force-gamemode}
+                function-permission-level=${parseValue server.function-permission-level}
+                gamemode=${server.gamemode}
+                generate-structures=${parseValue server.generate-structures}
+                hardcore=${parseValue server.hardcore}
+                hide-online-players=${parseValue server.hide-online-players}
+                initial-enabled-packs=${server.initial-enabled-packs}
+                level-name=${server.level-name}
+                level-seed=${server.level-seed}
+                level-type=${server.level-type}
+                log-ips=${parseValue server.log-ips}
+                max-chained-neighbor-updates=${parseValue server.max-chained-neighbor-updates}
+                max-players=${parseValue server.max-players}
+                max-tick-time=${parseValue server.max-tick-time}
+                max-world-size=${parseValue server.max-world-size}
+                motd=${server.motd}
+                network-compression-threshold=${parseValue server.network-compression-threshold}
+                online-mode=${parseValue server.online-mode}
+                op-permission-level=${parseValue server.op-permission-level}
+                player-idle-timeout=${parseValue server.player-idle-timeout}
+                prevent-proxy-connections=${parseValue server.prevent-proxy-connections}
+                pvp=${parseValue server.pvp}
+                query.port=${parseValue server.query.port}
+                rate-limit=${parseValue server.rate-limit}
+                rcon.password=${server.rcon.password}
+                rcon.port=${parseValue server.rcon.port}
+                region-file-compression=${server.region-file-compression}
+                require-resource-pack=${parseValue server.require-resource-pack}
+                server-ip=${server.server-ip}
+                server-port=${parseValue server.server-port}
+                simulation-distance=${parseValue server.simulation-distance}
+                spawn-animals=${parseValue server.spawn-animals}
+                spawn-monsters=${parseValue server.spawn-monsters}
+                spawn-npcs=${parseValue server.spawn-npcs}
+                spawn-protection=${parseValue server.spawn-protection}
+                sync-chunk-writes=${parseValue server.sync-chunk-writes}
+                use-native-transport=${parseValue server.use-native-transport}
+                view-distance=${parseValue server.view-distance}
+                white-list=${parseValue server.white-list}
             EOF
 
             cat > $out/share/paper-global.yml << EOF
-                _version: 29
+                _version: ${parseValue pg._version}
                 block-updates:
-                    disable-chorus-plant-updates: false
-                    disable-mushroom-block-updates: false
-                    disable-noteblock-updates: false
-                    disable-tripwire-updates: false
+                    disable-chorus-plant-updates: ${parseValue pg.block-updates.disable-chorus-plant-updates}
+                    disable-mushroom-block-updates: ${parseValue pg.block-updates.disable-mushroom-block-updates}
+                    disable-noteblock-updates: ${parseValue pg.block-updates.disable-noteblock-updates}
+                    disable-tripwire-updates: ${parseValue pg.block-updates.disable-tripwire-updates}
                 chunk-loading-advanced:
-                    auto-config-send-distance: true
-                    player-max-concurrent-chunk-generates: 0
-                    player-max-concurrent-chunk-loads: 0
+                    auto-config-send-distance: ${parseValue pg.chunk-loading-advanced.auto-config-send-distance}
+                    player-max-concurrent-chunk-generates: ${parseValue pg.chunk-loading-advanced.player-max-concurrent-chunk-generates}
+                    player-max-concurrent-chunk-loads: ${parseValue pg.chunk-loading-advanced.player-max-concurrent-chunk-loads}
                 chunk-loading-basic:
-                    player-max-chunk-generate-rate: -1.0
-                    player-max-chunk-load-rate: 100.0
-                    player-max-chunk-send-rate: 75.0
+                    player-max-chunk-generate-rate: ${parseValue pg.chunk-loading-basic.player-max-chunk-generate-rate}
+                    player-max-chunk-load-rate: ${parseValue pg.chunk-loading-basic.player-max-chunk-load-rate}
+                    player-max-chunk-send-rate: ${parseValue pg.chunk-loading-basic.player-max-chunk-send-rate}
                 chunk-system:
-                    gen-parallelism: default
-                    io-threads: -1
-                    worker-threads: -1
+                    gen-parallelism: ${pg.chunk-system.gen-parallelism}
+                    io-threads: ${parseValue pg.chunk-system.io-threads}
+                    worker-threads: ${parseValue pg.chunk-system.worker-threads}
                 collisions:
-                    enable-player-collisions: true
-                    send-full-pos-for-hard-colliding-entities: true
+                    enable-player-collisions: ${parseValue pg.collisions.enable-player-collisions}
+                    send-full-pos-for-hard-colliding-entities: ${parseValue pg.collisions.send-full-pos-for-hard-colliding-entities}
                 commands:
-                    fix-target-selector-tag-completion: true
-                    suggest-player-names-when-null-tab-completions: true
-                    time-command-affects-all-worlds: false
+                    fix-target-selector-tag-completion: ${parseValue pg.commands.fix-target-selector-tag-completion}
+                    suggest-player-names-when-null-tab-completions: ${parseValue pg.commands.suggest-player-names-when-null-tab-completions}
+                    time-command-affects-all-worlds: ${parseValue pg.commands.time-command-affects-all-worlds}
                 console:
-                    enable-brigadier-completions: true
-                    enable-brigadier-highlighting: true
-                    has-all-permissions: false
+                    enable-brigadier-completions: ${parseValue pg.console.enable-brigadier-completions}
+                    enable-brigadier-highlighting: ${parseValue pg.console.enable-brigadier-highlighting}
+                    has-all-permissions: ${parseValue pg.console.has-all-permissions}
                 item-validation:
                     book:
-                        author: 8192
-                        page: 16384
-                        title: 8192
+                        author: ${parseValue pg.item-validation.book.author}
+                        page: ${parseValue pg.item-validation.book.page}
+                        title: ${parseValue pg.item-validation.book.title}
                     book-size:
-                        page-max: 2560
-                        total-multiplier: 0.98
-                    display-name: 8192
-                    lore-line: 8192
-                    resolve-selectors-in-books: false
+                        page-max: ${parseValue pg.item-validation.book-size.page-max}
+                        total-multiplier: ${parseValue pg.item-validation.book-size.total-multiplier}
+                    display-name: ${parseValue pg.item-validation.display-name}
+                    lore-line: ${parseValue pg.item-validation.lore-line}
+                    resolve-selectors-in-books: ${parseValue pg.item-validation.resolve-selectors-in-books}
                 logging:
-                    deobfuscate-stacktraces: true
+                    deobfuscate-stacktraces: ${parseValue pg.logging.deobfuscate-stacktraces}
                 messages:
                     kick:
-                        authentication-servers-down: <lang:multiplayer.disconnect.authservers_down>
-                        connection-throttle: Connection throttled! Please wait before reconnecting.
-                        flying-player: <lang:multiplayer.disconnect.flying>
-                        flying-vehicle: <lang:multiplayer.disconnect.flying>
-                    no-permission: <red>I'm sorry, but you do not have permission to perform this command.
-                        Please contact the server administrators if you believe that this is in error.
-                    use-display-name-in-quit-message: false
+                        authentication-servers-down: ${pg.messages.kick.authentication-servers-down}
+                        connection-throttle: ${pg.messages.kick.connection-throttle}
+                        flying-player: ${pg.messages.kick.flying-player}
+                        flying-vehicle: ${pg.messages.kick.flying-vehicle}
+                    no-permission: ${pg.messages.no-permission}
+                    use-display-name-in-quit-message: ${parseValue pg.messages.use-display-name-in-quit-message}
                 misc:
                     chat-threads:
                         chat-executor-core-size: -1
@@ -211,13 +200,20 @@
                     early-warning-every: 5000
             EOF
 
-            cat > $out/bin/paper-wrapped << EOF
-                mkdir -p ${prefix}/${name}/config
-                cd ${prefix}/${name}
-                ln -s $out/share/eula.txt ${prefix}/${name}/eula.txt
-                cp $out/share/paper-global.yml ${prefix}/${name}/config
+            cat > $out/share/paper-world-defaults.yml << EOF
+            EOF
 
-                ${pkgs.jdk21}/bin/java -jar ${paper} -c $out/share/server.properties
+            cat > $out/bin/paper-wrapped << EOF
+                mkdir -p ${prefix}/${server.name}/config
+                cd ${prefix}/${server.name}
+                ln -s $out/share/eula.txt ${prefix}/${server.name}/eula.txt
+                cp $out/share/paper-global.yml ${prefix}/${server.name}/config
+                cp $out/share/paper-world-defaults.yml ${prefix}/${server.name}/config
+                cp $out/share/server.properties ${prefix}/${server.name}
+                cp $out/share/bukkit.yml ${prefix}/${server.name}
+                cp $out/share/spigot.yml ${prefix}/${server.name}
+
+                ${pkgs.jdk21}/bin/java -jar ${paper}
             EOF
             chmod +x $out/bin/paper-wrapped
         '';
