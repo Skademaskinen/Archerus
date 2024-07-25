@@ -18,7 +18,7 @@
         };
         domain = lib.mkOption {
             type = lib.types.str;
-            default = "localhost";
+            default = "skade.dev";
         };
         test = lib.mkOption {
             type = lib.types.bool;

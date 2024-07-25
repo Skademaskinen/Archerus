@@ -48,12 +48,20 @@ in {
     virtualisation.vmVariant = {
         virtualisation.memorySize = 8192;
         virtualisation.cores = 4;
+        skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
+        users.users.root.packages = [pkgs.nmap];
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = [
             { from = "host"; host.port = 2222; guest.port = 22; }
             { from = "host"; host.port = 25565; guest.port = 25565; }
+            { from = "host"; host.port = 25566; guest.port = 25566; }
+            { from = "host"; host.port = 25567; guest.port = 25567; }
+            { from = "host"; host.port = 25568; guest.port = 25568; }
+            { from = "host"; host.port = 25569; guest.port = 25569; }
+            { from = "host"; host.port = 25570; guest.port = 25570; }
+            
         ];
         environment.etc."nextcloud-admin-password".text = "1234";
     };
@@ -81,24 +89,6 @@ in {
     services.mysql.dataDir = "/mnt/raid/mysql";
     services.mysql.package = pkgs.mysql;
 
-    # simple-nixos-mailserver
-    #mailserver = {
-    #    enable = true;
-    #    fqdn = "mail.${config.skademaskinen.domain}";
-    #    domains = [config.skademaskinen.domain];
-    #    loginAccounts."mast3r@${config.skademaskinen.domain}" = {
-    #        hashedPasswordFile = ../../files/passwd/mast3r.pw;
-    #        aliases = ["admin@${config.skademaskinen.domain}" "postmaster@${config.skademaskinen.domain}"];
-    #    };
-    #    enablePop3Ssl = true;
-    #
-    #    certificateScheme = "acme-nginx";
-    #};
-    #security.acme = {
-    #    acceptTerms = true;
-    #    defaults.email = "security@${config.skademaskinen.domain}";
-    #};
-
     # custom module settings
     skademaskinen = {
         storage = storage;
@@ -107,7 +97,8 @@ in {
             config = "${storage}/bots/Putricide";
             args = [ "--disable-teams" ];
         };
-        minecraft-servers = ["survival" "hub" "creative" "paradox"];
+        minecraft.servers = ["survival" "hub" "creative" "paradox"];
+        minecraft.fallback = "hub";
 
         rp-utils = {
             enable = true;
