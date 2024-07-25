@@ -136,9 +136,9 @@ in {
         matrix.enable = true;
         matrix.port = 8005;
 
-        p8.enable = true;
+        p8.enable = false;
         p8.port = 8006;
-        p8.test.enable = true;
+        p8.test.enable = false;
         p8.test.port = 8007;
         
 
