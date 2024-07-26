@@ -1,4 +1,6 @@
-{lib, pkgs, config, ...}:{
+{lib, pkgs, config, ...}: let
+    enable = config.skademaskinen.rp-utils.enable;
+in {
 
     options.skademaskinen.rp-utils = {
         enable = lib.mkOption {
@@ -11,8 +13,8 @@
         
     };
     config = {
-        systemd.services.rp-utils = {
-            enable = config.skademaskinen.rp-utils.enable;
+        systemd.services.rp-utils = if !enable then {} else {
+            enable = enable;
             description = "rp-utils bot";
             environment = {
                 XELATEX_PATH = "${pkgs.texliveFull}/bin/xelatex";

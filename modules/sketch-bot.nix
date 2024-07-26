@@ -1,4 +1,6 @@
-{pkgs, lib, config, ...}: {
+{pkgs, lib, config, ...}: let
+    enable = config.skademaskinen.sketch-bot.enable;
+in {
     options.skademaskinen.sketch-bot = {
         enable = lib.mkOption {
             type = lib.types.bool;
@@ -8,7 +10,7 @@
             type = lib.types.str;
         };
     };
-    config.systemd.services.sketch-bot = let
+    config.systemd.services.sketch-bot = if !enable then {} else let
         pkg = pkgs.callPackage ../packages/sketch-bot {};
     in {
         enable = config.skademaskinen.sketch-bot.enable;
@@ -23,8 +25,8 @@
         wants = [ "network-online.target" ];
     };
 
-    config.systemd.services.sketch-bot-setup = {
-        enable = config.skademaskinen.sketch-bot.enable;
+    config.systemd.services.sketch-bot-setup = if !enable then {} else {
+        enable = enable;
         serviceConfig = {
             type = "oneshot";
             ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "sketch-bot-setup" ''
@@ -36,7 +38,7 @@
         before = ["sketch-bot.service" "lavalink.service"];
     };
 
-    config.systemd.services.lavalink = let
+    config.systemd.services.lavalink = if !enable then {} else let
         lavalink = pkgs.callPackage ../packages/lavalink {};
     in {
         enable = config.skademaskinen.sketch-bot.enable;
