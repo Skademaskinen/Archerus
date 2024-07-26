@@ -22,7 +22,7 @@ in {
             SKADEMASKINEN_FRONTEND_PORT = builtins.toString cfg.port;
         };
         serviceConfig = {
-            ExecStart = "${config.skademaskinen.storage}/F3/result/bin/RunProdServer"; 
+            ExecStart = "${config.skademaskinen.storage}/website/F3/result/bin/RunProdServer"; 
         };
         wantedBy = ["default.target"];
     };

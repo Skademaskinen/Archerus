@@ -11,7 +11,7 @@
     };
 
     inputs = {
-        nixpkgs.url = "nixpkgs/nixos-23.11";
+        nixpkgs.url = "nixpkgs/nixos-24.05";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
         #home-manager.url = "github:nix-community/home-manager";
         #home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -82,7 +82,7 @@
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
-            skademaskinen = nixosConfigurations.Skademaskinen.config.system.build.vm;
+            server = nixosConfigurations.Skademaskinen.config.system.build.vm;
         };
     };
 }

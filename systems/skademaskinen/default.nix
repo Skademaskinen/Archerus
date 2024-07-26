@@ -93,6 +93,17 @@ in {
     services.mysql.enable = true;
     services.mysql.dataDir = "/mnt/raid/mysql";
     services.mysql.package = pkgs.mysql;
+    systemd.services.mysql-setup = {
+        enable = true;
+        serviceConfig = {
+            ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "mysql-setup" ''
+                mkdir -p ${config.services.mysql.dataDir}
+                chown -R mysql:mysql ${config.services.mysql.dataDir}
+            ''}/bin/mysql-setup";
+        };
+        before = ["mysql.service"];
+        wantedBy = ["default.target"];
+    };
 
     # custom module settings
     skademaskinen = {
@@ -110,11 +121,8 @@ in {
 
         mast3r.website = {
             enable = true;
-            root = "${storage}/website/Backend";
-            databasePath = "${storage}/website/db.db3";
             hostname = "localhost";
             port = 8000;
-            keyfile = "${storage}/website/keyfile";
         };
         taoshi.website = {
             enable = true;

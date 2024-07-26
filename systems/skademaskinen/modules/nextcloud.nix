@@ -5,12 +5,12 @@
     };
     config.services.nextcloud = {
         enable = true;
-        package = pkgs.nextcloud27;
+        package = pkgs.nextcloud29;
         home = "${config.skademaskinen.storage}/nextcloud";
         hostName = "cloud.${config.skademaskinen.domain}";
         https = !(config.skademaskinen.test);
         config.adminpassFile = "/etc/nextcloud-admin-password";
-        extraOptions = {
+        settings = {
             port = config.skademaskinen.nextcloud.port;
         };
         nginx.recommendedHttpHeaders = true;
