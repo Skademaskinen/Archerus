@@ -26,3 +26,6 @@ jobs:
         run: nix build .#warcraftlogsuploader
       - name: build-sketch-bot
         run: nix build .#sketch-bot
+      # too heavy :(
+      #- name: build-all
+      #  run: nix build .#skademaskinen

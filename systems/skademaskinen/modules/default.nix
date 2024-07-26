@@ -4,5 +4,6 @@
         ./nextcloud.nix
         ./jupyter.nix
         ./F3.nix
+        ./minecraft.nix
     ];
 }

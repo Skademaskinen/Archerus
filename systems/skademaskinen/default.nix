@@ -1,6 +1,7 @@
 {pkgs, lib, config, modulesPath, ...}: let
     storage = "/mnt/raid";
     version = "23.11";
+    tools = import ../../tools;
 in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
@@ -14,6 +15,7 @@ in {
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
     boot.swraid.enable = true;
+    boot.swraid.mdadmConf = "MAILADDR mast3r@${config.skademaskinen.domain}";
 
     fileSystems = {
         "/" = { 
@@ -48,13 +50,24 @@ in {
     virtualisation.vmVariant = {
         virtualisation.memorySize = 8192;
         virtualisation.cores = 4;
+        skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
+        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; })];
         services.getty.autologinUser = "root";
-        virtualisation.forwardPorts = [
-            { from = "host"; host.port = 2222; guest.port = 22; }
-            { from = "host"; host.port = 25565; guest.port = 25565; }
+        virtualisation.forwardPorts = builtins.concatLists [
+            [{ from = "host"; host.port = 2222; guest.port = 22; }]
+            (map (server: {
+                from = "host";
+                host.port = server.server-port;
+                guest.port = server.server-port;
+            }) (builtins.attrValues config.skademaskinen.minecraft.servers))
+            (if (tools.attrLength config.skademaskinen.minecraft.servers) > 0 then 
+                [{ from = "host"; host.port = 25565; guest.port = 25565; }]
+            else
+                [])
         ];
+        virtualisation.graphics = false;
         environment.etc."nextcloud-admin-password".text = "1234";
     };
 
@@ -81,24 +94,6 @@ in {
     services.mysql.dataDir = "/mnt/raid/mysql";
     services.mysql.package = pkgs.mysql;
 
-    # simple-nixos-mailserver
-    #mailserver = {
-    #    enable = true;
-    #    fqdn = "mail.${config.skademaskinen.domain}";
-    #    domains = [config.skademaskinen.domain];
-    #    loginAccounts."mast3r@${config.skademaskinen.domain}" = {
-    #        hashedPasswordFile = ../../files/passwd/mast3r.pw;
-    #        aliases = ["admin@${config.skademaskinen.domain}" "postmaster@${config.skademaskinen.domain}"];
-    #    };
-    #    enablePop3Ssl = true;
-    #
-    #    certificateScheme = "acme-nginx";
-    #};
-    #security.acme = {
-    #    acceptTerms = true;
-    #    defaults.email = "security@${config.skademaskinen.domain}";
-    #};
-
     # custom module settings
     skademaskinen = {
         storage = storage;
@@ -107,7 +102,6 @@ in {
             config = "${storage}/bots/Putricide";
             args = [ "--disable-teams" ];
         };
-        minecraft-servers = ["survival" "hub" "creative" "paradox"];
 
         rp-utils = {
             enable = true;
@@ -135,13 +129,6 @@ in {
 
         matrix.enable = true;
         matrix.port = 8005;
-
-        p8.enable = false;
-        p8.port = 8006;
-        p8.test.enable = false;
-        p8.test.port = 8007;
-        
-
     };
     globalEnvs.python.enable = true;
 }

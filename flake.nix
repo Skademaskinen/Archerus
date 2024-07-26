@@ -34,7 +34,7 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [ 
-                    ./systems/skademaskinen { skademaskinen.domain = "skade.dev"; }
+                    ./systems/skademaskinen
 
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
