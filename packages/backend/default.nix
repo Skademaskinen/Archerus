@@ -1,4 +1,4 @@
-{pkgs}:let
+{config, pkgs, ...}: let
     py = (pkgs.python3.withPackages (pyPkgs: with pyPkgs; [
         requests
         python-nmap
@@ -21,7 +21,12 @@ in pkgs.stdenv.mkDerivation {
         mkdir -p $out/share/Backend
         
         cp ./* $out/share/Backend -r
-        echo "${py.interpreter} $out/share/Backend/skademaskinen/main.py \$@" > $out/bin/skademaskinen-backend
+        cat > $out/bin/skademaskinen-backend << EOF
+            if ! test -f "${config.skademaskinen.storage}/website/backend/keyfile"; then
+                echo "temp" > ${config.skademaskinen.storage}/website/backend/keyfile
+            fi
+            ${py.interpreter} $out/share/Backend/skademaskinen/main.py \$@
+        EOF
         chmod +x $out/bin/skademaskinen-backend
 
         cat > $out/bin/skademaskinen-backend-db << "EOF"

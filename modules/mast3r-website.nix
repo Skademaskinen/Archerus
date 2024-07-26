@@ -1,19 +1,12 @@
 {pkgs, lib, config, ...}: 
 
 let
-        backend = pkgs.callPackage ../packages/backend {};
+        backend = pkgs.callPackage ../packages/backend { inherit config pkgs; };
 in {
     options.skademaskinen.mast3r.website = {
         enable = lib.mkOption {
             type = lib.types.bool;
             default = false;
-        };
-        root = lib.mkOption {
-            type = lib.types.str;
-        };
-        databasePath = lib.mkOption {
-            type = lib.types.str;
-            default = "${config.skademaskinen.website.root}/webroot/admin/db.db3";
         };
         hostname = lib.mkOption {
             type = lib.types.str;
@@ -22,10 +15,6 @@ in {
         port = lib.mkOption {
             type = lib.types.int;
             default = 12345;
-        };
-        keyfile = lib.mkOption {
-            type = lib.types.str;
-            default = pkgs.writeText "website-keyfile-temp" "temp-keyfile";
         };
     };
 
@@ -38,10 +27,22 @@ in {
         };
         serviceConfig = if config.skademaskinen.mast3r.website.enable then {
             User = "mast3r";
-            WorkingDirectory = config.skademaskinen.mast3r.website.root;
-            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.mast3r.website.databasePath} --hostname ${config.skademaskinen.mast3r.website.hostname} --port ${builtins.toString config.skademaskinen.mast3r.website.port} --keyfile ${config.skademaskinen.mast3r.website.keyfile}";
+            WorkingDirectory = "${config.skademaskinen.storage}/website/backend";
+            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.storage}/website/backend/db.db3 --hostname ${config.skademaskinen.mast3r.website.hostname} --port ${builtins.toString config.skademaskinen.mast3r.website.port} --keyfile ${config.skademaskinen.storage}/website/backend/keyfile";
             Restart = "on-failure";
         } else {};
+        wantedBy = ["default.target"];
+        after = ["backend-setup.service"];
+    };
+    config.systemd.services.backend-setup = {
+        enable = config.skademaskinen.mast3r.website.enable;
+        serviceConfig = {
+            type = "oneshot";
+            ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "backend-setup" ''
+                mkdir -p ${config.skademaskinen.storage}/website/backend
+                chown -R mast3r:wheel ${config.skademaskinen.storage}/website/backend
+            ''}/bin/backend-setup";
+        };
         wantedBy = ["default.target"];
     };
 }
