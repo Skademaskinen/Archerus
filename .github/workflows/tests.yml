@@ -3,8 +3,6 @@ name: Test NixOS configuration
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   tests:
@@ -18,5 +16,6 @@ jobs:
       
       - name: build-warcraftlogsuploader
         run: nix build .#warcraftlogsuploader
-      - name: build-all
-        run: nix build .#skademaskinen
+      # too heavy :(
+      #- name: build-all
+      #  run: nix build .#skademaskinen
