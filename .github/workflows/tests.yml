@@ -3,6 +3,8 @@ name: Test NixOS configuration
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   tests:
@@ -14,8 +16,16 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-23.11
       
+      - name: build-backend
+        run: nix build .#backend
+      - name: build-putricide
+        run: nix build .#putricide
+      - name: build-banner
+        run: nix build .#banner
       - name: build-warcraftlogsuploader
         run: nix build .#warcraftlogsuploader
+      - name: build-sketch-bot
+        run: nix build .#sketch-bot
       # too heavy :(
       #- name: build-all
       #  run: nix build .#skademaskinen
