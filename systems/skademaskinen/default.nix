@@ -53,7 +53,7 @@ in {
         skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
-        users.users.root.packages = [pkgs.nmap];
+        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; })];
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
             [{ from = "host"; host.port = 2222; guest.port = 22; }]
@@ -102,42 +102,6 @@ in {
             config = "${storage}/bots/Putricide";
             args = [ "--disable-teams" ];
         };
-        minecraft.servers = {
-            hub = {
-                server-port = 25566;
-                force-gamemode = true;
-                gamemode = "adventure";
-                white-list = false;
-                enforce-whitelist = false;
-                online-mode = false;
-                difficulty = "peaceful";
-            };
-            survival = {
-                server-port = 25567;
-                white-list = true;
-                enforce-whitelist = true;
-                online-mode = false;
-                difficulty = "hard";
-                bukkit.settings.allow-end = false;
-            };
-            creative = {
-                server-port = 25568;
-                white-list = true;
-                enforce-whitelist = true;
-                online-mode = false;
-                difficulty = "hard";
-            };
-            paradox = {
-                server-port = 25569;
-                white-list = true;
-                enforce-whitelist = true;
-                online-mode = false;
-                difficulty = "hard";
-            };
-        };
-        minecraft.fallback = "hub";
-        minecraft.motd = "<#ff5500>Skademaskinen Declarative <rainbow>Minecraft <#ff5500>server";
-        minecraft.icon = ../../files/icon.png;
 
         rp-utils = {
             enable = true;

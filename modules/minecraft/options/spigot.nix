@@ -11,10 +11,7 @@ in with tools; {
     };
     advancements = {
         disable-saving = fbool;
-        disabled = lib.mkOption {
-            type = listOf str;
-            default = ["minecraft:story/disabled"];
-        };
+        disabled = slist ["minecraft:story/disabled"];
     };
     settings = {
         bungeecord = fbool;
@@ -50,15 +47,9 @@ in with tools; {
         tab-complete = intopt 0;
         send-namespaced = tbool;
         log = tbool;
-        spam-exclusions = lib.mkOption {
-            type = listOf str;
-            default = ["/skill"];
-        };
+        spam-exclusions = slist ["/skill"];
         silent-commandblock-console = fbool;
-        replace-commands = lib.mkOption {
-            type = listOf str;
-            default = ["setblock" "summon" "testforblock" "tellraw"];
-        };
+        replace-commands = slist ["setblock" "summon" "testforblock" "tellraw"];
     };
     world-settings = {
         default = {

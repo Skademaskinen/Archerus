@@ -69,6 +69,10 @@ in with mine-tools; {
                     bukkit = import ./minecraft/options/bukkit.nix { inherit lib; };
                     paper-global = import ./minecraft/options/paper-global.nix { inherit lib; };
                     paper-world = import ./minecraft/options/paper-world.nix { inherit lib; };
+                    plugins = lib.mkOption {
+                        type = attrsOf path;
+                        default = {};
+                    };
                 };
             });
             default = {};
@@ -113,6 +117,10 @@ in with mine-tools; {
             port = intopt 25577;
             map = stropt "Velocity";
             show-plugins = fbool;
+        };
+        plugins = lib.mkOption {
+            type = attrsOf path;
+            default = {};
         };
     };
 

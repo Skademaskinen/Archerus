@@ -6,44 +6,38 @@ in with tools; {
       anti-xray = {
         enabled = fbool;
         engine-mode = intopt 1;
-        hidden-blocks = lib.mkOption {
-          type = listOf str;
-          default = [
-            "copper_ore"
-            "deepslate_copper_ore"
-            "raw_copper_block"
-            "gold_ore"
-            "deepslate_gold_ore"
-            "iron_ore"
-            "deepslate_iron_ore"
-            "raw_iron_block"
-            "coal_ore"
-            "deepslate_coal_ore"
-            "lapis_ore"
-            "deepslate_lapis_ore"
-            "mossy_cobblestone"
-            "obsidian"
-            "chest"
-            "diamond_ore"
-            "deepslate_diamond_ore"
-            "redstone_ore"
-            "deepslate_redstone_ore"
-            "clay"
-            "emerald_ore"
-            "deepslate_emerald_ore"
-            "ender_chest"
-          ];
-        };
+        hidden-blocks = slist [
+          "copper_ore"
+          "deepslate_copper_ore"
+          "raw_copper_block"
+          "gold_ore"
+          "deepslate_gold_ore"
+          "iron_ore"
+          "deepslate_iron_ore"
+          "raw_iron_block"
+          "coal_ore"
+          "deepslate_coal_ore"
+          "lapis_ore"
+          "deepslate_lapis_ore"
+          "mossy_cobblestone"
+          "obsidian"
+          "chest"
+          "diamond_ore"
+          "deepslate_diamond_ore"
+          "redstone_ore"
+          "deepslate_redstone_ore"
+          "clay"
+          "emerald_ore"
+          "deepslate_emerald_ore"
+          "ender_chest"
+        ];
         lava-obscures = fbool;
         max-block-height = intopt 64;
-        replacement-blocks = lib.mkOption {
-          type = listOf str;
-          default = [
-            "stone"
-            "oak_planks"
-            "deepslate"
-          ];
-        };
+        replacement-blocks = slist [
+          "stone"
+          "oak_planks"
+          "deepslate"
+        ];
         update-radius = intopt 2;
         use-permission = fbool;
       };

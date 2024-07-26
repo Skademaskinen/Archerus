@@ -20,6 +20,11 @@
         type = str;
         default = s;
     };
+    # slist :: [lib.types.str] -> [lib.types.str]
+    slist = v: lib.mkOption {
+        type = listOf str;
+        default = v;
+    };
 
     parseValue = value: 
         if value == true then 
@@ -28,4 +33,8 @@
             "false" 
         else 
             builtins.toString value;
+
+    convert-list-to-yml = let
+        make-indent = indent: lib.concatMapStrings (_: " ") (lib.range 1 indent);
+    in list: indent: "\n" + (builtins.concatStringsSep "" (map (entry: "${make-indent indent}- ${entry}\n") list));
 }

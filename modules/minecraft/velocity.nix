@@ -75,6 +75,10 @@ EOF
                 rm -f ${prefix}/velocity/velocity.toml
                 ln -s ${cfg.icon} ${prefix}/velocity/server-icon.png
                 cp $out/share/velocity.toml ${prefix}/velocity/velocity.toml
+
+                rm ${prefix}/velocity/plugins/*.jar
+                ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: path: "cp ${path} ${prefix}/velocity/plugins/${name}") cfg.plugins))}
+
                 ${pkgs.jdk21}/bin/java -jar ${velocity}
 EOF
 

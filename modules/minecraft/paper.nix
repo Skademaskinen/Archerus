@@ -34,6 +34,11 @@ EOF
                 cp $out/share/server.properties ${prefix}/${server.name}
                 cp $out/share/bukkit.yml ${prefix}/${server.name}
                 cp $out/share/spigot.yml ${prefix}/${server.name}
+
+                rm -f ${prefix}/${server.name}/plugins/*.jar
+
+                ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: path: "cp ${path} ${prefix}/${server.name}/plugins/${name}") server.plugins))}
+
                 chmod +rw ${prefix}/${server.name}/{bukkit.yml,spigot.yml,server.properties,config/paper-world-defaults.yml,config/paper-global.yml}
 
                 ${pkgs.jdk21}/bin/java -jar ${paper}

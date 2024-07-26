@@ -125,10 +125,7 @@ in with tools; {
     };
     timings = {
         enabled = fbool;
-        hidden-config-entries = lib.mkOption {
-            type = listOf str;
-            default = ["database" "proxies.velocity.secret"];
-        };
+        hidden-config-entries = slist ["database" "proxies.velocity.secret"];
         history-interval = intopt 300;
         history-length = intopt 3600;
         server-name = stropt "Unknown Server";

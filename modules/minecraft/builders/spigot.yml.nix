@@ -11,8 +11,7 @@ cat > $out/share/spigot.yml << EOF
       restart: ${messages.restart}
     advancements:
       disable-saving: ${parseValue advancements.disable-saving}
-      disabled:
-      - minecraft:story/disabled
+      disabled: ${convert-list-to-yml advancements.disabled 8}
     settings:
       bungeecord: ${parseValue settings.bungeecord}
       save-user-cache-on-stop-only: ${parseValue settings.save-user-cache-on-stop-only}
@@ -41,14 +40,9 @@ cat > $out/share/spigot.yml << EOF
       tab-complete: ${parseValue commands.tab-complete}
       send-namespaced: ${parseValue commands.send-namespaced}
       log: ${parseValue commands.log}
-      spam-exclusions:
-      - /skill
+      spam-exclusions: ${convert-list-to-yml commands.spam-exclusions 8}
       silent-commandblock-console: ${parseValue commands.silent-commandblock-console}
-      replace-commands:
-      - setblock
-      - summon
-      - testforblock
-      - tellraw
+      replace-commands: ${convert-list-to-yml commands.replace-commands 8}
     world-settings:
       default:
         below-zero-generation-in-existing-chunks: ${parseValue world-settings.default.below-zero-generation-in-existing-chunks}

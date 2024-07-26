@@ -1,5 +1,6 @@
 {lib, config, ...}: let
     tools = import ../tools.nix { lib = lib; };
+
 in paper-global-settings: with paper-global-settings; with tools; ''
 cat > $out/share/paper-global.yml << EOF
 _version: ${parseValue _version}
@@ -100,7 +101,7 @@ spark:
     enabled: ${parseValue spark.enabled}
 timings:
     enabled: ${parseValue timings.enabled}
-    hidden-config-entries: ${builtins.concatStringsSep "" (map (entry: "    - ${entry}\n") timings.hidden-config-entries)}
+    hidden-config-entries: ${convert-list-to-yml timings.hidden-config-entries 8}
     history-interval: ${parseValue timings.history-interval}
     history-length: ${parseValue timings.history-length}
     server-name: ${timings.server-name}
