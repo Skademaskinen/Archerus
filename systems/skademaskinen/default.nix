@@ -1,6 +1,7 @@
 {pkgs, lib, config, modulesPath, ...}: let
     storage = "/mnt/raid";
     version = "23.11";
+    tools = import ../../tools;
 in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
@@ -14,6 +15,7 @@ in {
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
     boot.swraid.enable = true;
+    boot.swraid.mdadmConf = "MAILADDR mast3r@${config.skademaskinen.domain}";
 
     fileSystems = {
         "/" = { 
@@ -53,16 +55,19 @@ in {
         users.users.root.password = "1234";
         users.users.root.packages = [pkgs.nmap];
         services.getty.autologinUser = "root";
-        virtualisation.forwardPorts = [
-            { from = "host"; host.port = 2222; guest.port = 22; }
-            { from = "host"; host.port = 25565; guest.port = 25565; }
-            { from = "host"; host.port = 25566; guest.port = 25566; }
-            { from = "host"; host.port = 25567; guest.port = 25567; }
-            { from = "host"; host.port = 25568; guest.port = 25568; }
-            { from = "host"; host.port = 25569; guest.port = 25569; }
-            { from = "host"; host.port = 25570; guest.port = 25570; }
-            
+        virtualisation.forwardPorts = builtins.concatLists [
+            [{ from = "host"; host.port = 2222; guest.port = 22; }]
+            (map (server: {
+                from = "host";
+                host.port = server.server-port;
+                guest.port = server.server-port;
+            }) (builtins.attrValues config.skademaskinen.minecraft.servers))
+            (if (tools.attrLength config.skademaskinen.minecraft.servers) > 0 then 
+                [{ from = "host"; host.port = 25565; guest.port = 25565; }]
+            else
+                [])
         ];
+        virtualisation.graphics = false;
         environment.etc."nextcloud-admin-password".text = "1234";
     };
 
@@ -102,12 +107,37 @@ in {
                 server-port = 25566;
                 force-gamemode = true;
                 gamemode = "adventure";
+                white-list = false;
+                enforce-whitelist = false;
+                online-mode = false;
+                difficulty = "peaceful";
             };
-            survival.server-port = 25567;
-            creative.server-port = 25568;
-            paradox.server-port = 25569;
+            survival = {
+                server-port = 25567;
+                white-list = true;
+                enforce-whitelist = true;
+                online-mode = false;
+                difficulty = "hard";
+                bukkit.settings.allow-end = false;
+            };
+            creative = {
+                server-port = 25568;
+                white-list = true;
+                enforce-whitelist = true;
+                online-mode = false;
+                difficulty = "hard";
+            };
+            paradox = {
+                server-port = 25569;
+                white-list = true;
+                enforce-whitelist = true;
+                online-mode = false;
+                difficulty = "hard";
+            };
         };
         minecraft.fallback = "hub";
+        minecraft.motd = "<#ff5500>Skademaskinen Declarative <rainbow>Minecraft <#ff5500>server";
+        minecraft.icon = ../../files/icon.png;
 
         rp-utils = {
             enable = true;
@@ -135,12 +165,6 @@ in {
 
         matrix.enable = true;
         matrix.port = 8005;
-
-        p8.enable = true;
-        p8.port = 8006;
-        p8.test.enable = true;
-        p8.test.port = 8007;
-        
 
     };
     globalEnvs.python.enable = true;

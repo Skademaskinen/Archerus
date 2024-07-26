@@ -2,10 +2,11 @@
     cfg = config.skademaskinen.minecraft;
     prefix = "${config.skademaskinen.storage}/minecraft";
 
-    paper-wrapped = import ./minecraft/paper.nix { inherit config pkgs; };
+    paper-wrapped = import ./minecraft/paper.nix { inherit config pkgs lib; };
     velocity-wrapped = import ./minecraft/velocity.nix { inherit config pkgs; };
-    tools = import ./minecraft/options/tools.nix { lib = lib; };
-in with tools; {
+    mine-tools = import ./minecraft/tools.nix { lib = lib; };
+    tools = import ../tools;
+in with mine-tools; {
     options.skademaskinen.minecraft = with lib.types; {
         servers = lib.mkOption {
             type = attrsOf (submodule {
@@ -67,7 +68,7 @@ in with tools; {
                     spigot = import ./minecraft/options/spigot.nix { inherit lib; };
                     bukkit = import ./minecraft/options/bukkit.nix { inherit lib; };
                     paper-global = import ./minecraft/options/paper-global.nix { inherit lib; };
-                    #paper-world = import ./minecraft/options/paper-world.nix { inherit lib; };
+                    paper-world = import ./minecraft/options/paper-world.nix { inherit lib; };
                 };
             });
             default = {};
@@ -116,20 +117,71 @@ in with tools; {
     };
 
     config = {
+        users.users.minecraft = {
+            isSystemUser = true;
+            group = "minecraft";
+            packages = with pkgs; [jdk21];
+        };
+        users.groups.minecraft = {};
+
         systemd.services = let 
-            velocity = {
-                enable = true;
-                serviceConfig = {
-                    ExecStart = "${pkgs.bash}/bin/bash ${velocity-wrapped}/bin/velocity-wrapped";
+            services = {
+                velocity = {
+                    enable = true;
+                    serviceConfig = {
+                        User = "minecraft";
+                        ExecStart = "${pkgs.bash}/bin/bash ${velocity-wrapped}/bin/velocity-wrapped";
+                        StandardInput = "socket";
+                        StandardOutput = "journal";
+                        StandardError = "journal";
+                        Sockets = "velocity.socket";
+                    };
+                    wantedBy = ["default.target"];
+                    after = ["minecraft-setup.service"];
                 };
-                wantedBy = ["default.target"];
+                minecraft-setup = {
+                    enable = true;
+                    serviceConfig = {
+                        Type = "oneshot";
+                        ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "minecraft-setup" ''
+                            mkdir -p ${prefix}/{velocity,${builtins.concatStringsSep "," (builtins.attrNames cfg.servers)}}
+                            chown -R minecraft:minecraft ${prefix}/{velocity,${builtins.concatStringsSep "," (builtins.attrNames cfg.servers)}}
+                            mkdir -p ${prefix}/sockets
+                        ''}/bin/minecraft-setup";
+                    };
+                    wantedBy = ["default.target"];
+                };
             };
-        in if (builtins.length (builtins.attrNames cfg.servers)) > 0 then pkgs.lib.mergeAttrs {velocity = velocity;} (builtins.mapAttrs (name: server: {
+        in if (tools.attrLength cfg.servers) > 0 then pkgs.lib.mergeAttrs services (builtins.mapAttrs (name: server: {
             enable = true;
             serviceConfig = {
+                User = "minecraft";
                 ExecStart = "${pkgs.bash}/bin/bash ${paper-wrapped (pkgs.lib.mergeAttrs {name = name;} server)}/bin/paper-wrapped";
+                StandardInput = "socket";
+                StandardOutput = "journal";
+                StandardError = "journal";
+                Sockets = "${name}.socket";
             };
             wantedBy = ["default.target"];
+            after = ["minecraft-setup.service"];
+        }) cfg.servers) else {};
+
+        systemd.sockets = let
+            velocity = {
+                enable = true;
+                description = "velocity STDIN socket";
+                socketConfig = {
+                    ListenFIFO = "${prefix}/sockets/velocity.stdin";
+                    Service = "velocity.service";
+                };
+            };
+        in if (tools.attrLength cfg.servers) > 0 then pkgs.lib.mergeAttrs { velocity = velocity; } (builtins.mapAttrs (name: server: {
+            enable = true;
+            description = "${name} STDIN socket";
+            socketConfig = {
+                ListenFIFO = "${prefix}/sockets/${name}.stdin";
+                Service = "${name}.service";
+            };
         }) cfg.servers) else {};
     };
 }

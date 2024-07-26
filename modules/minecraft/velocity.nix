@@ -1,7 +1,7 @@
 {config, pkgs, ...}: let 
     cfg = config.skademaskinen.minecraft;
     prefix = "${config.skademaskinen.storage}/minecraft";
-    tools = import ./options/tools.nix { lib = pkgs.lib; };
+    tools = import ./tools.nix { lib = pkgs.lib; };
     
     velocity = pkgs.fetchurl {
         url = "https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/412/downloads/velocity-3.3.0-SNAPSHOT-412.jar";
@@ -73,6 +73,7 @@ EOF
                 mkdir -p ${prefix}/velocity
                 cd ${prefix}/velocity
                 rm -f ${prefix}/velocity/velocity.toml
+                ln -s ${cfg.icon} ${prefix}/velocity/server-icon.png
                 cp $out/share/velocity.toml ${prefix}/velocity/velocity.toml
                 ${pkgs.jdk21}/bin/java -jar ${velocity}
 EOF

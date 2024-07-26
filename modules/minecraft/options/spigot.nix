@@ -1,5 +1,5 @@
 {lib, ...}: with lib.types; let
-    tools = import ./tools.nix { lib = lib; };
+    tools = import ../tools.nix { lib = lib; };
 in with tools; {
     messages = {
         whitelist = stropt "You are not whitelisted on this server!";
@@ -68,7 +68,7 @@ in with tools; {
             thunder-chance = intopt 100000;
             merge-radius = {
                 item = fopt 0.5;
-                exp = fopt -1.0;
+                exp = fopt (-1.0);
             };
             mob-spawn-range = intopt 8;
             item-despawn-rate = intopt 6000;

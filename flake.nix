@@ -83,14 +83,6 @@
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
             skademaskinen = nixosConfigurations.Skademaskinen.config.system.build.vm;
-            server-test = pkgs.writeScriptBin "server-test" ''
-                rm -f *.qcow2
-                ${pkgs.tmux}/bin/tmux new-session -d ${packages.${system}.skademaskinen}/bin/run-Skademaskinen-vm
-                echo "waiting on startup..."
-                sleep 10
-                ssh localhost -o "StrictHostKeyChecking no" -o "UserKnownHostsFile=/dev/null" -p 2222
-                ${pkgs.tmux}/bin/tmux attach
-            '';
         };
     };
 }

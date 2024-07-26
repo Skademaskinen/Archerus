@@ -1,5 +1,5 @@
 {lib, ...}: with lib.types; let
-    tools = import ./tools.nix { lib = lib; };
+    tools = import ../tools.nix { lib = lib; };
 in with tools; {
     _version = intopt 29;
     block-updates = {
@@ -67,8 +67,8 @@ in with tools; {
     };
     misc = {
         chat-threads = {
-            chat-executor-core-size = intopt -1;
-            chat-executor-max-size = intopt -1;
+            chat-executor-core-size = intopt (-1);
+            chat-executor-max-size = intopt (-1);
         };
         compression-level = stropt "default";
         fix-entity-position-desync = tbool;
@@ -95,8 +95,8 @@ in with tools; {
         };
     };
     player-auto-save = {
-        max-per-tick = intopt -1;
-        rate = intopt -1;
+        max-per-tick = intopt (-1);
+        rate = intopt (-1);
     };
     proxies = {
         bungee-cord = {

@@ -1,5 +1,5 @@
 {lib, ...}: with lib.types; let
-    tools = import ./tools.nix { lib = lib; };
+    tools = import ../tools.nix { lib = lib; };
 in with tools; {
     settings = {
         allow-end = tbool;
