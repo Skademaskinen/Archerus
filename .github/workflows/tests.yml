@@ -19,4 +19,4 @@ jobs:
       - name: build-warcraftlogsuploader
         run: nix build .#warcraftlogsuploader
       - name: build-all
-        run: nix build .#Skademaskinen
+        run: nix build .#skademaskinen
