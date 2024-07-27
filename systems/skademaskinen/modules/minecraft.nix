@@ -13,6 +13,7 @@ in {
                 difficulty = "peaceful";
                 bukkit.settings.allow-end = false;
                 spigot.players.disable-saving = true;
+                level-name = "hubworld";
                 plugins = {
                     "DecentHolograms.jar" = pkgs.fetchurl {
                         url = "https://github.com/DecentSoftware-eu/DecentHolograms/releases/download/2.8.9/DecentHolograms-2.8.9.jar";
@@ -67,7 +68,7 @@ in {
                 plugins = {
                     "tabtps.jar" = pkgs.fetchurl {
                         url = "https://www.spigotmc.org/resources/tabtps-1-8-8-1-21-show-tps-mspt-and-more-in-the-tab-menu.82528/download?version=546554";
-                        sha256 = "sha256-SuoV7C0uo61x3gT6LE7Zy3OrNj+pGQaiJ4qCfjabN3c=";
+                        sha256 = "sha256-7D4sO3fx6o6y72pOCmEINlqSPCGOjBQnJe6knGEuYCg=";
                     };
                     #"WorldEdit.jar" = pkgs.fetchurl {
                     #    url = "https://dev.bukkit.org/projects/worldedit/files/5564367";

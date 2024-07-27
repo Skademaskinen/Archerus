@@ -12,6 +12,7 @@
         config.adminpassFile = "/etc/nextcloud-admin-password";
         settings = {
             port = config.skademaskinen.nextcloud.port;
+            maintenance = false;
         };
         nginx.recommendedHttpHeaders = true;
         appstoreEnable = true;
