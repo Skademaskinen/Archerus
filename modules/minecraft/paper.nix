@@ -12,18 +12,18 @@
         src = ./.;
         installPhase = ''
             mkdir -p $out/{bin,share}
-            cat > $out/share/eula.txt << EOF
-                eula=true
-EOF
-            ${(import ./builders/server.properties.nix { inherit lib; }) server}
+            echo "eula=true" > $out/share/eula.txt
 
-            ${(import ./builders/paper-global.yml.nix { inherit lib config; }) server.paper-global}
 
-            ${(import ./builders/paper-world-defaults.yml.nix { inherit lib; }) server.paper-world}
+            cp ${(import ./builders/server.properties.nix { inherit pkgs lib; }) server} $out/share/server.properties
 
-            ${(import ./builders/spigot.yml.nix { inherit lib; }) server.spigot}
+            cp ${(import ./builders/paper-global.yml.nix { inherit pkgs lib; }) server.paper-global} $out/share/paper-global.yml
 
-            ${(import ./builders/bukkit.yml.nix { inherit lib; }) server.bukkit}
+            cp ${(import ./builders/paper-world-defaults.yml.nix { inherit pkgs lib; }) server.paper-world} $out/share/paper-world-defaults.yml
+
+            cp ${(import ./builders/spigot.yml.nix { inherit pkgs lib; }) server.spigot} $out/share/spigot.yml
+
+            cp ${(import ./builders/bukkit.yml.nix { inherit pkgs lib; }) server.bukkit} $out/share/bukkit.yml
 
             cat > $out/bin/paper-wrapped << EOF
                 mkdir -p ${prefix}/${server.name}/config

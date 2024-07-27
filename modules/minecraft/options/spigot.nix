@@ -1,5 +1,5 @@
-{lib, ...}: with lib.types; let
-    tools = import ../tools.nix { lib = lib; };
+{pkgs, lib, ...}: with lib.types; let
+    tools = import ../tools.nix { inherit pkgs lib; };
 in with tools; {
     messages = {
         whitelist = stropt "You are not whitelisted on this server!";

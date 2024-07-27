@@ -3,8 +3,8 @@
     prefix = "${config.skademaskinen.storage}/minecraft";
 
     paper-wrapped = import ./minecraft/paper.nix { inherit config pkgs lib; };
-    velocity-wrapped = import ./minecraft/velocity.nix { inherit config pkgs; };
-    mine-tools = import ./minecraft/tools.nix { lib = lib; };
+    velocity-wrapped = import ./minecraft/velocity.nix { inherit config pkgs lib; };
+    mine-tools = import ./minecraft/tools.nix { inherit pkgs lib; };
     tools = import ../tools;
 in with mine-tools; {
     options.skademaskinen.minecraft = with lib.types; {
@@ -65,10 +65,10 @@ in with mine-tools; {
                     use-native-transport = tbool;
                     view-distance = intopt 10;
                     white-list = fbool;
-                    spigot = import ./minecraft/options/spigot.nix { inherit lib; };
-                    bukkit = import ./minecraft/options/bukkit.nix { inherit lib; };
-                    paper-global = import ./minecraft/options/paper-global.nix { inherit lib; };
-                    paper-world = import ./minecraft/options/paper-world.nix { inherit lib; };
+                    spigot = import ./minecraft/options/spigot.nix { inherit pkgs lib; };
+                    bukkit = import ./minecraft/options/bukkit.nix { inherit pkgs lib; };
+                    paper-global = import ./minecraft/options/paper-global.nix { inherit pkgs lib config; };
+                    paper-world = import ./minecraft/options/paper-world.nix { inherit pkgs lib; };
                     plugins = lib.mkOption {
                         type = attrsOf path;
                         default = {};
