@@ -1,7 +1,7 @@
-{config, pkgs, ...}: let 
+{config, pkgs, lib, ...}: let 
     cfg = config.skademaskinen.minecraft;
     prefix = "${config.skademaskinen.storage}/minecraft";
-    tools = import ./tools.nix { lib = pkgs.lib; };
+    tools = import ./tools.nix { inherit pkgs lib; };
     
     velocity = pkgs.fetchurl {
         url = "https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/412/downloads/velocity-3.3.0-SNAPSHOT-412.jar";

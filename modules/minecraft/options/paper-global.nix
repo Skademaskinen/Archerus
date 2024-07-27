@@ -1,5 +1,5 @@
-{lib, ...}: with lib.types; let
-    tools = import ../tools.nix { lib = lib; };
+{config, pkgs, lib, ...}: with lib.types; let
+    tools = import ../tools.nix { inherit pkgs lib; };
 in with tools; {
     _version = intopt 29;
     block-updates = {
@@ -106,6 +106,7 @@ in with tools; {
         velocity = {
             enabled = tbool;
             online-mode = tbool;
+            secret = stropt config.skademaskinen.minecraft.secret;
         };
     };
     scoreboards = {

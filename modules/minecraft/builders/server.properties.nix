@@ -1,7 +1,6 @@
-{lib, ...}: let
-    tools = import ../tools.nix { lib = lib; };
-in opts: with opts; with tools; ''
-cat > $out/share/server.properties << EOF
+{pkgs, lib, ...}: let
+    tools = import ../tools.nix { inherit pkgs lib; };
+in opts: with opts; with tools; pkgs.writeText "server.properties" ''
     accepts-transfers=${parseValue accepts-transfers}
     allow-flight=${parseValue allow-flight}
     allow-nether=${parseValue allow-nether}
@@ -56,5 +55,4 @@ cat > $out/share/server.properties << EOF
     use-native-transport=${parseValue use-native-transport}
     view-distance=${parseValue view-distance}
     white-list=${parseValue white-list}
-EOF
 ''
