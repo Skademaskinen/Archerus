@@ -3,6 +3,7 @@
     prefix = "${config.skademaskinen.storage}/minecraft";
 
     paper-wrapped = import ./minecraft/paper.nix { inherit config pkgs lib; };
+    fabric-wrapped = import ./minecraft/fabric.nix { inherit config pkgs lib; };
     velocity-wrapped = import ./minecraft/velocity.nix { inherit config pkgs lib; };
     mine-tools = import ./minecraft/tools.nix { inherit pkgs lib; };
     tools = import ../tools;
@@ -70,6 +71,14 @@ in with mine-tools; {
                     paper-global = import ./minecraft/options/paper-global.nix { inherit pkgs lib config; };
                     paper-world = import ./minecraft/options/paper-world.nix { inherit pkgs lib; };
                     plugins = lib.mkOption {
+                        type = attrsOf path;
+                        default = {};
+                    };
+                    type = lib.mkOption {
+                        type = str;
+                        default = "paper";
+                    };
+                    mods = lib.mkOption {
                         type = attrsOf path;
                         default = {};
                     };
@@ -164,7 +173,12 @@ in with mine-tools; {
             enable = true;
             serviceConfig = {
                 User = "minecraft";
-                ExecStart = "${pkgs.bash}/bin/bash ${paper-wrapped (pkgs.lib.mergeAttrs {name = name;} server)}/bin/paper-wrapped";
+                ExecStart = "${pkgs.bash}/bin/bash ${
+                    if server.type == "paper" then 
+                        paper-wrapped (pkgs.lib.mergeAttrs {name = name;} server)
+                    else if server.type == "fabric" then
+                        fabric-wrapped (pkgs.lib.mergeAttrs {name = name;} server)
+                    else ""}/bin/${server.type}-wrapped";
                 StandardInput = "socket";
                 StandardOutput = "journal";
                 StandardError = "journal";
