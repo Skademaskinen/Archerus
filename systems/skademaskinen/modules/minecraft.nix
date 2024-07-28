@@ -58,22 +58,15 @@ in {
                 online-mode = false;
                 difficulty = "hard";
                 gamemode = "creative";
-                plugins = {
-                    "tabtps.jar" = pkgs.fetchurl {
-                        url = "https://github.com/jpenilla/TabTPS/releases/download/v1.3.24/tabtps-spigot-1.3.24.jar";
-                        sha256 = "sha256-vUXWnBKKQY5Q3ZTK8/5OmOxRONSt09XZMc+oxMDcAnw=";
-                    };
-                    "WorldEdit.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/Jo76t1oi/worldedit-bukkit-7.3.5.jar";
-                        sha256 = "sha256-xMIsPMKop0pNWThOFsiA0TTrwEotN4FYkpy+MF8ctSA=";
-                    };
-
-                };
                 type = "fabric";
                 mods = {
                     "Servux.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/MBfJui8X/servux-fabric-1.21.0-0.2.0.jar";
                         sha256 = "sha256-td2eH5IDDH+7u22l1TNyBsiisMvvpMJXS00aOB0YtDY=";
+                    };
+                    "WorldEdit.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/srWerknn/worldedit-mod-7.3.5.jar";
+                        sha256 = "sha256-dtJQ9DMZ2RqVlIzUwHRtydFdXpV3c7hDIZhB0ftsn3I=";
                     };
                 };
             };
