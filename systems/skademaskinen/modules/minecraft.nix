@@ -60,8 +60,8 @@ in {
                 gamemode = "creative";
                 plugins = {
                     "tabtps.jar" = pkgs.fetchurl {
-                        url = "https://www.spigotmc.org/resources/tabtps-1-8-8-1-21-show-tps-mspt-and-more-in-the-tab-menu.82528/download?version=546554";
-                        sha256 = "sha256-tfEeEkkErPZaA3aUmavBV7t1DIA27ZdM5PBqHoSyRCM=";
+                        url = "https://github.com/jpenilla/TabTPS/releases/download/v1.3.24/tabtps-spigot-1.3.24.jar";
+                        sha256 = "sha256-vUXWnBKKQY5Q3ZTK8/5OmOxRONSt09XZMc+oxMDcAnw=";
                     };
                     "WorldEdit.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/Jo76t1oi/worldedit-bukkit-7.3.5.jar";

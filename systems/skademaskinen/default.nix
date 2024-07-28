@@ -56,7 +56,10 @@ in {
         users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; })];
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
-            [{ from = "host"; host.port = 2222; guest.port = 22; }]
+            [
+                { from = "host"; host.port = 2222; guest.port = 22; }
+                { from = "host"; host.port = 8080; guest.port = 80; }
+            ]
             (map (server: {
                 from = "host";
                 host.port = server.server-port;
