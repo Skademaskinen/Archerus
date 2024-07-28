@@ -23,14 +23,10 @@ in {
                         url = "https://github.com/JuL1En1997/Iportal/releases/download/major-update/Iportal-Updated-2.0.jar";
                         sha256 = "sha256-uF4Izym8nvQVo8jhm41AG5re4RrUYUmVjFPsHIuBiyI=";
                     };
-                    #"WorldEdit.jar" = pkgs.fetchurl {
-                    #    url = "https://dev.bukkit.org/projects/worldedit/files/5564367";
-                    #    sha256 = "sha256-Px0Va1uRLmQKve76NlIYthvSSlAgelh5KPPHi7dpi7o=";
-                    #};
-                    #"WorldGuard.jar" = pkgs.fetchurl {
-                    #    url = "https://dev.bukkit.org/projects/worldguard/files/5344377";
-                    #    sha256 = "sha256-O3flXyIBI5uo9AFhOcGdpMS94yDvvOnMt81b/tVu5oM=";
-                    #};
+                    "WorldEdit.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/Jo76t1oi/worldedit-bukkit-7.3.5.jar";
+                        sha256 = "sha256-xMIsPMKop0pNWThOFsiA0TTrwEotN4FYkpy+MF8ctSA=";
+                    };
                 };
             };
             survival = {
@@ -52,10 +48,7 @@ in {
                         url = "https://www.spigotmc.org/resources/spark.57242/download?version=544173";
                         sha256 = "sha256-CAesFNYfmrRhSMNkQOTfkjpiCpnhSkJ/Gb+kq0g5HGA=";
                     };
-                    #"WorldEdit.jar" = pkgs.fetchurl {
-                    #    url = "https://dev.bukkit.org/projects/worldedit/files/5564367";
-                    #    sha256 = "sha256-Px0Va1uRLmQKve76NlIYthvSSlAgelh5KPPHi7dpi7o=";
-                    #};
+
                 };
             };
             creative = {
@@ -70,10 +63,11 @@ in {
                         url = "https://www.spigotmc.org/resources/tabtps-1-8-8-1-21-show-tps-mspt-and-more-in-the-tab-menu.82528/download?version=546554";
                         sha256 = "sha256-tfEeEkkErPZaA3aUmavBV7t1DIA27ZdM5PBqHoSyRCM=";
                     };
-                    #"WorldEdit.jar" = pkgs.fetchurl {
-                    #    url = "https://dev.bukkit.org/projects/worldedit/files/5564367";
-                    #    sha256 = "sha256-Px0Va1uRLmQKve76NlIYthvSSlAgelh5KPPHi7dpi7o=";
-                    #};
+                    "WorldEdit.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/Jo76t1oi/worldedit-bukkit-7.3.5.jar";
+                        sha256 = "sha256-xMIsPMKop0pNWThOFsiA0TTrwEotN4FYkpy+MF8ctSA=";
+                    };
+
                 };
                 type = "fabric";
                 mods = {
@@ -92,7 +86,7 @@ in {
             };
         };
         fallback = "hub";
-        motd = "<#ff5500>Skademaskinen Declarative <rainbow>Minecraft <#ff5500>server";
+        motd = "<#ff5500>[Skademaskinen]<reset>                     <u><https://${config.skademaskinen.domain}></u>\n<rainbow>Minecraft";
         icon = ../../../files/icon.png;
     };
 }
