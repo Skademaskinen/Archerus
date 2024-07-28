@@ -68,13 +68,19 @@ in {
                 plugins = {
                     "tabtps.jar" = pkgs.fetchurl {
                         url = "https://www.spigotmc.org/resources/tabtps-1-8-8-1-21-show-tps-mspt-and-more-in-the-tab-menu.82528/download?version=546554";
-                        sha256 = "sha256-7D4sO3fx6o6y72pOCmEINlqSPCGOjBQnJe6knGEuYCg=";
+                        sha256 = "sha256-tfEeEkkErPZaA3aUmavBV7t1DIA27ZdM5PBqHoSyRCM=";
                     };
                     #"WorldEdit.jar" = pkgs.fetchurl {
                     #    url = "https://dev.bukkit.org/projects/worldedit/files/5564367";
                     #    sha256 = "sha256-Px0Va1uRLmQKve76NlIYthvSSlAgelh5KPPHi7dpi7o=";
                     #};
-
+                };
+                type = "fabric";
+                mods = {
+                    "Servux.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/MBfJui8X/servux-fabric-1.21.0-0.2.0.jar";
+                        sha256 = "sha256-td2eH5IDDH+7u22l1TNyBsiisMvvpMJXS00aOB0YtDY=";
+                    };
                 };
             };
             paradox = {
