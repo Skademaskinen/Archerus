@@ -1,4 +1,4 @@
-{pkgs, lib, config, modulesPath, ...}: let
+{pkgs, lib, config, modulesPath, nix-velocity, ...}: let
     storage = "/mnt/raid";
     version = "23.11";
     tools = import ../../tools;
@@ -50,10 +50,12 @@ in {
     virtualisation.vmVariant = {
         virtualisation.memorySize = 8192;
         virtualisation.cores = 4;
+        virtualisation.diskSize = 8192;
         skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
-        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; })];
+        users.users.root.packages = [pkgs.nmap pkgs.htop];
+        users.users.root.shell = pkgs.zsh;
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
             [
@@ -64,14 +66,29 @@ in {
                 from = "host";
                 host.port = server.server-port;
                 guest.port = server.server-port;
-            }) (builtins.attrValues config.skademaskinen.minecraft.servers))
-            (if (tools.attrLength config.skademaskinen.minecraft.servers) > 0 then 
+            }) (builtins.attrValues config.minecraft.servers))
+            (if (tools.attrLength config.minecraft.servers) > 0 then 
                 [{ from = "host"; host.port = 25565; guest.port = 25565; }]
             else
                 [])
         ];
         virtualisation.graphics = false;
         environment.etc."nextcloud-admin-password".text = "1234";
+
+        # little bit of jank...
+        systemd.services.zsh-setup = {
+            enable = true;
+            serviceConfig = {
+                type = "oneshot";
+                ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "zsh-setup" ''
+                    for user in ${builtins.concatStringsSep " " (builtins.attrNames config.users.users)}; do
+                        mkdir -p /home/$user
+                        echo "# placeholder" > /home/$user/.zshrc
+                    done
+                ''}/bin/zsh-setup";
+            };
+            wantedBy = ["multi-user.target"];
+        };
     };
 
     users.mutableUsers = false;
