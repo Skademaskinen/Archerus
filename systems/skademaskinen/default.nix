@@ -5,7 +5,6 @@
 in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
-        (import nix-velocity { inherit pkgs lib config; })
         ./packages.nix
         ./modules
     ];
@@ -54,7 +53,7 @@ in {
         skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
-        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; }) pkgs.htop];
+        users.users.root.packages = [pkgs.nmap pkgs.htop];
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
             [
@@ -65,8 +64,8 @@ in {
                 from = "host";
                 host.port = server.server-port;
                 guest.port = server.server-port;
-            }) (builtins.attrValues config.skademaskinen.minecraft.servers))
-            (if (tools.attrLength config.skademaskinen.minecraft.servers) > 0 then 
+            }) (builtins.attrValues config.minecraft.servers))
+            (if (tools.attrLength config.minecraft.servers) > 0 then 
                 [{ from = "host"; host.port = 25565; guest.port = 25565; }]
             else
                 [])

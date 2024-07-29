@@ -19,7 +19,6 @@ in {
                     iportal-updated 
                     worldedit
                 ];
-                };
             };
             #survival = {
             #    server-port = 25567;
@@ -50,18 +49,12 @@ in {
                 difficulty = "hard";
                 type = "fabric";
                 version = "1.20.1";
-                mods = with nix-velocity.instances.mods [
+                mods = with nix-velocity.instances.mods; [
                     servux
                     immersive-portals
                     fabric-api
                     fabric-proxy-lite
-                    {
-                        name = "CrossStitch.jar"; 
-                        versions.${version} = pkgs.fetchurl {
-                            url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/dJioNlO8/crossstitch-0.1.6.jar";
-                            sha256 = "sha256-z1qsXFV5sc6xsr0loV8eLcySJvV2cBY60fhBsvkFuC4=";
-                        };
-                    }
+                    cross-stitch
                 ];
             };
             creative = {
@@ -72,9 +65,9 @@ in {
                 difficulty = "hard";
                 gamemode = "creative";
                 type = "fabric";
-                mods = with nix-velocity.instances.mods [
+                mods = with nix-velocity.instances.mods; [
                     servux
-                    worldedit 
+                    worldedit
                 ];
             };
             paradox = {

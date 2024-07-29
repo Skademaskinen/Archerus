@@ -35,6 +35,8 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
+                    { _module.args.nix-velocity = nix-velocity; }
+                    nix-velocity.nixosModules.default
                     ./systems/skademaskinen
 
                     ./shared/bootloader/systemd-boot.nix
