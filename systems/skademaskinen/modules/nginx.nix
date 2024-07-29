@@ -66,6 +66,14 @@ in {
             locations."/.well-known/matrix/server".return = ''200 "{\"m.server\":\"matrix.skade.dev:443\"}"'';
             locations."/.well-known/matrix/client".return = ''200 "{\"m.homeserver\":{\"base_url\":\"https://matrix.skade.dev\"}}"'';
         };
+        virtualHosts."map.${config.skademaskinen.domain}" = if doSSL then {
+            inherit sslCertificate;
+            inherit sslCertificateKey;
+            forceSSL = true;
+            locations."/".proxyPass = "http://localhost:25564";
+        } else {
+            locations."/".proxyPass = "http://localhost:25564";
+        };
         
     };
 }

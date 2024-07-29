@@ -76,6 +76,9 @@ in {
                 enforce-whitelist = true;
                 online-mode = false;
                 difficulty = "hard";
+                plugins = with nix-velocity.instances.plugins; [
+                    dynmap
+                ];
             };
         };
         fallback = "hub";
