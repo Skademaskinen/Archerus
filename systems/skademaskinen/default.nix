@@ -1,10 +1,11 @@
-{pkgs, lib, config, modulesPath, ...}: let
+{pkgs, lib, config, modulesPath, nix-velocity, ...}: let
     storage = "/mnt/raid";
     version = "23.11";
     tools = import ../../tools;
 in {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix") 
+        (import nix-velocity { inherit pkgs lib config; })
         ./packages.nix
         ./modules
     ];
@@ -53,7 +54,7 @@ in {
         skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
-        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; })];
+        users.users.root.packages = [pkgs.nmap (import ../../modules/minecraft/mc-cmd.nix { inherit config pkgs; }) pkgs.htop];
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
             [
@@ -72,6 +73,21 @@ in {
         ];
         virtualisation.graphics = false;
         environment.etc."nextcloud-admin-password".text = "1234";
+
+        # little bit of jank...
+        systemd.services.zsh-setup = {
+            enable = true;
+            serviceConfig = {
+                type = "oneshot";
+                ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "zsh-setup" ''
+                    for user in ${builtins.concatStringsSep " " (builtins.attrNames config.users.users)}; do
+                        mkdir -p /home/$user
+                        echo "# placeholder" > /home/$user/.zshrc
+                    done
+                ''}/bin/zsh-setup";
+            };
+            wantedBy = ["multi-user.target"];
+        };
     };
 
     users.mutableUsers = false;
