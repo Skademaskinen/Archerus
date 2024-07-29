@@ -50,10 +50,12 @@ in {
     virtualisation.vmVariant = {
         virtualisation.memorySize = 8192;
         virtualisation.cores = 4;
+        virtualisation.diskSize = 8192;
         skademaskinen.domain = "localhost";
 
         users.users.root.password = "1234";
         users.users.root.packages = [pkgs.nmap pkgs.htop];
+        users.users.root.shell = pkgs.zsh;
         services.getty.autologinUser = "root";
         virtualisation.forwardPorts = builtins.concatLists [
             [

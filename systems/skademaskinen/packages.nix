@@ -1,7 +1,8 @@
-{pkgs, ...}:{
+{pkgs, config, nix-velocity, ...}:{
     environment.systemPackages = with pkgs; [
         lynx
         sqlite-interactive
+        (nix-velocity.mc-cmd config)
     ];
     system.autoUpgrade = {
         enable = true;
