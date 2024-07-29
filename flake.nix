@@ -13,12 +13,11 @@
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-24.05";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-        nix-velocity.url = "github:Mast3rwaf1z/nix-velocity";
         #home-manager.url = "github:nix-community/home-manager";
         #home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-velocity }: 
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -34,9 +33,7 @@
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = builtins.concatLists [defconfig [
-                    { _module.args.nix-velocity = nix-velocity; }
-                    nix-velocity.nixosModules.default
+                modules = builtins.concatLists [defconfig [ 
                     ./systems/skademaskinen
 
                     ./shared/bootloader/systemd-boot.nix

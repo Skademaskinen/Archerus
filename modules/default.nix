@@ -1,5 +1,6 @@
 {lib, ...}: {
     imports = [
+        ./minecraft.nix
         ./putricide.nix
         ./rp-utils.nix
         ./mast3r-website.nix
