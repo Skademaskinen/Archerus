@@ -82,5 +82,6 @@ in {
         motd = "<#ff5500>[Skademaskinen]<reset>                     <u><https://${config.skademaskinen.domain}></u>\n<rainbow>Minecraft";
         icon = ../../../files/icon.png;
         prefix = config.skademaskinen.storage + "/minecraft";
+        host = config.skademaskinen.domain;
     };
 }
