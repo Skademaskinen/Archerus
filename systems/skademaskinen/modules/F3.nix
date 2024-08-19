@@ -1,16 +1,12 @@
 {config, pkgs, lib, ...}: let
     cfg = config.skademaskinen.F3;
 
-    frontend = pkgs.stdenv.mkDerivation rec {
-        name = "F3";
-        
-        src = pkgs.fetchFromGitHub {
-            owner = "Skademaskinen";
-            repo = name;
-            rev = "master";
-            sha256 = "sha256-gXPS6uNL9v17DOLjFhHPsgqqN41xzr7KNyblBMxQVUc=";
-        };
-    };
+    frontend = import "${(pkgs.fetchFromGitHub {
+        owner = "skademaskinen";
+        repo = "F3";
+        rev = "master";
+        sha256 = "sha256-Y0bvdhlALkpI+JvmLIT4dnAsMOQDVYF3uUgnCq0ebpA=";
+    })}/default.nix";
 in {
     options.skademaskinen.F3.port = lib.mkOption {
         type = lib.types.int;
@@ -22,7 +18,7 @@ in {
             SKADEMASKINEN_FRONTEND_PORT = builtins.toString cfg.port;
         };
         serviceConfig = {
-            ExecStart = "${config.skademaskinen.storage}/website/F3/result/bin/RunProdServer"; 
+            ExecStart = "${frontend.outputs.packages.x86_64-linux.default}/bin/RunProdServer"; 
         };
         wantedBy = ["default.target"];
     };
