@@ -77,11 +77,7 @@ in {
                 enforce-whitelist = true;
                 online-mode = false;
                 difficulty = "hard";
-                type = "fabric";
-                mods = with nix-velocity.instances.mods; [
-                    fabric-api
-                    fabric-proxy-lite
-                    servux
+                plugins = with nix-velocity.instances.plugins; [
                     dynmap
                 ];
             };
