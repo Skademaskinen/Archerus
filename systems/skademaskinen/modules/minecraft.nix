@@ -76,7 +76,10 @@ in {
                 enforce-whitelist = true;
                 online-mode = false;
                 difficulty = "hard";
-                plugins = with nix-velocity.instances.plugins; [
+                type = "fabric";
+                mods = with nix-velocity.instances.mods; [
+                    servux
+                    fabric-api
                     dynmap
                 ];
             };
@@ -86,5 +89,6 @@ in {
         icon = ../../../files/icon.png;
         prefix = config.skademaskinen.storage + "/minecraft";
         host = config.skademaskinen.domain;
+        eula = true;
     };
 }
