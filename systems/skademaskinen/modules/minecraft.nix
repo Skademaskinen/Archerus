@@ -66,6 +66,7 @@ in {
                 gamemode = "creative";
                 type = "fabric";
                 mods = with nix-velocity.instances.mods; [
+                    fabric-proxy-lite
                     servux
                     worldedit
                 ];
@@ -78,8 +79,9 @@ in {
                 difficulty = "hard";
                 type = "fabric";
                 mods = with nix-velocity.instances.mods; [
-                    servux
                     fabric-api
+                    fabric-proxy-lite
+                    servux
                     dynmap
                 ];
             };
