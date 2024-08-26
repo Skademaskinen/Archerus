@@ -14,11 +14,10 @@
         nixpkgs.url = "nixpkgs/nixos-24.05";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
         nix-velocity.url = "github:Mast3rwaf1z/nix-velocity";
-        #home-manager.url = "github:nix-community/home-manager";
-        #home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+        homepage.url = "github:Mast3rwaf1z/homepage";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-velocity }: 
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-velocity, homepage }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -37,6 +36,7 @@
                 modules = builtins.concatLists [defconfig [
                     { _module.args.nix-velocity = nix-velocity; }
                     nix-velocity.nixosModules.default
+                    homepage.nixosModules.${system}.default
                     ./systems/skademaskinen
 
                     ./shared/bootloader/systemd-boot.nix

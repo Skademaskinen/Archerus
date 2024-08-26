@@ -34,12 +34,12 @@ in {
             inherit sslCertificate;
             inherit sslCertificateKey;
             forceSSL = true;
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
+            locations."/".proxyPass = "http://localhost:${builtins.toString config.services.homepage.port}";
             
             locations."/.well-known/matrix/server".return = ''200 "{\"m.server\":\"matrix.skade.dev:443\"}"'';
             locations."/.well-known/matrix/client".return = ''200 "{\"m.homeserver\":{\"base_url\":\"https://matrix.skade.dev\"}}"'';
         } else {
-            locations."/".proxyPass = "http://localhost:${builtins.toString config.skademaskinen.mast3r.website.port}";
+            locations."/".proxyPass = "http://localhost:${builtins.toString config.services.homepage.port}";
             
             locations."/.well-known/matrix/server".return = ''200 "{\"m.server\":\"matrix.skade.dev:443\"}"'';
             locations."/.well-known/matrix/client".return = ''200 "{\"m.homeserver\":{\"base_url\":\"https://matrix.skade.dev\"}}"'';

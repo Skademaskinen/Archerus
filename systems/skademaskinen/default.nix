@@ -144,10 +144,6 @@ in {
             hostname = "localhost";
             port = 8000;
         };
-        mast3r.website = {
-            enable = true;
-            port = 8006;
-        };
         taoshi.website = {
             enable = true;
             port = 8004;
@@ -163,4 +159,10 @@ in {
         matrix.port = 8005;
     };
     globalEnvs.python.enable = true;
+
+    services.homepage = {
+        enable = true;
+        port = 8006;
+        db.path = "/var/db/homepage.db3";
+    };
 }
