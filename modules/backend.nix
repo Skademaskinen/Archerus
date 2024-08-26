@@ -1,9 +1,7 @@
-{pkgs, lib, config, ...}: 
-
-let
-        backend = pkgs.callPackage ../packages/backend { inherit config pkgs; };
+{pkgs, lib, config, ...}: let
+    backend = pkgs.callPackage ../packages/backend { inherit config pkgs; };
 in {
-    options.skademaskinen.mast3r.website = {
+    options.skademaskinen.mast3r.backend = {
         enable = lib.mkOption {
             type = lib.types.bool;
             default = false;
@@ -19,23 +17,23 @@ in {
     };
 
     config.systemd.services.backend = {
-        enable = config.skademaskinen.mast3r.website.enable;
+        enable = config.skademaskinen.mast3r.backend.enable;
         description = "mast3r_waf1z website database server";
         environment = {
             SQLITE3_PATH = "${pkgs.sqlite-interactive}/bin/sqlite3";
             LSBLK_PATH = "${pkgs.util-linux}/bin/lsblk";
         };
-        serviceConfig = if config.skademaskinen.mast3r.website.enable then {
+        serviceConfig = if config.skademaskinen.mast3r.backend.enable then {
             User = "mast3r";
             WorkingDirectory = "${config.skademaskinen.storage}/website/backend";
-            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.storage}/website/backend/db.db3 --hostname ${config.skademaskinen.mast3r.website.hostname} --port ${builtins.toString config.skademaskinen.mast3r.website.port} --keyfile ${config.skademaskinen.storage}/website/backend/keyfile";
+            ExecStart = "${pkgs.bash}/bin/bash ${backend}/bin/skademaskinen-backend -db ${config.skademaskinen.storage}/website/backend/db.db3 --hostname ${config.skademaskinen.mast3r.backend.hostname} --port ${builtins.toString config.skademaskinen.mast3r.backend.port} --keyfile ${config.skademaskinen.storage}/website/backend/keyfile";
             Restart = "on-failure";
         } else {};
         wantedBy = ["default.target"];
         after = ["backend-setup.service"];
     };
     config.systemd.services.backend-setup = {
-        enable = config.skademaskinen.mast3r.website.enable;
+        enable = config.skademaskinen.mast3r.backend.enable;
         serviceConfig = {
             type = "oneshot";
             ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "backend-setup" ''

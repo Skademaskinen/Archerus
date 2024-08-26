@@ -139,10 +139,14 @@ in {
             root = "${storage}/bots/rp-utils";
         };
 
-        mast3r.website = {
+        mast3r.backend = {
             enable = true;
             hostname = "localhost";
             port = 8000;
+        };
+        mast3r.website = {
+            enable = true;
+            port = 8006;
         };
         taoshi.website = {
             enable = true;

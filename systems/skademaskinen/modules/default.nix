@@ -3,7 +3,7 @@
         ./nginx.nix
         ./nextcloud.nix
         ./jupyter.nix
-        ./F3.nix
         ./minecraft.nix
+        ./website.nix
     ];
 }

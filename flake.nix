@@ -77,7 +77,6 @@
         };
 
         packages.${system} = {
-            backend = pkgs.callPackage ./packages/backend {};
             putricide = pkgs.callPackage ./packages/putricide {};
             rp-utils = pkgs.callPackage ./packages/rp-utils {};
             warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
