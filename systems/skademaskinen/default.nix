@@ -165,4 +165,7 @@ in {
         port = 8006;
         db.path = "/var/db/homepage.db3";
     };
+
+    # fixes for janky services?
+    systemd.services.NetworkManager-wait-online.enable = false;
 }
