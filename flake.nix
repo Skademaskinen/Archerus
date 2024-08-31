@@ -34,7 +34,12 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
-                    { _module.args.nix-velocity = nix-velocity; }
+                    { 
+                        _module.args = {
+                            nix-velocity = nix-velocity;
+                            homepage = homepage;
+                        };
+                    }
                     nix-velocity.nixosModules.default
                     homepage.nixosModules.${system}.default
                     ./systems/skademaskinen
