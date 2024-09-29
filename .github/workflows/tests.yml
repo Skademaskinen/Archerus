@@ -24,7 +24,5 @@ jobs:
         run: nix build .#warcraftlogsuploader
       - name: build-sketch-bot
         run: nix build .#sketch-bot
-      - name: build-rp-utils
-        run: nix build .#rp-utils
       - name: build-lavalink
         run: nix build .#lavalink
