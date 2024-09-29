@@ -13,11 +13,26 @@
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-24.05";
         nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-        nix-velocity.url = "github:Mast3rwaf1z/nix-velocity";
-        homepage.url = "github:Mast3rwaf1z/homepage";
+        system-manager = {
+            url = "github:numtide/system-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        nix-velocity = {
+            url = "github:Mast3rwaf1z/nix-velocity";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        homepage = {
+            url = "github:Mast3rwaf1z/homepage";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        nix-system-graphics = {
+            url = "github:soupglasses/nix-system-graphics";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.system-manager.follows = "system-manager";
+        };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-velocity, homepage }: 
+    outputs = { self, nixpkgs, nixpkgs-unstable, nix-velocity, homepage, system-manager, nix-system-graphics }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -30,54 +45,36 @@
             ./shared/programs/git.nix
         ];
     in rec {
-        nixosConfigurations = {
-            Skademaskinen = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [
-                    { 
-                        _module.args = {
-                            nix-velocity = nix-velocity;
-                            homepage = homepage;
-                        };
-                    }
-                    nix-velocity.nixosModules.default
-                    homepage.nixosModules.${system}.default
-                    ./systems/skademaskinen
+        nixosConfigurations.Skademaskinen = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = builtins.concatLists [defconfig [
+                { 
+                    _module.args = {
+                        nix-velocity = nix-velocity;
+                        homepage = homepage;
+                    };
+                }
+                nix-velocity.nixosModules.default
+                homepage.nixosModules.${system}.default
+                ./systems/skademaskinen
+                ./shared/bootloader/systemd-boot.nix
+                ./shared/users/mast3r.nix
+                ./shared/users/taoshi.nix
+            ]];
+        };
 
-                    ./shared/bootloader/systemd-boot.nix
-                    ./shared/users/mast3r.nix
-                    ./shared/users/taoshi.nix
-                ]];
-            };
-
-            router = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [
-                    ./systems/router
-                    ./shared/users/mast3r.nix
-                ]];
-            };
-            laptop = nixpkgs-unstable.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [ 
-                    ./systems/laptop 
-                    ./systems/laptop/free.nix 
-
-                    ./shared/bootloader/grub.nix
-                    ./shared/programs/sway.nix
-                    ./shared/programs/plasma.nix
-                    ./shared/users/mast3r.nix
-                ]];
-            };
-            desktop = nixpkgs-unstable.lib.nixosSystem {
-                inherit system;
-                modules = builtins.concatLists [defconfig [ 
-                    ./systems/desktop 
-
-                    ./shared/bootloader/systemd-boot.nix
-                    ./shared/programs/plasma.nix
-                    ./shared/users/mast3r.nix
-                ]];
+        # non-nixos systems
+        systemConfigs = {
+            default = system-manager.lib.makeSystemConfig {
+                modules = [
+                    nix-system-graphics.systemModules.default
+                    ({
+                        environment.systemPackages = [system-manager.packages.${system}.system-manager];
+                        nixpkgs.hostPlatform = "x86_64-linux";
+                        system-manager.allowAnyDistro = true;
+                        system-graphics.enable = true;
+                    })
+                ];
             };
         };
 
