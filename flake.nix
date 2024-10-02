@@ -32,7 +32,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, nix-velocity, homepage, system-manager, nix-system-graphics }: 
+    outputs = { self, nixpkgs, nix-velocity, homepage, system-manager, nix-system-graphics }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
