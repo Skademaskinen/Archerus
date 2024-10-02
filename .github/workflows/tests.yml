@@ -20,4 +20,4 @@ jobs:
       - name: Nix cache
         uses: DeterminateSystems/magic-nix-cache-action@main
       - name: build system
-        run: nix build .#${{ matrix.system }}
+        run: nix build .#${{ matrix.package }}
