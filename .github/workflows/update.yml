@@ -16,5 +16,4 @@ jobs:
       - name: update-flake-lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          inputs: nixpkgs
           pr-title: Update systems
