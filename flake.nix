@@ -11,12 +11,17 @@
     };
 
     inputs = {
+        # external depends
         nixpkgs.url = "nixpkgs/nixos-24.05";
-        nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
         system-manager = {
             url = "github:numtide/system-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nix-system-graphics = {
+            url = "github:soupglasses/nix-system-graphics";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        # personal project depends
         nix-velocity = {
             url = "github:Mast3rwaf1z/nix-velocity";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -24,11 +29,6 @@
         homepage = {
             url = "github:Mast3rwaf1z/homepage";
             inputs.nixpkgs.follows = "nixpkgs";
-        };
-        nix-system-graphics = {
-            url = "github:soupglasses/nix-system-graphics";
-            inputs.nixpkgs.follows = "nixpkgs";
-            inputs.system-manager.follows = "system-manager";
         };
     };
 
