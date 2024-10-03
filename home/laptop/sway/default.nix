@@ -21,7 +21,7 @@
                 size = 12.0;
             };
             position = "top";
-            statusCommand = import ../../utils/status.nix {inherit pkgs;};
+            statusCommand = import ../../common/status.nix {inherit pkgs;};
         }];
         colors.focused = {
             border = "#ff5500";
@@ -47,7 +47,7 @@
         input."type:keyboard".xkb_layout = "dk";
 
         output."*" = {
-            bg = "${../../utils/bg.png} fill mode 1920x1080";
+            bg = "${../../common/bg.png} fill mode 1920x1080";
         };
 
         startup = map (command: {command = command;}) [

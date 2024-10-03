@@ -1,4 +1,4 @@
-{pkgs, ...}: let 
+{pkgs, battery ? true, ...}: let 
     mkPy = script: "${pkgs.writeScriptBin "script.py" ''
         #!${pkgs.python312}/bin/python
         ${script}
@@ -53,7 +53,7 @@
             print(f"{int(float(out[0])*100)}% 🔊")
 
     '';
-in {battery ? true}: "${pkgs.writeScriptBin "status.sh" ''
+in "${pkgs.writeScriptBin "status.sh" ''
     #!${pkgs.bash}/bin/bash
     while true; do
         node=$(${getNode})

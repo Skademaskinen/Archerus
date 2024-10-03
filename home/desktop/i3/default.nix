@@ -19,7 +19,7 @@
                 size = 12.0;
             };
             position = "top";
-            statusCommand = import ../../common/status.nix {inherit pkgs;} {battery = false;};
+            statusCommand = import ../../common/status.nix {inherit pkgs; battery = false; };
         }];
         colors.focused = {
             border = "#ff5500";
