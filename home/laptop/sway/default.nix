@@ -1,4 +1,6 @@
-{pkgs, config, lib, ...}: {
+{pkgs, config, lib, ...}: 
+
+{
     enable = true;
     config = {
         bars = [{
@@ -37,7 +39,7 @@
         };
         window.border = 1;
         window.titlebar = false;
-        terminal = "${pkgs.kitty}/bin/kitty";
+        terminal = "${pkgs.alacritty}/bin/alacritty";
         gaps.inner = 3;
         gaps.outer = 3;
         modifier = "Mod4";

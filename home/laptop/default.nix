@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, config, lib, ... }:
+
+{
+    imports = [
+        ../common/alacritty.nix
+    ];
     home.username = "mast3r";
     home.homeDirectory = "/home/mast3r";
     home.stateVersion = "24.05";

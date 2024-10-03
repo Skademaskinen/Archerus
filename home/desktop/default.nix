@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
     imports = [
         ./packages.nix
-        ./i3.nix
+        ../common/alacritty.nix
     ];
     home.username = "mast3r";
     home.homeDirectory = "/home/mast3r";
@@ -20,4 +20,9 @@
     nixpkgs.config.allowUnfree = true;
 
     programs.home-manager.enable = true;
+
+    xsession.windowManager.i3 = import ./i3 {inherit pkgs config lib;};
+    services.picom = {
+        enable = true;
+    };
 }

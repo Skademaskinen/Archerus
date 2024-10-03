@@ -1,3 +1,5 @@
+{pkgs, config, ...}:
+
 {
     home.packages = with pkgs; [
         vesktop
@@ -28,8 +30,6 @@
             path = "${config.xdg.dataHome}/zsh/history";
         };
     };
-
-
     programs.direnv.enable = true;
 
     programs.git = {

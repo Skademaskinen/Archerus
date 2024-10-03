@@ -53,7 +53,7 @@
             print(f"{int(float(out[0])*100)}% 🔊")
 
     '';
-in "${pkgs.writeScriptBin "status.sh" ''
+in {battery ? true}: "${pkgs.writeScriptBin "status.sh" ''
     #!${pkgs.bash}/bin/bash
     while true; do
         node=$(${getNode})
@@ -61,8 +61,8 @@ in "${pkgs.writeScriptBin "status.sh" ''
         uptime_formatted=$(uptime | cut -d ',' -f1 | cut -d ' ' -f 4,5)
         linux_version=$(uname -r)
         network=$(${getNetwork})
-        battery=$(${getBattery})
+        ${if battery then "battery=$(${getBattery})" else ""}
         volume=$(${getVolume})
-        echo "$node | $network | $uptime_formatted | $linux_version 🐧 | $volume | $battery | $date_time"
+        echo "$node | $network | $uptime_formatted | $linux_version 🐧 | $volume ${if battery then "| $battery " else ""}| $date_time"
     done
 ''}/bin/status.sh"
