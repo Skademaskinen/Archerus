@@ -1,16 +1,26 @@
-{pkgs, ...}:
+{pkgs, lib, ...}:
 
 {
     programs.alacritty = {
         enable = true;
         settings = {
             window.opacity = 0.90;
+            window.padding = {
+                x = 5;
+                y = 5;
+            };
             colors.primary.background = "#000000";
-            font.size = 12.0;
-            font.normal.family = "FiraCode Nerd Font";
-            font.italic.family = "FiraCode Nerd Font";
-            font.bold.family = "FiraCode Nerd Font";
-            font.bold_italic.family = "FiraCode Nerd Font";
+            font = lib.mergeAttrs {
+                size = 12.0;
+            }
+            (builtins.mapAttrs (name: value: {
+                family = value;
+            }) {
+                normal = "FiraCode Nerd Font";
+                italic = "FiraCode Nerd Font";
+                bold = "FiraCode Nerd Font";
+                bold_italic = "FiraCode Nerd Font";
+            });
 
             cursor.style.shape = "Underline";
             cursor.style.blinking = "On";
