@@ -133,7 +133,7 @@ in {
     };
     services.rp-utils = {
         enable = true;
-        runtimeDir = "${storage}/bots/rp-utils";
+        runtimeDir = "${storage}/bots/rp-utils/app";
     };
     skademaskinen = {
         storage = storage;
