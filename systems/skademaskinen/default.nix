@@ -126,18 +126,17 @@ in {
     };
 
     # custom module settings
+    services.putricide = {
+        enable = true;
+        path = "${storage}/bots/Putricide";
+        args = [ "--disable-teams" ];
+    };
+    services.rp-utils = {
+        enable = true;
+        runtimeDir = "${storage}/bots/rp-utils";
+    };
     skademaskinen = {
         storage = storage;
-        putricide = {
-            enable = true;
-            config = "${storage}/bots/Putricide";
-            args = [ "--disable-teams" ];
-        };
-
-        rp-utils = {
-            enable = true;
-            root = "${storage}/bots/rp-utils";
-        };
 
         mast3r.backend = {
             enable = true;
