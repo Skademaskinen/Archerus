@@ -60,6 +60,7 @@
         keybindings = let
             modifier = config.wayland.windowManager.sway.config.modifier;
         in lib.mkOptionDefault {
+            "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ${../../common/bg.png}'';
             "${modifier}+p" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
             "XF86AudioMute" = ''exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle'';
             "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+";

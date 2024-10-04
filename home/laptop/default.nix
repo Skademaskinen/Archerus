@@ -20,7 +20,12 @@
     ];
 
     wayland.windowManager.sway = import ./sway {inherit pkgs config lib;};
-    programs.swaylock.enable = true;
+    programs.swaylock.enable = false;
+    programs.swaylock.settings = {
+        show-failed-attempts = true;
+        ignore-empty-password = true;
+
+    };
     programs.rofi = {
         enable = true;
         package = pkgs.rofi-wayland;
