@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        package: [putricide, banner, warcraftlogsuploader, sketch-bot, lavalink]
+        package: [banner, warcraftlogsuploader, sketch-bot, lavalink]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

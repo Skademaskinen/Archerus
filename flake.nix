@@ -30,9 +30,17 @@
             url = "github:Mast3rwaf1z/homepage";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        putricide = {
+            url = "github:Skademaskinen/Putricide";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        rp-utils = {
+            url = "github:Skademaskinen/RP-Utils";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = { self, nixpkgs, nix-velocity, homepage, system-manager, nix-system-graphics }: 
+    outputs = { self, nixpkgs, system-manager, nix-system-graphics, nix-velocity, homepage, putricide, rp-utils }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -56,6 +64,8 @@
                 }
                 nix-velocity.nixosModules.default
                 homepage.nixosModules.${system}.default
+                putricide.nixosModules.default
+                rp-utils.nixosModules.default
                 ./systems/skademaskinen
                 ./shared/bootloader/systemd-boot.nix
                 ./shared/users/mast3r.nix
@@ -79,8 +89,6 @@
         };
 
         packages.${system} = {
-            putricide = pkgs.callPackage ./packages/putricide {};
-            rp-utils = pkgs.callPackage ./packages/rp-utils {};
             warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
             banner = pkgs.callPackage ./packages/banner {};
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};

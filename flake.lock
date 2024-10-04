@@ -57,6 +57,24 @@
         "systems": "systems"
       },
       "locked": {
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_2"
+      },
+      "locked": {
         "lastModified": 1726560853,
         "narHash": "sha256-X6rJYSESBVr3hBoH0WbKE5KvhPU5bloyZ2L4K60/fPQ=",
         "owner": "numtide",
@@ -89,6 +107,29 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gradle2nix": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "rp-utils",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1721151836,
+        "narHash": "sha256-v6O9fE2GBoo/i4qrc5co7KckIv5TTamRXrdltjal1Yw=",
+        "owner": "tadfisher",
+        "repo": "gradle2nix",
+        "rev": "b33693bc6b6ebd1c3633435d9d0833f665fb12d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tadfisher",
+        "ref": "v2",
+        "repo": "gradle2nix",
         "type": "github"
       }
     },
@@ -228,13 +269,56 @@
         "type": "github"
       }
     },
+    "putricide": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1727954647,
+        "narHash": "sha256-AYYxOWOzI5RsMX33FlyjDBX8yVktL9oW9lNBkQWWRTg=",
+        "owner": "Skademaskinen",
+        "repo": "Putricide",
+        "rev": "79538027f5de8ca2bb3172034e1cedcb8237318a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Skademaskinen",
+        "repo": "Putricide",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "homepage": "homepage",
         "nix-system-graphics": "nix-system-graphics",
         "nix-velocity": "nix-velocity",
         "nixpkgs": "nixpkgs",
+        "putricide": "putricide",
+        "rp-utils": "rp-utils",
         "system-manager": "system-manager"
+      }
+    },
+    "rp-utils": {
+      "inputs": {
+        "gradle2nix": "gradle2nix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1728048432,
+        "narHash": "sha256-HsXps1ofu+4SWDq9Bq+Ha5EX3RClYAmlyDVVEmJPr/Q=",
+        "owner": "Skademaskinen",
+        "repo": "RP-Utils",
+        "rev": "935d84bced577f6ce960e60be9c608f7ce70d304",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Skademaskinen",
+        "repo": "RP-Utils",
+        "type": "github"
       }
     },
     "rust-overlay": {
@@ -262,7 +346,7 @@
       "inputs": {
         "crane": "crane",
         "devshell": "devshell",
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "nix-vm-test": "nix-vm-test",
         "nixpkgs": [
           "nixpkgs"
@@ -286,6 +370,21 @@
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
