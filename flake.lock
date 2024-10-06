@@ -160,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1727877914,
-        "narHash": "sha256-Qj7OnAo75t2MPMqIlYwK/ePS1uu7vrP52n9uvOy3wY0=",
+        "lastModified": 1727939576,
+        "narHash": "sha256-bXUuM2wz1ZR47xxqkyt6+ZLM3xwL/h/soOiAOAXySNM=",
         "owner": "soupglasses",
         "repo": "nix-system-graphics",
-        "rev": "be11c4b6ed8f1e716f270844ea15d0df7992ba10",
+        "rev": "22790d2e4a2d1cbdd3ce5d0a87150bb3925e6b3f",
         "type": "github"
       },
       "original": {
@@ -216,11 +216,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1727672256,
-        "narHash": "sha256-9/79hjQc9+xyH+QxeMcRsA6hDyw6Z9Eo1/oxjvwirLk=",
+        "lastModified": 1728067476,
+        "narHash": "sha256-/uJcVXuBt+VFCPQIX+4YnYrHaubJSx4HoNsJVNRgANM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1719f27dd95fd4206afb9cec9f415b539978827e",
+        "rev": "6e6b3dd395c3b1eb9be9f2d096383a8d05add030",
         "type": "github"
       },
       "original": {
@@ -356,11 +356,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1727690685,
-        "narHash": "sha256-LFGErfh4NCMPCcZhN4zs5Uf2eb3Q5303Q1u5Ff/VcYo=",
+        "lastModified": 1727949733,
+        "narHash": "sha256-P1vkg1emLv1PhXqQlaVRRacIARCD7Fb9voRABIZ588s=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "ec0fe295baa1fb7954a678132076058b75dc941e",
+        "rev": "2a122fc0d8235f842efee0a2b05e23ee1a0e4bb2",
         "type": "github"
       },
       "original": {
