@@ -15,10 +15,10 @@
             (builtins.mapAttrs (name: value: {
                 family = value;
             }) {
-                normal = "Fira Code";
-                italic = "Fira Code";
-                bold = "Fira Code";
-                bold_italic = "Fira Code";
+                normal = "FiraCode Nerd Font";
+                italic = "FiraCode Nerd Font";
+                bold = "FiraCode Nerd Font";
+                bold_italic = "FiraCode Nerd Font";
             });
 
             cursor.style.shape = "Underline";

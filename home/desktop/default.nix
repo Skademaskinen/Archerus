@@ -21,4 +21,9 @@
     services.picom = {
         enable = true;
     };
+
+    programs.rofi = {
+        enable = true;
+        theme = "sidebar";
+    };
 }
