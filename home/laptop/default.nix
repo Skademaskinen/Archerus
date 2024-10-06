@@ -2,7 +2,7 @@
 
 {
     imports = [
-        ../common/alacritty.nix
+        ../common
     ];
     home.username = "mast3r";
     home.homeDirectory = "/home/mast3r";
@@ -36,11 +36,6 @@
     programs.neovim.enable = true;
     
     home.file = {
-    };
-    
-    home.sessionVariables = {
-        EDITOR="nvim";
-        PROMPT="%F{166}%n%f@%F{166}%m%f %F{7}%~%f%F{166} λ %f";
     };
 
     programs.home-manager.enable = true;
