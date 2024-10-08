@@ -113,6 +113,18 @@ in {
     services.mysql.enable = true;
     services.mysql.dataDir = "/mnt/raid/mysql";
     services.mysql.package = pkgs.mysql;
+    services.mysql.ensureUsers = [
+        {
+            name = config.services.homepage.db.user;
+            ensurePermissions."${config.services.homepage.db.name}.*" = "ALL PRIVILEGES";
+        }
+        {
+            name = "${config.services.homepage.db.user}@localhost";
+            ensurePermissions."${config.services.homepage.db.name}.*" = "ALL PRIVILEGES";
+        }
+    ];
+    services.mysql.ensureDatabases = ["homepage"];
+
     systemd.services.mysql-setup = {
         enable = true;
         serviceConfig = {
@@ -162,7 +174,8 @@ in {
     services.homepage = {
         enable = true;
         port = 8006;
-        db.path = "/var/db/homepage.db3";
+        db.name = "homepage";
+        db.user = "homepage";
     };
 
     # fixes for janky services?
