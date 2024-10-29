@@ -17,6 +17,8 @@
         tigervnc
         element-desktop
 	    teams-for-linux
+        signal-desktop
+        okular
     ];
 
     wayland.windowManager.sway = import ./sway {inherit pkgs config lib;};

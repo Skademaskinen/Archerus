@@ -44,7 +44,14 @@
         gaps.outer = 3;
         modifier = "Mod4";
         menu = "${pkgs.rofi}/bin/rofi -show run";
-        input."type:keyboard".xkb_layout = "dk";
+        input."type:keyboard" = {
+            xkb_layout = "dk";
+        };
+        input."type:touchpad" = {
+            dwt = "enabled";
+            tap = "enabled";
+            middle_emulation = "enabled";
+        };
 
         output."*" = {
             bg = "${../../common/bg.png} fill mode 1920x1080";
@@ -62,6 +69,7 @@
         in lib.mkOptionDefault {
             "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ${../../common/bg.png}'';
             "${modifier}+p" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
+            "Ctrl+Shift+Mod1+${modifier}+l" = "exec ${pkgs.xdg-utils}/bin/xdg-open https://linkedin.com";
             "XF86AudioMute" = ''exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle'';
             "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+";
             "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-";
