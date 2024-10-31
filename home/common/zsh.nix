@@ -10,7 +10,7 @@
             edit = "${pkgs.home-manager}/bin/home-manager edit";
             switch = "${pkgs.home-manager}/bin/home-manager switch";
             ls = "ls --color";
-            vim = "${pkgs.neovim}/bin/nvim";
+            vim = "nvim";
             nix-repl = ''${pkgs.nix}/bin/nix repl --expr "import <nixpkgs> {}"'';
         };
         history = {

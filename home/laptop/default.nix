@@ -3,6 +3,7 @@
 {
     imports = [
         ../common
+
     ];
     home.username = "mast3r";
     home.homeDirectory = "/home/mast3r";
@@ -13,12 +14,15 @@
         thunderbird
         hyfetch
         rofi-wayland
-        cinny-desktop
         tigervnc
         element-desktop
 	    teams-for-linux
         signal-desktop
         okular
+        feh
+        (python312.withPackages (py: with py; [
+            ipython
+        ]))
     ];
 
     wayland.windowManager.sway = import ./sway {inherit pkgs config lib;};
@@ -35,7 +39,6 @@
     };
 
     nixpkgs.config.allowUnfree = true;
-    programs.neovim.enable = true;
     
     home.file = {
     };

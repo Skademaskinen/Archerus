@@ -64,6 +64,15 @@
 
         defaultWorkspace = "workspace number 1";
 
+        floating.criteria = [
+            {
+                class = "feh";
+            }
+            {
+                class = "ffplay";
+            }
+        ];
+
         keybindings = let
             modifier = config.wayland.windowManager.sway.config.modifier;
         in lib.mkOptionDefault {

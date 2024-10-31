@@ -2,6 +2,7 @@
     imports = [
         ./alacritty.nix
         ./zsh.nix
+	./neovim
     ];
     home.sessionVariables = {
         EDITOR="nvim";
