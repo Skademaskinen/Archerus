@@ -11,6 +11,7 @@
     home.packages = with pkgs; [
         firefox
         discord
+        vesktop
         thunderbird
         hyfetch
         rofi-wayland

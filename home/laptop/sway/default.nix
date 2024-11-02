@@ -1,6 +1,8 @@
 {pkgs, config, lib, ...}: 
 
 {
+    package = pkgs.swayfx;
+    checkConfig = false;
     enable = true;
     config = {
         bars = [{
@@ -43,7 +45,7 @@
         gaps.inner = 3;
         gaps.outer = 3;
         modifier = "Mod4";
-        menu = "${pkgs.rofi}/bin/rofi -show run";
+        menu = "${pkgs.rofi-wayland}/bin/rofi -show run";
         input."type:keyboard" = {
             xkb_layout = "dk";
         };
@@ -84,4 +86,5 @@
             "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-";
         };
     };
+    extraConfig = "corner_radius 10";
 }

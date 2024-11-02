@@ -12,7 +12,9 @@
 
     inputs = {
         # external depends
-        nixpkgs.url = "nixpkgs/nixos-24.05";
+        nixpkgs = {
+            url = "nixpkgs/nixos-24.05";
+        };
         system-manager = {
             url = "github:numtide/system-manager";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -75,14 +77,27 @@
 
         # non-nixos systems
         systemConfigs = {
-            default = system-manager.lib.makeSystemConfig {
+            desktop = system-manager.lib.makeSystemConfig {
                 modules = [
                     nix-system-graphics.systemModules.default
                     ({
                         environment.systemPackages = [system-manager.packages.${system}.system-manager];
-                        nixpkgs.hostPlatform = "x86_64-linux";
+                        nixpkgs.hostPlatform = system;
                         system-manager.allowAnyDistro = true;
                         system-graphics.enable = true;
+                    })
+                ];
+            };
+            laptop = system-manager.lib.makeSystemConfig {
+                modules = [
+                    nix-system-graphics.systemModules.default
+                    ({
+                        environment.systemPackages = [system-manager.packages.${system}.system-manager];
+                        nixpkgs.hostPlatform = system;
+                        system-manager.allowAnyDistro = true;
+                        system-graphics = {
+                            enable = true;
+                        };
                     })
                 ];
             };
