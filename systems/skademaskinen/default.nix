@@ -176,6 +176,7 @@ in {
         port = 8006;
         db.name = "homepage";
         db.user = "homepage";
+        editor.root = "${storage}/homepage/editor";
     };
 
     # fixes for janky services?
