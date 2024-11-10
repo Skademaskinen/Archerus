@@ -6,6 +6,7 @@
       # LazyVim
       lua-language-server
       haskell-language-server
+      jdt-language-server
       stylua
       # Telescope
       ripgrep
@@ -13,6 +14,9 @@
 
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
+      nvim-jdtls
+      mason-nvim
+      mason-lspconfig-nvim
     ];
     enable = true;
 
@@ -69,6 +73,9 @@
           { name = "mini.pairs"; path = mini-nvim; }
           { name = "mini.surround"; path = mini-nvim; }
           haskell-tools-nvim
+          nvim-jdtls
+          mason-nvim
+          mason-lspconfig-nvim
         ];
         mkEntryFromDrv = drv:
           if lib.isDerivation drv then
@@ -95,8 +102,8 @@
             -- force enable telescope-fzf-native.nvim
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
             -- disable mason.nvim, use programs.neovim.extraPackages
-            { "williamboman/mason-lspconfig.nvim", enabled = false },
-            { "williamboman/mason.nvim", enabled = false },
+            { "williamboman/mason-lspconfig.nvim", enabled = true },
+            { "williamboman/mason.nvim", enabled = true },
             -- import/override with your plugins
             { import = "plugins" },
             -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
@@ -116,6 +123,7 @@
           c
           lua
           haskell
+          java
         ])).dependencies;
       };
     in

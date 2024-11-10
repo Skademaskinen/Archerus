@@ -10,6 +10,9 @@
         gimp
         mesa
         okular
+        neovide
+        signal-desktop
+        waypipe
     ];
     programs.firefox.enable = true;
 
