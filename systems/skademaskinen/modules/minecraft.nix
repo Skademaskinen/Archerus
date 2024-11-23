@@ -55,6 +55,7 @@ in {
                     fabric-api
                     fabric-proxy-lite
                     cross-stitch
+                    create
                 ];
             };
             creative = {
