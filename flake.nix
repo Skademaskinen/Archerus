@@ -32,6 +32,10 @@
             url = "github:Mast3rwaf1z/homepage";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        folkevognen = {
+            url = "github:Mast3rwaf1z/Folkevognen";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         putricide = {
             url = "github:Skademaskinen/Putricide";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -42,7 +46,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, system-manager, nix-system-graphics, nix-velocity, homepage, putricide, rp-utils }: 
+    outputs = { self, nixpkgs, system-manager, nix-system-graphics, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -72,6 +76,19 @@
                 ./shared/bootloader/systemd-boot.nix
                 ./shared/users/mast3r.nix
                 ./shared/users/taoshi.nix
+                {
+                    # TODO: fix at some point
+                    systemd.services.folkevognen = {
+                        enable = true;
+                        description = "Folkevognen";
+                        wantedBy = [ "multi-user.target" ];
+                        serviceConfig = {
+                            WorkingDirectory = "/mnt/raid/folkevognen";
+                            ExecStart = "${folkevognen.packages.${system}.default}/bin/folkevognen";
+                            User = "mast3r";
+                        };
+                    };
+                }
             ]];
         };
 
