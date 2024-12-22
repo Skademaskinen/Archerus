@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734876067,
-        "narHash": "sha256-+6PNTbP13HqkurC7A/2RymMfnZ6qrQ4oa1HGr/1ucqI=",
+        "lastModified": 1734882745,
+        "narHash": "sha256-G1zRM3W+2h+djjf/O6KJVn6EcT7VunBLJOD3KvGkRbI=",
         "owner": "Mast3rwaf1z",
         "repo": "Folkevognen",
-        "rev": "016a95cde2db5a154b5bf5c00412e01a3120aec5",
+        "rev": "07d48c6e085f551820eb4d79f3f06a15436a571b",
         "type": "github"
       },
       "original": {
