@@ -130,11 +130,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1729864290,
-        "narHash": "sha256-BBMfemVn4J0HKZ5DFFJf7pfgc9AJijbA7rliSzWFb8s=",
+        "lastModified": 1737457219,
+        "narHash": "sha256-nX9dxoATDCSQgWw/iv6BngXDJEyHVYYEvHEVQ7Ig3fI=",
         "owner": "soupglasses",
         "repo": "nix-system-graphics",
-        "rev": "5a8d749e977090c7f8c5b920b13262174b2d7b55",
+        "rev": "9c875e0c56cf2eb272b9102a4f3e24e4e31629fd",
         "type": "github"
       },
       "original": {
@@ -165,11 +165,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1732749044,
-        "narHash": "sha256-T38FQOg0BV5M8FN1712fovzNakSOENEYs+CSkg31C9Y=",
+        "lastModified": 1735563628,
+        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0c5b4ecbed5b155b705336aa96d878e55acd8685",
+        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
         "type": "github"
       },
       "original": {
@@ -238,11 +238,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732036556,
-        "narHash": "sha256-S2v43hSrx1cOTs7ahlZQx/I3ZaQkX7BiMzPiCaOdqXo=",
+        "lastModified": 1736722307,
+        "narHash": "sha256-2D+CqiHHzuiT+thjuNCMYQXXKQSAZSS1rtAxBV4A1Q0=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "cb01c5c4dd8eaa07a08888602f37bcaf80b0681a",
+        "rev": "196586a97d2b9be12e0b8e646ac1ec4f213cc9cd",
         "type": "github"
       },
       "original": {
