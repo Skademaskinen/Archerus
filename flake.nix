@@ -13,7 +13,7 @@
     inputs = {
         # external depends
         nixpkgs = {
-            url = "nixpkgs/nixos-24.05";
+            url = "nixpkgs/nixos-24.11";
         };
         system-manager = {
             url = "github:numtide/system-manager";
@@ -98,7 +98,6 @@
                     ./systems/laptop
                     ./shared/bootloader/grub.nix
                     ./shared/users/mast3r.nix
-                    ./shared/programs/sway.nix
                 ]];
             };
         };
