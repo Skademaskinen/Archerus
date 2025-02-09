@@ -9,6 +9,28 @@
     home-manager.useUserPackages = true;
     home-manager.users.mast3r = import ./home;
 
+    # quick hack to make swayfx understand it should run with proprietary nvidia drivers
+    services.displayManager.sessionPackages = let
+        swayfx-session = pkgs.stdenv.mkDerivation {
+            pname = "swayfx";
+            name = "swayfx";
+            version = "latest";
+            src = pkgs.swayfx;
+            installPhase = ''
+                mkdir -p $out/share/wayland-sessions
+                sed "s/Exec=sway/Exec=sway --unsupported-gpu/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
+            '';
+            passthru.providedSessions = ["sway"];
+        };
+    in [swayfx-session];
+
+    services.displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+        wayland.compositor = "weston";
+    };
+
+
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
         services.pipewire = {
@@ -35,6 +57,7 @@
         gobject-introspection
 
     ];
+    programs.firefox.enable = true;
     fonts.packages = with pkgs; [
         fira
         fira-mono
