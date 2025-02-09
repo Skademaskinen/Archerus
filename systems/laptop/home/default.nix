@@ -1,7 +1,9 @@
 {config, ...}:
 
 {
-    wayland.windowManager.sway = import ./sway;
+    imports = [
+        ./sway
+    ];
     home = {
         stateVersion = "24.11";
     };

@@ -9,13 +9,6 @@
     home-manager.useUserPackages = true;
     home-manager.users.mast3r = import ./home;
 
-    services.displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-        wayland.compositor = "weston";
-    };
-    services.desktopManager.plasma6.enable = true;
-
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
         services.pipewire = {
@@ -24,8 +17,6 @@
         alsa.support32Bit = true;
         pulse.enable = true;
     };
-    services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "mast3r";
     nixpkgs.config.allowUnfree = true;
 
     programs.neovim.enable = true;
