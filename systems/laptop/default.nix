@@ -1,17 +1,72 @@
-{pkgs, ...}:
+{pkgs, config, ...}:
 
 {
-    programs.sway = {
-        enable = true;
-        package = pkgs.swayfx;
-        extraOptions = ["--unsupported-gpu"];
-    };
+    imports = [
+        ./hardware-configuration.nix
+    ];
+
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.mast3r = import ./home;
+
     services.displayManager.sddm = {
         enable = true;
         wayland.enable = true;
         wayland.compositor = "weston";
+    };
+    services.desktopManager.plasma6.enable = true;
 
+    hardware.pulseaudio.enable = false;
+        security.rtkit.enable = true;
+        services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+    };
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "mast3r";
+    nixpkgs.config.allowUnfree = true;
+
+    programs.neovim.enable = true;
+    environment.systemPackages = with pkgs; [
+        neovim
+        alacritty
+        cargo
+        python3
+        unzip
+        nodejs
+        discord
+        spotify
+        kdePackages.breeze-gtk
+        kdePackages.breeze-icons
+        gtk3
+        gobject-introspection
+
+    ];
+    fonts.packages = with pkgs; [
+        fira
+        fira-mono
+    ];
+
+    hardware.graphics = {
+        enable = true;
     };
 
+    services.xserver.videoDrivers = ["nvidia"];
+
+    hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = false;
+        powerManagement.finegrained = false;
+        open = false;
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        prime.intelBusId = "PCI:0:2:0";
+        prime.nvidiaBusId = "PCI:1:0:0";
+        prime.sync.enable = true;
+    };
+
+    networking.hostName = "laptop";
     system.stateVersion = "24.11";
 }

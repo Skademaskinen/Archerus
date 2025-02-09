@@ -23,6 +23,10 @@
             url = "github:soupglasses/nix-system-graphics";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        home-manager = {
+            url = "github:nix-community/home-manager/release-24.11";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         # personal project depends
         nix-velocity = {
             url = "github:Mast3rwaf1z/nix-velocity";
@@ -46,7 +50,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, system-manager, nix-system-graphics, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
+    outputs = { self, nixpkgs, system-manager, nix-system-graphics, home-manager, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -95,6 +99,7 @@
             laptop = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
+                    home-manager.nixosModules.home-manager
                     ./systems/laptop
                     ./shared/bootloader/grub.nix
                     ./shared/users/mast3r.nix
@@ -137,6 +142,7 @@
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
             systems = builtins.mapAttrs (key: value: value.config.system.build.vm) self.nixosConfigurations;
+            azote = pkgs.callPackage ./systems/laptop/sway/nwg-packages/azote.nix {};
         };
     };
 }

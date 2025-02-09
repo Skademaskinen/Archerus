@@ -4,7 +4,7 @@
         efiSupport = true;
         useOSProber = true;
         device = "nodev";
-        splashImage = "/boot/grub/bg.png";
+        splashImage = "/etc/nixos-assets/wallpaper.png";
     };
         
     boot.loader.efi.canTouchEfiVariables = true;
