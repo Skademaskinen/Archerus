@@ -3,6 +3,7 @@
 {
     imports = [
         ./hardware-configuration.nix
+        ./plymouth
     ];
 
     home-manager.useGlobalPkgs = true;
@@ -28,8 +29,16 @@
         enable = true;
         wayland.enable = true;
         wayland.compositor = "weston";
+        theme = "breeze";
     };
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "mast3r";
+    services.displayManager.defaultSession = "sway";
 
+    programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+    };
 
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
@@ -61,6 +70,7 @@
     fonts.packages = with pkgs; [
         fira
         fira-mono
+        nerdfonts
     ];
 
     hardware.graphics = {
@@ -78,8 +88,13 @@
         package = config.boot.kernelPackages.nvidiaPackages.stable;
         prime.intelBusId = "PCI:0:2:0";
         prime.nvidiaBusId = "PCI:1:0:0";
-        prime.sync.enable = true;
+        #prime.sync.enable = true;
     };
+
+
+    programs.steam.enable = true;
+    programs.gamescope.enable = true;
+    programs.steam.gamescopeSession.enable = true;
 
     networking.hostName = "laptop";
     system.stateVersion = "24.11";

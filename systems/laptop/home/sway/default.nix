@@ -8,26 +8,7 @@
         systemd.enable = true;
         xwayland = true;
         config = {
-            bars = [{
-                colors.statusline = "#ffffff";
-                colors.background = "#00000088";
-                colors.inactiveWorkspace = {
-                    background = "#000000";
-                    border = "#32323200";
-                    text = "#555555";
-                };
-                colors.focusedWorkspace = {
-                    background = "#000000";
-                    border = "#ff5500";
-                    text = "#ffffff";
-                };
-                fonts = {
-                    names = ["firacode"];
-                    size = 12.0;
-                };
-                position = "top";
-                statusCommand = import ./status.nix {inherit pkgs;};
-            }];
+            bars = [];
             colors.focused = {
                 border = "#ff5500";
                 background = "#00000077";
@@ -48,7 +29,7 @@
             gaps.inner = 3;
             gaps.outer = 3;
             modifier = "Mod4";
-            menu = "${pkgs.rofi-wayland}/bin/rofi -show run";
+            menu = import ./nwg/drawer.nix { inherit pkgs; };
             input."type:keyboard" = {
                 xkb_layout = "dk";
             };
@@ -62,8 +43,14 @@
                 bg = "~/Pictures/wallpaper.png fill mode 1920x1080";
             };
 
-            startup = map (command: {command = command;}) [
-                "${pkgs.dunst}/bin/dunst"
+            startup = [
+                {
+                    command = import ./nwg/panel.nix { inherit pkgs; };
+                    always = true;
+                }
+                {
+                    command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
+                }
             ];
 
             defaultWorkspace = "workspace number 1";
@@ -82,15 +69,59 @@
             in lib.mkOptionDefault {
                 "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ~/Pictures/wallpaper.png'';
                 "${modifier}+p" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
+                "${modifier}+n" = ''exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t'';
+                "${modifier}+b" = "border toggle";
                 "Ctrl+Shift+Mod1+${modifier}+l" = "exec ${pkgs.xdg-utils}/bin/xdg-open https://linkedin.com";
                 "XF86AudioMute" = ''exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle'';
                 "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+";
                 "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-";
             };
         };
-        extraConfig = "corner_radius 10";
+        extraConfig = ''
+            corner_radius 10
+            for_window [title="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
+        '';
 
     };
+    home.packages = with pkgs; [
+        foot
+        gnome-themes-extra
+        gopsuinfo
+        grim
+        gtklock
+        gtklock-playerctl-module
+        gtklock-powerbar-module
+        gtklock-userinfo-module
+        imagemagick
+        jq
+        libappindicator-gtk3
+        networkmanagerapplet
+        nwg-clipman
+        nwg-displays
+        nwg-dock
+        nwg-drawer
+        nwg-hello
+        #nwg-icon-picker
+        nwg-look
+        nwg-menu
+        nwg-panel
+        #nwg-readme-browser
+        #nwg-shell-config
+        #nwg-shell-wallpapers
+        papirus-icon-theme
+        playerctl
+        polkit_gnome
+        slurp
+        swappy
+        swaybg
+        swayidle
+        swaylock
+        swaynotificationcenter
+        wl-clipboard
+        wlsunset
+        xdg-user-dirs
+    ];
+
     programs.swaylock = {
         enable = true;
 
@@ -106,6 +137,12 @@
     };
     services.swayosd = {
         enable = true;
+    };
+
+    programs.rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
+        theme = "sidebar";
     };
 
 }

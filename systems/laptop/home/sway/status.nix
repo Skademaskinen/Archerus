@@ -58,7 +58,7 @@ in "${pkgs.writeScriptBin "status.sh" ''
     while true; do
         node=$(${getNode})
         date_time=$(date +'%Y-%m-%d %X')
-        uptime_formatted=$(uptime | cut -d ',' -f1 | cut -d ' ' -f 4,5)
+        uptime_formatted=$(uptime | cut -d ',' -f1 | cut -d ' ' -f 7,8)
         linux_version=$(uname -r)
         network=$(${getNetwork})
         ${if battery then "battery=$(${getBattery})" else ""}
