@@ -1,0 +1,101 @@
+{pkgs, config, ...}:
+
+{
+    imports = [
+        ./hardware-configuration.nix
+        ./plymouth
+    ];
+
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.mast3r = import ./home;
+
+    # quick hack to make swayfx understand it should run with proprietary nvidia drivers
+    services.displayManager.sessionPackages = let
+        swayfx-session = pkgs.stdenv.mkDerivation {
+            pname = "swayfx";
+            name = "swayfx";
+            version = "latest";
+            src = pkgs.swayfx;
+            installPhase = ''
+                mkdir -p $out/share/wayland-sessions
+                sed "s/Exec=sway/Exec=sway --unsupported-gpu/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
+            '';
+            passthru.providedSessions = ["sway"];
+        };
+    in [swayfx-session];
+
+    services.displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+        wayland.compositor = "weston";
+        theme = "breeze";
+    };
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "mast3r";
+    services.displayManager.defaultSession = "sway";
+
+    programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+    };
+
+    hardware.pulseaudio.enable = false;
+        security.rtkit.enable = true;
+        services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+    };
+    nixpkgs.config.allowUnfree = true;
+
+    programs.neovim.enable = true;
+    environment.systemPackages = with pkgs; [
+        neovim
+        alacritty
+        cargo
+        python3
+        unzip
+        nodejs
+        discord
+        spotify
+        kdePackages.breeze-gtk
+        kdePackages.breeze-icons
+        gtk3
+        gobject-introspection
+
+    ];
+    programs.firefox.enable = true;
+    fonts.packages = with pkgs; [
+        fira
+        fira-mono
+        nerdfonts
+    ];
+
+    hardware.graphics = {
+        enable = true;
+    };
+
+    services.xserver.videoDrivers = ["nvidia"];
+
+    hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = false;
+        powerManagement.finegrained = false;
+        open = false;
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        prime.intelBusId = "PCI:0:2:0";
+        prime.nvidiaBusId = "PCI:1:0:0";
+        #prime.sync.enable = true;
+    };
+
+
+    programs.steam.enable = true;
+    programs.gamescope.enable = true;
+    programs.steam.gamescopeSession.enable = true;
+
+    networking.hostName = "laptop";
+    system.stateVersion = "24.11";
+}

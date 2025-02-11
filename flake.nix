@@ -13,7 +13,7 @@
     inputs = {
         # external depends
         nixpkgs = {
-            url = "nixpkgs/nixos-24.05";
+            url = "nixpkgs/nixos-24.11";
         };
         system-manager = {
             url = "github:numtide/system-manager";
@@ -21,6 +21,10 @@
         };
         nix-system-graphics = {
             url = "github:soupglasses/nix-system-graphics";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        home-manager = {
+            url = "github:nix-community/home-manager/release-24.11";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         # personal project depends
@@ -46,7 +50,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, system-manager, nix-system-graphics, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
+    outputs = { self, nixpkgs, system-manager, nix-system-graphics, home-manager, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
@@ -59,37 +63,48 @@
             ./shared/programs/git.nix
         ];
     in rec {
-        nixosConfigurations.Skademaskinen = nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = builtins.concatLists [defconfig [
-                { 
-                    _module.args = {
-                        nix-velocity = nix-velocity;
-                        homepage = homepage;
-                    };
-                }
-                nix-velocity.nixosModules.default
-                homepage.nixosModules.${system}.default
-                putricide.nixosModules.default
-                rp-utils.nixosModules.default
-                ./systems/skademaskinen
-                ./shared/bootloader/systemd-boot.nix
-                ./shared/users/mast3r.nix
-                ./shared/users/taoshi.nix
-                {
-                    # TODO: fix at some point
-                    systemd.services.folkevognen = {
-                        enable = true;
-                        description = "Folkevognen";
-                        wantedBy = [ "multi-user.target" ];
-                        serviceConfig = {
-                            WorkingDirectory = "/mnt/raid/folkevognen";
-                            ExecStart = "${folkevognen.packages.${system}.default}/bin/folkevognen";
-                            User = "mast3r";
+        nixosConfigurations = {
+            Skademaskinen = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [
+                    { 
+                        _module.args = {
+                            nix-velocity = nix-velocity;
+                            homepage = homepage;
                         };
-                    };
-                }
-            ]];
+                    }
+                    nix-velocity.nixosModules.default
+                    homepage.nixosModules.${system}.default
+                    putricide.nixosModules.default
+                    rp-utils.nixosModules.default
+                    ./systems/skademaskinen
+                    ./shared/bootloader/systemd-boot.nix
+                    ./shared/users/mast3r.nix
+                    ./shared/users/taoshi.nix
+                    {
+                        # TODO: fix at some point
+                        systemd.services.folkevognen = {
+                            enable = true;
+                            description = "Folkevognen";
+                            wantedBy = [ "multi-user.target" ];
+                            serviceConfig = {
+                                WorkingDirectory = "/mnt/raid/folkevognen";
+                                ExecStart = "${folkevognen.packages.${system}.default}/bin/folkevognen";
+                                User = "mast3r";
+                            };
+                        };
+                    }
+                ]];
+            };
+            laptop = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = builtins.concatLists [defconfig [
+                    home-manager.nixosModules.home-manager
+                    ./systems/laptop
+                    ./shared/bootloader/grub.nix
+                    ./shared/users/mast3r.nix
+                ]];
+            };
         };
 
         # non-nixos systems
@@ -126,7 +141,7 @@
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
-            server = nixosConfigurations.Skademaskinen.config.system.build.vm;
+            systems = builtins.mapAttrs (key: value: value.config.system.build.vm) self.nixosConfigurations;
         };
     };
 }
