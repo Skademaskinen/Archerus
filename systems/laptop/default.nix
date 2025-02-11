@@ -3,7 +3,7 @@
 {
     imports = [
         ./hardware-configuration.nix
-        ./plymouth
+        ./modules
     ];
 
     home-manager.useGlobalPkgs = true;
@@ -31,14 +31,10 @@
         wayland.compositor = "weston";
         theme = "breeze";
     };
+
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "mast3r";
     services.displayManager.defaultSession = "sway";
-
-    programs.direnv = {
-        enable = true;
-        enableZshIntegration = true;
-    };
 
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
@@ -49,55 +45,6 @@
         pulse.enable = true;
     };
     nixpkgs.config.allowUnfree = true;
-
-    programs.neovim.enable = true;
-    environment.systemPackages = with pkgs; [
-        neovim
-        alacritty
-        cargo
-        python3
-        unzip
-        nodejs
-        discord
-        spotify
-        kdePackages.breeze-gtk
-        kdePackages.breeze-icons
-        gtk3
-        gobject-introspection
-
-    ];
-    programs.firefox.enable = true;
-    fonts.packages = with pkgs; [
-        fira
-        fira-mono
-        nerdfonts
-    ];
-
-    hardware.graphics = {
-        enable = true;
-    };
-
-    services.xserver.videoDrivers = ["nvidia"];
-
-    hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = false;
-        powerManagement.finegrained = false;
-        open = false;
-        nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-        prime.intelBusId = "PCI:0:2:0";
-        prime.nvidiaBusId = "PCI:1:0:0";
-        #prime.sync.enable = true;
-    };
-
-
-    programs.steam.enable = true;
-    programs.gamescope.enable = true;
-    programs.steam.gamescopeSession.enable = true;
-
-    programs.obs-studio.enable = true;
-    xdg.portal.wlr.enable = true;
 
     networking.hostName = "laptop";
     system.stateVersion = "24.11";

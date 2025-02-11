@@ -40,7 +40,7 @@
             };
 
             output."*" = {
-                bg = "~/Pictures/wallpaper.png fill mode 1920x1080";
+                bg = "${import ./background { inherit pkgs; background = ../../../../files/wallpaper.png; }} fill mode 1920x1080";
             };
 
             startup = [

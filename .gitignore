@@ -1,5 +1,6 @@
 configuration.nix
 __pycache__
+venv
 result
 *.qcow2
 .vscode
