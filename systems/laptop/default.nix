@@ -96,6 +96,9 @@
     programs.gamescope.enable = true;
     programs.steam.gamescopeSession.enable = true;
 
+    programs.obs-studio.enable = true;
+    xdg.portal.wlr.enable = true;
+
     networking.hostName = "laptop";
     system.stateVersion = "24.11";
 }

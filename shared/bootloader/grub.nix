@@ -6,7 +6,7 @@
         efiSupport = true;
         useOSProber = true;
         device = "nodev";
-        splashImage = "${pkgs.nixos-artwork.wallpapers.stripes-logo}/share/wallpapers/stripes-logo-2016-02-19/contents/images/nix-wallpaper-stripes-logo.png";
+        splashImage = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png";
     };
         
     boot.loader.efi.canTouchEfiVariables = true;

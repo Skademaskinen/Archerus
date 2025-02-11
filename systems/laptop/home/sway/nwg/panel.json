@@ -27,72 +27,71 @@
             "random-wallpaper",
             "sway-mode",
             "tray",
-            "button-help",
             "button-clipman"
         ],
         "controls": "right",
         "controls-settings": {
             "alignment": "right",
             "components": [
-              "brightness",
-              "battery",
-              "volume",
-              "processes",
-              "readme"
+                "brightness",
+                "battery",
+                "volume",
+                "processes",
+                "readme"
             ],
             "commands": {
-              "battery": "",
-              "net": "",
-              "bluetooth": "blueman-manager"
+                "battery": "",
+                "net": "",
+                "bluetooth": "blueman-manager"
             },
             "custom-items": [
-              {
-                "name": "Wallpapers",
-                "icon": "azote",
-                "cmd": "azote"
-              },
-              {
-                "name": "GTK settings",
-                "icon": "nwg-look",
-                "cmd": "nwg-look"
-              },
-              {
-                "name": "Displays",
-                "icon": "nwg-displays",
-                "cmd": "nwg-displays"
-              },
-              {
-                "name": "Panel settings",
-                "icon": "nwg-panel",
-                "cmd": "nwg-panel-config"
-              },
-              {
-                "name": "Shell settings",
-                "icon": "nwg-shell-config",
-                "cmd": "nwg-shell-config"
-              }
+                {
+                    "name":"Edit NixOS",
+                    "icon": "nix-snowflake-white",
+                    "cmd": "alacritty --working-directory /etc/nixos --command vim ."
+                },
+                {
+                    "name": "NixOS Garbage Collection",
+                    "icon": "nix-snowflake-white",
+                    "cmd": "alacritty --command sudo nix-store --gc"
+                },
+                {
+                    "name": "NixOS Store Optimize",
+                    "icon": "nix-snowflake-white",
+                    "cmd": "alacritty --command sudo nix-store --optimize"
+                },
+                {
+                    "name": "nixpkgs search",
+                    "icon": "search",
+                    "cmd": "xdg-open https://search.nixos.org/packages"
+                },
+                {
+                    "name": "Displays",
+                    "icon": "nwg-displays",
+                    "cmd": "nwg-displays"
+                }
             ],
             "menu": {
-              "name": "Exit",
-              "icon": "system-shutdown-symbolic",
-              "items": [
-                {
-                  "name": "Lock",
-                  "cmd": "nwg-lock"
-                },
-                {
-                  "name": "Exit sway session",
-                  "cmd": "nwg-dialog -p exit-sway -c \"swaymsg exit\""
-                },
-                {
-                  "name": "Restart",
-                  "cmd": "nwg-dialog -p reboot -c \"systemctl reboot\""
-                },
-                {
-                  "name": "Shutdown",
-                  "cmd": "nwg-dialog -p poweroff -c \"systemctl -i poweroff\""
-                }
-              ]
+                "name": "Exit",
+                "icon": "system-shutdown-symbolic",
+                "items": [
+                    {
+                        "name": "Lock",
+                        "cmd": "nwg-lock"
+                    },
+                    {
+                        "name": "Exit sway session",
+                        "cmd": "nwg-dialog -p exit-sway -c \"swaymsg exit\""
+                    },
+                    {
+                        "name": "Restart",
+                        "cmd": "nwg-dialog -p reboot -c \"systemctl reboot\""
+                    },
+                    {
+                        "name": "Shutdown",
+                        "cmd": "nwg-dialog -p poweroff -c \"systemctl -i poweroff\""
+                    }
+                ]
             },
             "show-values": false,
             "interval": 1,
@@ -257,81 +256,81 @@
             "all-outputs": false,
             "image-size": 16,
             "workspace-menu": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8"
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8"
             ],
             "all-workspaces": true
         },
         "executor-cpubar": {
-          "script": "gopsuinfo -c g",
-          "interval": 2,
-          "tooltip-text": "",
-          "on-left-click": "",
-          "on-middle-click": "",
-          "on-right-click": "",
-          "on-scroll-up": "",
-          "on-scroll-down": "",
-          "css-name": "",
-          "icon-size": 16,
-          "icon-placement": "left"
+            "script": "gopsuinfo -c g",
+            "interval": 2,
+            "tooltip-text": "",
+            "on-left-click": "",
+            "on-middle-click": "",
+            "on-right-click": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "css-name": "",
+            "icon-size": 16,
+            "icon-placement": "left"
         },
         "executor-cpuav": {
-          "script": "gopsuinfo -i a",
-          "interval": 2,
-          "tooltip-text": "CPU average load",
-          "on-left-click": "nwg-processes",
-          "on-middle-click": "",
-          "on-right-click": "",
-          "on-scroll-up": "",
-          "on-scroll-down": "",
-          "css-name": "",
-          "icon-size": 16,
-          "icon-placement": "right"
+            "script": "gopsuinfo -i a",
+            "interval": 2,
+            "tooltip-text": "CPU average load",
+            "on-left-click": "nwg-processes",
+            "on-middle-click": "",
+            "on-right-click": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "css-name": "",
+            "icon-size": 16,
+            "icon-placement": "right"
         },
         "executor-temp": {
-          "script": "gopsuinfo -i t",
-          "interval": 5,
-          "tooltip-text": "",
-          "on-left-click": "",
-          "on-middle-click": "",
-          "on-right-click": "",
-          "on-scroll-up": "",
-          "on-scroll-down": "",
-          "css-name": "",
-          "icon-size": 16,
-          "icon-placement": "left"
+            "script": "gopsuinfo -i t",
+            "interval": 5,
+            "tooltip-text": "",
+            "on-left-click": "",
+            "on-middle-click": "",
+            "on-right-click": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "css-name": "",
+            "icon-size": 16,
+            "icon-placement": "left"
         },
         "executor-memory": {
-          "script": "gopsuinfo -i m",
-          "interval": 5,
-          "tooltip-text": "",
-          "on-left-click": "",
-          "on-middle-click": "",
-          "on-right-click": "",
-          "on-scroll-up": "",
-          "on-scroll-down": "",
-          "css-name": "",
-          "icon-size": 16,
-          "icon-placement": "left"
+            "script": "gopsuinfo -i m",
+            "interval": 5,
+            "tooltip-text": "",
+            "on-left-click": "",
+            "on-middle-click": "",
+            "on-right-click": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "css-name": "",
+            "icon-size": 16,
+            "icon-placement": "left"
         },
         "executor-drives": {
-          "script": "gopsuinfo -i n",
-          "interval": 15,
-          "tooltip-text": "",
-          "on-left-click": "",
-          "on-middle-click": "",
-          "on-right-click": "",
-          "on-scroll-up": "",
-          "on-scroll-down": "",
-          "css-name": "",
-          "icon-size": 16,
-          "icon-placement": "left"
+            "script": "gopsuinfo -i n",
+            "interval": 15,
+            "tooltip-text": "",
+            "on-left-click": "",
+            "on-middle-click": "",
+            "on-right-click": "",
+            "on-scroll-up": "",
+            "on-scroll-down": "",
+            "css-name": "",
+            "icon-size": 16,
+            "icon-placement": "left"
         },
         "playerctl": {},
         "sway-workspaces": {},

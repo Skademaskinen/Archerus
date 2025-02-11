@@ -14,11 +14,11 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5f0906e9-a4c4-4e7e-8dc7-7dc04741a43f";
+    { device = "/dev/mapper/ROOT";
       fsType = "xfs";
     };
 
-  boot.initrd.luks.devices."luks-5fd5f33f-cb5d-47fa-b264-cd84d8d302f7".device = "/dev/disk/by-uuid/5fd5f33f-cb5d-47fa-b264-cd84d8d302f7";
+  boot.initrd.luks.devices."ROOT".device = "/dev/disk/by-uuid/5fd5f33f-cb5d-47fa-b264-cd84d8d302f7";
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/BBB4-F2EB";
