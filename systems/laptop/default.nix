@@ -24,6 +24,10 @@
             passthru.providedSessions = ["sway"];
         };
     in [swayfx-session];
+    security.pam.services.swaylock = {};
+    security.sudo.extraConfig = ''
+        Defaults env_reset,pwfeedback
+    '';
 
     services.displayManager.sddm = {
         enable = true;

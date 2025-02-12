@@ -61,7 +61,7 @@
                     "cmd": "alacritty --command sudo nix-store --optimize"
                 },
                 {
-                    "name": "nixpkgs search",
+                    "name": "Search nixpkgs",
                     "icon": "search",
                     "cmd": "xdg-open https://search.nixos.org/packages"
                 },

@@ -1,7 +1,6 @@
 {pkgs, background}: let
     env = pkgs.python312.withPackages (py: with py; [
         pillow
-        numpy
     ]);
 in pkgs.stdenv.mkDerivation {
     name = "wallpaper.png";
