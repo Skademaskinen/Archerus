@@ -1,4 +1,7 @@
 # Archerus
+![NIX CI](https://github.com/Skademaskinen/Archerus/actions/workflows/tests.yml/badge.svg)
+![NIX CI](https://github.com/Skademaskinen/Archerus/actions/workflows/update.yml/badge.svg)
+
 This repository contains configuration for the server "Skademaskinen", and system-manager configuration for my personal computers.
 
 The name "Skademaskinen" for the organisation stems from my character in World of Warcraft; Skademanden. It's a death knight, and for the longest time i've thought about how i wanted to name this repository. Essentially its a typo of a place in the game that is related to the character that these projects are named after, but it also refers to the host distribution that i use the package manager on - Arch Linux.
