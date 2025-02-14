@@ -1,7 +1,7 @@
 [
     {
         "name": "top",
-        "output": "",
+        "output": "All",
         "layer": "bottom",
         "position": "top",
         "width": "auto",
@@ -64,6 +64,12 @@
                     "name": "Search nixpkgs",
                     "icon": "search",
                     "cmd": "xdg-open https://search.nixos.org/packages"
+                },
+                {
+                    "name": "Update NixOS",
+                    "icon": "nix-snowflake-white",
+                    "cmd": "alacritty --working-directory /etc/nixos --command sh -c 'nix flake update && sudo nixos-rebuild switch'"
+
                 },
                 {
                     "name": "Displays",
@@ -209,7 +215,7 @@
     },
     {
         "name": "bottom",
-        "output": "",
+        "output": "All",
         "layer": "bottom",
         "position": "bottom",
         "height": 30,

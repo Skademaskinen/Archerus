@@ -15,5 +15,8 @@
     programs.obs-studio.enable = true;
     xdg.portal.config.common.default = "*";
 
-
+    virtualisation.docker.enable = true;
+    users.groups.docker.members = [
+        "mast3r"
+    ];
 }

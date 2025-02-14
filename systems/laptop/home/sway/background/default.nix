@@ -7,6 +7,6 @@ in pkgs.stdenv.mkDerivation {
     pname = "wallpaper.png";
     src = ./.;
     installPhase = ''
-        ${env.interpreter} $src/rename.py ${background} ${pkgs.nixos-artwork.wallpapers.stripes-logo}/share/backgrounds/nixos/nix-wallpaper-stripes-logo.png $out
+        ${env.interpreter} $src/overlay.py ${background} ${pkgs.nixos-artwork.wallpapers.simple-dark-gray-bootloader}/share/backgrounds/nixos/nix-wallpaper-simple-dark-gray_bootloader.png $out
     '';
 }
