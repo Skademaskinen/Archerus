@@ -1,6 +1,10 @@
-{pkgs, lib, config, ...}:
-
-{
+{pkgs, lib, config, ...}: let
+    image = pkgs.fetchurl {
+        url = "https://img.goodfon.com/original/3840x2160/c/8d/anime-mech-fate.jpg";
+        hash = "sha256-my/d2+nKKj+XCtgS5hC2mKFb7yIvVNg9P1IelPl9lRY=";
+    };
+    background = import ./background { inherit pkgs; background = image; };
+in {
     wayland.windowManager.sway = {
         enable = true;
         package = pkgs.swayfx;
@@ -40,7 +44,7 @@
             };
 
             output."*" = {
-                bg = "${import ./background { inherit pkgs; background = ../../../../files/wallpaper.png; }} fill mode 1920x1080";
+                bg = "${background} fill mode 1920x1080";
             };
 
             startup = [
@@ -67,7 +71,7 @@
             keybindings = let
                 modifier = config.wayland.windowManager.sway.config.modifier;
             in lib.mkOptionDefault {
-                "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ~/Pictures/wallpaper.png'';
+                "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ${background}'';
                 "${modifier}+p" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
                 "${modifier}+n" = ''exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t'';
                 "${modifier}+b" = "border toggle";
@@ -78,6 +82,16 @@
             };
         };
         extraConfig = ''
+            workspace 1 output eDP-1
+            workspace 2 output DP-5
+            workspace 3 output eDP-1
+            workspace 4 output DP-5
+            workspace 5 output eDP-1
+            workspace 6 output DP-5
+            workspace 7 output eDP-1
+            workspace 8 output DP-5
+            workspace 9 output eDP-1
+            workspace 10 output DP-5
             corner_radius 10
             for_window [title="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
         '';
@@ -134,6 +148,7 @@
     };
     services.swaync = {
         enable = true;
+        style = builtins.readFile ./swaync.css;
     };
     services.swayosd = {
         enable = true;

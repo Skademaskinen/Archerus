@@ -19,7 +19,7 @@
             src = pkgs.swayfx;
             installPhase = ''
                 mkdir -p $out/share/wayland-sessions
-                sed "s/Exec=sway/Exec=sway --unsupported-gpu/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
+                sed "s/Exec=sway/Exec=sway --unsupported-gpu -D noscanout/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
             '';
             passthru.providedSessions = ["sway"];
         };
@@ -28,13 +28,14 @@
     security.sudo.extraConfig = ''
         Defaults env_reset,pwfeedback
     '';
-
     services.displayManager.sddm = {
         enable = true;
         wayland.enable = true;
         wayland.compositor = "weston";
         theme = "breeze";
     };
+    services.xserver.enable = true;
+    services.desktopManager.plasma6.enable = true;
 
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "mast3r";
