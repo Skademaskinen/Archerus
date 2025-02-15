@@ -1,6 +1,6 @@
 {
     description = "Skademaskinen configuration";
-    
+
     nixConfig = {
         extra-substituters = [
             "https://nix-community.cachix.org"
@@ -14,6 +14,10 @@
         # external depends
         nixpkgs = {
             url = "nixpkgs/nixos-24.11";
+        };
+        nixvim = {
+            url = "github:nix-community/nixvim";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
         system-manager = {
             url = "github:numtide/system-manager";
@@ -50,13 +54,13 @@
         };
     };
 
-    outputs = { self, nixpkgs, system-manager, nix-system-graphics, home-manager, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
+    outputs = { self, nixpkgs, nixvim, system-manager, nix-system-graphics, home-manager, nix-velocity, homepage, putricide, rp-utils, folkevognen }:
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
         defconfig = [
             ./modules
-            
+
             ./shared/locale.nix
             ./shared/networking.nix
             ./shared/programs/nix.nix
@@ -67,7 +71,7 @@
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
-                    { 
+                    {
                         _module.args = {
                             nix-velocity = nix-velocity;
                             homepage = homepage;
@@ -80,6 +84,7 @@
                     ./systems/skademaskinen
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
+		    ./shared/programs/vim.nix
                     ./shared/users/taoshi.nix
                     {
                         # TODO: fix at some point
@@ -103,6 +108,7 @@
                     ./systems/laptop
                     ./shared/bootloader/grub.nix
                     ./shared/users/mast3r.nix
+		    nixvim.nixosModules.default
                 ]];
             };
         };

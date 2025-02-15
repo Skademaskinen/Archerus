@@ -4,5 +4,6 @@
         ./nvidia
         ./programs
         ./plymouth
+        ./nvim
     ];
 }

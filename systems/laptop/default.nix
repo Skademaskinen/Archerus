@@ -51,6 +51,14 @@
     };
     nixpkgs.config.allowUnfree = true;
 
+    virtualisation.vmVariant = {
+        virtualisation.resolution = { x = 1920; y = 1080; };
+        virtualisation.qemu.options = [
+            "-device virtio-vga-gl"
+            "-display gtk,gl=on"
+        ];
+    };
+
     networking.hostName = "laptop";
     system.stateVersion = "24.11";
 }

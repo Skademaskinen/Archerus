@@ -4,8 +4,6 @@
         enableZshIntegration = true;
     };
 
-    programs.neovim.enable = true;
-
     programs.firefox.enable = true;
 
     programs.steam.enable = true;
