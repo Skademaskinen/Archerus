@@ -41,6 +41,9 @@
     services.displayManager.autoLogin.user = "mast3r";
     services.displayManager.defaultSession = "sway";
 
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
         services.pipewire = {

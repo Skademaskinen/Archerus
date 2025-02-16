@@ -25,8 +25,11 @@
             #!${pkgs.bash}/bin/bash
             systemd-run --user ${jetbrains.rider}/bin/rider $@
         '')
-        jdt-language-server
         jetbrains.idea-community
+        jdk23
+        lutris
+        bottles
+        protonup-qt
     ];
     fonts.packages = with pkgs; [
         fira
