@@ -1,7 +1,6 @@
 {pkgs, ...}: {
     imports = [
         ../programs/zsh.nix
-        ../programs/vim.nix
     ];
     users.users.taoshi = {
         isNormalUser = true;
