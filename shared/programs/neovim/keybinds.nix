@@ -15,7 +15,7 @@
                 key = "<A-j>";
                 action = "<Cmd>Neotree toggle<CR>";
                 mode = "n";
-            }
+    }
             {
                 key = "<C-s>";
                 action = "<Cmd><ESC>w<CR>";
@@ -25,6 +25,11 @@
                 key = "<C-s>";
                 action = "<Cmd>w<CR>";
                 mode = "i";
+            }
+            {
+                key = "<A-t>";
+                action = "<Cmd>Trouble diagnostics toggle<CR>";
+                mode = "n";
             }
         ];
 

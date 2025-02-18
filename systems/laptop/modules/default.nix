@@ -4,6 +4,5 @@
         ./nvidia
         ./programs
         ./plymouth
-        ./neovim
     ];
 }

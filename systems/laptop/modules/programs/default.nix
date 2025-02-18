@@ -1,3 +1,5 @@
+{pkgs, ...}:
+
 {
     programs.direnv = {
         enable = true;
@@ -17,4 +19,8 @@
     users.groups.docker.members = [
         "mast3r"
     ];
+    programs.java = {
+        enable = true;
+        package = pkgs.jdk23;
+    };
 }

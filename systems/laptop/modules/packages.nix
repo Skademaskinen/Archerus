@@ -26,7 +26,6 @@
             systemd-run --user ${jetbrains.rider}/bin/rider $@
         '')
         jetbrains.idea-community
-        jdk23
         lutris
         bottles
         protonup-qt

@@ -1,27 +1,23 @@
-{lib, ...}: let
+{pkgs, lib, ...}: let
     autoEnable = attrs: lib.mergeAttrs { enable = true; autoLoad = true; } attrs;
+    autoEnable' = attrs: lib.mergeAttrs { enable = true; autostart = true; } attrs;
 
 in {
     programs.nixvim = {
         plugins.lsp = {
             enable = true;
             inlayHints = true;
-            servers.jdtls = {
-                enable = true;
-                autostart = true;
-            };
-            servers.pyright = {
-                enable = true;
-                autostart = true;
-            };
-            servers.nixd = {
-                enable = true;
-                autostart = true;
-            };
-            servers.hls = {
-                enable = true;
-                autostart = true;
+            servers.pyright = autoEnable' {};
+            servers.nixd = autoEnable' {};
+            servers.hls = autoEnable' {
                 installGhc = false;
+            };
+        };
+        plugins.nvim-jdtls = {
+            enable = true;
+            data = "/home/mast3r/.cache/jdtls/workspace";
+            jdtLanguageServerPackage = pkgs.jdt-language-server.override {
+                jdk = pkgs.jdk23;
             };
         };
         plugins.lsp-lines = autoEnable {};
@@ -33,6 +29,7 @@ in {
         plugins.notify = autoEnable {};
         plugins.fzf-lua = autoEnable {};
         plugins.treesitter = autoEnable {};
+        plugins.telescope = autoEnable {};
         plugins.transparent = autoEnable {
             settings.groups = [
                 "Normal"
@@ -69,6 +66,7 @@ in {
         plugins.cmp-nvim-lsp.enable = true;
         plugins.cmp-path.enable = true;
         plugins.cmp-buffer.enable = true;
+        plugins.web-devicons.enable = true;
 
         plugins.neo-tree = {
             enable = true;
@@ -84,7 +82,6 @@ in {
         plugins.gitgutter = autoEnable {
             recommendedSettings = true;
         };
-        plugins.web-devicons.enable = true;
 
         plugins.toggleterm = {
             enable = true;

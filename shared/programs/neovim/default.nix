@@ -1,3 +1,5 @@
+{pkgs, ...}:
+
 {
     imports = [
         ./keybinds.nix
@@ -14,5 +16,8 @@
             vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
             vim.g.autoformat = false
         '';
+        extraPackages = with pkgs; [
+            jdk23
+        ];
     };
 }
