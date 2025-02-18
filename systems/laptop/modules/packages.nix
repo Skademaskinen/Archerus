@@ -2,7 +2,6 @@
 
 {
     environment.systemPackages = with pkgs; [
-        neovim
         alacritty
         cargo
         unzip
@@ -26,8 +25,10 @@
             #!${pkgs.bash}/bin/bash
             systemd-run --user ${jetbrains.rider}/bin/rider $@
         '')
-        jdt-language-server
         jetbrains.idea-community
+        lutris
+        bottles
+        protonup-qt
     ];
     fonts.packages = with pkgs; [
         fira

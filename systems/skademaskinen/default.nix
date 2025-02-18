@@ -112,7 +112,7 @@ in {
 
     services.mysql.enable = true;
     services.mysql.dataDir = "/mnt/raid/mysql";
-    services.mysql.package = pkgs.mysql;
+    services.mysql.package = pkgs.mariadb;
     services.mysql.ensureUsers = [
         {
             name = config.services.homepage.db.user;

@@ -41,6 +41,9 @@
     services.displayManager.autoLogin.user = "mast3r";
     services.displayManager.defaultSession = "sway";
 
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
         services.pipewire = {
@@ -50,6 +53,14 @@
         pulse.enable = true;
     };
     nixpkgs.config.allowUnfree = true;
+
+    virtualisation.vmVariant = {
+        virtualisation.resolution = { x = 1920; y = 1080; };
+        virtualisation.qemu.options = [
+            "-device virtio-vga-gl"
+            "-display gtk,gl=on"
+        ];
+    };
 
     networking.hostName = "laptop";
     system.stateVersion = "24.11";

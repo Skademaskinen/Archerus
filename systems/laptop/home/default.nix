@@ -9,8 +9,10 @@
         packages = with pkgs; [
             dconf
             nixos-icons
+            (pkgs.writeScriptBin "vim" "nvim")
         ];
     };
+    
     gtk = {
         enable = true;
         cursorTheme.name = "Vimix-cursors";
@@ -26,4 +28,5 @@
         enable = true;
         platformTheme.name = "gtk";
     };
+    
 }

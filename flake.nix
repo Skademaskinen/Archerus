@@ -1,6 +1,6 @@
 {
     description = "Skademaskinen configuration";
-    
+
     nixConfig = {
         extra-substituters = [
             "https://nix-community.cachix.org"
@@ -14,6 +14,10 @@
         # external depends
         nixpkgs = {
             url = "nixpkgs/nixos-24.11";
+        };
+        nixvim = {
+            url = "github:nix-community/nixvim";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
         system-manager = {
             url = "github:numtide/system-manager";
@@ -50,36 +54,38 @@
         };
     };
 
-    outputs = { self, nixpkgs, system-manager, nix-system-graphics, home-manager, nix-velocity, homepage, putricide, rp-utils, folkevognen }: 
+    outputs = inputs @ { self, nixpkgs, nixvim, ...}:
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
         defconfig = [
             ./modules
-            
+
             ./shared/locale.nix
             ./shared/networking.nix
             ./shared/programs/nix.nix
             ./shared/programs/git.nix
         ];
-    in rec {
+    in {
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
-                    { 
+                    {
                         _module.args = {
-                            nix-velocity = nix-velocity;
-                            homepage = homepage;
+                            nix-velocity = inputs.nix-velocity;
+                            homepage = inputs.homepage;
                         };
                     }
-                    nix-velocity.nixosModules.default
-                    homepage.nixosModules.${system}.default
-                    putricide.nixosModules.default
-                    rp-utils.nixosModules.default
+                    inputs.nix-velocity.nixosModules.default
+                    inputs.homepage.nixosModules.${system}.default
+                    inputs.putricide.nixosModules.default
+                    inputs.rp-utils.nixosModules.default
                     ./systems/skademaskinen
                     ./shared/bootloader/systemd-boot.nix
                     ./shared/users/mast3r.nix
+                    nixvim.nixosModules.default
+                    ./shared/programs/neovim
                     ./shared/users/taoshi.nix
                     {
                         # TODO: fix at some point
@@ -89,7 +95,7 @@
                             wantedBy = [ "multi-user.target" ];
                             serviceConfig = {
                                 WorkingDirectory = "/mnt/raid/folkevognen";
-                                ExecStart = "${folkevognen.packages.${system}.default}/bin/folkevognen";
+                                ExecStart = "${inputs.folkevognen.packages.${system}.default}/bin/folkevognen";
                                 User = "mast3r";
                             };
                         };
@@ -99,38 +105,40 @@
             laptop = nixpkgs.lib.nixosSystem {
                 inherit system;
                 modules = builtins.concatLists [defconfig [
-                    home-manager.nixosModules.home-manager
+                    inputs.home-manager.nixosModules.home-manager
                     ./systems/laptop
                     ./shared/bootloader/grub.nix
                     ./shared/users/mast3r.nix
+		            nixvim.nixosModules.default
+                    ./shared/programs/neovim
                 ]];
             };
         };
 
         # non-nixos systems
         systemConfigs = {
-            desktop = system-manager.lib.makeSystemConfig {
+            desktop = inputs.system-manager.lib.makeSystemConfig {
                 modules = [
-                    nix-system-graphics.systemModules.default
-                    ({
-                        environment.systemPackages = [system-manager.packages.${system}.system-manager];
+                    inputs.nix-system-graphics.systemModules.default
+                    {
+                        environment.systemPackages = [inputs.system-manager.packages.${system}.system-manager];
                         nixpkgs.hostPlatform = system;
                         system-manager.allowAnyDistro = true;
                         system-graphics.enable = true;
-                    })
+                    }
                 ];
             };
-            laptop = system-manager.lib.makeSystemConfig {
+            laptop = inputs.system-manager.lib.makeSystemConfig {
                 modules = [
-                    nix-system-graphics.systemModules.default
-                    ({
-                        environment.systemPackages = [system-manager.packages.${system}.system-manager];
+                    inputs.nix-system-graphics.systemModules.default
+                    {
+                        environment.systemPackages = [inputs.system-manager.packages.${system}.system-manager];
                         nixpkgs.hostPlatform = system;
                         system-manager.allowAnyDistro = true;
                         system-graphics = {
                             enable = true;
                         };
-                    })
+                    }
                 ];
             };
         };
