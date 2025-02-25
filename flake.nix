@@ -150,7 +150,7 @@
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
             systems = builtins.mapAttrs (key: value: value.config.system.build.vm) self.nixosConfigurations;
-            test-background = pkgs.callPackage ./systems/laptop/home/sway/background { inherit pkgs; background = ./files/wallpaper.png; };
+            test-background = pkgs.callPackage ./systems/laptop/home/sway/background { inherit pkgs; };
         };
     };
 }

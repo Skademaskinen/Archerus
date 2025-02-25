@@ -1,9 +1,5 @@
 {pkgs, lib, config, ...}: let
-    image = pkgs.fetchurl {
-        url = "https://img.goodfon.com/original/3840x2160/c/8d/anime-mech-fate.jpg";
-        hash = "sha256-my/d2+nKKj+XCtgS5hC2mKFb7yIvVNg9P1IelPl9lRY=";
-    };
-    background = import ./background { inherit pkgs; background = image; };
+    background = import ./background { inherit pkgs; };
 in {
     wayland.windowManager.sway = {
         enable = true;
