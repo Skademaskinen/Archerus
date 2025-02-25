@@ -7,6 +7,7 @@ in {
         plugins.lsp = {
             enable = true;
             inlayHints = true;
+            autoLoad = true;
             servers.pyright = autoEnable' {};
             servers.nixd = autoEnable' {};
             servers.hls = autoEnable' {

@@ -9,7 +9,6 @@
         packages = with pkgs; [
             dconf
             nixos-icons
-            (pkgs.writeScriptBin "vim" "nvim")
         ];
     };
     
