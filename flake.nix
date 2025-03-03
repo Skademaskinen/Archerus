@@ -65,12 +65,15 @@
             ./shared/networking.nix
             ./shared/programs/nix.nix
             ./shared/programs/git.nix
+            nixvim.nixosModules.default
+            ./shared/programs/neovim
+            ./shared/users/mast3r.nix
         ];
     in {
         nixosConfigurations = {
             Skademaskinen = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = builtins.concatLists [defconfig [
+                modules = defconfig ++ [
                     {
                         _module.args = {
                             nix-velocity = inputs.nix-velocity;
@@ -83,9 +86,6 @@
                     inputs.rp-utils.nixosModules.default
                     ./systems/skademaskinen
                     ./shared/bootloader/systemd-boot.nix
-                    ./shared/users/mast3r.nix
-                    nixvim.nixosModules.default
-                    ./shared/programs/neovim
                     ./shared/users/taoshi.nix
                     {
                         # TODO: fix at some point
@@ -100,18 +100,23 @@
                             };
                         };
                     }
-                ]];
+                ];
             };
             laptop = nixpkgs.lib.nixosSystem {
                 inherit system;
-                modules = builtins.concatLists [defconfig [
+                modules = defconfig ++ [
                     inputs.home-manager.nixosModules.home-manager
                     ./systems/laptop
                     ./shared/bootloader/grub.nix
-                    ./shared/users/mast3r.nix
-		            nixvim.nixosModules.default
-                    ./shared/programs/neovim
-                ]];
+                ];
+            };
+            thinkpad = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = defconfig ++ [
+                    inputs.home-manager.nixosModules.home-manager
+                    ./systems/laptop
+                    ./shared/bootloader/grub.nix
+                ];
             };
         };
 
