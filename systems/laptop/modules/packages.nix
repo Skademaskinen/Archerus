@@ -29,6 +29,7 @@
         lutris
         bottles
         protonup-qt
+        teams-for-linux
     ];
     fonts.packages = with pkgs; [
         fira

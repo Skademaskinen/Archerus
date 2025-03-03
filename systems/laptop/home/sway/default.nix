@@ -51,6 +51,10 @@ in {
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
                 }
+                {
+                    command = "${pkgs.tailscale-systray}/bin/tailscale-systray";
+                    always = true;
+                }
             ];
 
             defaultWorkspace = "workspace number 1";
