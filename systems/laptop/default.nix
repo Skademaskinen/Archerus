@@ -61,6 +61,17 @@
             "-display gtk,gl=on"
         ];
     };
+    networking.firewall = {
+        allowedTCPPorts = [ 17171 22 3308 3306 ];
+    };
+    environment.variables = {
+        NIXOS_OZONE_WL = "1";
+    };
+
+    programs.nix-ld.enable = true;
+
+    services.mysql.enable = true;
+    services.mysql.package = pkgs.mariadb;
 
     networking.hostName = "laptop";
     system.stateVersion = "24.11";

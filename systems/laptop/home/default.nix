@@ -8,7 +8,12 @@
         stateVersion = "24.11";
         packages = with pkgs; [
             dconf
-            nixos-icons
+            nixos-icons    
+            (pkgs.writeScriptBin "mage" ''
+                ${tmux}/bin/tmux new-session -d sh -c "cd ~/Games/xmage/xmage/mage-server && ${jdk8}/bin/java -jar ~/Games/xmage/xmage/mage-server/lib/mage-server-1.4.56.jar"
+                _JAVA_AWT_WM_NONREPARENTING=1 sh -c "cd ~/Games/xmage/xmage/mage-client && ${jdk8}/bin/java -jar ~/Games/xmage/xmage/mage-client/lib/mage-client-1.4.56.jar"
+                ${tmux}/bin/tmux kill-session
+            '')
         ];
     };
     
@@ -27,5 +32,5 @@
         enable = true;
         platformTheme.name = "gtk";
     };
-    
+
 }
