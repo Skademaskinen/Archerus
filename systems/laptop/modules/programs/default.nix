@@ -13,6 +13,7 @@
     programs.steam.gamescopeSession.enable = true;
 
     programs.obs-studio.enable = true;
+    xdg.portal.enable = true;
     xdg.portal.config.common.default = "*";
 
     virtualisation.docker.enable = true;
@@ -22,5 +23,14 @@
     programs.java = {
         enable = true;
         package = pkgs.jdk23;
+    };
+
+    programs.coolercontrol = {
+        enable = true;
+        nvidiaSupport = true;
+    };
+
+    services.tailscale = {
+        enable = true;
     };
 }
