@@ -61,6 +61,7 @@
             "-display gtk,gl=on"
         ];
     };
+    boot.loader.grub.gfxmodeEfi = "1920x1080";
 
     networking.hostName = "laptop";
     system.stateVersion = "24.11";

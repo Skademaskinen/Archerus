@@ -40,7 +40,7 @@ in {
             };
 
             output."*" = {
-                bg = "${background} fill mode 1920x1080";
+                bg = "${background} fill mode 1920x1200";
             };
 
             startup = [
@@ -75,6 +75,7 @@ in {
                 "XF86AudioMute" = ''exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle'';
                 "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+";
                 "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-";
+                "Mod4+Shift+XF86TouchpadOff" = "exec ${pkgs.alacritty}/bin/alacritty";
             };
         };
         extraConfig = ''

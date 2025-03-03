@@ -1,3 +1,5 @@
+{pkgs, ...}:
+
 {
     imports = [
         ./hardware-configuration.nix
@@ -6,7 +8,31 @@
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.users.mast3r = import ./home;
-
+    services.displayManager.sessionPackages = let
+        swayfx-session = pkgs.stdenv.mkDerivation {
+            pname = "swayfx";
+            name = "swayfx";
+            version = "latest";
+            src = pkgs.swayfx;
+            installPhase = ''
+                mkdir -p $out/share/wayland-sessions
+                sed "s/Exec=sway/Exec=sway --unsupported-gpu -D noscanout/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
+            '';
+            passthru.providedSessions = ["sway"];
+        };
+    in [swayfx-session];
+    security.pam.services.swaylock = {};
+    security.sudo.extraConfig = ''
+        Defaults env_reset,pwfeedback
+    '';
+    services.displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+        wayland.compositor = "weston";
+        theme = "breeze";
+    };
+    services.xserver.enable = true;
+ 
     services.desktopManager.plasma6.enable = true;
 
     services.displayManager.autoLogin.enable = true;
@@ -36,5 +62,6 @@
 
     networking.hostName = "thinkpad";
     system.stateVersion = "24.11";
+
 
 }
