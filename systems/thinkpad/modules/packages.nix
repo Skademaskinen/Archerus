@@ -30,7 +30,7 @@
     fonts.packages = with pkgs; [
         fira
         fira-mono
-        nerdfonts
+        #nerdfonts
     ];
 
 

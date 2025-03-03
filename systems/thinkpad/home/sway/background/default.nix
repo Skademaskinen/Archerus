@@ -13,7 +13,7 @@
             owner = "WillPower3309";
             repo = "swayfx";
             rev = "master";
-            sha256 = "sha256-+yHlfDX0fLXe5LFAwiK/Avtf0vVtqhYfjq7fWcoGIX4=";
+            sha256 = "sha256-gdab7zkjp/S7YVCP1t/OfOdUXZRwNvNSuRFGWEJScF8=";
         }}/assets/swayfx_logo.svg"
         "${pkgs.fetchFromGitHub {
             owner = "f-klubben";

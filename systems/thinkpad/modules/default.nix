@@ -3,5 +3,5 @@
         ./plymouth
         ./packages.nix
         ./programs
-    ]
+    ];
 }

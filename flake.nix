@@ -114,7 +114,7 @@
                 inherit system;
                 modules = defconfig ++ [
                     inputs.home-manager.nixosModules.home-manager
-                    ./systems/laptop
+                    ./systems/thinkpad
                     ./shared/bootloader/grub.nix
                 ];
             };
