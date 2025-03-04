@@ -62,6 +62,7 @@
             "-display gtk,gl=on"
         ];
     };
+
     boot.loader.grub.gfxmodeEfi = "1920x1080";
 
     networking.firewall = {
