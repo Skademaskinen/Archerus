@@ -1,4 +1,4 @@
-{pkgs, config, ...}:
+{pkgs, ...}:
 
 {
     imports = [
@@ -11,20 +11,7 @@
     home-manager.useUserPackages = true;
     home-manager.users.mast3r = import ./home;
 
-    # quick hack to make swayfx understand it should run with proprietary nvidia drivers
-    services.displayManager.sessionPackages = let
-        swayfx-session = pkgs.stdenv.mkDerivation {
-            pname = "swayfx";
-            name = "swayfx";
-            version = "latest";
-            src = pkgs.swayfx;
-            installPhase = ''
-                mkdir -p $out/share/wayland-sessions
-                sed "s/Exec=sway/Exec=sway --unsupported-gpu -D noscanout/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
-            '';
-            passthru.providedSessions = ["sway"];
-        };
-    in [swayfx-session];
+    services.displayManager.sessionPackages = [pkgs.swayfx];
     security.pam.services.swaylock = {};
     security.sudo.extraConfig = ''
         Defaults env_reset,pwfeedback
@@ -36,6 +23,7 @@
         theme = "breeze";
     };
     services.xserver.enable = true;
+ 
     services.desktopManager.plasma6.enable = true;
 
     services.displayManager.autoLogin.enable = true;
@@ -54,6 +42,7 @@
         pulse.enable = true;
     };
     nixpkgs.config.allowUnfree = true;
+    services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
     virtualisation.vmVariant = {
         virtualisation.resolution = { x = 1920; y = 1080; };
@@ -63,20 +52,12 @@
         ];
     };
 
-    boot.loader.grub.gfxmodeEfi = "1920x1080";
-
-    networking.firewall = {
-        allowedTCPPorts = [ 17171 22 3308 3306 ];
-    };
     environment.variables = {
         NIXOS_OZONE_WL = "1";
     };
 
-    programs.nix-ld.enable = true;
-
-    services.mysql.enable = true;
-    services.mysql.package = pkgs.mariadb;
-
-    networking.hostName = "laptop";
+    networking.hostName = "thinkpad";
     system.stateVersion = "24.11";
+
+
 }
