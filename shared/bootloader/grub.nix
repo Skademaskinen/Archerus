@@ -7,7 +7,6 @@
         useOSProber = true;
         device = "nodev";
         efiInstallAsRemovable = true;
-        gfxmodeEfi = "1920x1080";
         splashImage = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png";
         theme = (pkgs.sleek-grub-theme.override {
             withStyle = "dark";

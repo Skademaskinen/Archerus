@@ -51,6 +51,10 @@ in {
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
                 }
+                {
+                    command = "${pkgs.tailscale-systray}/bin/tailscale-systray";
+                    always = true;
+                }
             ];
 
             defaultWorkspace = "workspace number 1";
@@ -68,14 +72,22 @@ in {
                 modifier = config.wayland.windowManager.sway.config.modifier;
             in lib.mkOptionDefault {
                 "${modifier}+l" = ''exec swaylock --show-failed-attempts --ignore-empty-password -i ${background}'';
+                "XF86SelectiveScreenshot" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
                 "${modifier}+p" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
+                "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s +5%";
+                "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s 5%-";
                 "${modifier}+n" = ''exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t'';
                 "${modifier}+b" = "border toggle";
                 "Ctrl+Shift+Mod1+${modifier}+l" = "exec ${pkgs.xdg-utils}/bin/xdg-open https://linkedin.com";
                 "XF86AudioMute" = ''exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle'';
                 "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+";
                 "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-";
-                "Mod4+Shift+XF86TouchpadOff" = "exec ${pkgs.alacritty}/bin/alacritty";
+                # the copilot button
+                "Mod4+Shift+XF86TouchpadOff" = "exec ${pkgs.alacritty}/bin/alacritty --command ${pkgs.writeScriptBin "script.sh" ''
+                    ${pkgs.fastfetch}/bin/fastfetch
+                    ${pkgs.zsh}/bin/zsh
+                    #sudo ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch
+                ''}/bin/script.sh";
             };
         };
         extraConfig = ''

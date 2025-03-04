@@ -18,4 +18,8 @@
         enable = true;
         package = pkgs.jdk23;
     };
+
+    services.tailscale = {
+        enable = true;
+    };
 }

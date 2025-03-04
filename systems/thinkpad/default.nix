@@ -2,25 +2,16 @@
 
 {
     imports = [
+        ../generic-laptop
         ./hardware-configuration.nix
         ./modules
     ];
+
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.users.mast3r = import ./home;
-    services.displayManager.sessionPackages = let
-        swayfx-session = pkgs.stdenv.mkDerivation {
-            pname = "swayfx";
-            name = "swayfx";
-            version = "latest";
-            src = pkgs.swayfx;
-            installPhase = ''
-                mkdir -p $out/share/wayland-sessions
-                sed "s/Exec=sway/Exec=sway --unsupported-gpu -D noscanout/g" $src/share/wayland-sessions/sway.desktop > $out/share/wayland-sessions/sway.desktop
-            '';
-            passthru.providedSessions = ["sway"];
-        };
-    in [swayfx-session];
+
+    services.displayManager.sessionPackages = [pkgs.swayfx];
     security.pam.services.swaylock = {};
     security.sudo.extraConfig = ''
         Defaults env_reset,pwfeedback
@@ -51,6 +42,7 @@
         pulse.enable = true;
     };
     nixpkgs.config.allowUnfree = true;
+    services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
     virtualisation.vmVariant = {
         virtualisation.resolution = { x = 1920; y = 1080; };
@@ -58,6 +50,10 @@
             "-device virtio-vga-gl"
             "-display gtk,gl=on"
         ];
+    };
+
+    environment.variables = {
+        NIXOS_OZONE_WL = "1";
     };
 
     networking.hostName = "thinkpad";
