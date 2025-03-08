@@ -83,11 +83,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734882745,
-        "narHash": "sha256-G1zRM3W+2h+djjf/O6KJVn6EcT7VunBLJOD3KvGkRbI=",
+        "lastModified": 1741447146,
+        "narHash": "sha256-xEHnatW73ajBoa9fI+WgRSHiZ1JbN8O6F6KgNehNocU=",
         "owner": "Mast3rwaf1z",
         "repo": "Folkevognen",
-        "rev": "07d48c6e085f551820eb4d79f3f06a15436a571b",
+        "rev": "d2fc99152f90d8b4662104cbfde4d077918184ad",
         "type": "github"
       },
       "original": {
@@ -105,11 +105,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734576306,
-        "narHash": "sha256-SG5mX1e2s7zur4fXpTu8K0SPsg+11aX5MOaKczha6yA=",
+        "lastModified": 1738375406,
+        "narHash": "sha256-dvJxvDZCDnh4pY5T99thmQOqjnEeXmMAUeC0Hc4T7U4=",
         "owner": "tadfisher",
         "repo": "gradle2nix",
-        "rev": "f8c0afcd2936bce1eda300b74250ec1810c41c2e",
+        "rev": "2ca058c5b7f3b37f0c11258a78bd0110a675caae",
         "type": "github"
       },
       "original": {
