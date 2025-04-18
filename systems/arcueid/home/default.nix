@@ -14,7 +14,6 @@
             (import ../../../packages/bolt { inherit pkgs; })
             htop
             bottles
-            ckb-next
         ];
     };
     
