@@ -10,6 +10,8 @@
         packages = with pkgs; [
             dconf
             nixos-icons
+            (import ../../../packages/bolt { inherit pkgs; })
+            htop
         ];
     };
     
@@ -28,5 +30,14 @@
         enable = true;
         platformTheme.name = "gtk";
     };
-    
+
+    programs.obs-studio = {
+        enable = true;
+        plugins = with pkgs.obs-studio-plugins; [
+            wlrobs
+            obs-backgroundremoval
+            obs-pipewire-audio-capture
+        ];
+    };
+
 }

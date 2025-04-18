@@ -13,6 +13,8 @@ in {
             servers.hls = autoEnable' {
                 installGhc = false;
             };
+            servers.clangd = autoEnable' {};
+            servers.omnisharp = autoEnable' {};
         };
         plugins.nvim-jdtls = {
             enable = true;

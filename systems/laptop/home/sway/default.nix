@@ -134,6 +134,7 @@ in {
         wl-clipboard
         wlsunset
         xdg-user-dirs
+        wl-mirror
     ];
 
     programs.swaylock = {

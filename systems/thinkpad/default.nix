@@ -25,6 +25,7 @@
     services.xserver.enable = true;
  
     services.desktopManager.plasma6.enable = true;
+    users.groups.input.members = ["mast3r"];
 
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "mast3r";
@@ -32,6 +33,8 @@
 
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
+
+    services.fprintd.enable = true;
 
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
@@ -42,7 +45,7 @@
         pulse.enable = true;
     };
     nixpkgs.config.allowUnfree = true;
-    services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+    services.xserver.videoDrivers = [ "modesetting" ];
 
     virtualisation.vmVariant = {
         virtualisation.resolution = { x = 1920; y = 1080; };
@@ -52,6 +55,9 @@
         ];
     };
 
+    networking.firewall = {
+        allowedTCPPorts = [ 17171 22 3308 3306 3308 8080 5432 ];
+    };
     environment.variables = {
         NIXOS_OZONE_WL = "1";
     };

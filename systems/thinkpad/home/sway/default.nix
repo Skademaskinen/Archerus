@@ -1,5 +1,9 @@
 {pkgs, lib, config, ...}: let
-    background = import ./background { inherit pkgs; };
+    #background = import ./background { inherit pkgs; };
+    background = pkgs.fetchurl {
+        url = "https://rare-gallery.com/mocahbig/20952-Arcueid-BrunestudArcueid-Brunestud-HD-Wallpaper.png";
+        sha256 = "sha256-gm0Q555En8sQPDWVrV+a/LeWt7UXZe7wt3ASY2FzyuM=";
+    };
 in {
     wayland.windowManager.sway = {
         enable = true;
@@ -50,10 +54,6 @@ in {
                 }
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
-                }
-                {
-                    command = "${pkgs.tailscale-systray}/bin/tailscale-systray";
-                    always = true;
                 }
             ];
 
@@ -143,6 +143,7 @@ in {
         wl-clipboard
         wlsunset
         xdg-user-dirs
+        wl-mirror
     ];
 
     programs.swaylock = {

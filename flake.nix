@@ -15,6 +15,7 @@
         nixpkgs = {
             url = "nixpkgs/nixos-24.11";
         };
+        nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
             url = "github:nix-community/nixvim";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -114,6 +115,8 @@
                 inherit system;
                 modules = defconfig ++ [
                     inputs.home-manager.nixosModules.home-manager
+                    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p14s-amd-gen4
+                    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
                     ./systems/thinkpad
                     ./shared/bootloader/grub.nix
                 ];
@@ -154,6 +157,7 @@
             sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
             lavalink = pkgs.callPackage ./packages/lavalink {};
             p8 = pkgs.callPackage ./packages/p8 {};
+            bolt = pkgs.callPackage ./packages/bolt {};
             systems = builtins.mapAttrs (key: value: value.config.system.build.vm) self.nixosConfigurations;
             test-background = pkgs.callPackage ./systems/laptop/home/sway/background { inherit pkgs; };
         };

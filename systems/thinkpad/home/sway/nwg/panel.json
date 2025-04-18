@@ -72,6 +72,11 @@
 
                 },
                 {
+                    "name":"Mirror screen",
+                    "icon":"nwg-displays",
+                    "cmd":"wl-mirror eDP-1"
+                },
+                {
                     "name": "Displays",
                     "icon": "nwg-displays",
                     "cmd": "nwg-displays"

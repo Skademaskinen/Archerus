@@ -9,6 +9,7 @@
     programs.firefox.enable = true;
 
     xdg.portal.config.common.default = "*";
+    xdg.portal.wlr.enable = true;
 
     virtualisation.docker.enable = true;
     users.groups.docker.members = [
@@ -22,4 +23,6 @@
     services.tailscale = {
         enable = true;
     };
+
+    programs.wireshark.enable = true;
 }

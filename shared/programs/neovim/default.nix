@@ -18,6 +18,7 @@
         '';
         extraPackages = with pkgs; [
             jdk23
+            dotnet-sdk_8
         ];
     };
 }

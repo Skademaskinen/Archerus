@@ -13,5 +13,14 @@
             cat = "${pkgs.bat}/bin/bat -pp";
         };
         promptInit = "PROMPT=\"%F{#55AAFF}[%F{#FF5500}%n%f@%F{#FF5500}%m%F{#55AAFF}] %F{#888888}%~ %F{#55AAFF}> %f\"";
+        shellInit = ''
+            # Set terminal title dynamically
+            function precmd() {
+                print -Pn "\e]0;%~\a"
+            }
+            function preexec() {
+                print -Pn "\e]0;$1 - %~\a"
+            }
+        '';
     };
 }

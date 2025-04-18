@@ -15,7 +15,12 @@
                 key = "<A-j>";
                 action = "<Cmd>Neotree toggle<CR>";
                 mode = "n";
-    }
+            }
+            {
+                key = "<C-n>";
+                action = "<Cmd>Neotree focus<CR>";
+                mode = "n";
+            }
             {
                 key = "<C-s>";
                 action = "<Cmd><ESC>w<CR>";

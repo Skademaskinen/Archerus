@@ -1,10 +1,12 @@
-{
+{ pkgs, ... }: {
     programs.nixvim = {
-        colorschemes.tokyonight = {
+        colorschemes.nightfox = {
             enable = true;
             autoLoad = true;
             settings.transparent = true;
         };
+        opts.background = "";
+        colorscheme = "carbonfox";
     };
 
 }
