@@ -1,9 +1,11 @@
+ { config, ... }: 
+
  {
     home.file = {
-        Documents.source = /data/files/Documents;
-        Pictures.source = /data/files/Pictures;
-        Downloads.source = /data/files/Downloads;
-        git.source = /data/files/git;
-        Games.source = /data/games;
+        Documents.source = config.lib.file.mkOutOfStoreSymlink "/data/files/Documents";
+        Pictures.source = config.lib.file.mkOutOfStoreSymlink "/data/files/Pictures";
+        Downloads.source = config.lib.file.mkOutOfStoreSymlink "/data/files/Downloads";
+        git.source = config.lib.file.mkOutOfStoreSymlink "/data/files/git";
+        Games.source = config.lib.file.mkOutOfStoreSymlink "/data/games";
     };
  }

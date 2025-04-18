@@ -38,9 +38,15 @@ in {
                 xkb_layout = "dk";
             };
 
-            output."*" = {
-                bg = "${background} fill mode 3840x2160";
+            output = {
+                DP-1 = {
+                    bg = "${background} fill mode 3840x2160";
+                };
+                DP-2 = {
+                    bg = "${background} fill mode 3840x2160";
+                };
             };
+            
 
             startup = [
                 {
