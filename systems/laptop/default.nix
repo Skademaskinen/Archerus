@@ -2,7 +2,7 @@
 
 {
     imports = [
-        ../generic-laptop
+        ../generic-desktop
         ./hardware-configuration.nix
         ./modules
     ];
