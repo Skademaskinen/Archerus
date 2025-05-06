@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ pkgs, ... }:
 
 {
     imports = [
@@ -12,7 +12,29 @@
             nixos-icons
             (import ../../../packages/bolt { inherit pkgs; })
             htop
-        ];
+            (writeScriptBin "p10-postgres" ''
+                #!${bash}/bin/bash
+                ${docker}/bin/docker compose -f ${writeText "docker-compose.json" (lib.strings.toJSON {
+                    services.db = {
+                        image = "postgres";
+                        environment = {
+                            POSTGRES_USER = "root";
+                            POSTGRES_DB = "autoscaler";
+                            POSTGRES_PASSWORD = "password";
+                        };
+                        ports = [
+                            "5432:5432"
+                        ];
+                        volumes = [
+                            "/var/postgres_data:/var/lib/postgresql/data"
+                        ];
+                    };
+                })} $@
+                if test "$1" = "up"; then
+                    ${dotnet-sdk_8}/bin/dotnet run --project ~/git/p10/Autoscaler/Autoscaler.DbUp
+                fi
+            '')
+        ]; 
     };
     
     gtk = {
