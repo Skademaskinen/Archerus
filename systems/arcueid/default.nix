@@ -51,5 +51,4 @@
     boot.swraid = {
         enable = true;
     };
-
 }

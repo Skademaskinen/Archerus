@@ -2,16 +2,13 @@ name: evaluate nix store paths
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   eval:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        output: ["default", "maintenance", "test-image", "plymouth-theme", "nixosConfigurations.desktop"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4.1.1
@@ -19,9 +16,8 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
       - name: Nix cache
         uses: DeterminateSystems/flakehub-cache-action@main
-      - name: Init local flake
+      - name: evaluate systems
         run: |
-          sudo bash scripts/initialize.sh
-          nix flake update maintenance
-      - name: build system
-        run: nix eval .#${{ matrix.output }}
+          for system in arcueid laptop thinkpad; do
+            nix eval .#nixosConfigurations.$system.config.system.build.nixos-rebuild
+          done
