@@ -20,6 +20,7 @@ in {
             _JAVA_AWT_WM_NONREPARENTING=1 ${jdk8}/bin/java -jar ${myMage}/xmage/mage-client/lib/mage-client-1.4.56.jar
         '')
         wireshark-qt
+        (pkgs.callPackage ./programs/wine-discord-ipc-bridge.nix {})
     ];
     nixpkgs.config.permittedInsecurePackages = [
         "cinny-4.2.3"

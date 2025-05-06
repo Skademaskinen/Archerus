@@ -7,6 +7,7 @@
         cargo
         unzip
         nodejs
+        vesktop
         discord
         spotify
         kdePackages.breeze-gtk
@@ -14,18 +15,8 @@
         gtk3
         gobject-introspection
         feh
-        neovide
-        jetbrains.rider
         mono
-        (pkgs.python312.withPackages (py: with py; [
-            pillow
-        ]))
         vlc
-        (pkgs.writeScriptBin "or" ''
-            #!${pkgs.bash}/bin/bash
-            systemd-run --user ${jetbrains.rider}/bin/rider $@
-        '')
-        jetbrains.idea-community
         teams-for-linux
         signal-desktop
     ];

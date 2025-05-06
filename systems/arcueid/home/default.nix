@@ -14,6 +14,20 @@
             (import ../../../packages/bolt { inherit pkgs; })
             htop
             bottles
+            lutris
+            mangohud
+            # -- run app within sway
+            (pkgs.writeScriptBin "nested-run" ''
+                #!${pkgs.bash}/bin/bash
+                config_file=$(${pkgs.mktemp}/bin/mktemp)
+                cat > $config_file << EOF
+                    exec $@
+                EOF
+                ${pkgs.weston}/bin/weston --config $config_file
+            '')
+            shadps4
+            jetbrains.rider
+            dotnet-sdk_8
         ];
     };
     
@@ -27,6 +41,12 @@
         iconTheme.package = pkgs.kdePackages.breeze;
         theme.name = "Adwaita-dark";
         theme.package = pkgs.gnome-themes-extra;
+    };
+    home.pointerCursor = {
+        gtk.enable = true;
+        package = pkgs.vimix-cursors;
+        name = "Vimix-cursors";
+        size = 22;
     };
     qt = {
         enable = true;

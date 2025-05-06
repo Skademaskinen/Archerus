@@ -18,4 +18,9 @@
         enable = true;
         package = pkgs.jdk23;
     };
+
+    virtualisation.docker.enable = true;
+    users.groups.docker.members = [
+        "mast3r"
+    ];
 }

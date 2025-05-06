@@ -39,22 +39,30 @@ in {
             };
 
             output = {
+                DP-3 = {
+                    bg = "${background} fill mode 3840x2160";
+                    scale = "2";
+                    position = "0,0";
+                    adaptive_sync = "on";
+                };
                 DP-1 = {
                     bg = "${background} fill mode 3840x2160";
-                };
-                DP-2 = {
-                    bg = "${background} fill mode 3840x2160";
+                    scale = "2";
+                    position = "1920,0";
                 };
             };
             
 
             startup = [
                 {
-                    command = import ./nwg/panel.nix { inherit pkgs; };
+                    command = pkgs.callPackage ./nwg/panel.nix { };
                     always = true;
                 }
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
+                }
+                {
+                    command = "${pkgs.ckb-next}/bin/ckb-next -b";
                 }
             ];
 
@@ -88,16 +96,16 @@ in {
             };
         };
         extraConfig = ''
-            workspace 1 output DP-1
-            workspace 2 output DP-2
-            workspace 3 output DP-1
-            workspace 4 output DP-2
-            workspace 5 output DP-1
-            workspace 6 output DP-2
-            workspace 7 output DP-1
-            workspace 8 output DP-2
-            workspace 9 output DP-1
-            workspace 10 output DP-2
+            workspace 1 output DP-3
+            workspace 2 output DP-1
+            workspace 3 output DP-3
+            workspace 4 output DP-1
+            workspace 5 output DP-3
+            workspace 6 output DP-1
+            workspace 7 output DP-3
+            workspace 8 output DP-1
+            workspace 9 output DP-3
+            workspace 10 output DP-1
             corner_radius 10
             for_window [title="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
         '';
