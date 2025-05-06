@@ -20,3 +20,4 @@ jobs:
         run: |
           for system in arcueid laptop thinkpad Skademaskinen; do
             nix eval .#nixosConfigurations.$system.config.system.build.nixos-rebuild
+          done
