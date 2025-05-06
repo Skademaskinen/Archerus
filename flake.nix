@@ -121,6 +121,14 @@
                     ./shared/bootloader/grub.nix
                 ];
             };
+            arcueid = nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = defconfig ++ [
+                    inputs.home-manager.nixosModules.home-manager
+                    ./systems/arcueid
+                    ./shared/bootloader/grub.nix
+                ];
+            };
         };
 
         # non-nixos systems

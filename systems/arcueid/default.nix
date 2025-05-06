@@ -22,19 +22,12 @@
         wayland.compositor = "weston";
         theme = "breeze";
     };
-    services.xserver.enable = true;
- 
-    services.desktopManager.plasma6.enable = true;
+
     users.groups.input.members = ["mast3r"];
 
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "mast3r";
     services.displayManager.defaultSession = "sway";
-
-    hardware.bluetooth.enable = true;
-    services.blueman.enable = true;
-
-    services.fprintd.enable = true;
 
     hardware.pulseaudio.enable = false;
         security.rtkit.enable = true;
@@ -44,26 +37,19 @@
         alsa.support32Bit = true;
         pulse.enable = true;
     };
+
     nixpkgs.config.allowUnfree = true;
-    services.xserver.videoDrivers = [ "modesetting" ];
+    services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
 
-    virtualisation.vmVariant = {
-        virtualisation.resolution = { x = 1920; y = 1080; };
-        virtualisation.qemu.options = [
-            "-device virtio-vga-gl"
-            "-display gtk,gl=on"
-        ];
-    };
-
-    networking.firewall = {
-        allowedTCPPorts = [ 17171 22 3308 3306 3308 8080 5432 ];
-    };
     environment.variables = {
         NIXOS_OZONE_WL = "1";
     };
 
-    networking.hostName = "thinkpad";
+    networking.hostName = "arcueid";
     system.stateVersion = "24.11";
 
+    boot.swraid = {
+        enable = true;
+    };
 
 }
