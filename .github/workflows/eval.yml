@@ -9,9 +9,6 @@ on:
 jobs:
   eval:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        output: ["nixosConfigurations.arcueid"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4.1.1
@@ -19,5 +16,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
       - name: Nix cache
         uses: DeterminateSystems/flakehub-cache-action@main
-      - name: build system
-        run: nix eval .#${{ matrix.output }}.config.system.build.nixos-rebuild
+      - name: evaluate systems
+        run: |
+          for system in arcueid laptop thinkpad Skademaskinen; do
+            nix eval .#nixosConfigurations.$system.config.system.build.nixos-rebuild
