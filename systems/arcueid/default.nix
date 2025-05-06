@@ -39,7 +39,7 @@
     };
 
     nixpkgs.config.allowUnfree = true;
-    services.xserver.videoDrivers = [ "modesetting" ];
+    services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
 
     environment.variables = {
         NIXOS_OZONE_WL = "1";
@@ -48,5 +48,7 @@
     networking.hostName = "arcueid";
     system.stateVersion = "24.11";
 
-
+    boot.swraid = {
+        enable = true;
+    };
 }
