@@ -1,14 +1,5 @@
 {
-    description = "Skademaskinen configuration";
-
-    nixConfig = {
-        extra-substituters = [
-            "https://nix-community.cachix.org"
-        ];
-        extra-trusted-public-keys = [
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-    };
+    description = "Skademaskinen modules";
 
     inputs = {
         # external depends
@@ -18,14 +9,6 @@
         nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
             url = "github:nix-community/nixvim/nixos-24.11";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        system-manager = {
-            url = "github:numtide/system-manager";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        nix-system-graphics = {
-            url = "github:soupglasses/nix-system-graphics";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         home-manager = {
@@ -55,119 +38,10 @@
         };
     };
 
-    outputs = inputs @ { self, nixpkgs, nixvim, ...}:
+    outputs = inputs @ { self, nixpkgs, ...}:
     let
         system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
-        defconfig = [
-            ./modules
-
-            ./shared/locale.nix
-            ./shared/networking.nix
-            ./shared/programs/nix.nix
-            ./shared/programs/git.nix
-            nixvim.nixosModules.default
-            ./shared/programs/neovim
-            ./shared/users/mast3r.nix
-        ];
+        pkgs = import nixpkgs { inherit system; };
     in {
-        nixosConfigurations = {
-            Skademaskinen = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = defconfig ++ [
-                    {
-                        _module.args = {
-                            nix-velocity = inputs.nix-velocity;
-                            homepage = inputs.homepage;
-                        };
-                    }
-                    inputs.nix-velocity.nixosModules.default
-                    inputs.homepage.nixosModules.${system}.default
-                    inputs.putricide.nixosModules.default
-                    inputs.rp-utils.nixosModules.default
-                    ./systems/skademaskinen
-                    ./shared/bootloader/systemd-boot.nix
-                    ./shared/users/taoshi.nix
-                    {
-                        # TODO: fix at some point
-                        systemd.services.folkevognen = {
-                            enable = true;
-                            description = "Folkevognen";
-                            wantedBy = [ "multi-user.target" ];
-                            serviceConfig = {
-                                WorkingDirectory = "/mnt/raid/folkevognen";
-                                ExecStart = "${inputs.folkevognen.packages.${system}.default}/bin/folkevognen";
-                                User = "mast3r";
-                            };
-                        };
-                    }
-                ];
-            };
-            laptop = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = defconfig ++ [
-                    inputs.home-manager.nixosModules.home-manager
-                    ./systems/laptop
-                    ./shared/bootloader/grub.nix
-                ];
-            };
-            thinkpad = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = defconfig ++ [
-                    inputs.home-manager.nixosModules.home-manager
-                    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p14s-amd-gen4
-                    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
-                    ./systems/thinkpad
-                    ./shared/bootloader/grub.nix
-                ];
-            };
-            arcueid = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = defconfig ++ [
-                    inputs.home-manager.nixosModules.home-manager
-                    ./systems/arcueid
-                    ./shared/bootloader/grub.nix
-                ];
-            };
-        };
-
-        # non-nixos systems
-        systemConfigs = {
-            desktop = inputs.system-manager.lib.makeSystemConfig {
-                modules = [
-                    inputs.nix-system-graphics.systemModules.default
-                    {
-                        environment.systemPackages = [inputs.system-manager.packages.${system}.system-manager];
-                        nixpkgs.hostPlatform = system;
-                        system-manager.allowAnyDistro = true;
-                        system-graphics.enable = true;
-                    }
-                ];
-            };
-            laptop = inputs.system-manager.lib.makeSystemConfig {
-                modules = [
-                    inputs.nix-system-graphics.systemModules.default
-                    {
-                        environment.systemPackages = [inputs.system-manager.packages.${system}.system-manager];
-                        nixpkgs.hostPlatform = system;
-                        system-manager.allowAnyDistro = true;
-                        system-graphics = {
-                            enable = true;
-                        };
-                    }
-                ];
-            };
-        };
-
-        packages.${system} = {
-            warcraftlogsuploader = pkgs.callPackage ./packages/warcraftlogsuploader {};
-            banner = pkgs.callPackage ./packages/banner {};
-            sketch-bot = pkgs.callPackage ./packages/sketch-bot {};
-            lavalink = pkgs.callPackage ./packages/lavalink {};
-            p8 = pkgs.callPackage ./packages/p8 {};
-            bolt = pkgs.callPackage ./packages/bolt {};
-            systems = builtins.mapAttrs (key: value: value.config.system.build.vm) self.nixosConfigurations;
-            test-background = pkgs.callPackage ./systems/laptop/home/sway/background { inherit pkgs; };
-        };
     };
 }
