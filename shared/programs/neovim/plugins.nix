@@ -7,7 +7,6 @@ in {
         plugins.lsp = {
             enable = true;
             inlayHints = true;
-            autoLoad = true;
             servers.pyright = autoEnable' {};
             servers.nixd = autoEnable' {};
             servers.hls = autoEnable' {
@@ -16,24 +15,25 @@ in {
             servers.clangd = autoEnable' {};
             servers.omnisharp = autoEnable' {};
         };
-        plugins.nvim-jdtls = {
+        #plugins.nvim-jdtls = {
+        #    enable = true;
+        #    data = "/home/mast3r/.cache/jdtls/workspace";
+        #    jdtLanguageServerPackage = pkgs.jdt-language-server.override {
+        #        jdk = pkgs.jdk23;
+        #    };
+        #};
+        plugins.lsp-lines = { enable = true; };
+        plugins.lsp-status = { enable = true; };
+        plugins.trouble = { enable = true; };
+        plugins.fugitive = { enable = true; };
+        plugins.barbar = { enable = true; };
+        plugins.noice = { enable = true; };
+        plugins.notify = { enable = true; };
+        plugins.fzf-lua = { enable = true; };
+        plugins.treesitter = { enable = true; };
+        plugins.telescope = { enable = true; };
+        plugins.transparent = {
             enable = true;
-            data = "/home/mast3r/.cache/jdtls/workspace";
-            jdtLanguageServerPackage = pkgs.jdt-language-server.override {
-                jdk = pkgs.jdk23;
-            };
-        };
-        plugins.lsp-lines = autoEnable {};
-        plugins.lsp-status = autoEnable {};
-        plugins.trouble = autoEnable {};
-        plugins.fugitive = autoEnable {};
-        plugins.barbar = autoEnable {};
-        plugins.noice = autoEnable {};
-        plugins.notify = autoEnable {};
-        plugins.fzf-lua = autoEnable {};
-        plugins.treesitter = autoEnable {};
-        plugins.telescope = autoEnable {};
-        plugins.transparent = autoEnable {
             settings.groups = [
                 "Normal"
                 "NormalNC"
@@ -44,7 +44,8 @@ in {
                 "BarbarNC"
             ];
         };
-        plugins.lualine = autoEnable {
+        plugins.lualine = {
+            enable = true;
             settings.options.globalstatus = true;
         };
         plugins.cmp = {
@@ -65,7 +66,7 @@ in {
                 "<C-Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
             };
         };
-        plugins.haskell-scope-highlighting = autoEnable {};
+        plugins.haskell-scope-highlighting = { enable = true; };
         plugins.cmp-nvim-lsp.enable = true;
         plugins.cmp-path.enable = true;
         plugins.cmp-buffer.enable = true;
@@ -82,7 +83,8 @@ in {
         plugins.lspkind = {
             enable = true;
         };
-        plugins.gitgutter = autoEnable {
+        plugins.gitgutter = {
+            enable = true;
             recommendedSettings = true;
         };
 
