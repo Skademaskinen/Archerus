@@ -6,6 +6,8 @@ nixpkgs.lib.nixosSystem {
     inherit system;
     modules = with self; [
         inputs.home-manager.nixosModules.default
+        inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p14s-amd-gen4
+        inputs.nixos-hardware.nixosModules.lenovo-thinkpad
         nixosModules.common
         nixosModules.desktop
         nixosModules.gaming
