@@ -273,7 +273,7 @@
     menu-start-settings = {};
     modules-center = [ ];
     modules-left = [
-      "sway-taskbar"
+      "hyprland-taskbar"
       "scratchpad"
     ];
     modules-right = [

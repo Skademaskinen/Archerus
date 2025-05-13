@@ -1,7 +1,7 @@
 inputs:
 
 {pkgs, lib, config, ...}: let
-    wallpaper = pkgs.fetchurl inputs.self.lib.wallpapers.arcueid;
+    wallpaper = inputs.self.lib.wallpapers.arcueid;
 in {
     imports = [
         ./common/desktop.nix

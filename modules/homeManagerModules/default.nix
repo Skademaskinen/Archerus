@@ -10,7 +10,6 @@ listToAttrs (map (name: {
     "hyprland"
     "nixvim"
     "sway"
-    "programming"
     "zsh"
     "alacritty"
 ])

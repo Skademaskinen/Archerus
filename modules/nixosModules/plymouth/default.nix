@@ -8,10 +8,7 @@ inputs:
             enable = true;
             theme = "nixos-bgrt";
             themePackages = [
-                pkgs.kdePackages.breeze-plymouth
-                pkgs.plymouth-matrix-theme
-                pkgs.plymouth-proxzima-theme
-                pkgs.nixos-bgrt-plymouth
+                (inputs.self.packages.${inputs.system}.plymouth-theme { logo = inputs.lib.wallpapers.flogo; })
             ];
             logo = "${pkgs.fetchFromGitHub {
                 owner = "Mast3rwaf1z";

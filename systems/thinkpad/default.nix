@@ -13,6 +13,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.gaming
         nixosModules.grub
         nixosModules.plymouth
+        nixosModules.programming
         ({ pkgs, ... }:
 
         {
@@ -36,7 +37,6 @@ nixpkgs.lib.nixosSystem {
                     homeManagerModules.hyprland
                     homeManagerModules.nixvim
                     homeManagerModules.alacritty
-                    homeManagerModules.programming
                     homeManagerModules.sway
                     homeManagerModules.zsh
                     ./home.nix
