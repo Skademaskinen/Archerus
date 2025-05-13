@@ -38,10 +38,19 @@
         };
     };
 
-    outputs = inputs @ { self, nixpkgs, ...}:
-    let
-        system = "x86_64-linux";
-        pkgs = import nixpkgs { inherit system; };
-    in {
+    outputs = _inputs: let
+        inputs = _inputs // {
+            system = "x86_64-linux"; lib = import ./lib _inputs;
+        };
+    in 
+    
+    {
+        homeManagerModules = import ./modules/homeManagerModules inputs;
+        nixosModules = import ./modules/nixosModules inputs;
+        packages = import ./packages inputs 
+            // inputs.lib;
+        nixosConfigurations = import ./systems inputs;
+        lib = inputs.lib;
     };
+
 }
