@@ -18,14 +18,26 @@ in {
                 "$mod, k, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
                 "$mod, Return, exec, ${pkgs.alacritty}/bin/alacritty"
                 "$mod, o, exec, ${pkgs.alacritty}/bin/alacritty"
+                "$mod SHIFT, q, exit"
+                "$mod, q, killactive"
+                "$mod, 1, workspace, 1"
+                "$mod, 2, workspace, 2"
+                "$mod, 3, workspace, 3"
+                "$mod, 4, workspace, 4"
+                "$mod, 5, workspace, 5"
+                "$mod, 6, workspace, 6"
+                "$mod, 7, workspace, 7"
+                "$mod, 8, workspace, 8"
+                "$mod, 9, workspace, 9"
+                "$mod, 0, workspace, 10"
             ];
             exec-once = [
-                "${pkgs.callPackage ./common/nwg/panel.nix {}}"
+                "${pkgs.callPackage ./common/nwg/panel-hyprland.nix {}}"
                 "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
             ];
             general = {
-                "col.active_border" = "rgba(#ff5500)";
-                "col.inactive_border" = "rgba(#595959)";
+                "col.active_border" = "rgba(#ff5500ff)";
+                "col.inactive_border" = "rgba(#595959ff)";
                 gaps_in = "5";
                 gaps_out = "10";
                 border_size = "4";

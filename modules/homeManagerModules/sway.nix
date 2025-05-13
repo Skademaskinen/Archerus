@@ -56,14 +56,11 @@ in {
 
             startup = [
                 {
-                    command = pkgs.callPackage ./common/nwg/panel.nix { };
+                    command = pkgs.callPackage ./common/nwg/panel-sway.nix { };
                     always = true;
                 }
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
-                }
-                {
-                    command = "${pkgs.ckb-next}/bin/ckb-next -b";
                 }
             ];
 

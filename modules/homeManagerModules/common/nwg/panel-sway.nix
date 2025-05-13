@@ -40,11 +40,14 @@
       backlight-device = "";
       click-closes = true;
       commands = {
+        battery = "";
         bluetooth = "blueman-manager";
         net = "";
       };
       components = [
+        "brightness"
         "volume"
+        "battery"
         "processes"
         "readme"
       ];
