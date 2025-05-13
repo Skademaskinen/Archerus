@@ -15,8 +15,6 @@ nixpkgs.lib.nixosSystem {
         {
             imports = [
                 ./hardware-configuration.nix
-                ./packages.nix
-                ./grub-hack.nix
             ];
             users.users.mast3r = {
                 isNormalUser = true;
@@ -39,7 +37,7 @@ nixpkgs.lib.nixosSystem {
                 ];
 
             };
-            users.groups.input.members = "mast3r";
+            users.groups.input.members = ["mast3r"];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
                 user = "mast3r";
@@ -50,8 +48,6 @@ nixpkgs.lib.nixosSystem {
 
             hardware.bluetooth.enable = true;
             services.blueman.enable = true;
-
-            services.fprintd.enable = true;
 
             hardware.pulseaudio.enable = false;
                 security.rtkit.enable = true;

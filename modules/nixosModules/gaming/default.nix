@@ -3,13 +3,6 @@ inputs:
 { pkgs, ... }:
 
 {
-    environment.systemPackages = with pkgs; [
-        lutris
-        wine
-        protonup-qt
-        inputs.self.packages.${inputs.system}.bolt
-    ];
-
     nixpkgs.config.allowUnfree = true;
 
     programs.steam.enable = true;
@@ -19,32 +12,37 @@ inputs:
         enable = true;
         enable32Bit = true;
     };
+    programs.gamemode.enable = true;
+    programs.gamemode.enableRenice = true;
 
-    environment.variables = {
-        STEAM_GAMESCOPE_PREFIX = "${pkgs.writeScriptBin "gamescope-wrapped" ''
-            #!${pkgs.bash}/bin/bash
+    users.users.mast3r.extraGroups = [ "gamemode" ];
+
+    environment.systemPackages = with pkgs; [
+        lutris
+        wine
+        protonup-qt
+        inputs.self.packages.${inputs.system}.bolt
+        (pkgs.writeScriptBin "steam-gamescope-prefix" ''
+            #!${bash}/bin/bash
             export LD_PRELOAD=
             export XKB_DEFAULT_LAYOUT=dk
-            ${pkgs.gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f -- ${inputs.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@
-        ''}/bin/gamescope-wrapped";
+            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f -- ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@
+        '')
 
         # baldur's gate 3 was being sPeCiAl and needs spECIaL treatment...
-        BALDURS_GATE_3_PREFIX = "${pkgs.writeScriptBin "gamescope-wrapped" ''
-            #!${pkgs.bash}/bin/bash
-            export LD_PRELOAD=
-            export XKB_DEFAULT_LAYOUT=dk
-            ${pkgs.gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp -e -f -- ${inputs.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@
-        ''}/bin/gamescope-wrapped";
+        (pkgs.writeScriptBin "baldurs-gate-3-prefix" ''
+            #!${bash}/bin/bash
+            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp -e -f -- ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@ --vulkan --skip-launcher
+        '')
 
-        STEAM_PREFIX = "${inputs.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
+        inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
 
-        LUTRIS_GAMESCOPE_PREFIX = "${pkgs.writeScriptBin "gamescope-wrapped" ''
-            #!${pkgs.bash}/bin/bash
+        (pkgs.writeScriptBin "lutris-gamescope-prefix" ''
+            #!${bash}/bin/bash
             LD_PRELOAD=
             export XKB_DEFAULT_LAYOUT=dk
-            ${pkgs.gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -f -- ${inputs.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe $@
-        ''}/bin/gamescope-wrapped";
+            ${gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -f -- ${gamemode}/bin/gamemoderun ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe $@
+        '')
+    ];
 
-        LUTRIS_PREFIX = "${inputs.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe";
-    };
 }
