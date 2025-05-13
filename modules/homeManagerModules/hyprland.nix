@@ -25,7 +25,7 @@ in {
                 "$mod SHIFT, f, fullscreen"
             ] ++
                 map (index: "$mod, ${toStr (lib.mod index 10)}, workspace, ${toStr index}") (lib.lists.range 1 10) ++
-                map (index: "$mod, ${toStr (lib.mod index 10)}, movetoworkspacesilent, ${toStr index}") (lib.lists.range 1 10);
+                map (index: "$mod SHIFT, ${toStr (lib.mod index 10)}, movetoworkspacesilent, ${toStr index}") (lib.lists.range 1 10);
 
             bindm = [
                 "ALT, mouse:272, movewindow"
