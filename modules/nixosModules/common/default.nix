@@ -6,5 +6,6 @@ inputs:
     environment.systemPackages = with pkgs; [
         vim
     ];
+    networking.networkmanager.enable = true;
 
 }
