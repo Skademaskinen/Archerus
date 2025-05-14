@@ -23,5 +23,9 @@
             enable = true;
             platformTheme.name = "gtk";
         };
+
+        home.packages = with pkgs; [
+            cinny-desktop
+        ];
     };
 }

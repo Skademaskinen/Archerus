@@ -23,6 +23,7 @@ in {
                 "$mod, q, killactive"
                 "$mod, space, togglefloating"
                 "$mod SHIFT, f, fullscreen"
+                ''$mod, p, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy''
             ] ++
                 map (index: "$mod, ${toStr (lib.mod index 10)}, workspace, ${toStr index}") (lib.lists.range 1 10) ++
                 map (index: "$mod SHIFT, ${toStr (lib.mod index 10)}, movetoworkspacesilent, ${toStr index}") (lib.lists.range 1 10);
