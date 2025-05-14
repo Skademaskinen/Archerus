@@ -1,6 +1,6 @@
 inputs:
 
-{ pkgs, lib, ... }: let
+{ pkgs, lib, config, ... }: let
     wallpaper = inputs.self.lib.wallpapers.arcueid;
     toStr = builtins.toString;
 in {
@@ -38,8 +38,10 @@ in {
             ];
 
             exec-once = [
-                "${pkgs.callPackage ./common/nwg/panel-hyprland.nix {}}"
                 "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
+            ];
+            exec = [
+                "${pkgs.callPackage ./common/nwg/panel-hyprland.nix { inherit config; }}"
             ];
             general = {
                 "col.active_border" = "rgba(ff5500ff) rgba(ff5500ff)";

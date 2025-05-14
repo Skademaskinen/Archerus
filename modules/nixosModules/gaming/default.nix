@@ -28,11 +28,9 @@ inputs:
             export XKB_DEFAULT_LAYOUT=dk
             ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f -- ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@
         '')
-
-        # baldur's gate 3 was being sPeCiAl and needs spECIaL treatment...
-        (pkgs.writeScriptBin "baldurs-gate-3-prefix" ''
+        (pkgs.writeScriptBin "steam-prefix" ''
             #!${bash}/bin/bash
-            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp -e -f -- ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@ --vulkan --skip-launcher
+            ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh $@
         '')
 
         inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
