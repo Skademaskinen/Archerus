@@ -20,7 +20,7 @@ pkgs.nixos-bgrt-plymouth.overrideAttrs {
             ${builtins.concatStringsSep "\n" (map (index: let 
                 angle = index * 12;
                 imageIndex = if index < 10 then "000${builtins.toString index}" else "00${builtins.toString index}";
-            in "${pkgs.imagemagick}/bin/magick ${logo} -channel RGB -negate +channel -background none -virtual-pixel background -distort SRT ${builtins.toString angle} -resize \${width}x\${height} $out/images/throbber-${imageIndex}.png") (lib.lists.range 1 29))}
+            in "${pkgs.imagemagick}/bin/magick ${logo} -channel RGB -negate +channel -background none -virtual-pixel background -distort SRT ${builtins.toString angle} -resize $((width*2))x$((height*2)) $out/images/throbber-${imageIndex}.png") (lib.lists.range 1 29))}
         '';
     };
 })
