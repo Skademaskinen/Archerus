@@ -1,4 +1,4 @@
-{pkgs, lib, ...}:
+{pkgs, lib, config, ...}:
 
 "${pkgs.nwg-panel}/bin/nwg-panel -c ${pkgs.writeText "panel.json" (lib.strings.toJSON [
   {
@@ -40,17 +40,15 @@
       backlight-device = "";
       click-closes = true;
       commands = {
-        battery = "";
         bluetooth = "blueman-manager";
         net = "";
-      };
+      } // (if config.desktop.battery then { "battery" = ""; } else {});
       components = [
         "brightness"
         "volume"
-        "battery"
         "processes"
         "readme"
-      ];
+      ] ++ (if config.desktop.battery then ["battery"] else []);
       css-name = "controls-window";
       custom-items = [
         {

@@ -21,4 +21,6 @@
     '' + builtins.concatStringsSep "\n" (map (index:
         "workspace = ${builtins.toString index},monitor:DP-${if (lib.mod index 2 == 0) then "1" else "3"}"
     ) (lib.lists.range 1 10));
+
+    desktop.battery = false;
 }

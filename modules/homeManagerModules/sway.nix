@@ -56,7 +56,7 @@ in {
 
             startup = [
                 {
-                    command = pkgs.callPackage ./common/nwg/panel-sway.nix { };
+                    command = pkgs.callPackage ./common/nwg/panel-sway.nix { inherit config; };
                     always = true;
                 }
                 {

@@ -38,10 +38,8 @@ in {
             ];
 
             exec-once = [
-                "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
-            ];
-            exec = [
                 "${pkgs.callPackage ./common/nwg/panel-hyprland.nix { inherit config; }}"
+                "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
             ];
             general = {
                 "col.active_border" = "rgba(ff5500ff) rgba(ff5500ff)";
