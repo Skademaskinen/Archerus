@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
     home.stateVersion = "24.11";
@@ -12,10 +12,13 @@
         
         # toolkit-specific scale
         env = GDK_SCALE,2
-        env = XCURSOR_SIZE,32
+        env = XCURSOR_SIZE,24
+        env = NIXOS_OZONE_WL=1
 
         misc {
             vrr = 1
         }
-    '';
+    '' + builtins.concatStringsSep "\n" (map (index:
+        "workspace = ${builtins.toString index},monitor:DP-${if (lib.mod index 2 == 0) then "1" else "3"}"
+    ) (lib.lists.range 1 10));
 }
