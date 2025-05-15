@@ -17,5 +17,6 @@ inputs:
     environment.systemPackages = with pkgs; [
         jetbrains.rider
         jetbrains.idea-community
+        dotnet-sdk_8
     ];
 }

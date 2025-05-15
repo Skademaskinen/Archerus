@@ -15,6 +15,8 @@ inputs:
     programs.gamemode.enable = true;
     programs.gamemode.enableRenice = true;
 
+    programs.obs-studio.enable = true;
+
     users.users.mast3r.extraGroups = [ "gamemode" ];
 
     environment.systemPackages = with pkgs; [

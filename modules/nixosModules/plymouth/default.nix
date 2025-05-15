@@ -6,9 +6,9 @@ inputs:
     boot = {
         plymouth = {
             enable = true;
-            theme = "nixos-bgrt";
+            theme = "flogo";
             themePackages = [
-                (inputs.self.packages.${inputs.system}.plymouth-theme { logo = inputs.lib.wallpapers.flogo; })
+                (inputs.self.packages.${inputs.system}.plymouth-theme { logo = inputs.lib.wallpapers.flogo; name = "flogo"; })
             ];
             font = "${pkgs.fira}/share/fonts/opentype/FiraMono-Medium.otf";
         };

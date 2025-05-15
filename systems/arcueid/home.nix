@@ -23,4 +23,8 @@
     ) (lib.lists.range 1 10));
 
     desktop.battery = false;
+
+    home.packages = with pkgs; [
+        dotnet-sdk_8
+    ];
 }
