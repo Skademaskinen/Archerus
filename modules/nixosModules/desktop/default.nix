@@ -13,6 +13,12 @@ inputs:
     services.xserver.enable = true;
     services.displayManager.sddm = {
         enable = true;
+        wayland.enable = true;
+        wayland.compositor = "weston";
+        theme = "elegant-sddm";
+        extraPackages = [
+            pkgs.elegant-sddm
+        ];
     };
     programs.hyprland.enable = true;
     programs.sway.enable = true;

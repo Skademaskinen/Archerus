@@ -19,8 +19,8 @@ in {
                 "$mod, k, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
                 "$mod, Return, exec, ${pkgs.alacritty}/bin/alacritty"
                 "$mod, o, exec, ${pkgs.alacritty}/bin/alacritty"
-                "$mod SHIFT, q, exit"
-                "$mod, q, killactive"
+                "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
+                "$mod SHIFT, q, killactive"
                 "$mod, space, togglefloating"
                 "$mod SHIFT, f, fullscreen"
                 ''$mod, p, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy''
@@ -29,7 +29,7 @@ in {
                 map (index: "$mod SHIFT, ${toStr (lib.mod index 10)}, movetoworkspacesilent, ${toStr index}") (lib.lists.range 1 10);
 
             bindm = [
-                "ALT, mouse:272, movewindow"
+                "$mod, mouse:272, movewindow"
             ];
 
             bindel = [
