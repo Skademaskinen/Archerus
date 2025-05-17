@@ -6,6 +6,7 @@
         monitor = DP-1, 3840x2160, 1920x0, 2
         monitor = DP-3, 3840x2160, 0x0, 2
         exec-once =${pkgs.ckb-next}/bin/ckb-next -b
+        exec-once = ${pkgs.openrgb}/bin/openrgb --startminimized -c FFFFF,FF1000
         xwayland {
           force_zero_scaling = true
         }

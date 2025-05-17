@@ -12,6 +12,9 @@ inputs:
             enable = true;
             prompt.theme = "minimal";
         };
+        shellAliases = {
+            "_g" = "_git";
+            "g" = "git";
+        };
     };
-
 }
