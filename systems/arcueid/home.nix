@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 
 {
+    imports = [
+        ./symlinks.nix
+    ];
+
     home.stateVersion = "24.11";
     wayland.windowManager.hyprland.extraConfig = ''
         monitor = DP-1, 3840x2160, 1920x0, 2
@@ -27,5 +31,6 @@
 
     home.packages = with pkgs; [
         dotnet-sdk_8
+        ntfs3g
     ];
 }

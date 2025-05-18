@@ -14,25 +14,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6bf7a9d5-8763-402d-bc3a-a33eb840935b";
+    { device = "/dev/mapper/root";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/9b973049-9559-457a-b8aa-eb29eec9282c";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/ED37-E0B5";
+    { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/data/files" =
-    { device = "/dev/disk/by-uuid/b6c1e07f-37fe-4abb-b62a-63cd6a7365f7";
+    { device = "/dev/disk/by-label/FILES";
       fsType = "xfs";
     };
 
   fileSystems."/data/games" =
-    { device = "/dev/disk/by-uuid/52618f34-7882-4212-806c-e5c0391cfd44";
+    { device = "/dev/disk/by-label/GAMES";
       fsType = "ext4";
     };
 
