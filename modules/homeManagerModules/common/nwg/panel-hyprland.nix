@@ -1,4 +1,4 @@
-{pkgs, lib, ...}:
+{pkgs, lib, config, ...}:
 
 "${pkgs.nwg-panel}/bin/nwg-panel -c ${pkgs.writeText "panel.json" (lib.strings.toJSON [
   {
@@ -42,12 +42,13 @@
       commands = {
         bluetooth = "blueman-manager";
         net = "";
-      };
+      } // (if config.desktop.battery then { "battery" = ""; } else {});
       components = [
+        "brightness"
         "volume"
         "processes"
         "readme"
-      ];
+      ] ++ (if config.desktop.battery then ["battery"] else []);
       css-name = "controls-window";
       custom-items = [
         {
@@ -270,7 +271,7 @@
     menu-start-settings = {};
     modules-center = [ ];
     modules-left = [
-      "sway-taskbar"
+      "hyprland-taskbar"
       "scratchpad"
     ];
     modules-right = [
@@ -295,7 +296,7 @@
       single-output = false;
     };
     spacing = 10;
-    sway-taskbar = {
+    hyprland-taskbar = {
       all-outputs = false;
       all-workspaces = true;
       image-size = 16;

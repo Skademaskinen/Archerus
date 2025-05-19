@@ -12,4 +12,5 @@ listToAttrs (map (name: {
     "server"
     "grub"
     "plymouth"
+    "programming"
 ])

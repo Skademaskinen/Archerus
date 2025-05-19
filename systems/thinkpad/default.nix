@@ -13,6 +13,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.gaming
         nixosModules.grub
         nixosModules.plymouth
+        nixosModules.programming
         ({ pkgs, ... }:
 
         {
@@ -25,8 +26,8 @@ nixpkgs.lib.nixosSystem {
                 isNormalUser = true;
                 hashedPassword = "$y$j9T$I5fyCjf3pYZTZjXYaPHtI/$88R1u4uNP6yCs8GCy5aXmyDVm7AVeyASoYOOuouh0k3";
                 shell = pkgs.zsh;
-                extraGroups = [ "wheel" ];
-            };
+                extraGroups = [ "wheel" "networkmanager" ];
+                };
             programs.zsh.enable = true;
             users.groups.mast3r = {};
             home-manager = {
@@ -34,7 +35,8 @@ nixpkgs.lib.nixosSystem {
                 useUserPackages = true;
                 users.mast3r.imports = [
                     homeManagerModules.hyprland
-                    homeManagerModules.programming
+                    homeManagerModules.nixvim
+                    homeManagerModules.alacritty
                     homeManagerModules.sway
                     homeManagerModules.zsh
                     ./home.nix

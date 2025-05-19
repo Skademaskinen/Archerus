@@ -9,5 +9,8 @@ with builtins;
     }) [
         "testSystem"
         "bolt"
+        "plymouth-theme"
+        "plymouth-theme-default"
+        "wine-discord-ipc-bridge"
     ]);
 }

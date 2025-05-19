@@ -1,7 +1,7 @@
 inputs:
 
 {pkgs, lib, config, ...}: let
-    wallpaper = pkgs.fetchurl inputs.self.lib.wallpapers.arcueid;
+    wallpaper = inputs.self.lib.wallpapers.arcueid;
 in {
     imports = [
         ./common/desktop.nix
@@ -56,14 +56,11 @@ in {
 
             startup = [
                 {
-                    command = pkgs.callPackage ./common/nwg/panel.nix { };
+                    command = pkgs.callPackage ./common/nwg/panel-sway.nix { inherit config; };
                     always = true;
                 }
                 {
                     command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
-                }
-                {
-                    command = "${pkgs.ckb-next}/bin/ckb-next -b";
                 }
             ];
 

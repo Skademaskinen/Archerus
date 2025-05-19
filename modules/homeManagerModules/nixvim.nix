@@ -155,5 +155,4 @@ in
         opts.background = "";
         colorscheme = "carbonfox";
     };
-    home.packages = [ pkgs.neovim ];
 }
