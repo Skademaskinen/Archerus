@@ -56,18 +56,7 @@ nixpkgs.lib.nixosSystem {
 
             services.fprintd.enable = true;
 
-            hardware.pulseaudio.enable = false;
-                security.rtkit.enable = true;
-                services.pipewire = {
-                enable = true;
-                alsa.enable = true;
-                alsa.support32Bit = true;
-                pulse.enable = true;
-            };
             nixpkgs.config.allowUnfree = true;
-            environment.variables = {
-                NIXOS_OZONE_WL = "1";
-            };
         })
     ];
 }

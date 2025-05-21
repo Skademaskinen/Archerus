@@ -55,7 +55,7 @@ in
         lutris
         wine
         protonup-qt
-        inputs.self.packages.${inputs.system}.bolt
+        bolt-launcher
         (pkgs.writeScriptBin "steam-gamescope-prefix" ''
             #!${bash}/bin/bash
             export LD_PRELOAD=

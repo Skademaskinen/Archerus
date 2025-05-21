@@ -8,6 +8,7 @@ inputs:
         spotify
         discord
         vesktop
+        vimix-cursors
     ];
 
     networking.networkmanager.enable = true;
@@ -26,8 +27,22 @@ inputs:
     programs.sway.enable = true;
 
     fonts.packages = with pkgs; [
-        fira
         fira-mono
-        nerdfonts
+        nerd-fonts.droid-sans-mono
+	nerd-fonts.fira-code
     ];
+
+    services.pulseaudio.enable = false;
+        security.rtkit.enable = true;
+        services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+    };
+
+    environment.variables = {
+        NIXOS_OZONE_WL = "1";
+    };
+
 }
