@@ -26,7 +26,7 @@ inputs:
             cursor.style.shape = "Underline";
             cursor.style.blinking = "On";
 
-            colors = (builtins.fromTOML (builtins.readFile (pkgs.alacritty-theme + /pastel_dark.toml))).colors;
+            colors = (builtins.fromTOML (builtins.readFile (pkgs.alacritty-theme + /share/alacritty-theme/pastel_dark.toml))).colors;
         } ;
     };
 }

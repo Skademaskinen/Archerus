@@ -103,6 +103,6 @@ in
         lutris
         wine
         protonup-qt
-        inputs.self.packages.${inputs.system}.bolt
+        bolt-launcher
     ] ++ prefixes;
 }

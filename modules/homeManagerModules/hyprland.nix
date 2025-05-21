@@ -69,8 +69,8 @@ in {
             };
 
             env = [
-                "HYPRCURSOR_THEME,Vimix-cursors"
-                "XCURSOR_THEME,Vimix-cursors"
+                "HYPRCURSOR_THEME,Adwaita"
+                "XCURSOR_THEME,Adwaita"
                 "XCURSOR_SIZE,24"
                 "HYPRCURSOR_SIZE,24"
             ];

@@ -10,10 +10,10 @@
     config = {
         gtk = {
             enable = true;
-            cursorTheme.name = "Vimix-cursors";
+            cursorTheme.name = "Adwaita";
             cursorTheme.package = pkgs.vimix-cursors;
             font.name = "Noto Sans, 10";
-            font.package = pkgs.noto-fonts;
+            font.package = pkgs.fira-mono;
             iconTheme.name = "breeze-dark";
             iconTheme.package = pkgs.kdePackages.breeze;
             theme.name = "Adwaita-dark";

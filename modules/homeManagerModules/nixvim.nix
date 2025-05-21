@@ -1,7 +1,8 @@
 inputs:
 
 { pkgs, lib, ... }: let
-    autoStart = attrs: lib.mergeAttrs { enable = true; autostart = true; } attrs;
+    autoStart = { enable = true; autostart = true; };
+    autoEnable = { enable = true; autoLoad = true; };
 in
 
 {
@@ -63,13 +64,13 @@ in
         plugins.lsp = {
             enable = true;
             inlayHints = true;
-            servers.pyright = autoStart {};
-            servers.nixd = autoStart {};
-            servers.hls = autoStart {
+            servers.pyright = autoStart;
+            servers.nixd = autoStart;
+            servers.hls = autoStart // {
                 installGhc = false;
             };
-            servers.clangd = autoStart {};
-            servers.omnisharp = autoStart {};
+            servers.clangd = autoStart;
+            servers.omnisharp = autoStart;
         };
         #plugins.nvim-jdtls = {
         #    enable = true;
@@ -78,16 +79,21 @@ in
         #        jdk = pkgs.jdk23;
         #    };
         #};
-        plugins.lsp-lines = { enable = true; };
-        plugins.lsp-status = { enable = true; };
-        plugins.trouble = { enable = true; };
-        plugins.fugitive = { enable = true; };
-        plugins.barbar = { enable = true; };
-        plugins.noice = { enable = true; };
-        plugins.notify = { enable = true; };
-        plugins.fzf-lua = { enable = true; };
-        plugins.treesitter = { enable = true; };
-        plugins.telescope = { enable = true; };
+        plugins.lsp-lines = autoEnable;
+        plugins.lsp-signature = autoEnable;
+        plugins.lsp-status = autoEnable;
+        plugins.trouble = autoEnable;
+        plugins.fugitive = autoEnable;
+        plugins.barbar = autoEnable;
+        plugins.noice = autoEnable // {
+            settings.presets = {
+                command_palette = true;
+            };
+        };
+        plugins.notify = autoEnable;
+        plugins.fzf-lua = autoEnable;
+        plugins.treesitter = autoEnable;
+        plugins.telescope = autoEnable;
         plugins.transparent = {
             enable = true;
             settings.groups = [
@@ -100,12 +106,10 @@ in
                 "BarbarNC"
             ];
         };
-        plugins.lualine = {
-            enable = true;
+        plugins.lualine = autoEnable // {
             settings.options.globalstatus = true;
         };
-        plugins.cmp = {
-            enable = true;
+        plugins.cmp = autoEnable // {
             autoEnableSources = false;
             settings.sources = [
                 { name = "nvim_lsp"; }
@@ -122,11 +126,11 @@ in
                 "<C-Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
             };
         };
-        plugins.haskell-scope-highlighting = { enable = true; };
-        plugins.cmp-nvim-lsp.enable = true;
-        plugins.cmp-path.enable = true;
-        plugins.cmp-buffer.enable = true;
-        plugins.web-devicons.enable = true;
+        plugins.haskell-scope-highlighting = autoEnable;
+        plugins.cmp-nvim-lsp = autoEnable;
+        plugins.cmp-path = autoEnable;
+        plugins.cmp-buffer = autoEnable;
+        plugins.web-devicons = autoEnable;
 
         plugins.neo-tree = {
             enable = true;
@@ -136,23 +140,20 @@ in
                 statusline = true;
             };
         };
-        plugins.lspkind = {
-            enable = true;
-        };
-        plugins.gitgutter = {
-            enable = true;
+        plugins.lspkind = { enable = true; };
+        plugins.gitgutter = autoEnable // {
             recommendedSettings = true;
         };
 
-        plugins.toggleterm = {
-            enable = true;
+        plugins.toggleterm = autoEnable // {
             settings.winbar.enabled = true;
         };
         colorschemes.nightfox = {
             enable = true;
             settings.transparent = true;
         };
-        opts.background = "";
+        #opts.background = "";
         colorscheme = "carbonfox";
+
     };
 }
