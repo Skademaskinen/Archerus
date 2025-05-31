@@ -12,16 +12,25 @@ in
     programs.nixvim = {
         enable = true;
         vimAlias = true;
+        nixpkgs.useGlobalPackages = true;
         extraConfigLua = ''
             vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
             vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
             vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
             vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
             vim.g.autoformat = false
+            
+            vim.g.pyindent_open_paren = 0
+            vim.g.pyindent_close_paren = 0
+            vim.o.number = true
         '';
         extraPackages = with pkgs; [
             jdk23
             dotnet-sdk_8
+        ];
+        extraPlugins = with pkgs; [
+            vimPlugins.haskell-vim
+            vimPlugins.semshi
         ];
         keymaps = [
             {
@@ -72,28 +81,30 @@ in
             servers.clangd = autoStart;
             servers.omnisharp = autoStart;
         };
-        #plugins.nvim-jdtls = {
-        #    enable = true;
-        #    data = "/home/mast3r/.cache/jdtls/workspace";
-        #    jdtLanguageServerPackage = pkgs.jdt-language-server.override {
-        #        jdk = pkgs.jdk23;
-        #    };
-        #};
         plugins.lsp-lines = autoEnable;
+        plugins.tiny-inline-diagnostic = autoEnable;
+        plugins.fidget = { enable = true; };
         plugins.lsp-signature = autoEnable;
         plugins.lsp-status = autoEnable;
         plugins.trouble = autoEnable;
         plugins.fugitive = autoEnable;
-        plugins.barbar = autoEnable;
+        plugins.bufferline = autoEnable;
         plugins.noice = autoEnable // {
             settings.presets = {
                 command_palette = true;
             };
         };
-        plugins.notify = autoEnable;
+        #plugins.notify = autoEnable;
         plugins.fzf-lua = autoEnable;
-        plugins.treesitter = autoEnable;
-        plugins.telescope = autoEnable;
+        plugins.treesitter = autoEnable // {
+            grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+                python
+                nix
+                haskell
+            ];
+            settings.highlight.enable = true;
+        };
+        #plugins.telescope = autoEnable;
         plugins.transparent = {
             enable = true;
             settings.groups = [
@@ -104,6 +115,10 @@ in
                 "TroubleNormal"
                 "TroubleNormalNC"
                 "BarbarNC"
+                "Fidget"
+                "FidgetNC"
+                "LineNr"
+                "Title"
             ];
         };
         plugins.lualine = autoEnable // {
@@ -152,7 +167,6 @@ in
             enable = true;
             settings.transparent = true;
         };
-        #opts.background = "";
         colorscheme = "carbonfox";
 
     };
