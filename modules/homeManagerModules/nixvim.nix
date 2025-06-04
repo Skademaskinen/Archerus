@@ -30,7 +30,6 @@ in
         ];
         extraPlugins = with pkgs; [
             vimPlugins.haskell-vim
-            vimPlugins.semshi
         ];
         keymaps = [
             {
