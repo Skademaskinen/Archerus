@@ -31,6 +31,7 @@ nixpkgs.lib.nixosSystem {
                     homeManagerModules.hyprland
                     homeManagerModules.nixvim
                     homeManagerModules.alacritty
+                    homeManagerModules.kitty
                     homeManagerModules.sway
                     homeManagerModules.zsh
                     ./home.nix

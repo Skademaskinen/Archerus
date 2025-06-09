@@ -13,17 +13,8 @@ in
         enable = true;
         vimAlias = true;
         nixpkgs.useGlobalPackages = true;
-        extraConfigLua = ''
-            vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
-            vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
-            vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
-            vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
-            vim.g.autoformat = false
-            
-            vim.g.pyindent_open_paren = 0
-            vim.g.pyindent_close_paren = 0
-            vim.o.number = true
-        '';
+        extraConfigLua = builtins.readFile ./nixvim.lua;
+
         extraPackages = with pkgs; [
             jdk23
             dotnet-sdk_8
@@ -162,11 +153,26 @@ in
         plugins.toggleterm = autoEnable // {
             settings.winbar.enabled = true;
         };
+        plugins.nvim-autopairs = autoEnable;
+
         colorschemes.nightfox = {
             enable = true;
             settings.transparent = true;
         };
         colorscheme = "carbonfox";
 
+        #autoCmd = [
+        #    {
+        #        event = [ "BufReadPost" ];
+        #        pattern = [ "*" ];
+        #        callback = ''
+        #            local mark = vim.api.nvim_buf_get_mark(0, '"')
+        #            local lcount = vim.api.nvim_buf_line_count(0)
+        #            if mark[1] > 0 and mark[1] <= lcount then
+        #                pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        #            end
+        #        '';
+        #    }
+        #];
     };
 }
