@@ -18,6 +18,8 @@ in
         extraPackages = with pkgs; [
             jdk23
             dotnet-sdk_8
+            curl
+            ollama-rocm
         ];
         extraPlugins = with pkgs; [
             vimPlugins.haskell-vim
@@ -74,7 +76,7 @@ in
         plugins.lsp-lines = autoEnable;
         plugins.tiny-inline-diagnostic = autoEnable;
         plugins.fidget = { enable = true; };
-        plugins.lsp-signature = autoEnable;
+        #plugins.lsp-signature = autoEnable;
         plugins.lsp-status = autoEnable;
         plugins.trouble = autoEnable;
         plugins.fugitive = autoEnable;
