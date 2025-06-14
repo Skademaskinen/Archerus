@@ -37,5 +37,7 @@
         ntfs3g
         gimp
         teams-for-linux
+        nvtopPackages.amd
+        htop
     ];
 }

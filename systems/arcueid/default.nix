@@ -63,6 +63,13 @@ nixpkgs.lib.nixosSystem {
                 motherboard = "amd";
                 package = pkgs.openrgb-with-all-plugins;
             };
+
+            services.ollama = {
+                enable = true;
+                acceleration = "rocm";
+                package = pkgs.ollama-rocm;
+            };
+            nixpkgs.config.rocmSupport = true;
         })
     ];
 }
