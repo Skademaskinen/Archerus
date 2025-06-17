@@ -1,13 +1,16 @@
 inputs:
 
 { pkgs, lib, config, ... }: let
-    wallpaper = inputs.self.lib.wallpapers.arcueid;
     toStr = builtins.toString;
 in {
     imports = [
         ./common/desktop.nix
     ];
-    wayland.windowManager.hyprland = {
+    options.archerus.wallpaper = lib.mkOption {
+        type = lib.types.path;
+        default = inputs.self.lib.wallpapers.arcueid;
+    };
+    config.wayland.windowManager.hyprland = {
         enable = true;
         xwayland.enable = true;
         systemd.enable = true;
@@ -81,8 +84,8 @@ in {
     services.hyprpaper = {
         enable = true;
         settings = {
-            preload = "${wallpaper}";
-            wallpaper = ", ${wallpaper}";
+            preload = "${config.archerus.wallpaper}";
+            wallpaper = ", ${config.archerus.wallpaper}";
         };
     };
 

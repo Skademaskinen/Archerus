@@ -10,7 +10,7 @@ inputs:
         syntaxHighlighting.enable = true;
         prezto = {
             enable = true;
-            prompt.theme = "minimal";
+            prompt.theme = "sorin";
         };
         shellAliases = {
             "_g" = "_git";
