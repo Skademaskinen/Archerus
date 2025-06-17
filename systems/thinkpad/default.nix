@@ -27,7 +27,7 @@ nixpkgs.lib.nixosSystem {
                 hashedPassword = "$y$j9T$I5fyCjf3pYZTZjXYaPHtI/$88R1u4uNP6yCs8GCy5aXmyDVm7AVeyASoYOOuouh0k3";
                 shell = pkgs.zsh;
                 extraGroups = [ "wheel" "networkmanager" ];
-            };
+                };
             programs.zsh.enable = true;
             users.groups.mast3r = {};
             home-manager = {
@@ -37,6 +37,7 @@ nixpkgs.lib.nixosSystem {
                     homeManagerModules.hyprland
                     homeManagerModules.nixvim
                     homeManagerModules.alacritty
+                    homeManagerModules.kitty
                     homeManagerModules.sway
                     homeManagerModules.zsh
                     ./home.nix
@@ -56,18 +57,7 @@ nixpkgs.lib.nixosSystem {
 
             services.fprintd.enable = true;
 
-            hardware.pulseaudio.enable = false;
-                security.rtkit.enable = true;
-                services.pipewire = {
-                enable = true;
-                alsa.enable = true;
-                alsa.support32Bit = true;
-                pulse.enable = true;
-            };
             nixpkgs.config.allowUnfree = true;
-            environment.variables = {
-                NIXOS_OZONE_WL = "1";
-            };
         })
     ];
 }

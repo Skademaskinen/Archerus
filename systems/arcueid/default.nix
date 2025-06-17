@@ -31,6 +31,7 @@ nixpkgs.lib.nixosSystem {
                     homeManagerModules.hyprland
                     homeManagerModules.nixvim
                     homeManagerModules.alacritty
+                    homeManagerModules.kitty
                     homeManagerModules.sway
                     homeManagerModules.zsh
                     ./home.nix
@@ -49,18 +50,8 @@ nixpkgs.lib.nixosSystem {
             hardware.bluetooth.enable = true;
             services.blueman.enable = true;
 
-            hardware.pulseaudio.enable = false;
-                security.rtkit.enable = true;
-                services.pipewire = {
-                enable = true;
-                alsa.enable = true;
-                alsa.support32Bit = true;
-                pulse.enable = true;
-            };
             nixpkgs.config.allowUnfree = true;
-            environment.variables = {
-                NIXOS_OZONE_WL = "1";
-            };
+
             services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
 
             boot.swraid = {
@@ -72,6 +63,13 @@ nixpkgs.lib.nixosSystem {
                 motherboard = "amd";
                 package = pkgs.openrgb-with-all-plugins;
             };
+
+            services.ollama = {
+                enable = true;
+                acceleration = "rocm";
+                package = pkgs.ollama-rocm;
+            };
+            nixpkgs.config.rocmSupport = true;
         })
     ];
 }

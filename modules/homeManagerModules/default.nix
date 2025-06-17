@@ -12,4 +12,5 @@ listToAttrs (map (name: {
     "sway"
     "zsh"
     "alacritty"
+    "kitty"
 ])

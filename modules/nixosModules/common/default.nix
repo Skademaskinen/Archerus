@@ -9,7 +9,7 @@ inputs:
     networking.networkmanager.enable = true;
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 
     time.timeZone = "Europe/Copenhagen";
 
@@ -26,4 +26,6 @@ inputs:
         LC_TELEPHONE = "da_DK.UTF-8";
         LC_TIME = "da_DK.UTF-8";
     };
+
+    services.openssh.enable = true;
 }

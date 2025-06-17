@@ -1,7 +1,8 @@
 inputs:
 
 { pkgs, lib, ... }: let
-    autoStart = attrs: lib.mergeAttrs { enable = true; autostart = true; } attrs;
+    autoStart = { enable = true; autostart = true; };
+    autoEnable = { enable = true; autoLoad = true; };
 in
 
 {
@@ -11,16 +12,17 @@ in
     programs.nixvim = {
         enable = true;
         vimAlias = true;
-        extraConfigLua = ''
-            vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
-            vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
-            vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
-            vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
-            vim.g.autoformat = false
-        '';
+        nixpkgs.useGlobalPackages = true;
+        extraConfigLua = builtins.readFile ./nixvim.lua;
+
         extraPackages = with pkgs; [
             jdk23
             dotnet-sdk_8
+            curl
+            ollama-rocm
+        ];
+        extraPlugins = with pkgs; [
+            vimPlugins.haskell-vim
         ];
         keymaps = [
             {
@@ -63,31 +65,38 @@ in
         plugins.lsp = {
             enable = true;
             inlayHints = true;
-            servers.pyright = autoStart {};
-            servers.nixd = autoStart {};
-            servers.hls = autoStart {
+            servers.pyright = autoStart;
+            servers.nixd = autoStart;
+            servers.hls = autoStart // {
                 installGhc = false;
             };
-            servers.clangd = autoStart {};
-            servers.omnisharp = autoStart {};
+            servers.clangd = autoStart;
+            servers.omnisharp = autoStart;
         };
-        #plugins.nvim-jdtls = {
-        #    enable = true;
-        #    data = "/home/mast3r/.cache/jdtls/workspace";
-        #    jdtLanguageServerPackage = pkgs.jdt-language-server.override {
-        #        jdk = pkgs.jdk23;
-        #    };
-        #};
-        plugins.lsp-lines = { enable = true; };
-        plugins.lsp-status = { enable = true; };
-        plugins.trouble = { enable = true; };
-        plugins.fugitive = { enable = true; };
-        plugins.barbar = { enable = true; };
-        plugins.noice = { enable = true; };
-        plugins.notify = { enable = true; };
-        plugins.fzf-lua = { enable = true; };
-        plugins.treesitter = { enable = true; };
-        plugins.telescope = { enable = true; };
+        plugins.lsp-lines = autoEnable;
+        plugins.tiny-inline-diagnostic = autoEnable;
+        plugins.fidget = { enable = true; };
+        #plugins.lsp-signature = autoEnable;
+        plugins.lsp-status = autoEnable;
+        plugins.trouble = autoEnable;
+        plugins.fugitive = autoEnable;
+        plugins.bufferline = autoEnable;
+        plugins.noice = autoEnable // {
+            settings.presets = {
+                command_palette = true;
+            };
+        };
+        #plugins.notify = autoEnable;
+        plugins.fzf-lua = autoEnable;
+        plugins.treesitter = autoEnable // {
+            grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+                python
+                nix
+                haskell
+            ];
+            settings.highlight.enable = true;
+        };
+        #plugins.telescope = autoEnable;
         plugins.transparent = {
             enable = true;
             settings.groups = [
@@ -98,14 +107,16 @@ in
                 "TroubleNormal"
                 "TroubleNormalNC"
                 "BarbarNC"
+                "Fidget"
+                "FidgetNC"
+                "LineNr"
+                "Title"
             ];
         };
-        plugins.lualine = {
-            enable = true;
+        plugins.lualine = autoEnable // {
             settings.options.globalstatus = true;
         };
-        plugins.cmp = {
-            enable = true;
+        plugins.cmp = autoEnable // {
             autoEnableSources = false;
             settings.sources = [
                 { name = "nvim_lsp"; }
@@ -122,11 +133,11 @@ in
                 "<C-Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
             };
         };
-        plugins.haskell-scope-highlighting = { enable = true; };
-        plugins.cmp-nvim-lsp.enable = true;
-        plugins.cmp-path.enable = true;
-        plugins.cmp-buffer.enable = true;
-        plugins.web-devicons.enable = true;
+        plugins.haskell-scope-highlighting = autoEnable;
+        plugins.cmp-nvim-lsp = autoEnable;
+        plugins.cmp-path = autoEnable;
+        plugins.cmp-buffer = autoEnable;
+        plugins.web-devicons = autoEnable;
 
         plugins.neo-tree = {
             enable = true;
@@ -136,23 +147,34 @@ in
                 statusline = true;
             };
         };
-        plugins.lspkind = {
-            enable = true;
-        };
-        plugins.gitgutter = {
-            enable = true;
+        plugins.lspkind = { enable = true; };
+        plugins.gitgutter = autoEnable // {
             recommendedSettings = true;
         };
 
-        plugins.toggleterm = {
-            enable = true;
+        plugins.toggleterm = autoEnable // {
             settings.winbar.enabled = true;
         };
+        plugins.nvim-autopairs = autoEnable;
+
         colorschemes.nightfox = {
             enable = true;
             settings.transparent = true;
         };
-        opts.background = "";
         colorscheme = "carbonfox";
+
+        #autoCmd = [
+        #    {
+        #        event = [ "BufReadPost" ];
+        #        pattern = [ "*" ];
+        #        callback = ''
+        #            local mark = vim.api.nvim_buf_get_mark(0, '"')
+        #            local lcount = vim.api.nvim_buf_line_count(0)
+        #            if mark[1] > 0 and mark[1] <= lcount then
+        #                pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        #            end
+        #        '';
+        #    }
+        #];
     };
 }

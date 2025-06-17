@@ -16,12 +16,11 @@ in {
         systemd.enable = true;
         settings = {
             "$mod" = "SUPER";
-            "$terminal" = "${pkgs.alacritty}/bin/alacritty";
+            "$terminal" = "${pkgs.kitty}/bin/kitty";
             bind = [
                 "$mod, d, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
                 "$mod, k, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
-                "$mod, Return, exec, ${pkgs.alacritty}/bin/alacritty"
-                "$mod, o, exec, ${pkgs.alacritty}/bin/alacritty"
+                "$mod, Return, exec, ${pkgs.kitty}/bin/kitty"
                 "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
                 "$mod SHIFT, q, killactive"
                 "$mod, space, togglefloating"
@@ -69,11 +68,12 @@ in {
             };
             gestures = {
                 workspace_swipe = "true";
+                workspace_swipe_forever = "true";
             };
 
             env = [
-                "HYPRCURSOR_THEME,Vimix-cursors"
-                "XCURSOR_THEME,Vimix-cursors"
+                "HYPRCURSOR_THEME,Adwaita"
+                "XCURSOR_THEME,Adwaita"
                 "XCURSOR_SIZE,24"
                 "HYPRCURSOR_SIZE,24"
             ];
