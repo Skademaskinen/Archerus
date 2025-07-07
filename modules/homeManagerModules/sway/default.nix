@@ -4,7 +4,7 @@ inputs:
     wallpaper = inputs.self.lib.wallpapers.arcueid;
 in {
     imports = [
-        ./common/desktop.nix
+        ../common/desktop.nix
     ];
     wayland.windowManager.sway = {
         enable = true;
@@ -34,7 +34,7 @@ in {
             gaps.inner = 3;
             gaps.outer = 3;
             modifier = "Mod4";
-            menu = import ./common/nwg/drawer.nix { inherit pkgs; };
+            menu = import ../common/nwg/drawer.nix { inherit pkgs; };
             input."type:keyboard" = {
                 xkb_layout = "dk";
             };
@@ -56,7 +56,7 @@ in {
 
             startup = [
                 {
-                    command = pkgs.callPackage ./common/nwg/panel-sway.nix { inherit config; };
+                    command = pkgs.callPackage ../common/nwg/panel-sway.nix { inherit config; };
                     always = true;
                 }
                 {
@@ -160,7 +160,7 @@ in {
     };
     services.swaync = {
         enable = true;
-        style = builtins.readFile ./common/nwg/swaync.css;
+        style = builtins.readFile ../common/nwg/swaync.css;
     };
     services.swayosd = {
         enable = true;

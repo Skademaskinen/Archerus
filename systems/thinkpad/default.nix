@@ -35,7 +35,7 @@ nixpkgs.lib.nixosSystem {
                 useUserPackages = true;
                 users.mast3r.imports = [
                     homeManagerModules.hyprland
-                    homeManagerModules.nixvim
+                    homeManagerModules.neovim
                     homeManagerModules.alacritty
                     homeManagerModules.kitty
                     homeManagerModules.sway
@@ -58,6 +58,12 @@ nixpkgs.lib.nixosSystem {
             services.fprintd.enable = true;
 
             nixpkgs.config.allowUnfree = true;
+            services.ollama = {
+                enable = true;
+                acceleration = "rocm";
+                package = pkgs.ollama-rocm;
+            };
+            nixpkgs.config.rocmSupport = true;
         })
     ];
 }

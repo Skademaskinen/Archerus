@@ -5,7 +5,7 @@ inputs:
     toStr = builtins.toString;
 in {
     imports = [
-        ./common/desktop.nix
+        ../common/desktop.nix
     ];
     wayland.windowManager.hyprland = {
         enable = true;
@@ -15,8 +15,8 @@ in {
             "$mod" = "SUPER";
             "$terminal" = "${pkgs.kitty}/bin/kitty";
             bind = [
-                "$mod, d, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
-                "$mod, k, exec, ${pkgs.callPackage ./common/nwg/drawer.nix {}}"
+                "$mod, d, exec, ${pkgs.callPackage ../common/nwg/drawer.nix {}}"
+                "$mod, k, exec, ${pkgs.callPackage ../common/nwg/drawer.nix {}}"
                 "$mod, Return, exec, ${pkgs.kitty}/bin/kitty"
                 "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
                 "$mod SHIFT, q, killactive"
@@ -41,7 +41,7 @@ in {
                 "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
             ];
             exec = [
-                "${pkgs.callPackage ./common/nwg/panel-hyprland.nix { inherit config; }}"
+                "${pkgs.callPackage ../common/nwg/panel-hyprland.nix { inherit config; }}"
             ];
             general = {
                 "col.active_border" = "rgba(ff5500ff) rgba(ff5500ff)";

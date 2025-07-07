@@ -4,11 +4,11 @@ with builtins;
 
 listToAttrs (map (name: {
     name = name;
-    value = import (toPath "${./.}/${name}.nix") inputs;
+    value = import (toPath "${./.}/${name}") inputs;
 }) [
     "common"
     "hyprland"
-    "nixvim"
+    "neovim"
     "sway"
     "zsh"
     "alacritty"

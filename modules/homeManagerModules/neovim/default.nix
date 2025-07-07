@@ -3,17 +3,59 @@ inputs:
 { pkgs, lib, ... }: let
     autoStart = { enable = true; autostart = true; };
     autoEnable = { enable = true; autoLoad = true; };
+
+    keymaps = [
+        {
+            key = "<leader>i";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "n";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<A-i>";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "n";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<A-i>";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "t";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<leader>n";
+            action = "<Cmd>Neotree toggle<CR>";
+            mode = "n";
+            description = "Toggle Neotree";
+        }
+        {
+            key = "<leader>t";
+            action = "<Cmd>Trouble diagnostics toggle<CR>";
+            mode = "n";
+            description = "Toggle Trouble diagnostics";
+        }
+        {
+            key = "<leader>c";
+            action = ":CopilotChatToggle<CR>";
+            mode = "n";
+            description = "Toggle Copilot Chat";
+        }
+    ];
 in
 
 {
     imports = [
         inputs.nixvim.homeManagerModules.default
+        (import ./keymaps.nix keymaps)
+        ./theme.nix
+        ./copilot.nix
     ];
     programs.nixvim = {
         enable = true;
         vimAlias = true;
         nixpkgs.useGlobalPackages = true;
-        extraConfigLua = builtins.readFile ./nixvim.lua;
+        extraConfigLua = builtins.readFile ./default.lua;
 
         extraPackages = with pkgs; [
             jdk23
@@ -24,43 +66,6 @@ in
         extraPlugins = with pkgs; [
             vimPlugins.haskell-vim
         ];
-        keymaps = [
-            {
-                key = "<A-i>";
-                action = "<Cmd>ToggleTerm direction=float<CR>";
-                mode = "n";
-            }
-            {
-                key = "<A-i>";
-                action = "<Cmd>ToggleTerm direction=float<CR>";
-                mode = "t";
-            }
-            {
-                key = "<A-j>";
-                action = "<Cmd>Neotree toggle<CR>";
-                mode = "n";
-            }
-            {
-                key = "<C-n>";
-                action = "<Cmd>Neotree focus<CR>";
-                mode = "n";
-            }
-            {
-                key = "<C-s>";
-                action = "<Cmd><ESC>w<CR>";
-                mode = "n";
-            }
-            {
-                key = "<C-s>";
-                action = "<Cmd>w<CR>";
-                mode = "i";
-            }
-            {
-                key = "<A-t>";
-                action = "<Cmd>Trouble diagnostics toggle<CR>";
-                mode = "n";
-            }
-        ];
 
         plugins.lsp = {
             enable = true;
@@ -70,6 +75,7 @@ in
             servers.hls = autoStart // {
                 installGhc = false;
             };
+            servers.cmake = autoStart;
             servers.clangd = autoStart;
             servers.omnisharp = autoStart;
         };
@@ -97,31 +103,17 @@ in
             settings.highlight.enable = true;
         };
         #plugins.telescope = autoEnable;
-        plugins.transparent = {
-            enable = true;
-            settings.groups = [
-                "Normal"
-                "NormalNC"
-                "NeoTreeNormal"
-                "NeoTreeNormalNC"
-                "TroubleNormal"
-                "TroubleNormalNC"
-                "BarbarNC"
-                "Fidget"
-                "FidgetNC"
-                "LineNr"
-                "Title"
-            ];
-        };
+
         plugins.lualine = autoEnable // {
             settings.options.globalstatus = true;
         };
         plugins.cmp = autoEnable // {
-            autoEnableSources = false;
+            autoEnableSources = true;
             settings.sources = [
-                { name = "nvim_lsp"; }
-                { name = "path"; }
-                { name = "buffer"; }
+                { name = "nvim_lsp"; priority = 400; }
+                { name = "path"; priority = 300; }
+                { name = "buffer"; priority = 200; }
+                { name = "copilot"; priority = 100; }
             ];
             settings.mapping = {
                 "<C-Space>" = "cmp.mapping.complete()";
@@ -134,9 +126,6 @@ in
             };
         };
         plugins.haskell-scope-highlighting = autoEnable;
-        plugins.cmp-nvim-lsp = autoEnable;
-        plugins.cmp-path = autoEnable;
-        plugins.cmp-buffer = autoEnable;
         plugins.web-devicons = autoEnable;
 
         plugins.neo-tree = {
@@ -154,27 +143,16 @@ in
 
         plugins.toggleterm = autoEnable // {
             settings.winbar.enabled = true;
+            settings.winbar.name_formatter = ''
+                function(term)
+                    return fmt("%d:%s", term.id, term:_display_name())
+                end
+            '';
         };
         plugins.nvim-autopairs = autoEnable;
 
-        colorschemes.nightfox = {
-            enable = true;
-            settings.transparent = true;
+        globals = {
+            mapleader = " ";
         };
-        colorscheme = "carbonfox";
-
-        #autoCmd = [
-        #    {
-        #        event = [ "BufReadPost" ];
-        #        pattern = [ "*" ];
-        #        callback = ''
-        #            local mark = vim.api.nvim_buf_get_mark(0, '"')
-        #            local lcount = vim.api.nvim_buf_line_count(0)
-        #            if mark[1] > 0 and mark[1] <= lcount then
-        #                pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        #            end
-        #        '';
-        #    }
-        #];
     };
 }

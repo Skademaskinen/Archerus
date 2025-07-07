@@ -29,7 +29,7 @@ nixpkgs.lib.nixosSystem {
                 useUserPackages = true;
                 users.mast3r.imports = [
                     homeManagerModules.hyprland
-                    homeManagerModules.nixvim
+                    homeManagerModules.neovim
                     homeManagerModules.alacritty
                     homeManagerModules.kitty
                     homeManagerModules.sway
