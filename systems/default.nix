@@ -1,10 +1,17 @@
-inputs:
+{ lib, ... }@inputs:
 
 with builtins;
 
-mapAttrs (name: path: import path inputs) {
-    Arcueid = ./arcueid;
-    Laptop = ./laptop;
-    Skademaskinen = ./skademaskinen;
-    Thinkpad = ./thinkpad;
-}
+let 
+    genHosts = paths: listToAttrs (map (path: {
+        name = lib.capitalize (baseNameOf path);
+        value = path;
+    }) paths);
+in
+
+mapAttrs (name: path: import path inputs) (genHosts [
+    ./arcueid
+    ./laptop
+    ./skademaskinen
+    ./thinkpad
+])

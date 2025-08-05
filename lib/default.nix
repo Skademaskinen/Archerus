@@ -13,4 +13,12 @@ rec {
 
     wallpapers = import ./wallpapers.nix inputs;
 
+    mkSubmodules = args: builtins.listToAttrs (map (path: {
+        name = builtins.baseNameOf path;
+        value = import path (inputs // { lib = inputs.self.lib; });
+    }) args);
+
+    iCall = path: import path (inputs // { lib = inputs.self.lib; });
+
+    pkgs = import nixpkgs { system = inputs.system; };
 }

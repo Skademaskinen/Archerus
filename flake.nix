@@ -40,7 +40,7 @@
 
     outputs = _inputs: let
         inputs = _inputs // {
-            system = "x86_64-linux"; lib = import ./lib _inputs;
+            system = "x86_64-linux"; lib = import ./lib (_inputs // { system = "x86_64-linux"; });
         };
     in 
     
