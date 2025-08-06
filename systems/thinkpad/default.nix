@@ -23,20 +23,13 @@ nixpkgs.lib.nixosSystem {
                 ./packages.nix
                 ./grub-hack.nix
             ];
-            home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.mast3r.imports = [
-                    homeManagerModules.hyprland
-                    homeManagerModules.neovim
-                    homeManagerModules.alacritty
-                    homeManagerModules.kitty
-                    homeManagerModules.sway
-                    homeManagerModules.zsh
-                    ./home.nix
-                ];
-
-            };
+            home-manager.users.mast3r.imports = [
+                homeManagerModules.hyprland
+                homeManagerModules.alacritty
+                homeManagerModules.kitty
+                homeManagerModules.sway
+                ./home.nix
+            ];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
                 user = "mast3r";

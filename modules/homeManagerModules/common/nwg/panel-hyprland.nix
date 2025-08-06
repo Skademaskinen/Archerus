@@ -42,13 +42,13 @@
       commands = {
         bluetooth = "blueman-manager";
         net = "";
-      } // (if config.desktop.battery then { "battery" = ""; } else {});
+      } // (if config.skade.desktop.battery then { "battery" = ""; } else {});
       components = [
         "brightness"
         "volume"
         "processes"
         "readme"
-      ] ++ (if config.desktop.battery then ["battery"] else []);
+      ] ++ (if config.skade.desktop.battery then ["battery"] else []);
       css-name = "controls-window";
       custom-items = [
         {

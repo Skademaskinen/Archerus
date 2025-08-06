@@ -10,6 +10,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.grub
         nixosModules.plymouth
         nixosModules.programming
+        nixosModules.server
         nixosModules.users.mast3r
         nixosModules.users.taoshi
         ({ pkgs, ... }:
@@ -19,19 +20,10 @@ nixpkgs.lib.nixosSystem {
                 ./hardware-configuration.nix
                 ./packages.nix
             ];
-            home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.mast3r.imports = [
-                    homeManagerModules.neovim
-                    homeManagerModules.zsh
-                    { home.stateVersion = "24.11"; }
-                ];
-
-            };
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             system.stateVersion = "24.11";
 
+            services.getty.autologinUser = "mast3r";
             nixpkgs.config.allowUnfree = true;
 
             programs.nix-ld.enable = true;

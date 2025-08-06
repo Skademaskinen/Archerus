@@ -5,7 +5,6 @@
         ./symlinks.nix
     ];
 
-    home.stateVersion = "24.11";
     wayland.windowManager.hyprland.extraConfig = ''
         monitor = DP-3, 3840x2160, 1920x0, 2
         monitor = DP-1, 3840x2160, 0x0, 2

@@ -17,20 +17,13 @@ nixpkgs.lib.nixosSystem {
             imports = [
                 ./hardware-configuration.nix
             ];
-            home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.mast3r.imports = [
-                    homeManagerModules.hyprland
-                    homeManagerModules.neovim
-                    homeManagerModules.alacritty
-                    homeManagerModules.kitty
-                    homeManagerModules.sway
-                    homeManagerModules.zsh
-                    ./home.nix
-                ];
-
-            };
+            home-manager.users.mast3r.imports = [
+                homeManagerModules.hyprland
+                homeManagerModules.alacritty
+                homeManagerModules.kitty
+                homeManagerModules.sway
+                ./home.nix
+            ];
             users.groups.input.members = ["mast3r"];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
