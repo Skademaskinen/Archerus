@@ -16,12 +16,21 @@ let
     '';
 in
 
+{
+    options = {
 
-lib.mkProjectConfig config {
-    name = "dummyProject";
-    stdinSocket = true;
-    exec = "${dummy}/bin/dummyProject";
-    environment = {
-        DUMMY_VARIABLE = "hello, world!";
+    };
+    # import base to avoid having multiple imports
+    imports = [
+        (lib.iCall ../base.nix)
+    ];
+    
+    config = lib.mkProjectConfig config {
+        name = "dummyProject";
+        stdinSocket = true;
+        exec = "${dummy}/bin/dummyProject";
+        environment = {
+            DUMMY_VARIABLE = "hello, world!";
+        };
     };
 }

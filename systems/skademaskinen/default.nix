@@ -10,7 +10,6 @@ nixpkgs.lib.nixosSystem {
         nixosModules.grub
         nixosModules.plymouth
         nixosModules.programming
-        nixosModules.server.base
         nixosModules.server.dummyProject
         nixosModules.users.mast3r
         nixosModules.users.taoshi

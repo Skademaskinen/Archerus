@@ -30,7 +30,7 @@ rec {
                 enable = true;
                 environment = cfg.environment;
                 serviceConfig = {
-                    WorkingDirectory = "${sysCfg.skade.projectsRoot}/${cfg.name}";
+                    WorkingDirectory = "${sysCfg.skade.projectsRoot}/projects/${cfg.name}";
                     ExecStart = cfg.exec;
                 } // (if cfg.stdinSocket then {
                     StandardInput = "socket";
@@ -48,7 +48,7 @@ rec {
                     ExecStart = "${pkgs.writeScriptBin "${cfg.name}-setup" ''
                         #!${pkgs.bash}/bin/bash
                         set -e
-                        mkdir -p ${sysCfg.skade.projectsRoot}/${cfg.name}
+                        mkdir -p ${sysCfg.skade.projectsRoot}/projects/${cfg.name}
                         ${if cfg.stdinSocket then "mkdir -p ${sysCfg.skade.projectsRoot}/sockets" else ""}
                         echo "Finished setup"
                     ''}/bin/${cfg.name}-setup";
