@@ -1,19 +1,10 @@
-inputs:
+{ lib, ... }:
 
-{ lib, config, ...}:
-
-{
-    options.skade = {
-        projects = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [ "dummyProject" ];
-        };
-        projectsRoot = lib.mkOption {
-            type = lib.types.str;
-            default = "/mnt/raid";
-        };
-    };
-    imports = map (name: import (./projects + ("/" + name + ".nix")) inputs) ["dummyProject"];
-
-    config.virtualisation.vmVariant.virtualisation.graphics = false;
-}
+lib.mkSubmodules [
+    ./base.nix
+    ./projects/homepage.nix
+    ./projects/palworld.nix
+    ./projects/putricide.nix
+    ./projects/folkevognen.nix
+    ./projects/dummyProject.nix
+]
