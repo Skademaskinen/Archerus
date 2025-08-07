@@ -2,7 +2,7 @@
 
 {
     options = {
-        desktop.battery = lib.mkOption {
+        skade.desktop.battery = lib.mkOption {
             type = lib.types.bool;
             default = true;
         };

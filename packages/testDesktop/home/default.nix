@@ -3,10 +3,9 @@ inputs @ { self, ... }:
 {
     imports = map (module: self.homeManagerModules.${module}) [
         "common"
-        "nixvim"
+        "neovim"
         "sway"
         "hyprland"
-        "programming"
     ];
     home.stateVersion = "24.11";
 }

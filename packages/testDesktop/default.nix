@@ -8,9 +8,9 @@ inputs @ { self, nixpkgs, ... }:
         "gaming"
         "server"
         "common"
+        "programming"
     # Then regular depends
     ]) ++ (map (input: inputs.${input}.nixosModules.default) [
-        "nixvim"
         "home-manager"
         "homepage"
         "rp-utils"
@@ -29,6 +29,6 @@ inputs @ { self, nixpkgs, ... }:
         environment.systemPackages = with pkgs; [
             neovim
         ];
-        system.stateVersion = "nixos-24.11";
+        system.stateVersion = "25.05";
     }) (import ./configs.nix inputs)];
 }).config.system.build.vm
