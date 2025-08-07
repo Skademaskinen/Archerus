@@ -1,5 +1,18 @@
 {
   "nodes": {
+    "curseforge": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752591104,
+        "narHash": "sha256-fJ4eoKZDbnEdxB4zZdIALKRjN3c+tmFeb2hYezGsdO4=",
+        "type": "tarball",
+        "url": "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -330,6 +343,7 @@
     },
     "root": {
       "inputs": {
+        "curseforge": "curseforge",
         "folkevognen": "folkevognen",
         "home-manager": "home-manager",
         "homepage": "homepage",
