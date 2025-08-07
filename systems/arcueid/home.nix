@@ -29,7 +29,7 @@
         "workspace = ${builtins.toString index},monitor:DP-${if (lib.mod index 2 == 0) then "3" else "1"}"
     ) (lib.lists.range 1 10));
 
-    desktop.battery = false;
+    skade.desktop.battery = false;
 
     home.packages = with pkgs; [
         dotnet-sdk_8
