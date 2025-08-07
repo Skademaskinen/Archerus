@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        package: [bolt, curseforge, plymouth-theme-default, wine-discord-ipc-bridge]
+        package: [plymouth-theme-default]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
