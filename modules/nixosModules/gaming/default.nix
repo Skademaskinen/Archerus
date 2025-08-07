@@ -60,13 +60,22 @@ inputs:
             DISPLAY=""
             ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
         '')
-
+        #(pkgs.writeScriptBin "steam-lsfg-vk-prefix" ''
+        #    ${common-prefix}
+        #    export LD_PRELOAD="${inputs.self.packages.${inputs.system}.lsfg-vk}/lib/liblsfg-vk.so"
+        #    export ENABLE_LSFG=1
+        #    ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
+        #'')
         inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
         mangohud
 
         (pkgs.writeScriptBin "lutris-gamescope-prefix" ''
             ${common-gamescope-prefix}
             ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope ${gamescope-args} ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe $COMMAND
+        '')
+        (pkgs.writeScriptBin "lutris-prefix" ''
+            ${common-prefix}
+            ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${executable-postfix}
         '')
         (writeScriptBin "test-mangohud" ''
             ${common-prefix}
@@ -103,6 +112,8 @@ in
         lutris
         wine
         protonup-qt
+        wowup-cf
         bolt-launcher
+        inputs.self.packages.${inputs.system}.curseforge
     ] ++ prefixes;
 }

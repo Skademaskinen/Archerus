@@ -39,5 +39,7 @@
         teams-for-linux
         nvtopPackages.amd
         htop
+        libreoffice
+        kdePackages.okular
     ];
 }

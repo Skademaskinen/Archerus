@@ -12,5 +12,7 @@ with builtins;
         "plymouth-theme"
         "plymouth-theme-default"
         "wine-discord-ipc-bridge"
+        "lsfg-vk"
+        "curseforge"
     ]);
 }

@@ -36,6 +36,12 @@
             url = "github:Skademaskinen/RP-Utils";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        
+        # Binaries
+        curseforge = {
+            url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
+            flake = false;
+        };
     };
 
     outputs = _inputs: let
