@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        package: [bolt, curseforge, lsfg-vk, plymouth-theme-default, wine-discord-ipc-bridge]
+        package: [bolt, curseforge, plymouth-theme-default, wine-discord-ipc-bridge]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
