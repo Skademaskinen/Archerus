@@ -20,11 +20,7 @@ in
     options = {
 
     };
-    # import base to avoid having multiple imports
-    imports = [
-        (lib.iCall ../base.nix)
-    ];
-    
+
     config = lib.mkProjectConfig config {
         name = "dummyProject";
         stdinSocket = true;

@@ -9,6 +9,7 @@
         ./plymouth-theme-default
         ./wine-discord-ipc-bridge
         ./curseforge
+        ./homepage
     ];
 }
 

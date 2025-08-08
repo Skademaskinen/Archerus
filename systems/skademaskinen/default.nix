@@ -5,14 +5,21 @@ inputs @ { self, nixpkgs, lib, system, ... }:
 nixpkgs.lib.nixosSystem {
     inherit system;
     modules = with self; [
+        # Depends
         inputs.home-manager.nixosModules.default
+
+        # System setup
         nixosModules.common
         nixosModules.grub
         nixosModules.plymouth
         nixosModules.programming
-        nixosModules.server.dummyProject
         nixosModules.users.mast3r
         nixosModules.users.taoshi
+
+        # Hosted projects
+        nixosModules.server.base
+        nixosModules.server.dummyProject
+        nixosModules.server.homepage
         ({ pkgs, ... }:
 
         {
@@ -27,6 +34,10 @@ nixpkgs.lib.nixosSystem {
             nixpkgs.config.allowUnfree = true;
 
             programs.nix-ld.enable = true;
+
+            skade.projects.homepage = {
+                db.dialect = "sqlite";
+            };
         })
     ];
 }
