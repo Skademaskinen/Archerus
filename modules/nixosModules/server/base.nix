@@ -26,7 +26,7 @@ inputs:
     };
 
     # maintenance tools
-    environment.systemPackages = with pkgs; [
+    config.environment.systemPackages = with pkgs; [
         htop
     ];
 }
