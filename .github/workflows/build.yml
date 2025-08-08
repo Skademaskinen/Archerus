@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        package: [plymouth-theme-default]
+        package: [plymouth-theme-default, homepage]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
