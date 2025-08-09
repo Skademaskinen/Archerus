@@ -1,8 +1,7 @@
-inputs:
+{ nixpkgs, lib, ... }:
 
 let
-
-    pkgs = import inputs.nixpkgs { system = inputs.system; };
+    pkgs = lib.load nixpkgs;
 
 in pkgs.callPackage (
 { pkgs, lib, logo, name, ... }:

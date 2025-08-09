@@ -1,3 +1,3 @@
-inputs:
+{ lib, ... }:
 
-(import ../plymouth-theme inputs) { logo = inputs.lib.wallpapers.flogo; name = "flogo"; }
+(lib.load ../plymouth-theme) { logo = lib.wallpapers.flogo; name = "flogo"; }

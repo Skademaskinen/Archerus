@@ -15,48 +15,29 @@
             url = "github:nix-community/home-manager/release-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        # personal project depends
-        nix-velocity = {
-            url = "github:Mast3rwaf1z/nix-velocity";
+        gradle2nix = {
+            url = "github:tadfisher/gradle2nix/v2";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        homepage = {
-            url = "github:Mast3rwaf1z/homepage";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        folkevognen = {
-            url = "github:Mast3rwaf1z/Folkevognen";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        putricide = {
-            url = "github:Skademaskinen/Putricide";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        rp-utils = {
-            url = "github:Skademaskinen/RP-Utils";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        
-        # Binaries
+        # non-flake files
         curseforge = {
             url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
             flake = false;
         };
     };
 
-    outputs = _inputs: let
-        inputs = _inputs // {
-            system = "x86_64-linux"; lib = import ./lib (_inputs // { system = "x86_64-linux"; });
-        };
+    outputs = inputs:
+
+    let
+        lib = import ./lib (inputs // { system = "x86_64-linux"; });
     in 
     
     {
-        homeManagerModules = import ./modules/homeManagerModules inputs;
-        nixosModules = import ./modules/nixosModules inputs;
-        packages = import ./packages inputs 
-            // inputs.lib;
-        nixosConfigurations = import ./systems inputs;
-        lib = inputs.lib;
+        inherit lib;
+        homeManagerModules = lib.load ./modules/homeManagerModules;
+        nixosModules = lib.load ./modules/nixosModules;
+        packages = lib.load ./packages;
+        nixosConfigurations = lib.load ./systems;
     };
 
 }

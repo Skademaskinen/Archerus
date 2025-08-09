@@ -1,0 +1,26 @@
+{ lib, self, system, ...}:
+
+{ pkgs, config, ...}:
+
+{
+    options = {
+
+    };
+    config = lib.mkProject config {
+        name = "folkevognen";
+        exec = "${self.packages.${system}.folkevognen}/bin/Folkevognen";
+        setup = ''
+            if ! [ -f ${config.skade.projectsRoot}/projects/folkevognen/settings.json ]; then
+                echo "Creating default json file"
+                # using cat to create new permissions
+                cat ${pkgs.writeText "settings.json" (builtins.toJSON {
+                    token = "";
+                    lastFolkedWeek = 32;
+                    lastFolkedYear = 2025;
+                    lastFolker = "";
+                    folkevognen = {};
+                })} > ${config.skade.projectsRoot}/projects/folkevognen/settings.json
+            fi
+        '';
+    };
+}

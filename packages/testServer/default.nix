@@ -1,9 +1,13 @@
-{ self, lib, ... }:
+{ self, nixpkgs, lib, ... }:
 
-let cfg = self.nixosConfigurations.Skademaskinen.config; in
+let
+    
+    cfg = self.nixosConfigurations.Skademaskinen.config;
+    pkgs = lib.load nixpkgs;
+in
 
-lib.pkgs.writeScriptBin "testServer" ''
-    #!${lib.pkgs.bash}/bin/bash
+pkgs.writeScriptBin "testServer" ''
+    #!${pkgs.bash}/bin/bash
     rm -rf ${cfg.networking.hostName}.qcow2
     ${cfg.system.build.vm}/bin/run-${cfg.networking.hostName}-vm
 ''

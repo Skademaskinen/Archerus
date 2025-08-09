@@ -1,6 +1,6 @@
 inputs:
 
-{ lib, pkgs, ...}:
+{ config, lib, pkgs, ...}:
 
 {
     options.skade = {
@@ -28,5 +28,6 @@ inputs:
     # maintenance tools
     config.environment.systemPackages = with pkgs; [
         htop
+        (inputs.self.packages.${inputs.system}.secretHandler config)
     ];
 }

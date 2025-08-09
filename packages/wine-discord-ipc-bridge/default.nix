@@ -1,5 +1,7 @@
-inputs: let 
-    pkgs = import inputs.nixpkgs { system = inputs.system; };
+{ nixpkgs, lib, ... }: 
+
+let 
+    pkgs = lib.load nixpkgs;
 in 
 
 pkgs.callPackage ({ pkgs, lib, stdenv, wine, pkgsCross, ... }: let

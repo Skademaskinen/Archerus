@@ -1,2 +1,18 @@
-inputs: (import ./utils.nix inputs) 
-     // (import ./builders.nix inputs)
+inputs:
+
+let
+    load = import ./utils/load.nix inputs;
+in
+
+{
+    inherit load;
+    capitalize = load ./utils/capitalize.nix;
+    removeExtension = load ./utils/removeExtension.nix;
+    stringTail = load ./utils/stringTail.nix;
+    mkProject = load ./builders/mkProject.nix;
+    mkProxy = load ./builders/mkProxy.nix;
+    mkWebProject = load ./builders/mkWebProject.nix;
+    mkSubmodules = load ./builders/mkSubmodules.nix;
+    mkBanner = load ./builders/mkBanner.nix;
+    wallpapers = load ./wallpapers.nix;
+} // load ./utils/if.nix

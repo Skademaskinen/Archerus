@@ -21,7 +21,7 @@ in
 
     };
 
-    config = lib.mkProjectConfig config {
+    config = lib.mkProject config {
         name = "dummyProject";
         stdinSocket = true;
         exec = "${dummy}/bin/dummyProject";

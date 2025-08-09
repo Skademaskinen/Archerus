@@ -1,9 +1,9 @@
-inputs:
+{ nixpkgs, lib, ... }:
 
 # All credit goes to https://github.com/PancakeTAS/lsfg-vk/pull/53#issuecomment-3066948757
 
 let
-    pkgs = import inputs.nixpkgs { system = inputs.system; };
+    pkgs = lib.load nixpkgs;
 in pkgs.callPackage ({
   stdenv,
   fetchurl,

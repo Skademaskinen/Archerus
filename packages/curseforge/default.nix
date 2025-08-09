@@ -1,12 +1,11 @@
-inputs:
+{ lib, nixpkgs, curseforge, ... }:
 
 let 
-    pkgs = import inputs.nixpkgs { system = inputs.system; }; 
+    pkgs = lib.load nixpkgs; 
     name = "curseforge";
     pname = "CurseForge";
     version = "1.283.2-27468";
-    rawPath = "${inputs.curseforge}";
-    src = "${rawPath}/${pname}-${version}.AppImage";
+    src = "${curseforge}/${pname}-${version}.AppImage";
     contents = pkgs.appimageTools.extract { inherit pname version src; };
 in
 

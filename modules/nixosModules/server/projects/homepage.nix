@@ -2,7 +2,7 @@
 
 let
     homepage = self.packages.${system}.homepage;
-    mkWebConfig = lib.mkWebConfig;
+    mkWebProject = lib.mkWebProject;
 in
 
 { lib, config, ... }:
@@ -56,7 +56,7 @@ in
     };
     config = let 
         cfg = config.skade.projects.homepage;
-    in mkWebConfig config {
+    in mkWebProject config {
         name = "homepage";
         subdomain = "";
         port = cfg.port;

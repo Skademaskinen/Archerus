@@ -20,6 +20,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.server.base
         nixosModules.server.dummyProject
         nixosModules.server.homepage
+        nixosModules.server.folkevognen
         ({ pkgs, ... }:
 
         {
