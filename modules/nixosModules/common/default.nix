@@ -10,6 +10,7 @@ inputs:
     config = {
         environment.systemPackages = with pkgs; [
             vim
+            fastfetch
         ];
         networking.networkmanager.enable = true;
     
