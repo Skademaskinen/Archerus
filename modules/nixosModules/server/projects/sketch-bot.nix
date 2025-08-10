@@ -10,12 +10,6 @@ in
 { config, lib, ... }: 
 
 {
-    options.skade.projects.sketch-bot = {
-        root = lib.mkOption {
-            type = lib.types.str;
-            default = "${config.skade.projectsRoot}/projects/sketch-bot";
-        };
-    };
     imports = [
         (mkProject config {
             name = "lavalink";
@@ -26,7 +20,7 @@ in
         inherit name;
         exec = "${sketch-bot}/bin/${name}";
         setup = ''
-            cp -rf ${sketch-bot}/lib/* $proot
+            cp -rf ${sketch-bot}/lib/SketchBot/* $proot
         '';
     };
 }

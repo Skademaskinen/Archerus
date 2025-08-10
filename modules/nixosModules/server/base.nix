@@ -60,6 +60,7 @@ in
     # maintenance tools
     config.environment.systemPackages = with pkgs; [
         htop
+        git
         projectTools.secretHandler
         projectTools.reinit
         projectTools.getInitialized

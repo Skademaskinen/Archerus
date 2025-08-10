@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
 
         # System setup
         nixosModules.common
-        nixosModules.grub
+        nixosModules.systemd-boot
         nixosModules.plymouth
         nixosModules.users.mast3r
         nixosModules.users.taoshi
