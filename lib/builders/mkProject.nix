@@ -39,10 +39,14 @@ in {
                         ${database.register name "${sysCfg.skade.projectsRoot}/projects/${name}"}
                     fi
                     proot=${sysCfg.skade.projectsRoot}/projects/${name}
-                    mkdir -p ${sysCfg.skade.projectsRoot}/projects/${name}
+                    if [ -d $proot ]; then
+                        echo "Project directory already exists, skipping..."
+                        exit 0
+                    fi
+                    mkdir -p $proot
                     ${lib.strIf stdinSocket "mkdir -p ${sysCfg.skade.projectsRoot}/sockets"}
                     ${setup}
-                    chown -R ${name}:${name} ${sysCfg.skade.projectsRoot}/projects/${name}
+                    chown -R ${name}:${name} $proot
                     ${database.setInitialized name "true"}
                     echo "Finished setup"
                 ''}/bin/${name}-setup";

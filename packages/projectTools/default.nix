@@ -10,14 +10,25 @@ in
 {
     reinit = pkgs.writeScriptBin "reinitProjects" ''
         #!${pkgs.bash}/bin/bash
+        set -e
         if [ -z $1 ]; then
             echo "WARNING: resetting all projects"
+            if [ -d ${config.skade.projectsRoot}/.projects.backup ]; then
+                echo "Error, backup directory '${config.skade.projectsRoot}/.projects.backup' already exists"
+                exit 1
+            fi
+            cp ${config.skade.projectsRoot}/projects ${config.skade.projectsRoot}/.projects.backup
             ${database.doSQL "UPDATE projects SET initialized = false"}
             for project in ${database.getAllProjects}; do
                 systemctl start $project-setup
             done
             exit 0
         fi
+        if [ -d ${config.skade.projectsRoot}/projects/.$1.backup ]; then
+            echo "Error, backup directory '${config.skade.projectsRoot}/projects/.$1.backup' already exists"
+            exit 1
+        fi
+        cp ${config.skade.projectsRoot}/projects/$1 ${config.skade.projectsRoot}/projects/.$1.backup
         ${database.doSQL "UPDATE projects SET initialized = false WHERE name = '$1'"}
         systemctl start $1-setup
     

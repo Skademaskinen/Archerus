@@ -11,14 +11,14 @@
     };
     programs.zsh.enable = true;
     users.groups.mast3r = {};
-        home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.mast3r.imports = [
-                self.homeManagerModules.neovim
-                self.homeManagerModules.zsh
-                { home.stateVersion = config.system.stateVersion; }
-            ];
+    home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.taoshi.imports = [
+            self.homeManagerModules.neovim
+            self.homeManagerModules.zsh
+            { home.stateVersion = config.system.stateVersion; }
+        ];
 
-        };
+    };
 }
