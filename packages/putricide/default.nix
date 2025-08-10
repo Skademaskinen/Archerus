@@ -1,25 +1,34 @@
-{pkgs}: pkgs.maven.buildMavenPackage {
-    name = "putricide";
-    pname = "putricide";
-    version = "3.38a";
+{ lib, nixpkgs, ... }:
 
-    mvnParameters = "-f ppbot";
+let
+    pkgs = lib.load nixpkgs;
+    name = "Putricide";
+    pname = "ppbot";
+    version = "3.38a";
+    owner = "Skademaskinen";
+    repo = name;
+    rev = "master";
+    sha256 = "sha256-xkKelk7tJdh06R744tkWU7jfwUaNaXo2Io+uqpf/Pls=";
+    src = pkgs.fetchFromGitHub { inherit owner repo rev sha256; };
+
+in
+
+pkgs.maven.buildMavenPackage {
+    inherit name pname version src;
+
+    mvnParameters = "-f ${pname}";
     mvnHash = "sha256-cuJvC/yYEC9ok2991y0VjGhycNBnaDOPv1SxZj6lrjA=";
 
-    src = pkgs.fetchFromGitHub {
-        owner = "Skademaskinen";
-        repo = "Putricide";
-        rev = "15240e905e17173990c9057432a8532879244cb3";
-        sha256 = "sha256-InYSJlR4Q84vZdXV1oFnDlMR3vQNevuRrxSYW5jqtLI=";
-    };
     installPhase = ''
-        mkdir -p $out/bin
-        mkdir -p $out/share/Putricide
-
-        mv *.jar ppbot.jar
-
-        cp ./* $out/share/Putricide -r
-        echo "${pkgs.jdk21}/bin/java -jar $out/share/Putricide/ppbot.jar \$@" > $out/bin/skademaskinen-putricide
-        chmod +x $out/bin/skademaskinen-putricide
+        mkdir -p $out/{lib,share}/${name}
+        mkdir $out/bin
+        cp ${pname}-${version}.jar $out/lib/${name}/${name}.jar
+        cp -r $src/* $out/share/${name}
+        substitute ${pkgs.writeText pname ''
+            #!${pkgs.bash}/bin/bash
+            set -e
+            ${pkgs.jdk21}/bin/java -jar REPLACE_ME/lib/${name}/${name}.jar $@
+        ''} $out/bin/${pname} --replace-fail REPLACE_ME $out
+        chmod +x $out/bin/${pname}
     '';
 }

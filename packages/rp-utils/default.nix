@@ -1,29 +1,33 @@
-{pkgs}: pkgs.stdenv.mkDerivation {
-    pname = "rp-utils";
+{ gradle2nix, lib, nixpkgs, ... }:
+
+let
+    pkgs = lib.load nixpkgs;
     name = "rp-utils";
+    version = "1.0";
+    pname = "wordcount";
+    owner = "Skademaskinen";
+    repo = name;
+    rev = "master";
+    sha256 = "sha256-xEHnatW73ajBoa9fI+WgRSHiZ1JbN8O6F6KgNehNocU=";
+    src = pkgs.fetchFromGitHub { inherit owner repo rev sha256; };
+in
 
-    src = pkgs.fetchFromGitHub {
-        owner = "Skademaskinen";
-        repo = "rp-utils";
-        rev = "81524107cb729a14c35dcbffd5632138c5ce00f8";
-        sha256 = "sha256-Eszh8sHRg3w+N329EFbKV1ryYo/qpcWEcj4WpK4MXps=";
-    };
-
-    nativeBuildInputs = [
-        pkgs.gradle
-    ];
-
-    buildPhase = ''
-        gradle --offline shadowJar
-    '';
+gradle2nix.builders.x86_64-linux.buildGradlePackage rec {
+    inherit name version pname src;
+    lockFile = ./gradle.lock;
+    gradleBuildFlags = ["build -x test"];
+    gradleInstallFlags = ["installDist -x test"];
 
     installPhase = ''
-        cp app/build/libs/app-all.jar ./rp-utils.jar
-
-        mkdir $out/share/rp-utils
-        cp /* $out/share/rp-utils -r
-
-        echo "${pkgs.jdk21}/bin/java -jar $out/share/rp-utils.jar \$@" > $out/bin/skademaskinen-rp-utils
-        chmod +x $out/bin/skademaskinen-rp-utils
+        mkdir -p $out/{lib,share}/${name}
+        mkdir $out/bin
+        cp ./app/build/libs/app-all.jar $out/lib/${name}/${name}.jar
+        cp -r $src/* $out/share/${name}
+        substitute ${pkgs.writeText name ''
+            #!${pkgs.bash}/bin/bash
+            set -e
+            ${pkgs.jdk21}/bin/java -jar REPLACE_ME/lib/${name}/${name}.jar $@
+        ''} $out/bin/${name} --replace-fail REPLACE_ME $out
+        chmod +x $out/bin/${name}
     '';
 }

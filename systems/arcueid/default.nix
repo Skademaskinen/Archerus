@@ -1,54 +1,61 @@
-{pkgs, ...}:
+inputs @ { self, nixpkgs, lib, system, ... }:
 
-{
-    imports = [
-        ../generic-desktop
-        ./hardware-configuration.nix
-        ./modules
+nixpkgs.lib.nixosSystem {
+    inherit system;
+    modules = with self; [
+        inputs.home-manager.nixosModules.default
+        nixosModules.common
+        nixosModules.desktop
+        nixosModules.gaming
+        nixosModules.grub
+        nixosModules.plymouth
+        nixosModules.programming
+        nixosModules.users.mast3r
+        ({ pkgs, ... }:
+
+        {
+            imports = [
+                ./hardware-configuration.nix
+            ];
+            home-manager.users.mast3r.imports = [
+                homeManagerModules.hyprland
+                homeManagerModules.alacritty
+                homeManagerModules.kitty
+                homeManagerModules.sway
+                ./home.nix
+            ];
+            users.groups.input.members = ["mast3r"];
+            services.displayManager.defaultSession = "hyprland";
+            services.displayManager.autoLogin = {
+                user = "mast3r";
+                enable = true;
+            };
+            networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
+            system.stateVersion = "24.11";
+
+            hardware.bluetooth.enable = true;
+            services.blueman.enable = true;
+
+            nixpkgs.config.allowUnfree = true;
+
+            services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
+
+            boot.swraid = {
+                enable = true;
+            };
+            hardware.ckb-next.enable = true;
+            services.hardware.openrgb = {
+                enable = true;
+                motherboard = "amd";
+                package = pkgs.openrgb-with-all-plugins;
+            };
+
+            services.ollama = {
+                enable = true;
+                acceleration = "rocm";
+                package = pkgs.ollama-rocm;
+            };
+            nixpkgs.config.rocmSupport = true;
+        })
     ];
-
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
-    home-manager.users.mast3r = import ./home;
-
-    services.displayManager.sessionPackages = [pkgs.swayfx];
-    security.pam.services.swaylock = {};
-    security.sudo.extraConfig = ''
-        Defaults env_reset,pwfeedback
-    '';
-    services.displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-        wayland.compositor = "weston";
-        theme = "breeze";
-    };
-
-    users.groups.input.members = ["mast3r"];
-
-    services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "mast3r";
-    services.displayManager.defaultSession = "sway";
-
-    hardware.pulseaudio.enable = false;
-        security.rtkit.enable = true;
-        services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-    };
-
-    nixpkgs.config.allowUnfree = true;
-    services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
-
-    environment.variables = {
-        NIXOS_OZONE_WL = "1";
-    };
-
-    networking.hostName = "arcueid";
-    system.stateVersion = "24.11";
-
-    boot.swraid = {
-        enable = true;
-    };
 }
