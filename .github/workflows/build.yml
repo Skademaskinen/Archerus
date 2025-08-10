@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        package: [plymouth-theme-default, homepage]
+        package: [plymouth-theme-default, homepage, putricide, lavalink, sketch-bot, folkevognen]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
