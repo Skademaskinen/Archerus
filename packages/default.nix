@@ -9,11 +9,17 @@
         ./plymouth-theme-default
         ./wine-discord-ipc-bridge
         ./curseforge
-        ./secretHandler
+        ./lavalink
+
+        # maintenance
+        ./projectTools
         
         # projects
         ./homepage
         ./folkevognen
+        ./putricide
+        ./rp-utils
+        ./sketch-bot
     ];
 }
 

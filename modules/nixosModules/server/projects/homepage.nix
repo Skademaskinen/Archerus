@@ -5,7 +5,7 @@ let
     mkWebProject = lib.mkWebProject;
 in
 
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 {
     options.skade.projects.homepage = {
@@ -84,5 +84,12 @@ in
             HOMEPAGE_COLOR = builtins.toString cfg.color;
             HOMEPAGE_EDITOR_ROOT = cfg.editor.root;
         };
+    } // {
+        environment.systemPackages = with pkgs; [
+            (writeScriptBin "homepage-cli" ''
+                #!${pkgs.bash}/bin/bash
+                sudo -u homepage ${homepage}/bin/homepage --interactive
+            '')
+        ];
     };
 }

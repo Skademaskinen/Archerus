@@ -1,12 +1,12 @@
 { lib, ... }:
 
-sysCfg: cfg: (lib.mkProject sysCfg cfg) // (let
-    name = lib.fIf cfg "subdomain" cfg.name;
-    formattedName = if name == "" then "" else "${name}.";
+sysCfg: { name, subdomain ? name, secure ? sysCfg.skade.baseDomain != "localhost", port, ... } @ cfg: (lib.mkProject sysCfg cfg) // (let
+    formattedName = if subdomain == "" then "" else "${subdomain}.";
 in {
     services.nginx.virtualHosts."${formattedName}${sysCfg.skade.baseDomain}" = lib.mkProxy sysCfg {
+        inherit secure;
         path = "/";
-        location = "http://localhost:${builtins.toString cfg.port}";
-        secure = lib.fIf cfg "secure" (sysCfg.skade.baseDomain != "localhost");
+        location = "http://localhost:${builtins.toString port}";
     };
+
 })

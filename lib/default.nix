@@ -15,4 +15,5 @@ in
     mkSubmodules = load ./builders/mkSubmodules.nix;
     mkBanner = load ./builders/mkBanner.nix;
     wallpapers = load ./wallpapers.nix;
+    database = load ./utils/database.nix;
 } // load ./utils/if.nix

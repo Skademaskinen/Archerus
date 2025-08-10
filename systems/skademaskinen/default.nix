@@ -16,11 +16,20 @@ nixpkgs.lib.nixosSystem {
         nixosModules.users.mast3r
         nixosModules.users.taoshi
 
+        # External projects
+        nixosModules.server.mysql
+        nixosModules.server.nextcloud
+        nixosModules.server.matrix
+        nixosModules.server.palworld
+
         # Hosted projects
         nixosModules.server.base
         nixosModules.server.dummyProject
         nixosModules.server.homepage
         nixosModules.server.folkevognen
+        nixosModules.server.putricide
+        nixosModules.server.taoshi-web
+        nixosModules.server.sketch-bot
         ({ pkgs, ... }:
 
         {
