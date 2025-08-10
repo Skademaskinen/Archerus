@@ -20,7 +20,7 @@ in {
                 XELATEX_PATH = "${pkgs.texliveFull}/bin/xelatex";
                 BASH_PATH = "${pkgs.bash}/bin/bash";
                 SQLITE3_PATH = "${pkgs.sqlite}/bin/sqlite3";
-                PYTHON_EXE_PATH = "${pkgs.python3}/bin/python";
+                PYTHON_EXE_PATH = "${pkgs.python312}/bin/python";
             };
             serviceConfig = if config.skademaskinen.rp-utils.enable then {
                 WorkingDirectory = config.skademaskinen.rp-utils.root;

@@ -13,5 +13,6 @@
         enable = true;
         settings.PermitRootLogin = "yes";
         settings.X11Forwarding = true;
+        settings.PasswordAuthentication = false; 
     };
 }

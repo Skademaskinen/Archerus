@@ -127,6 +127,7 @@ in {
 
     systemd.services.mysql-setup = {
         enable = true;
+
         serviceConfig = {
             ExecStart = "${pkgs.bash}/bin/bash ${pkgs.writeScriptBin "mysql-setup" ''
                 mkdir -p ${config.services.mysql.dataDir}

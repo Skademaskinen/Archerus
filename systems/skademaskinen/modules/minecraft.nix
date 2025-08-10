@@ -1,7 +1,7 @@
 {pkgs, config, lib, nix-velocity, ...}: let
     cfg = config.minecraft;
 in {
-    minecraft = {
+    services.minecraft = {
         servers = {
             hub = {
                 server-port = 25566;

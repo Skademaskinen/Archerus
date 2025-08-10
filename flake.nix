@@ -50,7 +50,8 @@
         };
         rp-utils = {
             url = "github:Skademaskinen/RP-Utils";
-            inputs.nixpkgs.follows = "nixpkgs";
+            # this should be fixed at some point?
+            #inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
@@ -78,7 +79,7 @@
                         };
                     }
                     inputs.nix-velocity.nixosModules.default
-                    inputs.homepage.nixosModules.${system}.default
+                    inputs.homepage.nixosModules.default
                     inputs.putricide.nixosModules.default
                     inputs.rp-utils.nixosModules.default
                     ./systems/skademaskinen

@@ -15,7 +15,6 @@ in {
         };
         plugins.nvim-jdtls = {
             enable = true;
-            data = "/home/mast3r/.cache/jdtls/workspace";
             jdtLanguageServerPackage = pkgs.jdt-language-server.override {
                 jdk = pkgs.jdk23;
             };

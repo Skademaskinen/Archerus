@@ -11,7 +11,7 @@
     config.users.groups.jupyter = {};
 
     config.services.jupyterhub = {
-        enable = true;
+        enable = false; # not really being used anymore
         port = config.skademaskinen.jupyter.port;
         extraConfig = ''
             c.Spawner.notebook_dir = '${config.skademaskinen.storage}/jupyter'

@@ -4,5 +4,6 @@
         ./nextcloud.nix
         ./jupyter.nix
         ./minecraft.nix
+        ./palworld.nix
     ];
 }
