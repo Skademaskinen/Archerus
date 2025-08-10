@@ -42,7 +42,11 @@ in
         skade.wireguard = false;
         skade.baseDomain = "localhost";
         skade.projectsRoot = "/vmVariant";
+        skade.projects.homepage = {
+            db.dialect = "sqlite";
+        };
     };
+    skade.type = "server";
     
     # there is a high probability that we need nginx, so lets just configure it by default
     config.services.nginx = {
