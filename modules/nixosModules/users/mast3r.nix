@@ -14,7 +14,7 @@
     home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.taoshi.imports = [
+        users.mast3r.imports = [
             self.homeManagerModules.neovim
             self.homeManagerModules.zsh
             { home.stateVersion = config.system.stateVersion; }

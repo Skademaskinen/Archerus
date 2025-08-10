@@ -1,6 +1,6 @@
 inputs: 
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
     programs.zsh = {
@@ -12,9 +12,13 @@ inputs:
             enable = true;
             prompt.theme = "minimal";
         };
+        initContent = lib.mkAfter ''
+            export "PROMPT=($USER@$HOST) $PROMPT"
+        '';
         shellAliases = {
             "_g" = "_git";
             "g" = "git";
         };
+
     };
 }
