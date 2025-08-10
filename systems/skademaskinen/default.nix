@@ -12,7 +12,6 @@ nixpkgs.lib.nixosSystem {
         nixosModules.common
         nixosModules.grub
         nixosModules.plymouth
-        nixosModules.programming
         nixosModules.users.mast3r
         nixosModules.users.taoshi
 
@@ -45,9 +44,6 @@ nixpkgs.lib.nixosSystem {
 
             programs.nix-ld.enable = true;
 
-            skade.projects.homepage = {
-                db.dialect = "sqlite";
-            };
         })
     ];
 }
