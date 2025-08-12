@@ -10,8 +10,9 @@
         ./curseforge
         ./lavalink
 
-        # maintenance
+        # tools
         ./projectTools
+        ./homeInit
         
         # projects
         ./homepage
