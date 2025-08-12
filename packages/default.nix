@@ -12,7 +12,7 @@
 
         # tools
         ./projectTools
-        ./homeInit
+        ./initializer
         
         # projects
         ./homepage
@@ -23,6 +23,7 @@
 
         # package sets
         ./steamPackages
-    ];
+    ] // {
+        default = lib.load ./initializer;
+};
 }
-
