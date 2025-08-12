@@ -20,7 +20,9 @@
         ./putricide
         ./rp-utils
         ./sketch-bot
-        ./palServer
+
+        # package sets
+        ./steamPackages
     ];
 }
 

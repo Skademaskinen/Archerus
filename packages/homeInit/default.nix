@@ -13,6 +13,10 @@ pkgs.writeScriptBin "homeInit" ''
         username = environ["USER"]
     else:
         username = argv[-1]
+    if username == "--switch":
+        print("Error, username cannot be --switch")
+        exit(1)
+    switch = "--switch" in argv
     home = environ["HOME"]
 
     print(f"Writing to {home}/.config/home-manager/flake.nix")
@@ -29,4 +33,6 @@ pkgs.writeScriptBin "homeInit" ''
             mkdir(directory)
     with open(f"{home}/.config/home-manager/flake.nix", "w") as home_manager_flake:
         home_manager_flake.write(flake)
+    if switch:
+        system("${pkgs.home-manager}/bin/home-manager switch")
 ''

@@ -6,6 +6,7 @@ in
 
 { id, sha256 }:
 
+# WIP, the hash is not necessarily the same
 pkgs.stdenv.mkDerivation {
     name = "steam-fetch-${builtins.toString id}";
     nativeBuildInputs = [ pkgs.steamcmd ];
@@ -17,10 +18,10 @@ pkgs.stdenv.mkDerivation {
     buildCommand = ''
         mkdir -p $TMPDIR/{home,steam}
         export HOME="$TMPDIR/home"
-        steamcmd +login anonymous \
-                 +force_install_dir $TMPDIR/app \
-                 +app_update ${builtins.toString id} validate \
-                 +quit
+        steamcmd +force_install_dir $TMPDIR/app \
+            +login anonymous \
+            +app_update ${builtins.toString id} validate \
+            +quit
 
         mkdir -p $out
         # Copy downloaded files to Nix store output
