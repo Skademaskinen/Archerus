@@ -1,4 +1,4 @@
-{ home-manager, self, ... }:
+{ home-manager, self, lib, nixpkgs, ... }:
 
 name:
 
@@ -17,4 +17,5 @@ home-manager.lib.homeManagerConfiguration {
             home.stateVersion = "25.05";
         }
     ];
+    pkgs = lib.load nixpkgs;
 }
