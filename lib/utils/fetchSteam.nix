@@ -22,6 +22,7 @@ pkgs.stdenv.mkDerivation {
                  +app_update ${builtins.toString id} validate \
                  +quit
 
+        mkdir -o $out
         # Copy downloaded files to Nix store output
         cp -r $TMPDIR/app/* $out
     '';
