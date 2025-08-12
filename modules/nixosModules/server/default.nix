@@ -15,4 +15,5 @@ lib.mkSubmodules [
     ./projects/nextcloud.nix
     ./projects/minecraft.nix
     ./projects/matrix.nix
+    ./projects/prometheus.nix
 ]

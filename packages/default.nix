@@ -19,6 +19,7 @@
         ./putricide
         ./rp-utils
         ./sketch-bot
+        ./palServer
     ];
 }
 

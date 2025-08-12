@@ -38,6 +38,7 @@
         nixosModules = lib.load ./modules/nixosModules;
         packages = lib.load ./packages;
         nixosConfigurations = lib.load ./systems;
+        homeMAnagerConfigurations = lib.load ./systems/homes;
     };
 
 }
