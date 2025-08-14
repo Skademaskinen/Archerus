@@ -3,7 +3,7 @@
 
 let
     pkgs = lib.load nixpkgs;
-    hyprland_desktop = pkgs.writeText (pkgs.lib.replaceString "Hyprland" "nixGLIntel Hyprland" (builtins.readFile "${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop"));
+    hyprland_desktop = pkgs.writeText "hyprland.desktop" (pkgs.lib.replaceString "Hyprland" "nixGLIntel Hyprland" (builtins.readFile "${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop"));
     sway_desktop = pkgs.writeText "sway.desktop" (pkgs.lib.replaceString "sway" "nixGLIntel sway" (builtins.readFile "${pkgs.sway-unwrapped}/share/wayland-sessions/sway.desktop"));
     source_strings = ["home-manager-executable" "home-manager-flake.nix" "nixos-flake.nix" "hyprland.desktop" "sway.desktop"];
     target_strings = [ "${pkgs.home-manager}/bin/home-manager" "${./home-manager-flake.nix}" "${./nixos-flake.nix}" "${hyprland_desktop}" "${sway_desktop}"];
