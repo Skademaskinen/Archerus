@@ -13,7 +13,6 @@ nixpkgs.lib.nixosSystem {
         nixosModules.systemd-boot
         nixosModules.plymouth
         nixosModules.users.mast3r
-        nixosModules.users.taoshi
 
         # External projects
         nixosModules.server.mysql
@@ -27,8 +26,6 @@ nixpkgs.lib.nixosSystem {
         nixosModules.server.homepage
         nixosModules.server.folkevognen
         nixosModules.server.putricide
-        nixosModules.server.taoshi-web
-        nixosModules.server.sketch-bot
         ({ pkgs, ... }:
 
         {
