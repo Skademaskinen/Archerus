@@ -47,7 +47,7 @@ class Initializer:
 class HomeManager(Initializer):
     def __init__(self, home, username):
         self.username = username
-        super().__init__("home-manager-flake.nix", f"{home}/.config/home-manager/flake.nix", "home-manager-placeholder")
+        super().__init__("home-manager-flake.nix", f"{home}/.config/home-manager/flake.nix", "home-manager-executable")
         for directory in [f"{home}/.config", f"{home}/.config/home-manager"]:
             if not path.exists(directory):
                 mkdir(directory)
