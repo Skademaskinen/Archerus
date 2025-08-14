@@ -55,7 +55,7 @@ class HomeManager(Initializer):
     def string_pairs(self):
         return [("user", self.username)]
 
-    def extras(self):
+    def extra_init(self):
         for file in ["hyprland.desktop", "sway.desktop"]:
             system(f"cp {file} /usr/share/wayland-sessions")
 
