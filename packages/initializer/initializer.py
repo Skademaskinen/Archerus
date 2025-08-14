@@ -3,37 +3,89 @@ from os import mkdir, system, environ, path
 from argparse import ArgumentParser
 from subprocess import check_output
 
-def init(args):
-    path = f"{args.home}/.config/home-manager/flake.nix" if args.type == "home-manager" else "/etc/nixos/flake.nix"
-    print(f"Initializing flake in {path}")
-    file = "home-manager-flake.nix" if args.type == "home-manager" else "nixos-flake.nix"
-    with open(file, "r") as input_flake:
-        flake = input_flake.read()
-    final_flake = flake.replace("user", args.username).replace("host", args.hostname)
-    with open(path, "w") as output_flake:
-        output_flake.write(final_flake)
+class Initializer:
+    def __init__(self, input_path, output_path, executable):
+        self.input_path = input_path
+        self.output_path = output_path
+        self.executable = executable
 
-def switch(args):
-    print(f"Switching {args.type} configuration")
-    system("home-manager switch" if args.type == "home-manager" else "sudo nixos-rebuild switch")
 
-parser = ArgumentParser()
-parser.add_argument("--username", default=environ["USER"])
-parser.add_argument("--home", default=environ["HOME"])
-parser.add_argument("--hostname", default=check_output(["hostname"]).decode())
-parser.add_argument("--type", default="home-manager", choices=["home-manager", "nixos"])
-parser.add_argument("modes", nargs="+", choices=["init", "switch"])
-args = parser.parse_args()
+    def init(self):
+        print(f"Initializing flake in {self.output_path}")
+        with open(self.input_path, "r") as input_file:
+            flake = input_file.read()
+        final_flake = self.replace_strings(flake, self.string_pairs())
+        with open(self.output_path, "w") as output_file:
+            output_file.write(final_flake)
+        self.extra_init()
 
-actions = {
-    "init": init,
-    "switch": switch
-}
+    def switch(self):
+        system(f"{self.executable} switch")
+    
+    def extra_init(self):
+        pass
 
-if args.type == "home-manager":
-    for directory in [f"{args.home}/.config", f"{args.home}/.config/home-manager"]:
-        if not path.exists(directory):
-            mkdir(directory)
+    def replace_strings(self, flake, strings):
+        final = flake
+        for fst, snd in strings:
+            final = final.replace(fst, snd)
+        return final
 
-for mode in args.modes:
-    actions[mode](args)
+    def string_pairs(self):
+        return []
+
+    def execute(self, mode):
+        match mode:
+            case "init":
+                self.init()
+            case "switch":
+                self.switch()
+            case _:
+                raise NotImplementedError("No such mode")
+
+
+class HomeManager(Initializer):
+    def __init__(self, home, username):
+        self.username = username
+        super().__init__("home-manager-flake.nix", f"{home}/.config/home-manager/flake.nix", "home-manager")
+        for directory in [f"{home}/.config", f"{home}/.config/home-manager"]:
+            if not path.exists(directory):
+                mkdir(directory)
+
+    def string_pairs(self):
+        return [("user", self.username)]
+
+    def extras(self):
+        for file in ["hyprland.desktop", "sway.desktop"]:
+            system(f"cp {file} /usr/share/wayland-sessions")
+
+class Nixos(Initializer):
+    def __init__(self, host):
+        self.host = host
+        super().__init__("nixos-flake.nix", "/etc/nixos/flake.nix", "nixos-rebuild")
+
+    def string_pairs(self):
+        return [("host", self.host)]
+
+def getInitializer(args):
+    match args.type:
+        case "home-manager":
+            return HomeManager(args.home, args.username)
+        case "nixos":
+            return Nixos(args.hostname)
+        case _:
+            raise NotImplementedError("Error, no such type")
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--username", default=environ["USER"])
+    parser.add_argument("--home", default=environ["HOME"])
+    parser.add_argument("--hostname", default=check_output(["hostname"]).decode())
+    parser.add_argument("--type", default="home-manager", choices=["home-manager", "nixos"])
+    parser.add_argument("modes", nargs="+", choices=["init", "switch"])
+    args = parser.parse_args()
+    
+    initializer = getInitializer(args)
+    
+    for mode in args.modes:
+        initializer.execute(mode)

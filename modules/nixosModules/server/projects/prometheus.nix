@@ -8,7 +8,6 @@ in
 
 let
     secure = config.skade.baseDomain != "localhost";
-    enabledExporterNames = builtins.attrNames (lib.filterAttrs (_: value: value.enable) config.services.prometheus.exporters);
 in
 
 {
