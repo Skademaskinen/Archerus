@@ -9,6 +9,7 @@ inputs:
         discord
         vesktop
         vimix-cursors
+        nextcloud-client
     ];
 
     networking.networkmanager.enable = true;

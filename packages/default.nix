@@ -10,8 +10,9 @@
         ./curseforge
         ./lavalink
 
-        # maintenance
+        # tools
         ./projectTools
+        ./initializer
         
         # projects
         ./homepage
@@ -19,6 +20,10 @@
         ./putricide
         ./rp-utils
         ./sketch-bot
-    ];
-}
 
+        # package sets
+        ./steamPackages
+    ] // {
+        default = lib.load ./initializer;
+};
+}

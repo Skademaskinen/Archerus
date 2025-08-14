@@ -35,7 +35,10 @@ in
         wantedBy = [ "default.target" ];
         serviceConfig.ExecStart = "${pkgs.writeScriptBin "nextcloud-pre-setup" ''
             #!${pkgs.bash}/bin/bash
-            echo "mydefaultpassword" > ${config.skade.projectsRoot}/projects/nextcloud/admin-password.txt
+            if ! [ -f ${config.skade.projectsRoot}/projects/nextcloud/admin-password.txt ]; then
+                echo "Creating admin password file for Nextcloud..."
+                echo "mydefaultpassword" > ${config.skade.projectsRoot}/projects/nextcloud/admin-password.txt
+            fi
         ''}/bin/nextcloud-pre-setup";
     };
     config.services.nginx.virtualHosts."cloud.${config.skade.baseDomain}" = mkProxy config {

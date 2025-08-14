@@ -19,6 +19,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.server.nextcloud
         nixosModules.server.matrix
         nixosModules.server.palworld
+        nixosModules.server.prometheus
 
         # Hosted projects
         nixosModules.server.base

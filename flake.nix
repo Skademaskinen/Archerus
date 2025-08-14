@@ -11,6 +11,10 @@
             url = "github:nix-community/nixvim/nixos-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nixGL = {
+            url = "github:nix-community/nixGL";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         home-manager = {
             url = "github:nix-community/home-manager/release-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +42,7 @@
         nixosModules = lib.load ./modules/nixosModules;
         packages = lib.load ./packages;
         nixosConfigurations = lib.load ./systems;
+        homeConfigurations = lib.load ./systems/homes;
     };
 
 }

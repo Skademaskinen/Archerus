@@ -9,6 +9,7 @@ in
     capitalize = load ./utils/capitalize.nix;
     removeExtension = load ./utils/removeExtension.nix;
     stringTail = load ./utils/stringTail.nix;
+    fetchSteam = load ./utils/fetchSteam.nix;
     mkProject = load ./builders/mkProject.nix;
     mkProxy = load ./builders/mkProxy.nix;
     mkWebProject = load ./builders/mkWebProject.nix;
