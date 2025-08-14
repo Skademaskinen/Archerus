@@ -26,13 +26,12 @@ home-manager.lib.homeManagerConfiguration {
                 cp $SWAY_DESKOP $TMP/sway.desktop
                 cp $HYPRLAND_DESKTOP $TMP/hyprland.desktop
                 ${pkgs.gnused}/bin/sed -i 's|Exec=sway|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.sway-unwrapped}/bin/sway|g' $TMP/sway.desktop
-                ${pkgs.gnused}/bin/sed -i 's|Exec=Hyprland|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.Hyprland}/bin/Hyprland|g' $TMP/hyprland.desktop
+                ${pkgs.gnused}/bin/sed -i 's|Exec=Hyprland|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.hyprland}/bin/Hyprland|g' $TMP/hyprland.desktop
                 sudo cp $TMP/* /usr/share/wayland-sessions
             '')
         ];
 
         archerus.wallpaper = "${pkgs.cosmic-wallpapers}/share/wallpapers/cosmic/contents/images/phytoplankton_bloom_nasa_oli2_20240121.jpg";
-pg
     })];
     pkgs = import nixpkgs {
         system = "x86_64-linux";
