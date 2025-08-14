@@ -16,6 +16,7 @@ home-manager.lib.homeManagerConfiguration {
         home.packages = with pkgs; [
             nixgl.nixGLIntel
             home-manager
+            git
             (writeScriptBin "init-desktop-files" ''
                 #!${pkgs.bash}/bin/bash
                 set -e
@@ -24,8 +25,8 @@ home-manager.lib.homeManagerConfiguration {
                 HYPRLAND_DESKTOP=${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop
                 cp $SWAY_DESKOP $TMP/sway.desktop
                 cp $HYPRLAND_DESKTOP $TMP/hyprland.desktop
-                ${pkgs.gnused}/bin/sed -i 's|Exec=sway|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.sway-unwrapped}/bin/sway|g' $HYPRLAND_DESKTOP
-                ${pkgs.gnused}/bin/sed -i 's|Exec=Hyprland|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.Hyprland}/bin/Hyprland|g' $HYPRLAND_DESKTOP
+                ${pkgs.gnused}/bin/sed -i 's|Exec=sway|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.sway-unwrapped}/bin/sway|g' $TMP/sway.desktop
+                ${pkgs.gnused}/bin/sed -i 's|Exec=Hyprland|Exec=${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.hyprland}/bin/Hyprland|g' $TMP/hyprland.desktop
                 sudo cp $TMP/* /usr/share/wayland-sessions
             '')
         ];
