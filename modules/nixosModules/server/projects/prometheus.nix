@@ -15,6 +15,9 @@ in
         port = lib.mkOption {
             type = lib.types.int;
             default = 8090;
+            description = ''
+                Port to host prometheus on
+            '';
         };
     };
     config = {
@@ -39,5 +42,6 @@ in
             path = "/";
             location = "http://localhost:${builtins.toString config.skade.projects.prometheus.port}";
         };
+        skade.status.vhosts."prometheus.${config.skade.baseDomain}".port = config.skade.projects.prometheus.port;
     };
 }

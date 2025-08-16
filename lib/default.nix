@@ -15,6 +15,7 @@ in
     mkWebProject = load ./builders/mkWebProject.nix;
     mkSubmodules = load ./builders/mkSubmodules.nix;
     mkBanner = load ./builders/mkBanner.nix;
+    mkArchitecture = load ./builders/mkArchitecture.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
 } // load ./utils/if.nix

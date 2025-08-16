@@ -8,5 +8,8 @@ in {
         path = "/";
         location = "http://localhost:${builtins.toString port}";
     };
+    skade.status.vhosts."${formattedName}${sysCfg.skade.baseDomain}" = {
+        port = port;
+    };
 
 })

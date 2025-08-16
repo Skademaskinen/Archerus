@@ -10,4 +10,5 @@ lib.mkSubmodules [
     ./plymouth
     ./programming
     ./users
+    ./all
 ]

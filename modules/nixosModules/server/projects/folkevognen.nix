@@ -11,6 +11,9 @@ in
         token = lib.mkOption {
             type = lib.types.str;
             default = "";
+            description = ''
+                Discord bot token, generate it here: https://discord.com/developers/applications
+            '';
         };
     };
     config = mkProject config {

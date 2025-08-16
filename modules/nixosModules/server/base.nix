@@ -18,14 +18,23 @@ in
         projectsRoot = lib.mkOption {
             type = lib.types.str;
             default = "/mnt/raid";
+            description = ''
+                Root directory for hosting projects
+            '';
         };
         baseDomain = lib.mkOption {
             type = lib.types.str;
             default = "skade.dev";
+            description = ''
+                base domain for the server, this will determine SSL and routing settings
+            '';
         };
         wireguard = lib.mkOption {
             type = lib.types.bool;
             default = true;
+            description = ''
+                Whether to enable wireguard connection
+            '';
         };
     };
     config = {
