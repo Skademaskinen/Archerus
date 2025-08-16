@@ -10,6 +10,9 @@ in
     options.skade.projects.nextcloud.port = lib.mkOption {
         type = lib.types.int;
         default = 8089;
+        description = ''
+            port to host nextcloud on
+        '';
     };
     config.services.nextcloud = {
         enable = true;
@@ -46,4 +49,5 @@ in
         location = "http://localhost:${builtins.toString config.skade.projects.nextcloud.port}";
         secure = config.skade.baseDomain != "localhost";
     };
+    config.skade.status.vhosts."nextcloud.${config.skade.baseDomain}".port = config.skade.projects.nextcloud.port;
 }

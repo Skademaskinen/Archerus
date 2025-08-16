@@ -6,6 +6,9 @@ inputs:
     options.skade.type = lib.mkOption {
         type = lib.types.str;
         default = "desktop";
+        description = ''
+            The type of the system being built, desktop or server
+        '';
     };
     config = {
         environment.systemPackages = with pkgs; [

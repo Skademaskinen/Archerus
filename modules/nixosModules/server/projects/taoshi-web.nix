@@ -15,6 +15,9 @@ in
         port = lib.mkOption {
             type = lib.types.int;
             default = 8001;
+            description = ''
+                port to host taoshi website on
+            '';
         };
     };
 

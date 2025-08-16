@@ -27,6 +27,9 @@ in
         port = lib.mkOption {
             type = lib.types.int;
             default = 6167;
+            description = ''
+                port to host matrix on
+            '';
         };
     };
 
@@ -51,4 +54,6 @@ in
         "/.well-known/matrix/client".return = ''200 ${clientBody}'';
         "/.well-known/matrix/server".return = ''200 ${serverBody}'';
     };
+
+    config.skade.status.vhosts."matrix.${config.skade.baseDomain}".port = config.skade.projects.matrix.port;
 }

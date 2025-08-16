@@ -9,9 +9,6 @@
         shell = pkgs.zsh;
         extraGroups = [ "wheel" "networkmanager" ];
         # run everything in wayland unless i explicitly tell it to run in xwayland
-        environment = {
-            DISPLAY = "";
-        };
         packages = with pkgs; [
             quickemu
             (writeScriptBin "x" ''

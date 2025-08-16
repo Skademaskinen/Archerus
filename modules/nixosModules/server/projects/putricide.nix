@@ -16,27 +16,45 @@ in
         configDir = lib.mkOption {
             type = lib.types.str;
             default = "${config.skade.projectsRoot}/projects/putricide";
+            description = ''
+                directory to store configuration
+            '';
         };
         args = lib.mkOption {
             type = lib.types.listOf lib.types.str;
             default = ["--disable-teams"];
+            description = ''
+                Arguments to the jar file
+            '';
         };
         init.status = lib.mkOption {
             type = lib.types.str;
             default = "Hello from Nix!";
+            description = ''
+                Status message of the bot
+            '';
         };
         # only set these locally, never commit these options to git
         init.token = lib.mkOption {
             type = lib.types.str;
             default = "";
+            description = ''
+                Initial discord bot token
+            '';
         };
         init.wow.clientId = lib.mkOption {
             type = lib.types.str;
             default = "";
+            description = ''
+                Client ID of the wow API
+            '';
         };
         init.wow.clientSecret = lib.mkOption {
             type = lib.types.str;
             default = "";
+            description = ''
+                Client secret of the wow API
+            '';
         };
 
     };
