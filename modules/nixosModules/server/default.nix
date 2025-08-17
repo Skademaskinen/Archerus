@@ -8,7 +8,7 @@ lib.mkSubmodules [
     ./projects/dummyProject.nix
     ./projects/taoshi-web.nix
     ./projects/sketch-bot.nix
-    ./projects/server.nix
+    ./projects/docs.nix
 
     # external projects
     ./projects/palworld.nix

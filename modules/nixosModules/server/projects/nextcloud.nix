@@ -49,5 +49,5 @@ in
         location = "http://localhost:${builtins.toString config.skade.projects.nextcloud.port}";
         secure = config.skade.baseDomain != "localhost";
     };
-    config.skade.status.vhosts."nextcloud.${config.skade.baseDomain}".port = config.skade.projects.nextcloud.port;
+    config.skade.docs.vhosts."nextcloud.${config.skade.baseDomain}".port = config.skade.projects.nextcloud.port;
 }

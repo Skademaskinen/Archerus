@@ -42,6 +42,6 @@ in
             path = "/";
             location = "http://localhost:${builtins.toString config.skade.projects.prometheus.port}";
         };
-        skade.status.vhosts."prometheus.${config.skade.baseDomain}".port = config.skade.projects.prometheus.port;
+        skade.docs.vhosts."prometheus.${config.skade.baseDomain}".port = config.skade.projects.prometheus.port;
     };
 }
