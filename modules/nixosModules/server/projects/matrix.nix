@@ -55,5 +55,5 @@ in
         "/.well-known/matrix/server".return = ''200 ${serverBody}'';
     };
 
-    config.skade.status.vhosts."matrix.${config.skade.baseDomain}".port = config.skade.projects.matrix.port;
+    config.skade.docs.vhosts."matrix.${config.skade.baseDomain}".port = config.skade.projects.matrix.port;
 }

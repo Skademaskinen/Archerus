@@ -27,7 +27,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.server.homepage
         nixosModules.server.folkevognen
         nixosModules.server.putricide
-        nixosModules.server.server
+        nixosModules.server.docs
         ({ pkgs, ... }:
 
         {
