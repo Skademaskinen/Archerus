@@ -3,24 +3,10 @@ inputs:
 let
     pkgs = inputs.lib.load inputs.nixpkgs;
     lib = pkgs.lib;
-in options: root:
+in options:
 
 let
-  # flatten recursive option sets into list of { path, value }
-  flattenOptions = prefix: optSet:
-    lib.concatMapAttrs
-      (name: val:
-        if lib.isAttrs val && val ? _type && val._type == "option"
-        then {
-          "${prefix}.${name}" = val;
-        }
-        else if lib.isAttrs val then
-          flattenOptions "${prefix}.${name}" val
-        else {}
-      )
-      optSet;
-
-  allOptions = flattenOptions root options;
+  docList = lib.optionAttrSetToDocList options;
 
   html = ''
     <!DOCTYPE html>
@@ -32,8 +18,9 @@ let
         body { font-family: sans-serif; margin: 2rem; }
         input { width: 100%; padding: 0.5rem; font-size: 1rem; margin-bottom: 1rem; }
         .option { margin-bottom: 1rem; }
-        .path { font-weight: bold; }
+        .path { font-weight: bold; font-size: 1.1rem; }
         .desc { margin-left: 1rem; color: #555; }
+        .data { margin-left: 2rem; }
       </style>
       <script>
         function filterOptions() {
@@ -51,18 +38,24 @@ let
     </head>
     <body>
       <input id="search" type="text" onkeyup="filterOptions()" placeholder="Search options..."/>
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList
-        (path: opt:
+      ${lib.concatStringsSep "\n" (map
+        (option:
           let
-            desc = if opt ? description then opt.description else "";
-            type = opt.type.name;
+            desc = if option ? description then option.description else "";
           in
             ''<div class="option">
-              <div class="path">${lib.escapeXML path}</div>
-              <div class="desc">${lib.escapeXML desc}</div>
-              <div class="desc">Type: ${lib.escapeXML type}</div>
+                <div class="path">${lib.escapeXML option.name}</div>
+                <div class="desc">${lib.escapeXML desc}</div>
+                <ul>
+                    <li>Type: ${lib.escapeXML option.type}</li>
+                    <li>Default: ${lib.escapeXML option.default.text}</li>
+                </ul>
+                <b>Declared in:</b><br>
+                <ul>
+                    ${builtins.toString (map (d: "<li>${lib.escapeXML d}</li>") option.declarations)}
+                </ul>
             </div>'')
-        allOptions)}
+        docList)}
     </body>
     </html>
   '';

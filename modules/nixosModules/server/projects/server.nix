@@ -11,7 +11,7 @@ let
         ports = config.networking.firewall.allowedTCPPorts;
         vhosts = config.skade.status.vhosts;
     };
-    docs = _lib.mkOptionsHtml (options.skade) "skade";
+    docs = _lib.mkOptionsHtml (options.skade);
     pages = {
         "index" = ''
             <!DOCTYPE HTML>
