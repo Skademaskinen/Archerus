@@ -1,4 +1,4 @@
-{ self, lib, system, nixpkgs, home-manager, ... }:
+{ lib, ... }:
 
 let
     _lib = lib;
@@ -11,8 +11,7 @@ let
         ports = config.networking.firewall.allowedTCPPorts;
         vhosts = config.skade.status.vhosts;
     };
-    docs = (pkgs.nixosOptionsDoc { options = options.skade; }).optionsCommonMark;
-
+    docs = _lib.mkOptionsHtml (options.skade) "skade";
     pages = {
         "index" = ''
             <!DOCTYPE HTML>
@@ -28,17 +27,7 @@ let
                 <img src="architecture-diagram.png">
             </html>
         '';
-        "options" = ''
-            <!DOCTYPE HTML>
-            <html style="margin-left: 20%; margin-right: 20%">
-                <section style="background-color: gray; padding: 1%;">
-                    <h1>Options</h1>
-                    ${builtins.readFile (pkgs.runCommand "options.html" {} ''
-                        ${pkgs.cmark}/bin/cmark -t html ${docs} > $out
-                    '')}
-                </section>
-            </html>
-        '';
+        "options" = docs;
     };
     page_script = pkgs.writeScriptBin "page" ''
         #!${pkgs.bash}/bin/bash
@@ -60,8 +49,6 @@ let
                 )
             )}
             cp ${architectureDiagram} $out/workdir/architecture-diagram.png
-            cp ${docs} $out/workdir/docs.md
-
         '';
     };
 in
