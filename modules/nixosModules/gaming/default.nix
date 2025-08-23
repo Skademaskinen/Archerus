@@ -1,6 +1,9 @@
 inputs:
 
-{ pkgs, ... }: let
+{ pkgs, ... }: 
+
+let
+    # Configuration files
     mangohud_config = pkgs.writeText "mangohud.conf" ''
         gpu_temp
         gpu_fan
@@ -28,60 +31,91 @@ inputs:
         fps
         fps_color_change
     '';
+
+    # Binary paths
+    gamescope-bin = "${pkgs.gamescope}/bin/gamescope";
+    gamemode-bin = "${pkgs.gamemode}/bin/gamemoderun";
+    mangohud-bin = "${pkgs.mangohud}/bin/mangohud";
+    ipc-steam-bin = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
+    ipc-exe = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe";
+    lsfg-vk-so = "${inputs.self.packages.${inputs.system}.lsfg-vk}/lib/liblsfg-vk.so";
+
+    # Common prefixes
     common-prefix = ''
         #!/bin/sh
         export MANGOHUD_CONFIGFILE=${mangohud_config}
-        echo "Running Command: [$@]"
+        args="$@"
+        echo "Running Command: [$args]"
+        ${pkgs.libnotify}/bin/notify-send -- "Launching game..." "Args: $args"
     '';
     common-gamescope-prefix = ''
         ${common-prefix}
         export LD_PRELOAD=""
         export XKB_DEFAULT_LAYOUT=dk
     '';
-    gamescope-args = "-W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f --";
-    executable-postfix = "$@";
+    lutris-ipc-prefix = ''
+        # Wine executable should be first argument
+        wine_executable=$1
+        # Launch IPC as a subprocess
+        $wine_executable ${ipc-exe} &
+    '';
 
-    prefixes = with pkgs; [
-        (pkgs.writeScriptBin "steam-gamescope-prefix" ''
+    # Arguments
+    gamescope-args = "-W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f --";
+
+    # Common postfixes
+    executable-postfix = "\"$@\"";
+
+    # Actual prefixes
+    prefixes = {
+        # Steam prefixes
+        steam-gamescope-prefix = ''
             ${common-gamescope-prefix}
-            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope ${gamescope-args} ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
-        '')
-        (pkgs.writeScriptBin "steam-prefix" ''
+            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${ipc-steam-bin} ${executable-postfix}
+        '';
+        steam-prefix = ''
             ${common-prefix}
-            ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
-        '')
-        (pkgs.writeScriptBin "steam-gamescope-wayland-prefix" ''
+            ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
+        '';
+        steam-gamescope-wayland-prefix = ''
             ${common-gamescope-prefix}
-            export DISPLAY=""
-            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope ${gamescope-args} ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
-        '')
-        (pkgs.writeScriptBin "steam-wayland-prefix" ''
+            DISPLAY=""
+            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${ipc-steam-bin} ${executable-postfix}
+        '';
+        steam-wayland-prefix = ''
             ${common-prefix}
             DISPLAY=""
-            ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
-        '')
-        #(pkgs.writeScriptBin "steam-lsfg-vk-prefix" ''
+            ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
+        '';
+        #steam-lsfg-vk-prefix = ''
         #    ${common-prefix}
-        #    export LD_PRELOAD="${inputs.self.packages.${inputs.system}.lsfg-vk}/lib/liblsfg-vk.so"
+        #    export LD_PRELOAD="${lsfg-vk-so}"
         #    export ENABLE_LSFG=1
-        #    ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh ${executable-postfix}
-        #'')
-        inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
-        mangohud
+        #    ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
+        #'';
 
-        (pkgs.writeScriptBin "lutris-gamescope-prefix" ''
+        # Lutris prefixes
+        lutris-gamescope-prefix = ''
             ${common-gamescope-prefix}
-            ${gamemode}/bin/gamemoderun ${gamescope}/bin/gamescope ${gamescope-args} ${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe $COMMAND
-        '')
-        (pkgs.writeScriptBin "lutris-prefix" ''
+            ${lutris-ipc-prefix}
+            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${executable-postfix}
+        '';
+        lutris-prefix = ''
             ${common-prefix}
-            ${gamemode}/bin/gamemoderun ${mangohud}/bin/mangohud ${executable-postfix}
-        '')
-        (writeScriptBin "test-mangohud" ''
+            ${lutris-ipc-prefix}
+            ${gamemode-bin} ${mangohud-bin} ${executable-postfix}
+        '';
+        lutris-wayland-prefix = ''
             ${common-prefix}
-            ${mangohud}/bin/mangohud ${mesa-demos}/bin/glxgears -geometry 1920x1080
-        '')
-    ];
+            ${lutris-ipc-prefix}
+            DISPLAY=""
+            ${gamemode-bin} ${mangohud-bin} ${executable-postfix}
+        '';
+    };
+
+    # build strings to scripts
+    convert = name: pkgs.writeScriptBin name prefixes.${name};
+    prefix-pkgs = map convert (builtins.attrNames prefixes);
 in
 
 {
@@ -89,7 +123,7 @@ in
 
     programs.steam = {
         enable = true;
-        extraPackages = prefixes;
+        extraPackages = prefix-pkgs;
     };
     programs.gamescope.enable = true;
 
@@ -114,6 +148,12 @@ in
         protonup-qt
         wowup-cf
         bolt-launcher
+        inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
+        mangohud
         inputs.self.packages.${inputs.system}.curseforge
-    ] ++ prefixes;
+        (writeScriptBin "test-mangohud" ''
+            ${common-prefix}
+            ${mangohud-bin} ${mesa-demos}/bin/glxgears -geometry 1920x1080
+        '')
+    ] ++ prefix-pkgs;
 }
