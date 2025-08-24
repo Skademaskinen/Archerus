@@ -14,6 +14,7 @@ in
     mkProxy = load ./builders/mkProxy.nix;
     mkWebProject = load ./builders/mkWebProject.nix;
     mkSubmodules = load ./builders/mkSubmodules.nix;
+    mkRecursiveModules = load ./builders/mkRecursiveModules.nix;
     mkBanner = load ./builders/mkBanner.nix;
     mkArchitecture = load ./builders/mkArchitecture.nix;
     mkOptionsHtml = load ./builders/mkOptionsHtml.nix;
