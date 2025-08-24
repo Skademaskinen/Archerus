@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, system, self, ... }:
 
 let
     _lib = lib;
@@ -35,6 +35,7 @@ let
         port = 8095;
         extraFiles = {
             "architecture-diagram.png" = architectureDiagram;
+            "Archerus.iso" = self.packages.${system}.iso;
         };
     };
 in
