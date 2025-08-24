@@ -5,35 +5,36 @@
 
 let
     pkgs = lib.load nixpkgs;
+
     discoverModules = basePath: modulePath:
         let
             entries = builtins.readDir (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}");
-            result = pkgs.lib.foldl' (acc: name:
-                let
-                    fullPath = modulePath ++ [ name ];
-                    pathStr  = pkgs.lib.concatStringsSep "/" fullPath;
-                    isDir    = entries.${name} == "directory";
-                    isFile   = entries.${name} == "regular";
-                in
-                    if isDir then
-                        acc // {
-                            ${pkgs.lib.removeSuffix "/" name} =
-                                discoverModules basePath fullPath;
-                        }
-                    else if name == "default.nix" then
-                        # default.nix takes priority, replace whole dir with it
-                        lib.load (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}/default.nix")
-                    else if pkgs.lib.hasSuffix ".nix" name then
-                        if builtins.hasAttr "default.nix" entries then acc else
-                        acc // {
-                            ${pkgs.lib.removeSuffix ".nix" name} =
-                                lib.load (basePath + "/${pathStr}");
-                        }
-                    else
-                        acc
-            ) { } (builtins.attrNames entries);
         in
-          result;
+            if builtins.hasAttr "default.nix" entries then
+                # if default.nix exists, import it and stop
+                lib.load (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}/default.nix")
+            else
+                pkgs.lib.foldl' (acc: name:
+                    let
+                        fullPath = modulePath ++ [ name ];
+                        pathStr  = pkgs.lib.concatStringsSep "/" fullPath;
+                        isDir    = entries.${name} == "directory";
+                        isFile   = entries.${name} == "regular";
+                    in
+                        if isDir then
+                            acc // {
+                                ${pkgs.lib.removeSuffix "/" name} =
+                                    discoverModules basePath fullPath;
+                            }
+                        else if pkgs.lib.hasSuffix ".nix" name then
+                            acc // {
+                                ${pkgs.lib.removeSuffix ".nix" name} =
+                                    lib.load (basePath + "/${pathStr}");
+                            }
+                        else
+                            acc
+                ) { } (builtins.attrNames entries);
+
 in basePath:
     discoverModules basePath []
 
