@@ -38,11 +38,11 @@
     
     {
         inherit lib;
-        homeManagerModules = lib.load ./modules/homeManagerModules;
-        nixosModules = lib.load ./modules/nixosModules;
-        packages = lib.load ./packages;
-        nixosConfigurations = lib.load ./systems;
-        homeConfigurations = lib.load ./systems/homes;
+        homeManagerModules = lib.mkRecursiveModules ./modules/homeManagerModules;
+        nixosModules = lib.mkRecursiveModules ./modules/nixosModules;
+        packages = lib.mkRecursiveModules ./packages;
+        nixosConfigurations = lib.mkRecursiveModules ./systems;
+        homeConfigurations = lib.mkRecursiveModules ./systems/homes;
     };
 
 }
