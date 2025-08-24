@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, system, self, ... }:
 
 let
     _lib = lib;

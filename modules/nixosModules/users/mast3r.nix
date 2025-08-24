@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, nyx, ... }:
 
 { pkgs, config, ... }:
 
@@ -27,9 +27,22 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         users.mast3r.imports = [
+            nyx.homeManagerModules.default
             self.homeManagerModules.neovim
             self.homeManagerModules.zsh
-            { home.stateVersion = config.system.stateVersion; }
+            {
+                home.stateVersion = config.system.stateVersion;
+                nyx = {
+                    enable = true;
+                    username = "mast3r";
+                    nixDirectory = "/etc/nixos";
+                    logDir = "/home/mast3r/.nyx/logs";
+                    autoPush = false;
+                
+                    nyx-tool.enable = true;
+                    nyx-rebuild.enable = true;
+                };
+            }
         ];
 
     };
