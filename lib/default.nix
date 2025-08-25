@@ -19,6 +19,7 @@ in
     mkArchitecture = load ./builders/mkArchitecture.nix;
     mkOptionsHtml = load ./builders/mkOptionsHtml.nix;
     mkWebServer = load ./builders/mkWebServer;
+    mkParallelScripts = load ./builders/mkParallelScripts.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
 } // load ./utils/if.nix
