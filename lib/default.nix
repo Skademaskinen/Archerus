@@ -17,7 +17,7 @@ in
     mkBanner = load ./builders/mkBanner.nix;
     mkArchitecture = load ./builders/mkArchitecture.nix;
     mkOptionsHtml = load ./builders/mkOptionsHtml.nix;
-    mkWebServer = load ./builders/mkWebServer.nix;
+    mkWebServer = load ./builders/mkWebServer;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
 } // load ./utils/if.nix

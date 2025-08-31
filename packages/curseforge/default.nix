@@ -5,7 +5,7 @@ let
     name = "curseforge";
     pname = "CurseForge";
     version = "1.283.2-27468";
-    src = "${curseforge}/${pname}-${version}.AppImage";
+    src = "${curseforge}";
     contents = pkgs.appimageTools.extract { inherit pname version src; };
 in
 

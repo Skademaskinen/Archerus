@@ -23,6 +23,7 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.kitty
                 homeManagerModules.sway
                 ./home.nix
+                (lib.load ./symlinks.nix)
             ];
             users.groups.input.members = ["mast3r"];
             services.displayManager.defaultSession = "hyprland";
@@ -31,6 +32,9 @@ nixpkgs.lib.nixosSystem {
                 enable = true;
             };
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
+            networking.extraHosts = ''
+                10.225.171.51 skade.dev
+            '';
             system.stateVersion = "24.11";
 
             hardware.bluetooth.enable = true;
@@ -56,6 +60,12 @@ nixpkgs.lib.nixosSystem {
                 package = pkgs.ollama-rocm;
             };
             nixpkgs.config.rocmSupport = true;
+            nix.settings = {
+                substituters = [ "https://nix-gaming.cachix.org" "https://cache.nixos.org/" ];
+                trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+                trusted-users = [ "root" "mast3r" ];
+            };
+            environment.systemPackages = [ pkgs.cachix ];
         })
     ];
 }

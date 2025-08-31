@@ -36,8 +36,8 @@ let
     gamescope-bin = "${pkgs.gamescope}/bin/gamescope";
     gamemode-bin = "${pkgs.gamemode}/bin/gamemoderun";
     mangohud-bin = "${pkgs.mangohud}/bin/mangohud";
-    ipc-steam-bin = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
-    ipc-exe = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe";
+    ipc-steam-bin = "${inputs.nix-gaming.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
+    ipc-exe = "${inputs.nix-gaming.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe";
     lsfg-vk-so = "${inputs.self.packages.${inputs.system}.lsfg-vk}/lib/liblsfg-vk.so";
 
     # Common prefixes
@@ -148,7 +148,7 @@ in
         protonup-qt
         wowup-cf
         bolt-launcher
-        inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
+        inputs.nix-gaming.packages.${inputs.system}.wine-discord-ipc-bridge
         mangohud
         inputs.self.packages.${inputs.system}.curseforge
         (writeScriptBin "test-mangohud" ''
@@ -156,4 +156,24 @@ in
             ${mangohud-bin} ${mesa-demos}/bin/glxgears -geometry 1920x1080
         '')
     ] ++ prefix-pkgs;
+
+    services.sunshine = {
+        enable = true;
+    };
+    networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 47984 47989 47990 48010 ];
+        allowedUDPPortRanges = [
+            { from = 47998; to = 48000; }
+            #{ from = 8000; to = 8010; }
+        ];
+    };
+    security.wrappers.sunshine = {
+        owner = "root";
+        group = "root";
+        capabilities = "cap_sys_admin+p";
+        source = "${pkgs.sunshine}/bin/sunshine";
+    };
+    services.avahi.publish.enable = true;
+    services.avahi.publish.userServices = true;
 }

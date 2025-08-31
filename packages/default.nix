@@ -4,6 +4,7 @@
     ${system} = lib.mkSubmodules [
         ./testDesktop
         ./testServer
+        ./testWebServer
         ./plymouth-theme
         ./plymouth-theme-default
         ./wine-discord-ipc-bridge
