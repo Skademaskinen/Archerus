@@ -156,7 +156,6 @@ in
             ${mangohud-bin} ${mesa-demos}/bin/glxgears -geometry 1920x1080
         '')
     ] ++ prefix-pkgs;
-
     services.sunshine = {
         enable = true;
     };
