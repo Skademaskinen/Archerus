@@ -1,8 +1,11 @@
 #pragma once
 
-#include <argparse/argparse.hpp>
 #include <map>
 #include <string>
+
+#include <argparse/argparse.hpp>
+
+#include "base_config.hpp"
 
 class File {
     std::string type;
@@ -14,19 +17,15 @@ public:
     const std::string& get_path() const;
 };
 
-class Config {
-    argparse::ArgumentParser parser;
+class Config : public BaseConfig {
+    using BaseConfig::parser;
     unsigned int port;
-    bool parsed;
     std::map<std::string, std::string> routes;
     std::map<std::string, File> extra_route_files;
 
-    void process_json_config();
+    void parse_json() override;
 public:
     Config();
-    ~Config();
-    void parse(int argc, char* argv[]);
-    bool is_parsed() const;
 
     const unsigned int get_port() const;
     const std::map<std::string, std::string>& get_routes() const;

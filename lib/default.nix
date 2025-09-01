@@ -18,8 +18,10 @@ in
     mkBanner = load ./builders/mkBanner.nix;
     mkArchitecture = load ./builders/mkArchitecture.nix;
     mkOptionsHtml = load ./builders/mkOptionsHtml.nix;
-    mkWebServer = load ./builders/mkWebServer;
+    mkWebServer = load ./builders/mkWebServer.nix;
     mkParallelScripts = load ./builders/mkParallelScripts.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
+
+    prepareCpplib = load ./cpplib/prepare.nix;
 } // load ./utils/if.nix

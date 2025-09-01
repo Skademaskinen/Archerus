@@ -20,7 +20,7 @@ const std::string& File::get_type() const {
     return type;
 }
 
-Config::Config() : parser("Webserver"), parsed(false) {
+Config::Config() : BaseConfig("Webserver") {
     LOG("Config initializing");
     parser.add_argument("-c", "--config")
         .help("Path to configuration file")
@@ -28,23 +28,8 @@ Config::Config() : parser("Webserver"), parsed(false) {
         .action([](const std::string& value) { return value; });
 }
 
-Config::~Config() {
-    LOG("Config destroying");
-}
-
-void Config::parse(int argc, char* argv[]) {
-    try {
-        parser.parse_args(argc, argv);
-    } catch (const std::runtime_error& err) {
-        LOG("Argument parsing error: %s", err.what());
-        exit(1);
-    }
-    process_json_config();
-    parsed = true;
-}
-
 // This function processes the passed config file, it should be json in the form { "port": 8080, "routes": { "/index.html", "/nix/store/aaaa-index.html"}}
-void Config::process_json_config() {
+void Config::parse_json() {
     std::string config_path = parser.get<std::string>("--config");
     LOG("Processing config file: %s", config_path.c_str());
     // use nlohhmann_json to parse the json file
@@ -88,10 +73,6 @@ void Config::process_json_config() {
             LOG("Configured extra route file: %s -> %s", key.c_str(), ((std::string)value["path"]).c_str());
         }
     }
-}
-
-bool Config::is_parsed() const {
-    return parsed;
 }
 
 const unsigned int Config::get_port() const {

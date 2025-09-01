@@ -1,7 +1,6 @@
 configuration.nix
 __pycache__
 venv
-result
 *.qcow2
 .vscode
 files/ssl
@@ -10,3 +9,6 @@ home/common/bg.*
 
 .envrc
 .direnv
+
+build
+result*

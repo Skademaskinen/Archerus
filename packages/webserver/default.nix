@@ -4,10 +4,8 @@ let
     pkgs = lib.load nixpkgs;
 in
 
-config:
-
 pkgs.stdenv.mkDerivation rec {
-    pname = "nix-webserver";
+    pname = "webserver";
     version = "1.0.0";
     src = ./.;
     nativeBuildInputs = [ pkgs.cmake ];
@@ -21,17 +19,14 @@ pkgs.stdenv.mkDerivation rec {
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
 
+    preConfigure = lib.prepareCpplib;
+
     passthru.devShell = pkgs.mkShellNoCC {
         packages = buildInputs;
     };
 
     installPhase = ''
         mkdir -p $out/bin
-        cp webserver $out/bin
-        cp ${pkgs.writeScriptBin "nix-webserver" ''
-            #!${pkgs.bash}/bin/bash
-            exec PLACEHOLDER/bin/webserver --config ${pkgs.writeText "config.json" (builtins.toJSON config)} "$@"
-        ''}/bin/nix-webserver $out/bin
-        substituteInPlace $out/bin/nix-webserver --replace 'PLACEHOLDER' $out
+        cp ${pname} $out/bin
     '';
 }
