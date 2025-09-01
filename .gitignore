@@ -12,3 +12,5 @@ home/common/bg.*
 
 build
 result*
+
+.cache
