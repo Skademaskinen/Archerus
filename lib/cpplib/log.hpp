@@ -1,25 +1,50 @@
 #pragma once
 
+#include <chrono>
 #include <cstdio>
 #include <ctime>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
+#include <tuple>
+#include <format>
 
-// This function strips everything until the last '/' in a file path to just show the file name
-inline char* strip_path(const char* path) {
-    const char* last_slash = path;
-    for (const char* p = path; *p; ++p) {
-        if (*p == '/' || *p == '\\') {
-            last_slash = p + 1;
+
+
+#define Level(level) {__FILE__, __FUNCTION__, __LINE__, level}
+
+namespace utils {
+    // This function strips everything until the last '/' in a file path to just show the file name
+    inline char* strip_path(const char* path) {
+        const char* last_slash = path;
+        for (const char* p = path; *p; ++p) {
+            if (*p == '/' || *p == '\\') {
+                last_slash = p + 1;
+            }
         }
+        return const_cast<char*>(last_slash);
     }
-    return const_cast<char*>(last_slash);
+
+    enum LogLevel {
+        Debug,
+        Info,
+        Warn,
+        Error
+    };
+    typedef std::tuple<std::string, std::string, unsigned int, LogLevel> LogLevelData;
+    inline LogLevel currentLevel = Warn;
+
+    template<typename ...T>
+    void log(const LogLevelData loglevel_data, const std::format_string<T...> fmt, T&&... args) {
+        const auto& [filename, function, line_number, level] = loglevel_data;
+        std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    
+        std::string s(30, '\0');
+        std::strftime(&s[0], s.size(), "%Y-%m-%d %H:%M", std::localtime(&now));
+
+        std::string formatted_string = std::format(fmt, std::forward<T>(args)...);
+        if (currentLevel <= level)
+            std::cout << '[' << s << "] " << strip_path(filename.c_str()) << "::" << function << ':' << line_number << "\r\t\t\t\t\t\t\t\t" << formatted_string << std::endl;
+    }
 }
-
-#define LOG(fmt, ...) do { \
-    std::time_t t = std::time(nullptr); \
-    std::tm tm = *std::localtime(&t); \
-    char timebuf[32]; \
-    std::strftime(timebuf, sizeof(timebuf), "[%d/%m/%Y]", &tm); \
-    std::fprintf(stderr, "%s %s::%s:%d\r\t\t\t\t\t\t- " fmt "\n", \
-        timebuf, strip_path(__FILE__), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-} while (0)
-

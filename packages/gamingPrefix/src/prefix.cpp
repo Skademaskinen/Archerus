@@ -7,7 +7,7 @@
 #include <vector>
 
 Prefix::Prefix(ExecutablesFile executables_file) : executables(executables_file.get_executables()) {
-    LOG("Constructed prefix");
+    utils::log(Level(utils::Debug), "Constructed prefix");
 }
 
 const std::vector<Executable> Prefix::get_executables() const {
@@ -17,7 +17,7 @@ const std::vector<Executable> Prefix::get_executables() const {
 const std::string Prefix::build(const ExecutablesConfig& config) const {
     std::vector<Executable> enabled_executables;
     for(auto [name, state] : config) {
-        LOG("%s -> %s", name.c_str(), state ? "true" : "false");
+        utils::log(Level(utils::Debug), "%s -> %s", name.c_str(), state ? "true" : "false");
         if (!state) {
             continue;
         }

@@ -12,7 +12,7 @@ protected:
     Config& config;
 public:
     Type(Config& config) : config(config) {
-        LOG("Constructed type");
+        utils::log(Level(utils::Debug), "Constructed type");
     }
     virtual void execute() = 0;
 
@@ -26,7 +26,7 @@ public:
             });
             auto environment = executable.get_environment();
             for (const auto& [name, value] : environment) {
-                LOG("Env: %s -> %s", name.c_str(), value.c_str());
+                utils::log(Level(utils::Debug), "Env: %s -> %s", name.c_str(), value.c_str());
                 setenv(name.c_str(), value.c_str(), 1);
             }
         }

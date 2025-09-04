@@ -2,7 +2,7 @@
 #include "log.hpp"
 
 Argument::Argument(std::string value) : value(value) {
-    LOG("Constructed argument");
+    utils::log(Level(utils::Debug), "Constructed argument");
 }
 
 const std::string Argument::get() const {

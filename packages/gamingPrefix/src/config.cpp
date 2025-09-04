@@ -1,11 +1,21 @@
 #include "config.hpp"
 #include "executables_file.hpp"
+#include "log.hpp"
 #include "prefix.hpp"
 
+std::map<std::string, utils::LogLevel> loglevel_mapping {
+    {"debug", utils::Debug},
+    {"info",  utils::Info},
+    {"warn",  utils::Warn},
+    {"error", utils::Error}
+};
+
 Config::Config(ExecutablesFile& file) : BaseConfig("gaming prefix"), file(file), prefix(file) {
-    parser.add_argument("--wayland")
-        .store_into(wayland);
     for(auto& executable : file.get_executables()) {
+        parser.add_argument("--loglevel")
+            .action([](std::string level) {
+                utils::currentLevel = loglevel_mapping[level];
+            });
         parser.add_argument("--" + executable.get_name())
             .store_into(executables_config[executable.get_name()])
             .default_value(false).implicit_value(true);
@@ -13,7 +23,7 @@ Config::Config(ExecutablesFile& file) : BaseConfig("gaming prefix"), file(file),
     parser.add_argument("rest")
         .remaining()
         .store_into(command_parts);
-    LOG("Constructed config");
+    utils::log(Level(utils::Debug), "Constructed config");
 }
 
 const Prefix& Config::get_prefix() const {
@@ -30,8 +40,4 @@ const ExecutablesConfig& Config::get_executables_config() const {
 
 const CommandParts& Config::get_command_parts() const {
     return command_parts;
-}
-
-const bool& Config::get_wayland() const {
-    return wayland;
 }

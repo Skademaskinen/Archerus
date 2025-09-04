@@ -13,7 +13,7 @@ nixpkgs.lib.nixosSystem {
         nixosModules.plymouth
         nixosModules.programming
         nixosModules.users.mast3r
-        ({ pkgs, ... }:
+        ({ pkgs, config, ... }:
 
         {
             imports = [
@@ -41,7 +41,17 @@ nixpkgs.lib.nixosSystem {
             nixpkgs.config.allowUnfree = true;
 
             programs.nix-ld.enable = true;
-            hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+            hardware.nvidia = {
+                package = config.boot.kernelPackages.nvidiaPackages.stable;
+                open = false;
+                prime = {
+                    intelBusId = "PCI:0:2.0";
+                    nvidiaBusId = "PCI:1:0:0";
+                };
+            };
+            hardware.graphics.enable = true;
+
+            services.xserver.videoDrivers = [ "nvidia" ];
         })
     ];
 }

@@ -4,7 +4,7 @@
 #include <string>
 
 Postfix::Postfix() {
-    LOG("Constructed postfix");
+    utils::log(Level(utils::Debug), "Constructed postfix");
 }
 
 const std::string Postfix::build(const std::vector<std::string>& command_parts) const {

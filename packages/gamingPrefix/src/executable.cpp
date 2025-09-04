@@ -4,7 +4,7 @@
 #include "log.hpp"
 
 Executable::Executable(std::string name, std::string path, std::vector<Argument> arguments, int priority, Environment environment) : name(name), path(path), arguments(arguments), priority(priority), environment(environment) {
-    LOG("Constructed executable | %s | %s | %d", name.c_str(), path.c_str(), priority);
+    utils::log(Level(utils::Debug), "Constructed executable | %s | %s | %d", name.c_str(), path.c_str(), priority);
 
 }
 

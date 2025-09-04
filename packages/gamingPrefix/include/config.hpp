@@ -13,7 +13,6 @@ typedef std::vector<std::string> CommandParts;
 class Config : public BaseConfig {
     Prefix prefix;
     Postfix postfix;
-    bool wayland;
     ExecutablesFile& file;
     ExecutablesConfig executables_config;
     CommandParts command_parts;
@@ -24,5 +23,4 @@ public:
     const Postfix& get_postfix() const;
     const ExecutablesConfig& get_executables_config() const;
     const CommandParts& get_command_parts() const;
-    const bool& get_wayland() const;
 };

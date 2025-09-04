@@ -11,20 +11,20 @@ protected:
 
 public:
     virtual void parse_json() {
-        LOG("Running default (empty) parse_json implementation");
+        utils::log(Level(utils::Debug), "Running default (empty) parse_json implementation");
     };
     void parse(int argc, char* argv[]) {
         try {
             parser.parse_args(argc, argv);
         } catch (const std::runtime_error& err) {
-            LOG("Argument parsing error: %s", err.what());
+            utils::log(Level(utils::Debug), "Argument parsing error: %s", err.what());
             exit(1);
         }
         parse_json();
         parsed = true;
     }
     ~BaseConfig() {
-        LOG("Destroying Base config child");
+        utils::log(Level(utils::Debug), "Destroying Base config child");
     }
     bool is_parsed() const {
         return parsed;

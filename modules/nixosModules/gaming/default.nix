@@ -41,6 +41,13 @@ let
             environment.DISPLAY = "";
         }
         {
+            name = "x11";
+            path = "";
+            arguments = [];
+            priority = 0;
+            environment.WAYLAND_DISPLAY = "";
+        }
+        {
             name = "gamemode";
             path = "${pkgs.gamemode}/bin/gamemoderun";
             arguments = [];
@@ -59,12 +66,14 @@ let
             path = "${pkgs.gamescope}/bin/gamescope";
             arguments = [ "-W" "3840" "-H" "2160" "-w" "3840" "-h" "2160" "--adaptive-sync" "--mangoapp" "--force-grab-cursor" "-s" "2" "-e" "-f" "--" ];
             priority = 3;
+            environment = {};
         }
         {
             name = "ipc_bridge";
             path = "${nix-gaming.packages.${system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
             arguments = [];
             priority = 4;
+            environment = {};
         }
     ]);
 in
