@@ -41,6 +41,7 @@ nixpkgs.lib.nixosSystem {
             nixpkgs.config.allowUnfree = true;
 
             programs.nix-ld.enable = true;
+            hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
         })
     ];
 }
