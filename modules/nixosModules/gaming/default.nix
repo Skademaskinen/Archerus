@@ -100,7 +100,11 @@ in
 
     users.users.mast3r.extraGroups = [ "gamemode" ];
 
-    environment.variables.GAMING_EXECUTABLES_CONFIG = gaming_executables_config;
+    environment.variables = {
+        GAMING_PREFIX_ICON = "${self.packages.${system}.homepage.src}/static/icon.png";
+        GAMING_EXECUTABLES_CONFIG = gaming_executables_config;
+        MANGOHUD_CONFIGFILE = mangohud_config;
+    };
 
     environment.systemPackages = with pkgs; [
 

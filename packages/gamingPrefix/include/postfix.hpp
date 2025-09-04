@@ -1,11 +1,15 @@
 #pragma once
 
+#include "prefix.hpp"
 #include <string>
 #include <vector>
+
+typedef std::vector<std::string> CommandParts;
 
 class Postfix {
 public:
     Postfix();
 
-    const std::string build(const std::vector<std::string>&) const;
+    void execute(const ExecutablesConfig&, const Prefix&, const CommandParts&) const;
+    const std::string represent(const CommandParts&) const;
 };

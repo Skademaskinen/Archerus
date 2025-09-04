@@ -1,14 +1,51 @@
 #include "postfix.hpp"
 #include "log.hpp"
-#include "vector_utils.hpp"
+#include "prefix.hpp"
+#include "utils.hpp"
 #include <string>
+#include <unistd.h>
+
 
 Postfix::Postfix() {
     utils::log(Level(utils::Debug), "Constructed postfix");
 }
 
-const std::string Postfix::build(const std::vector<std::string>& command_parts) const {
-    return utils::concat_elements(command_parts, [](std::string part) {
-        return part + " ";
-    });
+void Postfix::execute(const ExecutablesConfig& config, const Prefix& prefix, const CommandParts& args) const {
+
+    if (args.empty()) {
+        utils::log(Level(utils::Error), "No executable specified");
+        return;
+    }
+
+    // Start with prefix string as-is
+    std::string cmd = prefix.build(config);
+
+    // Escape the actual executable
+    cmd += " " + utils::escape(args[0]);
+
+    // Escape remaining arguments
+    bool first = true;
+    for (const auto& arg : args) {
+        if (first) {
+            first = !first;
+            continue;
+        }
+        utils::log(Level(utils::Debug), "arg: {}", arg);
+        cmd += " " + utils::escape(utils::escape(utils::escape(arg), '('), ')');
+    }
+
+    utils::log(Level(utils::Debug), "Running command: {}", cmd);
+
+    int ret = std::system(cmd.c_str());
+    if (ret == -1) {
+        utils::log(Level(utils::Error), "system failed");
+    }
+}
+
+const std::string Postfix::represent(const CommandParts& args) const {
+    std::string result;
+    for(const auto& arg : args) {
+        result += arg + " ";
+    }
+    return result;
 }

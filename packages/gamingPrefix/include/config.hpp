@@ -1,14 +1,9 @@
 #pragma once
 
-#include <map>
-#include <string>
-
 #include "base_config.hpp"
 #include "executables_file.hpp"
 #include "prefix.hpp"
 #include "postfix.hpp"
-
-typedef std::vector<std::string> CommandParts;
 
 class Config : public BaseConfig {
     Prefix prefix;
@@ -16,6 +11,7 @@ class Config : public BaseConfig {
     ExecutablesFile& file;
     ExecutablesConfig executables_config;
     CommandParts command_parts;
+    bool enableNotifications;
 public:
     Config(ExecutablesFile&);
 
@@ -23,4 +19,5 @@ public:
     const Postfix& get_postfix() const;
     const ExecutablesConfig& get_executables_config() const;
     const CommandParts& get_command_parts() const;
+    const bool& notifications_enabled() const;
 };

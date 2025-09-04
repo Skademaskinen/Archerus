@@ -17,7 +17,7 @@ public:
         try {
             parser.parse_args(argc, argv);
         } catch (const std::runtime_error& err) {
-            utils::log(Level(utils::Debug), "Argument parsing error: %s", err.what());
+            utils::log(Level(utils::Debug), "Argument parsing error: {}", err.what());
             exit(1);
         }
         parse_json();

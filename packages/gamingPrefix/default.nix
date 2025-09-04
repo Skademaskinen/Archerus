@@ -17,6 +17,10 @@ pkgs.stdenv.mkDerivation rec {
         cmake
         gcc
         nlohmann_json
+        libnotify.dev
+        libnotify
+        glib
+        pkg-config
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
 

@@ -4,19 +4,19 @@
 
 class Steam : public Type {
     public:
-        Steam(Config& config) : Type(config) {
+        Steam(Config& config) : Type(config, "steam") {
             utils::log(Level(utils::Debug), "Constructed Steam");
         }
         void execute() override {
             set_environment();
             const auto& prefix = config.get_prefix();
             const auto& postfix = config.get_postfix();
+            send_notification(prefix, postfix);
             const auto prefix_string = prefix.build(config.get_executables_config());
-            const auto postfix_string = postfix.build(config.get_command_parts());
-            utils::log(Level(utils::Info), "Prefix: %s", prefix_string.c_str());
-            utils::log(Level(utils::Info), "Postfix: %s", postfix_string.c_str());
-            auto res = std::system((prefix_string + " " + postfix_string).c_str());
-            utils::log(Level(utils::Debug), "Command result: %d", res);
+            const auto postfix_string = postfix.represent(config.get_command_parts());
+            utils::log(Level(utils::Info), "Prefix: {}", prefix_string.c_str());
+            utils::log(Level(utils::Info), "Postfix: {}", postfix_string.c_str());
+            postfix.execute(config.get_executables_config(), prefix, config.get_command_parts());
         }
 };
 

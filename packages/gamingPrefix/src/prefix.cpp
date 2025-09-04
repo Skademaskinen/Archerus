@@ -15,22 +15,36 @@ const std::vector<Executable> Prefix::get_executables() const {
 }
 
 const std::string Prefix::build(const ExecutablesConfig& config) const {
+    const auto enabled_executables = get_enabled_executables(config);
+    auto ordered = utils::order_elements(
+        enabled_executables, 
+        [](const Executable& first, const Executable& second){
+            return first.get_priority() < second.get_priority();
+        }
+    );
+    return utils::concat_elements(ordered, [](const Executable& executable){
+        return executable.get_path() + " " + utils::concat_elements(
+            executable.get_arguments(), 
+            [](const Argument argument) {
+                return argument.get() + " ";
+            }
+        );
+    });
+}
+
+const std::vector<Executable> Prefix::get_enabled_executables(const ExecutablesConfig& config) const {
     std::vector<Executable> enabled_executables;
     for(auto [name, state] : config) {
-        utils::log(Level(utils::Debug), "%s -> %s", name.c_str(), state ? "true" : "false");
+        utils::log(Level(utils::Debug), "{} -> {}", name.c_str(), state ? "true" : "false");
         if (!state) {
             continue;
         }
-        enabled_executables.push_back(utils::find_element(executables, [name, state](const Executable& element) {
-            return element.get_name() == name && state;
-        }));
+        enabled_executables.push_back(utils::find_element(
+            executables, 
+            [name, state](const Executable& element) {
+                return element.get_name() == name && state;
+            }
+        ));
     }
-    auto ordered = utils::order_elements(enabled_executables, [](const Executable& first, const Executable& second){
-        return first.get_priority() > second.get_priority();
-    });
-    return utils::concat_elements(ordered, [](const Executable& executable){
-        return executable.get_path() + " " + utils::concat_elements(executable.get_arguments(), [](const Argument argument) {
-            return argument.get() + " ";
-        });
-    });
+    return enabled_executables;
 }

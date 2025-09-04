@@ -4,8 +4,6 @@
 #include <cstdio>
 #include <ctime>
 #include <iostream>
-#include <map>
-#include <sstream>
 #include <string>
 #include <tuple>
 #include <format>
@@ -33,7 +31,7 @@ namespace utils {
         Error
     };
     typedef std::tuple<std::string, std::string, unsigned int, LogLevel> LogLevelData;
-    inline LogLevel currentLevel = Warn;
+    inline LogLevel currentLevel = Info;
 
     template<typename ...T>
     void log(const LogLevelData loglevel_data, const std::format_string<T...> fmt, T&&... args) {
@@ -45,6 +43,6 @@ namespace utils {
 
         std::string formatted_string = std::format(fmt, std::forward<T>(args)...);
         if (currentLevel <= level)
-            std::cout << '[' << s << "] " << strip_path(filename.c_str()) << "::" << function << ':' << line_number << "\r\t\t\t\t\t\t\t\t" << formatted_string << std::endl;
+            std::cout << '[' << s << "] " << strip_path(filename.c_str()) << "::" << function << ':' << line_number << "   |||   " << formatted_string << std::endl;
     }
 }

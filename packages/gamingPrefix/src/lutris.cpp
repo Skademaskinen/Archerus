@@ -5,19 +5,19 @@
 
 class Lutris : public Type {
     public:
-        Lutris(Config& config) : Type(config) {
+        Lutris(Config& config) : Type(config, "lutris") {
             utils::log(Level(utils::Debug), "Constructed lutris");
         }
         void execute() override {
             set_environment();
             const Prefix& prefix = config.get_prefix();
             const Postfix& postfix = config.get_postfix();
+            send_notification(prefix, postfix);
             const auto prefix_string = prefix.build(config.get_executables_config());
-            const auto postfix_string = postfix.build(config.get_command_parts());
-            utils::log(Level(utils::Info), "Prefix: %s", prefix_string.c_str());
-            utils::log(Level(utils::Info), "Postfix: %s", postfix_string.c_str());
-            auto res = std::system((prefix_string + " " + postfix_string).c_str());
-            utils::log(Level(utils::Debug), "Command result: %d", res);
+            const auto postfix_string = postfix.represent(config.get_command_parts());
+            utils::log(Level(utils::Info), "Prefix: {}", prefix_string.c_str());
+            utils::log(Level(utils::Info), "Postfix: {}", postfix_string.c_str());
+            postfix.execute(config.get_executables_config(), prefix, config.get_command_parts());
         }
 };
 

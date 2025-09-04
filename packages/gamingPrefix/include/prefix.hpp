@@ -16,5 +16,6 @@ public:
     Prefix(ExecutablesFile);
 
     const std::vector<Executable> get_executables() const;
+    const std::vector<Executable> get_enabled_executables(const ExecutablesConfig&) const;
     const std::string build(const ExecutablesConfig&) const;
 };

@@ -17,16 +17,23 @@ include_directories(../../lib/cpplib)
 
 find_package(argparse REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBNOTIFY REQUIRED libnotify)
 
 add_executable(lutris-prefix src/lutris.cpp ${PROJECT_IMPLEMENTATIONS})
 add_executable(steam-prefix src/steam.cpp ${PROJECT_IMPLEMENTATIONS})
 
+target_include_directories(lutris-prefix PRIVATE ${LIBNOTIFY_INCLUDE_DIRS})
+target_include_directories(steam-prefix PRIVATE ${LIBNOTIFY_INCLUDE_DIRS})
+
 target_link_libraries(lutris-prefix PRIVATE 
     argparse::argparse 
     nlohmann_json::nlohmann_json
+    ${LIBNOTIFY_LIBRARIES}
 )
 
 target_link_libraries(steam-prefix PRIVATE 
     argparse::argparse 
     nlohmann_json::nlohmann_json
+    ${LIBNOTIFY_LIBRARIES}
 )
