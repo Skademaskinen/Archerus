@@ -22,6 +22,4 @@ in
     mkParallelScripts = load ./builders/mkParallelScripts.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
-
-    prepareCpplib = load ./cpplib/prepare.nix;
 } // load ./utils/if.nix
