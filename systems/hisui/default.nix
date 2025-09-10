@@ -8,7 +8,7 @@ nixpkgs.lib.nixosSystem {
         inputs.home-manager.nixosModules.default
         nixosModules.common
         nixosModules.desktop
-        #nixosModules.gaming
+        nixosModules.gaming
         nixosModules.grub
         nixosModules.plymouth
         nixosModules.programming

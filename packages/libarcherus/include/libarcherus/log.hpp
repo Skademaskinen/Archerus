@@ -26,5 +26,15 @@ namespace utils {
     inline LogLevel currentLevel = Info;
 
     template<typename ...T>
-    void log(const LogLevelData loglevel_data, const std::format_string<T...> fmt, T&&... args);
+    void log(const LogLevelData loglevel_data, const std::format_string<T...> fmt, T&&... args) {
+        const auto& [filename, function, line_number, level] = loglevel_data;
+        std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    
+        std::string s(30, '\0');
+        std::strftime(&s[0], s.size(), "%Y-%m-%d %H:%M", std::localtime(&now));
+    
+        std::string formatted_string = std::format(fmt, std::forward<T>(args)...);
+        if (currentLevel <= level)
+            std::cout << '[' << s << "] " << strip_path(filename.c_str()) << "::" << function << ':' << line_number << "\r\t\t\t\t\t\t" << formatted_string << std::endl;
+    }
 }
