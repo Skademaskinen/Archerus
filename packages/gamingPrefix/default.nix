@@ -1,11 +1,8 @@
 # This package will make sure that the gaming prefixes that i define are evaluated at compile time
 # This means that something like 'lutris-prefix --wayland' will only be valid if wayland is enabled or something like that
 # Essentially i'm packaging all my dependencies for gaming prefixes into a single binary
-{ self, lib, nixpkgs, system, ...}:
+{ archerusPkgs, pkgs, ...}:
 
-let
-    pkgs = lib.load nixpkgs;
-in
 
 pkgs.stdenv.mkDerivation rec {
     pname = "gaming-prefix";
@@ -20,7 +17,7 @@ pkgs.stdenv.mkDerivation rec {
         libnotify
         glib
         pkg-config
-        self.packages.${system}.common
+        archerusPkgs.libarcherus
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
 

@@ -1,4 +1,4 @@
-inputs:
+{ archerusPkgs, ... }:
 
 { pkgs, lib, ... }:
 
@@ -8,7 +8,8 @@ inputs:
 
         font = {
             size = 12.0;
-            name = "FiraCode Nerd Font";
+            name = "LigaComicMono";
+            package = archerusPkgs.comicMonoLiga;
         };
 
         settings = {

@@ -1,9 +1,8 @@
-{ lib, nixpkgs, ... }:
+{ pkgs, lib, ... }:
 
 config:
 
 let
-    pkgs = lib.load nixpkgs;
     database = lib.database config;
 in
 

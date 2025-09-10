@@ -7,5 +7,6 @@
         pkgs.gimp
         pkgs.kdePackages.okular
         pkgs.vlc
+        pkgs.linuxPackages.nvidiaPackages.latest.lib32
     ];
 }

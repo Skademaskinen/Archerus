@@ -14,6 +14,7 @@ include_directories(../../lib/cpplib)
 find_package(argparse REQUIRED)
 find_package(httplib REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(libarcherus REQUIRED)
 
 add_executable(webserver src/main.cpp ${PROJECT_IMPLEMENTATIONS})
 
@@ -21,4 +22,5 @@ target_link_libraries(webserver PRIVATE
     argparse::argparse 
     httplib::httplib 
     nlohmann_json::nlohmann_json
+    archerus::libarcherus
 )

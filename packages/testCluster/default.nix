@@ -1,7 +1,6 @@
-{ lib, nixpkgs, system, ... }:
+{ pkgs, lib, nixpkgs, system, ... }:
 
 let
-    pkgs = lib.load nixpkgs;
     # --- cluster constants ---
     k3sPort = 6443;
     serverIP = "10.1.1.2";

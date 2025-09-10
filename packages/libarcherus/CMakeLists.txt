@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(libarcherus VERSION 0.1.0 LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 23)
+
 # Shared library
 add_library(libarcherus SHARED
     src/libarcherus.cpp

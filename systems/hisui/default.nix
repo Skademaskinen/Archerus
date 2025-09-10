@@ -8,7 +8,7 @@ nixpkgs.lib.nixosSystem {
         inputs.home-manager.nixosModules.default
         nixosModules.common
         nixosModules.desktop
-        nixosModules.gaming
+        #nixosModules.gaming
         nixosModules.grub
         nixosModules.plymouth
         nixosModules.programming
@@ -21,6 +21,7 @@ nixpkgs.lib.nixosSystem {
                 ./packages.nix
             ];
             home-manager.users.mast3r.imports = [
+                homeManagerModules.common
                 homeManagerModules.hyprland
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
@@ -42,16 +43,18 @@ nixpkgs.lib.nixosSystem {
 
             programs.nix-ld.enable = true;
             hardware.nvidia = {
-                package = config.boot.kernelPackages.nvidiaPackages.stable;
+                package = config.boot.kernelPackages.nvidiaPackages.latest;
                 open = false;
                 prime = {
                     intelBusId = "PCI:0:2.0";
                     nvidiaBusId = "PCI:1:0:0";
                 };
             };
+
             hardware.graphics.enable = true;
 
             services.xserver.videoDrivers = [ "nvidia" ];
+
         })
     ];
 }

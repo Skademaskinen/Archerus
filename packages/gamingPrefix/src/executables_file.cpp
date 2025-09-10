@@ -1,14 +1,13 @@
 #include <cstdlib>
 #include <fstream>
-#include <nlohmann/json_fwd.hpp>
 #include <string>
 #include <vector>
 
 #include <nlohmann/json.hpp>
+#include <libarcherus/log.hpp>
 
 #include "executables_file.hpp"
 #include "executable.hpp"
-#include "log.hpp"
 
 ExecutablesFile::ExecutablesFile() : data(read_json_data()) {
     auto j = nlohmann::json::parse(data);

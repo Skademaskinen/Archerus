@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base_config.hpp"
+#include <libarcherus/base_config.hpp>
 
 enum Mode {
     NixosMode,
@@ -26,7 +26,7 @@ namespace instructions {
     }
 };
 
-class Config : public BaseConfig {
+class Config : public archerus::BaseConfig {
     using BaseConfig::parser;
     Mode mode;
     std::vector<instructions::Instruction> instructions;

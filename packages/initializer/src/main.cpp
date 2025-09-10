@@ -1,14 +1,15 @@
+#include <libarcherus/log.hpp>
+
 #include "initializer.hpp"
-#include "log.hpp"
 #include "config.hpp"
 #include "home_manager.hpp"
 #include "nixos.hpp"
 
 int main(int argc, char* argv[]) {
-    LOG("initializing initializer");
+    utils::log(Level(utils::Debug), "initializing initializer");
     Config config;
     config.parse(argc, argv);
-    LOG("Finished setting up config");
+    utils::log(Level(utils::Info), "Finished setting up config");
     switch(config.get_mode()) {
         case NixosMode: {
             Nixos nixos(config);

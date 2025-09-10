@@ -3,15 +3,16 @@
 #include <cstdlib>
 #include <format>
 
+#include <libnotify/notify.h>
+#include <libarcherus/log.hpp>
+#include <libarcherus/vector_utils.hpp>
+#include <libarcherus/utils.hpp>
+
 #include "glib-object.h"
-#include "log.hpp"
 #include "prefix.hpp"
 #include "postfix.hpp"
 #include "config.hpp"
-#include "utils.hpp"
-#include "vector_utils.hpp"
 
-#include <libnotify/notify.h>
 
 class Type {
 protected:

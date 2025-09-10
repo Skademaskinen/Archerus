@@ -1,11 +1,15 @@
+#include <filesystem>
+#include <vector>
+
+#include <libarcherus/log.hpp>
+
 #include "home_manager.hpp"
-#include "log.hpp"
 #include <filesystem>
 #include <vector>
 
 HomeManager::HomeManager(Config& config) : Type(config, "/home/" + config.get_username() + "/.config/home-manager/flake.nix", config.get_home_flake_template_path()) {
     substitution_pairs["user"] = config.get_username();
-    LOG("initialized Home manager");
+    utils::log(Level(utils::Debug), "initialized Home manager");
 }
 
 void HomeManager::extra_init() {

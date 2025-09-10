@@ -1,8 +1,4 @@
-{ lib, nixpkgs, ... }:
-
-let
-    pkgs = lib.load nixpkgs;
-in
+{ pkgs, lib, nixpkgs, ... }:
 
 lib.mkWebServer {
     port = 8080;

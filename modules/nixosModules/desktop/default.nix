@@ -1,6 +1,6 @@
-inputs:
+{ archerusPkgs, ... }:
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
     environment.systemPackages = with pkgs; [
@@ -28,9 +28,10 @@ inputs:
     programs.sway.enable = true;
 
     fonts.packages = with pkgs; [
+        archerusPkgs.comicMonoLiga
         fira-mono
         nerd-fonts.droid-sans-mono
-	nerd-fonts.fira-code
+	    nerd-fonts.fira-code
     ];
 
     services.pulseaudio.enable = false;
@@ -44,6 +45,11 @@ inputs:
 
     environment.variables = {
         NIXOS_OZONE_WL = "1";
+        SUDO_PROMPT="[🔒 | %u] Password: ";
     };
+
+    security.sudo.extraConfig = ''
+        Defaults pwfeedback
+    '';
 
 }

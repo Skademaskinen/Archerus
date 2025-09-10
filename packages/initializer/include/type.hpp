@@ -24,7 +24,7 @@ protected:
     std::map<std::string, std::string> substitution_pairs;
     Type(Config& config, std::string path, std::string flake_path) : config(config), path(path), flake_path(flake_path) {
         if (std::filesystem::exists(path)) {
-            LOG("Error, %s exists...", path.c_str());
+            utils::log(Level(utils::Debug), "Error, %s exists...", path.c_str());
             exit(1);
         }
     }
@@ -37,7 +37,6 @@ public:
         ss << input.rdbuf();
         std::string file = ss.str();
         for(const auto& [fst, snd] : substitution_pairs) {
-            LOG("Substituting %s -> %s", fst.c_str(), snd.c_str());
             file = substitute_all(fst, snd, file);
         }
         output.open(path);
@@ -46,7 +45,7 @@ public:
         extra_init();
     };
     void switch_i() {
-        LOG("Mock Type");
+        utils::log(Level(utils::Debug), "Mock Type");
     };
     virtual void extra_init() = 0;
 };

@@ -61,13 +61,13 @@ button {
 
 /* Executors usually behave better in monospace fonts */
 #executor-label {
-    font-family: DejaVu Sans Mono, monospace;
+    font-family: LigaComicMono, monospace;
     font-size: 16px
 }
 
 /* and so does the Clock */
 #clock {
-    font-family: DejaVu Sans Mono, monospace;
+    font-family: LigaComicMono, monospace;
     font-size: 16px
 }
 
@@ -83,7 +83,7 @@ button {
 }
 
 #dwl-tag-occupied {
-	font-family: monospace;
+	font-family: LigaComicMono;
 	color: #eee;
     background-color: #006699;
     padding-left: 3px;
@@ -91,7 +91,7 @@ button {
 }
 
 #dwl-tag-free {
-	font-family: monospace;
+	font-family: LigaComicMono;
 	color: #eee;
     background-color: rgba(32, 50, 90, 1.0);
     padding-left: 3px;
@@ -99,7 +99,7 @@ button {
 }
 
 #dwl-tag-urgent {
-	font-family: monospace;
+	font-family: LigaComicMono;
 	color: #eee;
     background-color: #ee6600;
     padding-left: 3px;

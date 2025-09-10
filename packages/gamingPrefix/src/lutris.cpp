@@ -1,7 +1,9 @@
-#include "log.hpp"
+#include <cstdlib>
+
+#include <libarcherus/log.hpp>
+
 #include "type.hpp"
 #include "config.hpp"
-#include <cstdlib>
 
 class Lutris : public Type {
     public:

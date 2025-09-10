@@ -1,10 +1,8 @@
-{ nixpkgs, lib, ... }:
+{ pkgs, ... }:
 
 # All credit goes to https://github.com/PancakeTAS/lsfg-vk/pull/53#issuecomment-3066948757
 
-let
-    pkgs = lib.load nixpkgs;
-in pkgs.callPackage ({
+pkgs.callPackage ({
   stdenv,
   fetchurl,
   jq,

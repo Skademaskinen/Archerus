@@ -27,14 +27,6 @@
             url = "github:tadfisher/gradle2nix/v2";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        nyx = {
-            url = "github:Peritia-System/Nyx-Tools";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        nixos-wizard = {
-            url = "github:km-clay/nixos-wizard";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         # non-flake files
         curseforge = {
             url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
@@ -46,16 +38,18 @@
 
     let
         system = "x86_64-linux";
-        lib = import ./lib (inputs // { inherit system; });
+        pkgs = import inputs.nixpkgs { inherit system; };
+        archerusPkgs = mkRecursiveModules ./packages;
+        lib = archerusPkgs.lib;
+        mkRecursiveModules = import ./packages/lib/builders/mkRecursiveModules.nix (inputs // { inherit system pkgs archerusPkgs lib; });
     in 
     
     {
-        inherit lib;
-        homeManagerModules = lib.mkRecursiveModules ./modules/homeManagerModules;
-        nixosModules = lib.mkRecursiveModules ./modules/nixosModules;
-        packages.${system} = lib.mkRecursiveModules ./packages;
-        nixosConfigurations = lib.mkRecursiveModules ./systems;
-        homeConfigurations = lib.mkRecursiveModules ./systems/homes;
+        homeManagerModules = mkRecursiveModules ./modules/homeManagerModules;
+        nixosModules = mkRecursiveModules ./modules/nixosModules;
+        packages.${system} = mkRecursiveModules ./packages;
+        nixosConfigurations = mkRecursiveModules ./systems;
+        homeConfigurations = mkRecursiveModules ./systems/homes;
     };
 
 }

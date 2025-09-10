@@ -17,10 +17,10 @@ inputs:
             (builtins.mapAttrs (name: value: {
                 family = value;
             }) {
-                normal = "FiraCode Nerd Font";
-                italic = "FiraCode Nerd Font";
-                bold = "FiraCode Nerd Font";
-                bold_italic = "FiraCode Nerd Font";
+                normal = "LigaComicMono";
+                italic = "LigaComicMono";
+                bold = "LigaComicMono";
+                bold_italic = "LigaComicMono";
             });
 
             cursor.style.shape = "Underline";

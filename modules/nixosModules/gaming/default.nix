@@ -1,4 +1,4 @@
-{ self, nix-gaming, system, ... }:
+{ nix-gaming, system, archerusPkgs, ... }:
 
 { pkgs, ... }: 
 
@@ -35,29 +35,22 @@ let
     gaming_executables_config = pkgs.writeText "config.json" (builtins.toJSON [
         {
             name = "wayland";
-            path = "";
-            arguments = [];
             priority = 0;
             environment.DISPLAY = "";
         }
         {
             name = "x11";
-            path = "";
-            arguments = [];
             priority = 0;
             environment.WAYLAND_DISPLAY = "";
         }
         {
             name = "gamemode";
             path = "${pkgs.gamemode}/bin/gamemoderun";
-            arguments = [];
             priority = 1;
-            environment = {};
         }
         {
             name = "mangohud";
             path = "${pkgs.mangohud}/bin/mangohud";
-            arguments = [];
             priority = 2;
             environment.MANGOHUD_CONFIGFILE = mangohud_config;
         }
@@ -66,14 +59,11 @@ let
             path = "${pkgs.gamescope}/bin/gamescope";
             arguments = [ "-W" "3840" "-H" "2160" "-w" "3840" "-h" "2160" "--adaptive-sync" "--mangoapp" "--force-grab-cursor" "-s" "2" "-e" "-f" "--" ];
             priority = 3;
-            environment = {};
         }
         {
             name = "ipc_bridge";
             path = "${nix-gaming.packages.${system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
-            arguments = [];
             priority = 4;
-            environment = {};
         }
     ]);
 in
@@ -84,7 +74,7 @@ in
     programs.steam = {
         enable = true;
         extraPackages = [
-            self.packages.${system}.gamingPrefix
+            archerusPkgs.gamingPrefix
         ];
     };
     programs.gamescope.enable = true;
@@ -101,14 +91,13 @@ in
     users.users.mast3r.extraGroups = [ "gamemode" ];
 
     environment.variables = {
-        GAMING_PREFIX_ICON = "${self.packages.${system}.homepage.src}/static/icon.png";
+        GAMING_PREFIX_ICON = "${archerusPkgs.homepage.src}/static/icon.png";
         GAMING_EXECUTABLES_CONFIG = gaming_executables_config;
-        MANGOHUD_CONFIGFILE = mangohud_config;
     };
 
     environment.systemPackages = with pkgs; [
 
-        self.packages.${system}.gamingPrefix
+        archerusPkgs.gamingPrefix
         lutris
         wine
         protonup-qt
@@ -116,25 +105,6 @@ in
         bolt-launcher
         nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
-        self.packages.${system}.curseforge
+        archerusPkgs.curseforge
     ];
-    services.sunshine = {
-        enable = true;
-    };
-    networking.firewall = {
-        enable = true;
-        allowedTCPPorts = [ 47984 47989 47990 48010 ];
-        allowedUDPPortRanges = [
-            { from = 47998; to = 48000; }
-            #{ from = 8000; to = 8010; }
-        ];
-    };
-    security.wrappers.sunshine = {
-        owner = "root";
-        group = "root";
-        capabilities = "cap_sys_admin+p";
-        source = "${pkgs.sunshine}/bin/sunshine";
-    };
-    services.avahi.publish.enable = true;
-    services.avahi.publish.userServices = true;
 }

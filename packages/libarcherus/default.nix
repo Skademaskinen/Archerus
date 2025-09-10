@@ -1,9 +1,5 @@
 # this package makes the library "libarcherus"
-{ lib, nixpkgs, ... }:
-
-let
-    pkgs = lib.load nixpkgs;
-in
+{ pkgs, ... }:
 
 pkgs.stdenv.mkDerivation {
   pname = "libarcherus";
@@ -11,7 +7,7 @@ pkgs.stdenv.mkDerivation {
 
   src = ./.; # your source with headers + cpp files
 
-  nativeBuildInputs = [ pkgs.cmake ];
+  nativeBuildInputs = [ pkgs.cmake pkgs.argparse ];
   buildInputs = [ ];
 
   cmakeFlags = [

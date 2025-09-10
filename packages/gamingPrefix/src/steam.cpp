@@ -1,5 +1,6 @@
+#include <libarcherus/log.hpp>
+
 #include "type.hpp"
-#include "log.hpp"
 #include "config.hpp"
 
 class Steam : public Type {

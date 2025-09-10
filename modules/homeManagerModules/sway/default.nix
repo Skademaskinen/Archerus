@@ -1,11 +1,8 @@
 inputs:
 
 {pkgs, lib, config, ...}: let
-    wallpaper = inputs.self.lib.wallpapers.arcueid;
+    wallpaper = inputs.lib.wallpapers.arcueid;
 in {
-    imports = [
-        ../common/desktop.nix
-    ];
     wayland.windowManager.sway = {
         enable = true;
         package = pkgs.swayfx;

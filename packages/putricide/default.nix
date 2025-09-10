@@ -1,7 +1,6 @@
-{ lib, nixpkgs, ... }:
+{ pkgs, ... }:
 
 let
-    pkgs = lib.load nixpkgs;
     name = "Putricide";
     pname = "ppbot";
     version = "3.38a";

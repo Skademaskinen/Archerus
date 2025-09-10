@@ -1,8 +1,4 @@
-{ lib, nixpkgs, ...}:
-
-let
-    pkgs = lib.load nixpkgs;
-in
+{ pkgs, archerusPkgs, ...}:
 
 pkgs.stdenv.mkDerivation rec {
     pname = "initializer";
@@ -13,14 +9,13 @@ pkgs.stdenv.mkDerivation rec {
         argparse
         cmake
         gcc
+        archerusPkgs.libarcherus
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
 
     passthru.devShell = pkgs.mkShellNoCC {
         packages = buildInputs;
     };
-
-    preConfigure = lib.prepareCpplib;
 
     installPhase = ''
         mkdir -p $out/bin

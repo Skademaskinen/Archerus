@@ -1,9 +1,9 @@
 #include <fstream>
 
 #include <nlohmann/json.hpp>
+#include <libarcherus/log.hpp>
 
 #include "config.hpp"
-#include "log.hpp"
 
 File::File(const std::string& type, const std::string& path) : type(type), path(path) {
 
@@ -21,7 +21,7 @@ const std::string& File::get_type() const {
 }
 
 Config::Config() : BaseConfig("Webserver") {
-    LOG("Config initializing");
+    utils::log(Level(utils::Debug), "Config initializing");
     parser.add_argument("-c", "--config")
         .help("Path to configuration file")
         .default_value(std::string("config.json"))
@@ -31,46 +31,46 @@ Config::Config() : BaseConfig("Webserver") {
 // This function processes the passed config file, it should be json in the form { "port": 8080, "routes": { "/index.html", "/nix/store/aaaa-index.html"}}
 void Config::parse_json() {
     std::string config_path = parser.get<std::string>("--config");
-    LOG("Processing config file: %s", config_path.c_str());
+    utils::log(Level(utils::Debug), "Processing config file: %s", config_path.c_str());
     // use nlohhmann_json to parse the json file
     std::ifstream config_file(config_path);
     if (!config_file.is_open()) {
-        LOG("Could not open config file: %s", config_path.c_str());
+        utils::log(Level(utils::Debug), "Could not open config file: %s", config_path.c_str());
         exit(1);
     }
     nlohmann::json config_json;
     try {
         config_file >> config_json;
     } catch (const nlohmann::json::parse_error& err) {
-        LOG("JSON parsing error: %s", err.what());
+        utils::log(Level(utils::Debug), "JSON parsing error: %s", err.what());
         exit(1);
     }
     if (config_json.contains("port") && config_json["port"].is_number_unsigned()) {
         port = config_json["port"];
-        LOG("Configured port: %d", port);
+        utils::log(Level(utils::Debug), "Configured port: %d", port);
     } else {
-        LOG("Config file missing 'port' or 'port' is not an unsigned number");
+        utils::log(Level(utils::Debug), "Config file missing 'port' or 'port' is not an unsigned number");
         exit(1);
     }
     if (config_json.contains("routes") && config_json["routes"].is_object()) {
         for (auto& [key, value] : config_json["routes"].items()) {
             if (value.is_string()) {
                 routes[key] = value;
-                LOG("Configured route: %s -> %s", key.c_str(), ((std::string)value).c_str());
+                utils::log(Level(utils::Debug), "Configured route: %s -> %s", key.c_str(), ((std::string)value).c_str());
             } else {
-                LOG("Route value for key '%s' is not a string", key.c_str());
+                utils::log(Level(utils::Debug), "Route value for key '%s' is not a string", key.c_str());
                 exit(1);
             }
         }
     } else {
-        LOG("Config file missing 'routes' or 'routes' is not an object");
+        utils::log(Level(utils::Debug), "Config file missing 'routes' or 'routes' is not an object");
         exit(1);
     }
     if (config_json.contains("extra_files") && config_json["extra_files"].is_object()) {
         for (auto& [key, value] : config_json["extra_files"].items()) {
             File file(value["type"], value["path"]);
             extra_route_files[key] = file;
-            LOG("Configured extra route file: %s -> %s", key.c_str(), ((std::string)value["path"]).c_str());
+            utils::log(Level(utils::Debug), "Configured extra route file: %s -> %s", key.c_str(), ((std::string)value["path"]).c_str());
         }
     }
 }

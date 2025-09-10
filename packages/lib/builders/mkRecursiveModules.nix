@@ -1,18 +1,16 @@
-{ lib, nixpkgs, ...}:
+{ pkgs, ...} @ inputs:
 
 # This builder will automatically check the current directory for files ending in .nix or a default.nix.
 # if one is found, a module representing the path is generated.
 
 let
-    pkgs = lib.load nixpkgs;
-
     discoverModules = basePath: modulePath:
         let
             entries = builtins.readDir (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}");
         in
             if builtins.hasAttr "default.nix" entries then
                 # if default.nix exists, import it and stop
-                lib.load (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}/default.nix")
+                import (basePath + "/${pkgs.lib.concatStringsSep "/" modulePath}/default.nix") inputs
             else
                 pkgs.lib.foldl' (acc: name:
                     let
@@ -29,7 +27,7 @@ let
                         else if pkgs.lib.hasSuffix ".nix" name then
                             acc // {
                                 ${pkgs.lib.removeSuffix ".nix" name} =
-                                    lib.load (basePath + "/${pathStr}");
+                                    import (basePath + "/${pathStr}") inputs;
                             }
                         else
                             acc

@@ -1,7 +1,6 @@
-{ nixpkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
-    pkgs = lib.load nixpkgs;
     pname = "homepage";
     version = "0.1.0.0";
     owner = "Skademaskinen";

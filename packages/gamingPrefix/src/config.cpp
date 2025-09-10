@@ -1,6 +1,7 @@
+#include <libarcherus/log.hpp>
+
 #include "config.hpp"
 #include "executables_file.hpp"
-#include "log.hpp"
 #include "prefix.hpp"
 
 std::map<std::string, utils::LogLevel> loglevel_mapping {

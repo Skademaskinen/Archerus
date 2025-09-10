@@ -1,11 +1,12 @@
 #pragma once
 
-#include "base_config.hpp"
+#include <libarcherus/base_config.hpp>
+
 #include "executables_file.hpp"
 #include "prefix.hpp"
 #include "postfix.hpp"
 
-class Config : public BaseConfig {
+class Config : public archerus::BaseConfig {
     Prefix prefix;
     Postfix postfix;
     ExecutablesFile& file;

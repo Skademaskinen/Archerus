@@ -4,8 +4,8 @@
 #include <string>
 
 #include <argparse/argparse.hpp>
+#include <libarcherus/base_config.hpp>
 
-#include "base_config.hpp"
 
 class File {
     std::string type;
@@ -17,7 +17,7 @@ public:
     const std::string& get_path() const;
 };
 
-class Config : public BaseConfig {
+class Config : public archerus::BaseConfig {
     using BaseConfig::parser;
     unsigned int port;
     std::map<std::string, std::string> routes;

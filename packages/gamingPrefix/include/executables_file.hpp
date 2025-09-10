@@ -1,8 +1,9 @@
 #pragma once
 
-#include "executable.hpp"
 #include <string>
 #include <vector>
+
+#include "executable.hpp"
 class ExecutablesFile {
     std::string data;
     std::vector<Executable> executables;

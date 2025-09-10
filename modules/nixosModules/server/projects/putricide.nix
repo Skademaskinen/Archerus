@@ -1,4 +1,4 @@
-{ lib, self, system, ...}:
+{ lib, archerusPkgs, self, system, ...}:
 
 let
     mkProject = lib.mkProject;
@@ -60,7 +60,7 @@ in
     };
     config = mkProject config {
         name = "putricide";
-        exec = "${self.packages.${system}.putricide}/bin/ppbot --config ${pfx.configDir} --source ${self.packages.${system}.putricide}/share/Putricide ${builtins.toString pfx.args}";
+        exec = "${archerusPkgs.putricide}/bin/ppbot --config ${pfx.configDir} --source ${self.packages.${system}.putricide}/share/Putricide ${builtins.toString pfx.args}";
         setup = ''
             mkdir -p ${pfx.configDir}/files/{config,log}
             if ! [ -f ${pfx.configDir}/files/config/main.json ]; then

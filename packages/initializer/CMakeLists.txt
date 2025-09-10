@@ -11,12 +11,12 @@ set(PROJECT_IMPLEMENTATIONS
 
 include_directories(include)
 
-include_directories(../../lib/cpplib)
-
 find_package(argparse REQUIRED)
+find_package(libarcherus REQUIRED)
 
 add_executable(initializer src/main.cpp ${PROJECT_IMPLEMENTATIONS})
 
 target_link_libraries(initializer PRIVATE 
     argparse::argparse 
+    archerus::libarcherus
 )

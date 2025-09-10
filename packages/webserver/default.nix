@@ -1,8 +1,4 @@
-{ lib, nixpkgs, ...}:
-
-let
-    pkgs = lib.load nixpkgs;
-in
+{ pkgs, archerusPkgs, ...}:
 
 pkgs.stdenv.mkDerivation rec {
     pname = "webserver";
@@ -16,10 +12,9 @@ pkgs.stdenv.mkDerivation rec {
         nlohmann_json
         cmake
         gcc
+        archerusPkgs.libarcherus
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
-
-    preConfigure = lib.prepareCpplib;
 
     passthru.devShell = pkgs.mkShellNoCC {
         packages = buildInputs;
