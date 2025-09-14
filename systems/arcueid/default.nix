@@ -21,7 +21,7 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.hyprland
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
-                homeManagerModules.sway
+                #homeManagerModules.sway
                 ./home.nix
                 (lib.load ./symlinks.nix)
             ];

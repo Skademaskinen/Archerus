@@ -106,5 +106,7 @@ in
         nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
         archerusPkgs.curseforge
+        self.packages.${system}.curseforge
+        shadps4
     ];
 }
