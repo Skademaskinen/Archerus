@@ -22,6 +22,7 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.hyprland
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
+                homeManagerModules.spotify
                 #homeManagerModules.sway
                 ./home.nix
                 (lib.load ./symlinks.nix)

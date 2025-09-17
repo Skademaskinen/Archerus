@@ -4,19 +4,19 @@
 button {
     margin: 2px;
     background: none;
-    border: none
+    border: none;
 }
 
 /* SwayTaskBar and SwayWorkspaces use custom widgets, that need this and the next name
    to highlight currently focused task / workspace. */
 #task-box {
     padding-left: 4px;
-    padding-right: 4px
+    padding-right: 4px;
 }
 #task-box-focused {
     background-color: rgba(255, 255, 255, 0.12);
     padding-left: 4px;
-    padding-right: 4px
+    padding-right: 4px;
 }
 
 /***** MODIFY TO YOUR TASTE *****/
@@ -24,30 +24,32 @@ button {
 /* Default custom button */
 #button-custom {
     background: rgba(0, 0, 0, 0.0);
-    border: 0
+    border: 0;
 }
 
 #button-custom:hover {
     border: none;
     border-radius: 3px;
     background: #222222;
-    color: #fff
+    color: #fff;
 }
 
 /* Top panel in sample config uses this name */
 #panel-top {
-    background: #03030399;
+    background: #030303;
     border-radius: 0;
     color: #eeeeee;
     border-bottom: 2px solid #f50;
+    opacity: 0.9;
 }
 
 /* Bottom panel in sample config uses this name */
 #panel-bottom {
-    background-color: #03030399;
+    background-color: #030303;
     border-radius: 0;
     color: #eeeeee;
     border-top: 2px solid #f50;
+    opacity: 0.9;
 }
 
 /* Controls window in sample config uses this name */
@@ -57,7 +59,7 @@ button {
     border-style: solid;
     border-width: 1px;
     border-color: rgba(0, 0, 0, 1.0);
-    color: #eeeeee
+    color: #eeeeee;
 }
 
 /* Executors usually behave better in monospace fonts */
@@ -75,13 +77,13 @@ button {
 
 /* Sample executor-weather uses "css-name": "weather" */
 #weather {
-    font-size: 16px
+    font-size: 16px;
 }
 
 /* dwl module */
 #dwl-tag-box {
 	padding-top: 4px;
-	padding-bottom: 4px
+	padding-bottom: 4px;
 }
 
 #dwl-tag-occupied {
@@ -117,9 +119,8 @@ button {
     all: unset;
     margin: 8px;
     border: none;
-    border-radius: 3px;
+    border-radius: 2px;
     background-color: #222222;
     color: #fff;
-    border-bottom: 2px solid #f50;
-    border-top: 2px solid #f50;
+    border: 2px solid #f50;
 }
