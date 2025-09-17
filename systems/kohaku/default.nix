@@ -26,6 +26,7 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.sway
+                homeManagerModules.spotify
                 ./home.nix
             ];
             services.displayManager.defaultSession = "hyprland";

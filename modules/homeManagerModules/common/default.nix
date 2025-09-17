@@ -29,6 +29,7 @@
 
         home.packages = with pkgs; [
             cinny-desktop
+            bat
         ];
         services.swaync = {
             enable = true;

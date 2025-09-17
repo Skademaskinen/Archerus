@@ -5,7 +5,6 @@
 {
     environment.systemPackages = with pkgs; [
         firefox
-        spotify
         discord
         vesktop
         vimix-cursors

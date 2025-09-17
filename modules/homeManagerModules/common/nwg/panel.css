@@ -19,7 +19,6 @@ button {
     padding-right: 4px
 }
 
-
 /***** MODIFY TO YOUR TASTE *****/
 
 /* Default custom button */
@@ -37,16 +36,18 @@ button {
 
 /* Top panel in sample config uses this name */
 #panel-top {
-    background: #030303;
+    background: #03030399;
     border-radius: 0;
-    color: #eeeeee
+    color: #eeeeee;
+    border-bottom: 2px solid #f50;
 }
 
 /* Bottom panel in sample config uses this name */
 #panel-bottom {
-    background-color: #030303;
+    background-color: #03030399;
     border-radius: 0;
-    color: #eeeeee
+    color: #eeeeee;
+    border-top: 2px solid #f50;
 }
 
 /* Controls window in sample config uses this name */
@@ -68,7 +69,8 @@ button {
 /* and so does the Clock */
 #clock {
     font-family: LigaComicMono, monospace;
-    font-size: 16px
+    font-size: 16px;
+    border-bottom: 2px solid #f50;
 }
 
 /* Sample executor-weather uses "css-name": "weather" */
@@ -118,4 +120,6 @@ button {
     border-radius: 3px;
     background-color: #222222;
     color: #fff;
+    border-bottom: 2px solid #f50;
+    border-top: 2px solid #f50;
 }

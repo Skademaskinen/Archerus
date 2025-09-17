@@ -27,6 +27,10 @@
             url = "github:tadfisher/gradle2nix/v2";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        spicetify-nix = {
+            url = "github:Gerg-L/spicetify-nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         # non-flake files
         curseforge = {
             url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
