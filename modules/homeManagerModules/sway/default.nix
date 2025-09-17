@@ -155,10 +155,7 @@ in {
     services.swayidle = {
         enable = true;
     };
-    services.swaync = {
-        enable = true;
-        style = builtins.readFile ../common/nwg/swaync.css;
-    };
+
     services.swayosd = {
         enable = true;
     };

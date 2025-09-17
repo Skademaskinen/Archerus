@@ -12,7 +12,7 @@ Prefix::Prefix(ExecutablesFile executables_file) : executables(executables_file.
     utils::log(Level(utils::Debug), "Constructed prefix");
 }
 
-const std::vector<Executable> Prefix::get_executables() const {
+const std::vector<Executable>& Prefix::get_executables() const {
     return executables;
 }
 

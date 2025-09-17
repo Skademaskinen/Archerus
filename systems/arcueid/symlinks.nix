@@ -16,5 +16,7 @@
        }).steamcompattool;
        ".local/share/lutris/runners/wine/wine-tkg-NixOS".source = nix-gaming.packages.${system}.wine-tkg;
        ".local/share/lutris/runners/wine/wine-ge-NixOS".source = nix-gaming.packages.${system}.wine-ge;
+
+       ".local/share/bolt-launcher/runelite.jar".source = "${pkgs.runelite}/share/RuneLite.jar";
    };
 }

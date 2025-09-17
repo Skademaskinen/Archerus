@@ -18,6 +18,7 @@ nixpkgs.lib.nixosSystem {
                 ./hardware-configuration.nix
             ];
             home-manager.users.mast3r.imports = [
+                homeManagerModules.common
                 homeManagerModules.hyprland
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
@@ -66,6 +67,12 @@ nixpkgs.lib.nixosSystem {
                 trusted-users = [ "root" "mast3r" ];
             };
             environment.systemPackages = [ pkgs.cachix ];
+
+            programs.nix-ld.enable = true;
+
+            programs.nix-ld.libraries = with pkgs; [
+
+            ];
         })
     ];
 }

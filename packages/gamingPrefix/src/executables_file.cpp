@@ -12,14 +12,25 @@
 ExecutablesFile::ExecutablesFile() : data(read_json_data()) {
     auto j = nlohmann::json::parse(data);
     for(auto& item : j) {
-        const auto name = item.at("name").get<std::string>();
-        const auto path = item.at("path").get<std::string>();
+        std::filesystem::path path = "";
+        int priority = 0;
         std::vector<Argument> arguments;
-        for(const auto& argument_str : item.at("arguments").get<std::vector<std::string>>()) {
-            arguments.push_back(argument_str);
+        Environment environment;
+        const auto name = item.at("name").get<std::string>();
+        if (item.contains("path")) {
+            path = item.at("path").get<std::string>();
         }
-        const auto priority = item.at("priority").get<int>();
-        const auto environment = item.at("environment").get<Environment>();
+        if (item.contains("arguments")) {
+            for(const auto& argument_str : item.at("arguments").get<std::vector<std::string>>()) {
+                arguments.push_back(argument_str);
+            }
+        }
+        if (item.contains("priority")) {
+            priority = item.at("priority").get<int>();
+        }
+        if (item.contains("environment")) {
+            environment = item.at("environment").get<Environment>();
+        }
         executables.push_back({ name, path, arguments, priority, environment });
     }
 }

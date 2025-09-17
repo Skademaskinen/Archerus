@@ -36,7 +36,11 @@ let
         {
             name = "wayland";
             priority = 0;
-            environment.DISPLAY = "";
+            environment = {
+                DISPLAY = "";
+                SDL_VIDEO_DRIVER = "wayland";
+                QT_QPA_PLATFORM = "wayland";
+            };
         }
         {
             name = "x11";
@@ -106,7 +110,14 @@ in
         nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
         archerusPkgs.curseforge
-        self.packages.${system}.curseforge
+        archerusPkgs.warcraftLogsUploader
         shadps4
+        mesa-demos
+        (runelite.overrideAttrs {
+            postInstall = ''
+                sed -i '$a StartupWMClass=net-runelite-client-RuneLite' $out/share/applications/*.desktop
+                '';
+
+        })
     ];
 }

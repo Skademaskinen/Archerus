@@ -29,12 +29,12 @@ public:
             if (!enabled) {
                 continue;
             }
-            auto& executable = utils::find_element(config.get_prefix().get_executables(), [name](Executable executable) {
+            const auto& executable = utils::find_element(config.get_prefix().get_executables(), [name](const Executable& executable) {
                 return executable.get_name() == name;
             });
-            auto environment = executable.get_environment();
+            const auto& environment = executable.get_environment();
             for (const auto& [name, value] : environment) {
-                utils::log(Level(utils::Debug), "Env: %s -> %s", name.c_str(), value.c_str());
+                utils::log(Level(utils::Debug), "Env: {} -> {}", name.c_str(), value.c_str());
                 setenv(name.c_str(), value.c_str(), 1);
             }
         }
@@ -50,7 +50,7 @@ public:
             R"(
     command: {}
     enabled parts: 
-    {}
+        {}
             )", 
             postfix.represent(config.get_command_parts()),
             utils::concat_elements(prefix.get_enabled_executables(config.get_executables_config()), [](Executable executable){

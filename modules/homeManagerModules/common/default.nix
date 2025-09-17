@@ -30,5 +30,9 @@
         home.packages = with pkgs; [
             cinny-desktop
         ];
+        services.swaync = {
+            enable = true;
+            style = builtins.readFile ../common/nwg/swaync.css;
+        };
     };
 }
