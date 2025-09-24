@@ -40,7 +40,7 @@ button {
     border-radius: 0;
     color: #eeeeee;
     border-bottom: 2px solid #f50;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 /* Bottom panel in sample config uses this name */
@@ -49,7 +49,7 @@ button {
     border-radius: 0;
     color: #eeeeee;
     border-top: 2px solid #f50;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 /* Controls window in sample config uses this name */

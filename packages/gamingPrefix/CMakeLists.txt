@@ -13,8 +13,6 @@ set(PROJECT_IMPLEMENTATIONS
 
 include_directories(include)
 
-include_directories(../../lib/cpplib)
-
 find_package(argparse REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(PkgConfig REQUIRED)

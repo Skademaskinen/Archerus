@@ -40,8 +40,8 @@ const std::vector<instructions::Instruction>& Config::get_instructions() const {
     return instructions;
 }
 
-const std::string Config::get_desktop_prefix() const {
-    return parser.get("--desktop_prefix") + "/";
+const std::filesystem::path Config::get_desktop_prefix() const {
+    return parser.get("--desktop_prefix");
 }
 
 const std::string Config::get_hostname() const {
@@ -52,10 +52,10 @@ const std::string Config::get_username() const {
     return parser.get("--username");
 }
 
-const std::string Config::get_home_flake_template_path() const {
+const std::filesystem::path Config::get_home_flake_template_path() const {
     return parser.get("--home_template");
 }
 
-const std::string Config::get_nixos_flake_template_path() const {
+const std::filesystem::path Config::get_nixos_flake_template_path() const {
     return parser.get("--nixos_template");
 }

@@ -9,12 +9,12 @@
 
 class File {
     std::string type;
-    std::string path;
+    std::filesystem::path path;
 public:
-    File(const std::string& type, const std::string& path);
+    File(const std::string& type, const std::filesystem::path& path);
     File();
     const std::string& get_type() const;
-    const std::string& get_path() const;
+    const std::filesystem::path& get_path() const;
 };
 
 class Config : public archerus::BaseConfig {

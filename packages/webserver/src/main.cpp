@@ -5,7 +5,7 @@
 #include "webserver.hpp"
 
 int main(int argc, char* argv[]) {
-    utils::log(Level(utils::Debug), "Starting webserver...");
+    utils::log(Level(Debug), "Starting webserver...");
     Config config;
     config.parse(argc, argv);
     Webserver server(config);

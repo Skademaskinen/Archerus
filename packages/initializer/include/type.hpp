@@ -19,12 +19,12 @@ inline std::string substitute_all(std::string fst, std::string snd, std::string 
 class Type {
 protected:
     Config& config;
-    std::string path;
-    std::string flake_path;
+    std::filesystem::path path;
+    std::filesystem::path flake_path;
     std::map<std::string, std::string> substitution_pairs;
-    Type(Config& config, std::string path, std::string flake_path) : config(config), path(path), flake_path(flake_path) {
+    Type(Config& config, std::filesystem::path path, std::filesystem::path flake_path) : config(config), path(path), flake_path(flake_path) {
         if (std::filesystem::exists(path)) {
-            utils::log(Level(utils::Debug), "Error, %s exists...", path.c_str());
+            utils::log(Level(Debug), "Error, {} exists...", path.string());
             exit(1);
         }
     }
@@ -45,7 +45,7 @@ public:
         extra_init();
     };
     void switch_i() {
-        utils::log(Level(utils::Debug), "Mock Type");
+        utils::log(Level(Debug), "Mock Type");
     };
     virtual void extra_init() = 0;
 };

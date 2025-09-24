@@ -4,14 +4,14 @@
 #include "libarcherus/vector_utils.hpp"
 
 void archerus::BaseConfig::parse_json() {
-    utils::log(Level(utils::Debug), "Running default (empty) parse_json implementation");
+    utils::log(Level(Debug), "Running default (empty) parse_json implementation");
 }
 
 void archerus::BaseConfig::parse(int argc, char* argv[]) {
     try {
         parser.parse_args(argc, argv);
     } catch (const std::runtime_error& err) {
-        utils::log(Level(utils::Debug), "Argument parsing error: {}", err.what());
+        utils::log(Level(Debug), "Argument parsing error: {}", err.what());
         exit(1);
     }
     parse_json();
@@ -19,7 +19,7 @@ void archerus::BaseConfig::parse(int argc, char* argv[]) {
 }
 
 archerus::BaseConfig::~BaseConfig() {
-    utils::log(Level(utils::Debug), "Destroying Base config child");
+    utils::log(Level(Debug), "Destroying Base config child");
 }
 
 bool archerus::BaseConfig::is_parsed() const {

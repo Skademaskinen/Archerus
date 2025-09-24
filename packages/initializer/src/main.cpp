@@ -6,10 +6,10 @@
 #include "nixos.hpp"
 
 int main(int argc, char* argv[]) {
-    utils::log(Level(utils::Debug), "initializing initializer");
+    utils::log(Level(Debug), "initializing initializer");
     Config config;
     config.parse(argc, argv);
-    utils::log(Level(utils::Info), "Finished setting up config");
+    utils::log(Level(Info), "Finished setting up config");
     switch(config.get_mode()) {
         case NixosMode: {
             Nixos nixos(config);

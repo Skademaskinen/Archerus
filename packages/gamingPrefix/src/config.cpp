@@ -4,17 +4,10 @@
 #include "executables_file.hpp"
 #include "prefix.hpp"
 
-std::map<std::string, utils::LogLevel> loglevel_mapping {
-    {"debug", utils::Debug},
-    {"info",  utils::Info},
-    {"warn",  utils::Warn},
-    {"error", utils::Error}
-};
-
 Config::Config(ExecutablesFile& file) : BaseConfig("gaming prefix"), file(file), prefix(file) {
     parser.add_argument("--loglevel")
         .action([](std::string level) {
-            utils::currentLevel = loglevel_mapping[level];
+            utils::currentLevel = utils::fromString(level);
         });
     parser.add_argument("--disable_notifications")
         .default_value(true)
@@ -28,7 +21,7 @@ Config::Config(ExecutablesFile& file) : BaseConfig("gaming prefix"), file(file),
     parser.add_argument("rest")
         .remaining()
         .store_into(command_parts);
-    utils::log(Level(utils::Debug), "Constructed config");
+    utils::log(Level(Debug), "Constructed config");
 }
 
 const Prefix& Config::get_prefix() const {

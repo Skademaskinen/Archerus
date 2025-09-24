@@ -35,9 +35,9 @@ public:
 
     const Mode& get_mode() const;
     const std::vector<instructions::Instruction>& get_instructions() const;
-    const std::string get_desktop_prefix() const;
+    const std::filesystem::path get_desktop_prefix() const;
     const std::string get_hostname() const;
     const std::string get_username() const;
-    const std::string get_home_flake_template_path() const;
-    const std::string get_nixos_flake_template_path() const;
+    const std::filesystem::path get_home_flake_template_path() const;
+    const std::filesystem::path get_nixos_flake_template_path() const;
 };
