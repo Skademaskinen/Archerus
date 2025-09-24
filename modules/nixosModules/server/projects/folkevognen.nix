@@ -1,4 +1,4 @@
-{ lib, self, system, ...}:
+{ lib, archerusPkgs, self, system, ...}:
 
 let
     mkProject = lib.mkProject;
@@ -18,7 +18,7 @@ in
     };
     config = mkProject config {
         name = "folkevognen";
-        exec = "${self.packages.${system}.folkevognen}/bin/Folkevognen";
+        exec = "${archerusPkgs.folkevognen}/bin/Folkevognen";
         setup = ''
             if ! [ -f ${config.skade.projectsRoot}/projects/folkevognen/settings.json ]; then
                 echo "Creating default json file"

@@ -18,5 +18,7 @@ inputs:
         jetbrains.rider
         jetbrains.idea-community
         dotnet-sdk_8
+        unzip
+        zip
     ];
 }

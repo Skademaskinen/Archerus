@@ -14,4 +14,6 @@ mapAttrs (name: path: import path inputs) (genHosts [
     ./laptop
     ./skademaskinen
     ./thinkpad
+    ./kohaku
+    ./hisui
 ])

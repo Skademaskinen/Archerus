@@ -3,12 +3,9 @@ inputs:
 { pkgs, lib, config, ... }: let
     toStr = builtins.toString;
 in {
-    imports = [
-        ../common/desktop.nix
-    ];
     options.archerus.wallpaper = lib.mkOption {
         type = lib.types.path;
-        default = inputs.self.lib.wallpapers.arcueid;
+        default = inputs.lib.wallpapers.arcueid;
     };
     config = {
         wayland.windowManager.hyprland = {
@@ -80,8 +77,8 @@ in {
                 ];
             };
         };
-        programs.hyprlock.enable = true;
-        services.hypridle.enable = true;
+        #programs.hyprlock.enable = true;
+        #services.hypridle.enable = true;
         services.hyprpaper = {
             enable = true;
             settings = {

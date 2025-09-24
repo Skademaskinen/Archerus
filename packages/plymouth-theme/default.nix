@@ -1,9 +1,6 @@
-{ nixpkgs, lib, ... }:
+{ pkgs, ... }:
 
-let
-    pkgs = lib.load nixpkgs;
-
-in pkgs.callPackage (
+pkgs.callPackage (
 { pkgs, lib, logo, name, ... }:
 
 pkgs.nixos-bgrt-plymouth.overrideAttrs {

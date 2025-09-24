@@ -29,7 +29,9 @@
         users.mast3r.imports = [
             self.homeManagerModules.neovim
             self.homeManagerModules.zsh
-            { home.stateVersion = config.system.stateVersion; }
+            {
+                home.stateVersion = config.system.stateVersion;
+            }
         ];
 
     };

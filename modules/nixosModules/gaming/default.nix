@@ -1,4 +1,4 @@
-inputs:
+{ nix-gaming, system, archerusPkgs, ... }:
 
 { pkgs, ... }: 
 
@@ -32,90 +32,44 @@ let
         fps_color_change
     '';
 
-    # Binary paths
-    gamescope-bin = "${pkgs.gamescope}/bin/gamescope";
-    gamemode-bin = "${pkgs.gamemode}/bin/gamemoderun";
-    mangohud-bin = "${pkgs.mangohud}/bin/mangohud";
-    ipc-steam-bin = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
-    ipc-exe = "${inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge.exe";
-    lsfg-vk-so = "${inputs.self.packages.${inputs.system}.lsfg-vk}/lib/liblsfg-vk.so";
-
-    # Common prefixes
-    common-prefix = ''
-        #!/bin/sh
-        export MANGOHUD_CONFIGFILE=${mangohud_config}
-        args="$@"
-        echo "Running Command: [$args]"
-        ${pkgs.libnotify}/bin/notify-send -- "Launching game..." "Args: $args"
-    '';
-    common-gamescope-prefix = ''
-        ${common-prefix}
-        export LD_PRELOAD=""
-        export XKB_DEFAULT_LAYOUT=dk
-    '';
-    lutris-ipc-prefix = ''
-        # Wine executable should be first argument
-        wine_executable=$1
-        # Launch IPC as a subprocess
-        $wine_executable ${ipc-exe} &
-    '';
-
-    # Arguments
-    gamescope-args = "-W 3840 -H 2160 -w 3840 -h 2160 --adaptive-sync --mangoapp --force-grab-cursor -s 2 -e -f --";
-
-    # Common postfixes
-    executable-postfix = "\"$@\"";
-
-    # Actual prefixes
-    prefixes = {
-        # Steam prefixes
-        steam-gamescope-prefix = ''
-            ${common-gamescope-prefix}
-            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${ipc-steam-bin} ${executable-postfix}
-        '';
-        steam-prefix = ''
-            ${common-prefix}
-            ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
-        '';
-        steam-gamescope-wayland-prefix = ''
-            ${common-gamescope-prefix}
-            DISPLAY=""
-            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${ipc-steam-bin} ${executable-postfix}
-        '';
-        steam-wayland-prefix = ''
-            ${common-prefix}
-            DISPLAY=""
-            ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
-        '';
-        #steam-lsfg-vk-prefix = ''
-        #    ${common-prefix}
-        #    export LD_PRELOAD="${lsfg-vk-so}"
-        #    export ENABLE_LSFG=1
-        #    ${gamemode-bin} ${mangohud-bin} ${ipc-steam-bin} ${executable-postfix}
-        #'';
-
-        # Lutris prefixes
-        lutris-gamescope-prefix = ''
-            ${common-gamescope-prefix}
-            ${lutris-ipc-prefix}
-            ${gamemode-bin} ${gamescope-bin} ${gamescope-args} ${executable-postfix}
-        '';
-        lutris-prefix = ''
-            ${common-prefix}
-            ${lutris-ipc-prefix}
-            ${gamemode-bin} ${mangohud-bin} ${executable-postfix}
-        '';
-        lutris-wayland-prefix = ''
-            ${common-prefix}
-            ${lutris-ipc-prefix}
-            DISPLAY=""
-            ${gamemode-bin} ${mangohud-bin} ${executable-postfix}
-        '';
-    };
-
-    # build strings to scripts
-    convert = name: pkgs.writeScriptBin name prefixes.${name};
-    prefix-pkgs = map convert (builtins.attrNames prefixes);
+    gaming_executables_config = pkgs.writeText "config.json" (builtins.toJSON [
+        {
+            name = "wayland";
+            priority = 0;
+            environment = {
+                DISPLAY = "";
+                SDL_VIDEO_DRIVER = "wayland";
+                QT_QPA_PLATFORM = "wayland";
+            };
+        }
+        {
+            name = "x11";
+            priority = 0;
+            environment.WAYLAND_DISPLAY = "";
+        }
+        {
+            name = "gamemode";
+            path = "${pkgs.gamemode}/bin/gamemoderun";
+            priority = 1;
+        }
+        {
+            name = "mangohud";
+            path = "${pkgs.mangohud}/bin/mangohud";
+            priority = 2;
+            environment.MANGOHUD_CONFIGFILE = mangohud_config;
+        }
+        {
+            name = "gamescope";
+            path = "${pkgs.gamescope}/bin/gamescope";
+            arguments = [ "-W" "3840" "-H" "2160" "-w" "3840" "-h" "2160" "--adaptive-sync" "--mangoapp" "--force-grab-cursor" "-s" "2" "-e" "-f" "--" ];
+            priority = 3;
+        }
+        {
+            name = "ipc_bridge";
+            path = "${nix-gaming.packages.${system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
+            priority = 4;
+        }
+    ]);
 in
 
 {
@@ -123,7 +77,9 @@ in
 
     programs.steam = {
         enable = true;
-        extraPackages = prefix-pkgs;
+        extraPackages = [
+            archerusPkgs.gamingPrefix
+        ];
     };
     programs.gamescope.enable = true;
 
@@ -139,21 +95,29 @@ in
     users.users.mast3r.extraGroups = [ "gamemode" ];
 
     environment.variables = {
-        MANGOHUD_CONFIGFILE = mangohud_config;
+        GAMING_PREFIX_ICON = "${archerusPkgs.homepage.src}/static/icon.png";
+        GAMING_EXECUTABLES_CONFIG = gaming_executables_config;
     };
 
     environment.systemPackages = with pkgs; [
+
+        archerusPkgs.gamingPrefix
         lutris
         wine
         protonup-qt
         wowup-cf
         bolt-launcher
-        inputs.self.packages.${inputs.system}.wine-discord-ipc-bridge
+        nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
-        inputs.self.packages.${inputs.system}.curseforge
-        (writeScriptBin "test-mangohud" ''
-            ${common-prefix}
-            ${mangohud-bin} ${mesa-demos}/bin/glxgears -geometry 1920x1080
-        '')
-    ] ++ prefix-pkgs;
+        archerusPkgs.curseforge
+        archerusPkgs.warcraftLogsUploader
+        shadps4
+        mesa-demos
+        (runelite.overrideAttrs {
+            postInstall = ''
+                sed -i '$a StartupWMClass=net-runelite-client-RuneLite' $out/share/applications/*.desktop
+                '';
+
+        })
+    ];
 }

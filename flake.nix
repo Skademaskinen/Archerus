@@ -15,12 +15,20 @@
             url = "github:nix-community/nixGL";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nix-gaming = {
+            url = "github:fufexan/nix-gaming";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         home-manager = {
             url = "github:nix-community/home-manager/release-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         gradle2nix = {
             url = "github:tadfisher/gradle2nix/v2";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        spicetify-nix = {
+            url = "github:Gerg-L/spicetify-nix";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         # non-flake files
@@ -34,16 +42,18 @@
 
     let
         system = "x86_64-linux";
-        lib = import ./lib (inputs // { inherit system; });
+        pkgs = import inputs.nixpkgs { inherit system; };
+        archerusPkgs = mkRecursiveModules ./packages;
+        lib = archerusPkgs.lib;
+        mkRecursiveModules = import ./packages/lib/builders/mkRecursiveModules.nix (inputs // { inherit system pkgs archerusPkgs lib; });
     in 
     
     {
-        inherit lib;
-        homeManagerModules = lib.mkRecursiveModules ./modules/homeManagerModules;
-        nixosModules = lib.mkRecursiveModules ./modules/nixosModules;
-        packages.${system} = lib.mkRecursiveModules ./packages;
-        nixosConfigurations = lib.mkRecursiveModules ./systems;
-        homeConfigurations = lib.mkRecursiveModules ./systems/homes;
+        homeManagerModules = mkRecursiveModules ./modules/homeManagerModules;
+        nixosModules = mkRecursiveModules ./modules/nixosModules;
+        packages.${system} = mkRecursiveModules ./packages;
+        nixosConfigurations = mkRecursiveModules ./systems;
+        homeConfigurations = mkRecursiveModules ./systems/homes;
     };
 
 }

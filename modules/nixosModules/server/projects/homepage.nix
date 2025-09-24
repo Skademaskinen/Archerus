@@ -1,7 +1,7 @@
-{ lib, self, system, ... }:
+{ lib, archerusPkgs, self, system, ... }:
 
 let
-    homepage = self.packages.${system}.homepage;
+    homepage = archerusPkgs.homepage;
     mkWebProject = lib.mkWebProject;
 in
 

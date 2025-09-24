@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, system, self, ... }:
 
 let
     _lib = lib;
@@ -15,26 +15,27 @@ let
     };
     docs = _lib.mkOptionsHtml (options.skade);
     webserver = _lib.mkWebServer rec {
-        pages = {
-            "" = htmlFile ''
+        routes = {
+            "/" = htmlFile ''
                 <!DOCTYPE HTML>
                 <html style="text-align: center">
                     <h1>Index</h1>
-                    ${builtins.concatStringsSep "\n" (map (page: "<a href=\"${page}\">${page}</a><br>") (builtins.attrNames pages))}
+                    ${builtins.concatStringsSep "\n" (map (page: "<a href=\"${page}\">${page}</a><br>") (builtins.attrNames routes))}
                 </html>
             '';
-            "Architecture" = htmlFile ''
+            "/Architecture" = htmlFile ''
                 <!DOCTYPE HTML>
                 <html style="text-align: center">
                     <h1>Architecture</h1>
                     <img src="architecture-diagram.png">
                 </html>
             '';
-            "Options" = htmlFile docs;
+            "/Options" = htmlFile docs;
         };
         port = 8095;
-        extraFiles = {
-            "architecture-diagram.png" = architectureDiagram;
+        extra_files."/architecture-diagram.png" = {
+            path = architectureDiagram;
+            type = "image/png";
         };
     };
 in
@@ -51,7 +52,7 @@ in
     };
     config = _lib.mkWebProject config {
         name = "docs";
-        exec = "${webserver}/bin/webserver-8095";
+        exec = "${webserver}/bin/nix-webserver";
         port = 8095;
     };
 }

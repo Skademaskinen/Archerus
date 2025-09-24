@@ -1,7 +1,6 @@
-{ gradle2nix, lib, nixpkgs, ... }:
+{ gradle2nix, pkgs, ... }:
 
 let
-    pkgs = lib.load nixpkgs;
     name = "Folkevognen";
     version = "1.0";
     pname = name;
