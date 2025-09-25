@@ -6,7 +6,7 @@
 #include "executable.hpp"
 
 Executable::Executable(std::string name, std::filesystem::path path, std::vector<Argument> arguments, int priority, Environment environment) : name(name), path(path), arguments(arguments), priority(priority), environment(environment) {
-    utils::log(Level(Debug), "Constructed executable | {} | {} | {}", name.c_str(), path.c_str(), priority);
+    log(DEBUG, "Constructed executable | {} | {} | {}", name.c_str(), path.c_str(), priority);
 
 }
 

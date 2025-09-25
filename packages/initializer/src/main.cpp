@@ -5,25 +5,26 @@
 #include "home_manager.hpp"
 #include "nixos.hpp"
 
-int main(int argc, char* argv[]) {
-    utils::log(Level(Debug), "initializing initializer");
+Main(Argv& args) {
+    log(DEBUG, "initializing initializer");
     Config config;
-    config.parse(argc, argv);
-    utils::log(Level(Info), "Finished setting up config");
+    config.parse(args);
+    log(INFO, "Finished setting up config");
     switch(config.get_mode()) {
         case NixosMode: {
             Nixos nixos(config);
             Initializer initializer(nixos, config);
             initializer.execute_instructions();
-            return 0;
+            return ErrorCode::success;
         }
         case HomeManagerMode: {
             HomeManager homeManager(config);
             Initializer initializer(homeManager, config);
             initializer.execute_instructions();
-            return 0;
+            return ErrorCode::success;
         }
 
     }
+    return ErrorCode::invalid_argument;
 
 }

@@ -24,7 +24,7 @@ protected:
     std::map<std::string, std::string> substitution_pairs;
     Type(Config& config, std::filesystem::path path, std::filesystem::path flake_path) : config(config), path(path), flake_path(flake_path) {
         if (std::filesystem::exists(path)) {
-            utils::log(Level(Debug), "Error, {} exists...", path.string());
+            log(DEBUG, "Error, {} exists...", path.string());
             exit(1);
         }
     }
@@ -45,7 +45,7 @@ public:
         extra_init();
     };
     void switch_i() {
-        utils::log(Level(Debug), "Mock Type");
+        log(DEBUG, "Mock Type");
     };
     virtual void extra_init() = 0;
 };

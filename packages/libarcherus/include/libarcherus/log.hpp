@@ -1,79 +1,66 @@
 #pragma once
 
-#include <chrono>
-#include <cstdio>
-#include <ctime>
+#include <argparse/argparse.hpp>
 #include <iostream>
-#include <map>
 #include <string>
-#include <tuple>
 #include <format>
 
+#include "error_handling.hpp"
+
+#define LOGLEVEL_DATA                              \
+    X(tra,  100, 100, 100)                         \
+    X(dbg,  100, 100, 100)                         \
+    X(info, 255, 255, 255)                         \
+    X(warn, 255, 255, 0)                           \
+    X(err,  255, 0,   0)                           \
+    X(cri,  255, 0,   0)                           \
+
+enum LogLevel {
+    #define X(name,_1,_2,_3) name,
+        LOGLEVEL_DATA
+    #undef X
+};
+
+#define LEVEL(level) {__PRETTY_FUNCTION__, __LINE__, level}
+#define TRACE LEVEL(tra)
+#define DEBUG LEVEL(dbg)
+#define INFO LEVEL(info)
+#define WARNING LEVEL(warn)
+#define ERROR LEVEL(err)
+#define CRITICAL LEVEL(cri)
+
+typedef std::tuple<std::string, unsigned int, LogLevel> logger_data;
+typedef std::tuple<unsigned int, unsigned int, unsigned int> Color;
+
+const std::string to_string(const LogLevel& level);
+
+const std::string to_string(const ErrorCode& code);
+
+const LogLevel from_string(const std::string& data);
 
 
-#define Level(level) {__PRETTY_FUNCTION__, __LINE__, utils::level}
+const Color to_color(const LogLevel& level);
 
-#define LOGLEVEL_ENUM \
-    X(Debug)          \
-    X(Info)           \
-    X(Warn)           \
-    X(Error)
+inline LogLevel currentLogLevel = LogLevel::info;
 
-namespace utils {
-    // This function strips everything until the last '/' in a file path to just show the file name
-    const std::string strip_path(const std::string path);
+void parse_loglevel(argparse::ArgumentParser& parser);
 
-    enum LogLevel {
-        #define X(name) name,
-            LOGLEVEL_ENUM
-        #undef X
-    };
+template<typename ...T>
+ErrorCode log(logger_data loglevel, std::format_string<T...> fmt, T... values) {
+    try {
+        const auto& [function, line, level] = loglevel;
+        const auto formatted = std::format(fmt, std::forward<T>(values)...);
+        const auto [r, g, b] = to_color(level);
+        const auto formatted_color = std::format("\033[38;2;{};{};{}m", r, g, b);
 
-    inline std::string toString(LogLevel level) {
-        return (std::map<LogLevel, std::string>) {
-            #define X(name) { LogLevel::name, #name },
-                LOGLEVEL_ENUM
-            #undef X
-        }[level];
-    }
-
-    inline LogLevel fromString(std::string data) {
-        return (std::map<std::string, LogLevel>) {
-            #define X(name) { #name, LogLevel::name },
-                LOGLEVEL_ENUM
-            #undef X
-        }[data];
-    }
-
-    typedef std::tuple<std::string, unsigned int, LogLevel> LogLevelData;
-    inline LogLevel currentLevel = Info;
-
-    typedef std::tuple<unsigned int, unsigned int, unsigned int> Color;
-
-    inline std::string color(LogLevel level, const std::string& data) {
-        const auto [red, green, blue] = (std::map<LogLevel, Color>) {
-            {Debug,     {100, 100, 100}},
-            {Info,      {255, 255, 255}},
-            {Warn,      {255, 255, 0  }},
-            {Error,     {255, 0,   0  }}
-        }[level];
-        return std::format("\033[38;2;{};{};{}m{}\033[0m", red, green, blue, data);
-    }
-
-    template<typename ...T>
-    void log(const LogLevelData loglevel_data, const std::format_string<T...> fmt, T&&... args) {
-        const auto& [function, line_number, level] = loglevel_data;
-        std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    
-        std::string s(30, '\0');
-        std::strftime(&s[0], s.size(), "%Y-%m-%d %H:%M", std::localtime(&now));
-    
-        std::string formatted_string = std::format(fmt, std::forward<T>(args)...);
-        if (currentLevel <= level) {
-            if (currentLevel == Debug) {
-                std::cout << "| [" << s << "] " << function << ':' << line_number << "\n*-\t";
-            }
-            std::cout << color(level, formatted_string) << std::endl;
+        if (level < currentLogLevel) {
+            return ErrorCode::success;
         }
+
+        std::cout << formatted_color << function << ':' << line << ' ' << formatted << "\033[0m" << std::endl;
+        return ErrorCode::success;
+    } catch (const std::exception& e) {
+        log(ERROR, "Unknown Exception: {}", e.what());
+        return ErrorCode::unknown_error;
     }
 }

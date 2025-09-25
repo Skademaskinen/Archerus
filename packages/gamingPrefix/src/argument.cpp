@@ -3,7 +3,7 @@
 #include "argument.hpp"
 
 Argument::Argument(std::string value) : value(value) {
-    utils::log(Level(Debug), "Constructed argument");
+    log(DEBUG, "Constructed argument");
 }
 
 const std::string Argument::get() const {

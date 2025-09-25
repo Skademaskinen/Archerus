@@ -6,9 +6,9 @@
 
 Nixos::Nixos(Config& config) : Type(config, "/etc/nixos/flake.nix", config.get_nixos_flake_template_path()) {
     substitution_pairs["host"] = config.get_hostname();
-    utils::log(Level(Debug), "Initialized NixOS");
+    log(DEBUG, "Initialized NixOS");
 }
 
 void Nixos::extra_init() {
-    utils::log(Level(Warn), "Empty nixos extra_init");
+    log(WARNING, "Empty nixos extra_init");
 }

@@ -6,14 +6,14 @@
 #include "webserver.hpp"
 
 Webserver::Webserver(Config& config) : config(config) {
-    utils::log(Level(Debug), "Webserver initialized");
+    log(DEBUG, "Webserver initialized");
     if(!config.is_parsed()) {
-        utils::log(Level(Debug), "Config not yet parsed, exiting");
+        log(DEBUG, "Config not yet parsed, exiting");
         exit(1);
     }
     for(const auto& [route, file] : config.get_routes()) {
         handlers[route] = [&route, &file](httplib::Request req, httplib::Response& res) {
-            utils::log(Level(Debug), "Serving route: %s -> %s", route.c_str(), file.c_str());
+            log(DEBUG, "Serving route: %s -> %s", route.c_str(), file.c_str());
             std::ifstream f;
             std::stringstream ss;
             std::string content;
@@ -27,7 +27,7 @@ Webserver::Webserver(Config& config) : config(config) {
     }
     for(const auto& [route, file] : config.get_extra_route_files()) {
         handlers[route] = [&route, &file](httplib::Request req, httplib::Response& res) {
-            utils::log(Level(Debug), "Serving extra route: %s -> %s", route.c_str(), file.get_path().c_str());
+            log(DEBUG, "Serving extra route: %s -> %s", route.c_str(), file.get_path().c_str());
             std::ifstream f;
             std::stringstream ss;
             std::string content;
@@ -41,16 +41,16 @@ Webserver::Webserver(Config& config) : config(config) {
     }
     for(const auto& [route, handler] : handlers) {
         server.Get(route.c_str(), handler);
-        utils::log(Level(Debug), "Registered route: %s", route.c_str());
+        log(DEBUG, "Registered route: %s", route.c_str());
     }
 }
 
 Webserver::~Webserver() {
-    utils::log(Level(Debug), "Webserver destroyed");
+    log(DEBUG, "Webserver destroyed");
 }
 
 void Webserver::start() {
     int port = config.get_port();
-    utils::log(Level(Debug), "Starting server on port %d", port);
+    log(DEBUG, "Starting server on port %d", port);
     server.listen("", port);
 }

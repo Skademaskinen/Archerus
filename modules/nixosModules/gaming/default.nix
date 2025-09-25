@@ -69,6 +69,12 @@ let
             path = "${nix-gaming.packages.${system}.wine-discord-ipc-bridge}/bin/winediscordipcbridge-steam.sh";
             priority = 4;
         }
+        {
+            name = "wine";
+            path = "${nix-gaming.packages.${system}.wine-tkg}/bin/wine";
+            priority = 10000;
+            environment.WINEPREFIX = "~/Games/prefixes/nixos-wineprefix";
+        }
     ]);
 in
 
