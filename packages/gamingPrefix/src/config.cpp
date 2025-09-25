@@ -5,23 +5,23 @@
 #include "prefix.hpp"
 
 Config::Config(ExecutablesFile& file) : BaseConfig("gaming prefix"), file(file), prefix(file) {
-    parser.add_argument("--loglevel")
-        .action([](std::string level) {
-            utils::currentLevel = utils::fromString(level);
-        });
+    parse_loglevel(parser);
     parser.add_argument("--disable_notifications")
+        .help("Disable desktop notifications")
         .default_value(true)
         .implicit_value(false)
         .store_into(enableNotifications);
     for(auto& executable : file.get_executables()) {
         parser.add_argument("--" + executable.get_name())
+            .help(std::format("Enable {}", executable.get_name()).c_str())
             .store_into(executables_config[executable.get_name()])
             .default_value(false).implicit_value(true);
     }
     parser.add_argument("rest")
+        .help("The command to run with the prefix")
         .remaining()
         .store_into(command_parts);
-    utils::log(Level(Debug), "Constructed config");
+    log(DEBUG, "Constructed config");
 }
 
 const Prefix& Config::get_prefix() const {

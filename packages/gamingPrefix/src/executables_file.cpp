@@ -10,8 +10,7 @@
 #include "executable.hpp"
 
 ExecutablesFile::ExecutablesFile() : data(read_json_data()) {
-    auto j = nlohmann::json::parse(data);
-    for(auto& item : j) {
+    for(auto& item : data) {
         std::filesystem::path path = "";
         int priority = 0;
         std::vector<Argument> arguments;
@@ -35,7 +34,7 @@ ExecutablesFile::ExecutablesFile() : data(read_json_data()) {
     }
 }
 
-const std::string& ExecutablesFile::get_data() const {
+const nlohmann::json& ExecutablesFile::get_data() const {
     return data;
 }
 
@@ -43,39 +42,35 @@ const std::vector<Executable> ExecutablesFile::get_executables() const {
     return executables;
 }
 
-const std::string ExecutablesFile::read_json_data() const {
+const nlohmann::json ExecutablesFile::read_json_data() const {
     const auto path = std::getenv("GAMING_EXECUTABLES_CONFIG");
     if (path == nullptr) {
-        return R"([
-            {
-                "name": "gamemode",
-                "path": "gamemoderun",
-                "arguments": [],
-                "priority": 1,
-                "environment": {}
-            },
-            {
-                "name": "mangohud",
-                "path": "mangohud",
-                "arguments": [],
-                "priority": 2,
-                "environment": {}
-            },
-            {
-                "name": "wayland",
-                "path": "",
-                "arguments": [],
-                "priority": 0,
-                "environment": {
-                    "DISPLAY": ""
-                }
-            }
-        ])";
+        return nlohmann::json {
+           {
+               {"name", "gamemode"},
+               {"path", "gamemoderun"},
+               {"priority", 1}
+           },
+           {
+               {"name", "mangohud"},
+               {"path", "mangohud"},
+               {"priority", 2}
+           },
+           {
+               {"name", "wayland"},
+               {"path", ""},
+               {"priority", 0},
+               {"environment", {
+                   {"DISPLAY", ""}
+               }}
+           }
+        };
+
     } else {
         std::ifstream file;
         file.open(path);
         std::stringstream ss;
         ss << file.rdbuf();
-        return ss.str();
+        return nlohmann::json::parse(ss.str());
     }
 }

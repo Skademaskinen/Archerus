@@ -1,16 +1,17 @@
 #pragma once
 
-#include <string>
 #include <vector>
+
+#include <nlohmann/json.hpp>
 
 #include "executable.hpp"
 class ExecutablesFile {
-    std::string data;
+    nlohmann::json data;
     std::vector<Executable> executables;
 public:
     ExecutablesFile();
 
-    const std::string& get_data() const;
+    const nlohmann::json& get_data() const;
     const std::vector<Executable> get_executables() const;
-    const std::string read_json_data() const;
+    const nlohmann::json read_json_data() const;
 };

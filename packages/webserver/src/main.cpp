@@ -4,10 +4,11 @@
 #include "config.hpp"
 #include "webserver.hpp"
 
-int main(int argc, char* argv[]) {
-    utils::log(Level(Debug), "Starting webserver...");
+Main(Argv& args) {
+    log(DEBUG, "Starting webserver...");
     Config config;
-    config.parse(argc, argv);
+    config.parse(args);
     Webserver server(config);
     server.start();
+    return ErrorCode::success;
 }

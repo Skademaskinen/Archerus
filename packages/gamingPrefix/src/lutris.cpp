@@ -8,7 +8,7 @@
 class Lutris : public Type {
     public:
         Lutris(Config& config) : Type(config, "lutris") {
-            utils::log(Level(Debug), "Constructed lutris");
+            log(DEBUG, "Constructed lutris");
         }
         void execute() override {
             set_environment();
@@ -17,17 +17,18 @@ class Lutris : public Type {
             send_notification(prefix, postfix);
             const auto prefix_string = prefix.build(config.get_executables_config());
             const auto postfix_string = postfix.represent(config.get_command_parts());
-            utils::log(Level(Info), "Prefix: {}", prefix_string.c_str());
-            utils::log(Level(Info), "Postfix: {}", postfix_string.c_str());
+            log(INFO, "Prefix: {}", prefix_string);
+            log(INFO, "Postfix: {}", postfix_string);
             postfix.execute(config.get_executables_config(), prefix, config.get_command_parts());
         }
 };
 
-int main(int argc, char* argv[]) {
-    utils::log(Level(Info), "Running lutris prefix");
+Main(Argv& args) {
+    log(INFO, "Running lutris prefix");
     ExecutablesFile file;
     Config config(file);
-    config.parse(argc, argv);
+    config.parse(args);
     Lutris lutris(config);
     lutris.execute();
+    return ErrorCode::success;
 }

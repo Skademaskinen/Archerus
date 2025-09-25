@@ -9,7 +9,7 @@
 #include "executables_file.hpp"
 
 Prefix::Prefix(ExecutablesFile executables_file) : executables(executables_file.get_executables()) {
-    utils::log(Level(Debug), "Constructed prefix");
+    log(DEBUG, "Constructed prefix");
 }
 
 const std::vector<Executable>& Prefix::get_executables() const {
@@ -24,12 +24,22 @@ const std::string Prefix::build(const ExecutablesConfig& config) const {
             return first.get_priority() < second.get_priority();
         }
     );
-    return utils::concat_elements(ordered, [](const Executable& executable){
-        return executable.get_path() + " " + utils::concat_elements(
-            executable.get_arguments(), 
-            [](const Argument argument) {
-                return argument.get() + " ";
-            }
+    // Very functional
+    return utils::concat_elements(
+        ordered,
+        [](const Executable& executable){
+        return std::format(
+            "{} {} ",
+            executable.get_path().string(),
+            utils::concat_elements(
+                executable.get_arguments(),
+                [](const Argument& argument){
+                    return std::format(
+                        "{} ",
+                        argument.get()
+                    );
+                }
+            )
         );
     });
 }
@@ -37,7 +47,7 @@ const std::string Prefix::build(const ExecutablesConfig& config) const {
 const std::vector<Executable> Prefix::get_enabled_executables(const ExecutablesConfig& config) const {
     std::vector<Executable> enabled_executables;
     for(auto [name, state] : config) {
-        utils::log(Level(Debug), "{} -> {}", name.c_str(), state ? "true" : "false");
+        log(DEBUG, "{} -> {}", name.c_str(), state ? "true" : "false");
         if (!state) {
             continue;
         }

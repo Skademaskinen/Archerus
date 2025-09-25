@@ -9,13 +9,13 @@
 
 
 Postfix::Postfix() {
-    utils::log(Level(Debug), "Constructed postfix");
+    log(DEBUG, "Constructed postfix");
 }
 
 void Postfix::execute(const ExecutablesConfig& config, const Prefix& prefix, const CommandParts& args) const {
 
     if (args.empty()) {
-        utils::log(Level(Error), "No executable specified");
+        log(ERROR, "No executable specified");
         return;
     }
 
@@ -32,15 +32,15 @@ void Postfix::execute(const ExecutablesConfig& config, const Prefix& prefix, con
             first = !first;
             continue;
         }
-        utils::log(Level(Debug), "arg: {}", arg);
+        log(DEBUG, "arg: {}", arg);
         cmd += " " + utils::escape(utils::escape(utils::escape(arg), '('), ')');
     }
 
-    utils::log(Level(Debug), "Running command: {}", cmd);
+    log(DEBUG, "Running command: {}", cmd);
 
     int ret = std::system(cmd.c_str());
     if (ret == -1) {
-        utils::log(Level(Error), "system failed");
+        log(ERROR, "system failed");
     }
 }
 

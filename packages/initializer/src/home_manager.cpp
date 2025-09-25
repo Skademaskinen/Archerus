@@ -7,7 +7,7 @@
 
 HomeManager::HomeManager(Config& config) : Type(config, "/home/" + config.get_username() + "/.config/home-manager/flake.nix", config.get_home_flake_template_path()) {
     substitution_pairs["user"] = config.get_username();
-    utils::log(Level(Debug), "initialized Home manager");
+    log(DEBUG, "initialized Home manager");
 }
 
 void HomeManager::extra_init() {

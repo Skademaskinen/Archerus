@@ -20,7 +20,7 @@ protected:
     std::string name;
 public:
     Type(Config& config, std::string name) : config(config), name(name) {
-        utils::log(Level(Debug), "Constructed type");
+        log(DEBUG, "Constructed type");
     }
     virtual void execute() = 0;
 
@@ -34,7 +34,7 @@ public:
             });
             const auto& environment = executable.get_environment();
             for (const auto& [name, value] : environment) {
-                utils::log(Level(Debug), "Env: {} -> {}", name.c_str(), value.c_str());
+                log(DEBUG, "Env: {} -> {}", name.c_str(), value.c_str());
                 setenv(name.c_str(), value.c_str(), 1);
             }
         }

@@ -7,12 +7,12 @@
 #include "postfix.hpp"
 
 class Config : public archerus::BaseConfig {
-    Prefix prefix;
-    Postfix postfix;
-    ExecutablesFile& file;
+    Prefix            prefix;
+    Postfix           postfix;
+    ExecutablesFile&  file;
     ExecutablesConfig executables_config;
-    CommandParts command_parts;
-    bool enableNotifications;
+    CommandParts      command_parts;
+    bool              enableNotifications;
 public:
     Config(ExecutablesFile&);
 
