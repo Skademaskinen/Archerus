@@ -6,7 +6,7 @@ let
     owner = "Skademaskinen";
     repo = pname;
     rev = "master";
-    sha256 = "sha256-fZFvXg/onf3BKw42kymOlKOE+KWKQMLIc3xUGkYNy3Q=";
+    sha256 = "sha256-KbAXQNMPfsqNyBiNbA230qw5BSLA/3aVJC+V7tBW8Mo=";
     src = pkgs.fetchFromGitHub { inherit owner repo rev sha256; };
     env = pkgs.python312.withPackages (py: with py; [ matplotlib scipy ]);
     dependencies = with pkgs.haskellPackages; [

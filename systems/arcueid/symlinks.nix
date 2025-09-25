@@ -19,7 +19,7 @@ in
 
        # pin proton and wine versions for steam and lutris respectively
        ".local/share/Steam/compatibilitytools.d/Proton-${proton.version}-NixOS".source = (proton.override {
-           steamDisplayName = "GE-Proton-${proton.version}-NixOS";
+           steamDisplayName = "${proton.version}-NixOS";
        }).steamcompattool;
        ".local/share/lutris/runners/wine/wine-tkg-${wine-tkg.version}-NixOS".source = nix-gaming.packages.${system}.wine-tkg;
        ".local/share/lutris/runners/wine/wine-ge-${wine-ge.version}-NixOS".source = nix-gaming.packages.${system}.wine-ge;

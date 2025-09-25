@@ -73,7 +73,7 @@ let
             name = "wine";
             path = "${nix-gaming.packages.${system}.wine-tkg}/bin/wine";
             priority = 10000;
-            environment.WINEPREFIX = "~/Games/prefixes/nixos-wineprefix";
+            environment.WINEPREFIX = "/run/prefixes/nixos-wineprefix";
         }
     ]);
 in
