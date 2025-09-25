@@ -17,8 +17,8 @@ class Lutris : public Type {
             send_notification(prefix, postfix);
             const auto prefix_string = prefix.build(config.get_executables_config());
             const auto postfix_string = postfix.represent(config.get_command_parts());
-            utils::log(Level(Info), "Prefix: {}", prefix_string.c_str());
-            utils::log(Level(Info), "Postfix: {}", postfix_string.c_str());
+            utils::log(Level(Info), "Prefix: {}", prefix_string);
+            utils::log(Level(Info), "Postfix: {}", postfix_string);
             postfix.execute(config.get_executables_config(), prefix, config.get_command_parts());
         }
 };

@@ -20,5 +20,10 @@ inputs:
         dotnet-sdk_8
         unzip
         zip
+        (pkgs.writeScriptBin "runcpp" ''
+            #!/usr/bin/env bash
+            FILE=$(mktemp)
+            ${gcc}/bin/g++ -o $FILE $@ && $FILE
+        '')
     ];
 }

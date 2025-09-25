@@ -24,12 +24,22 @@ const std::string Prefix::build(const ExecutablesConfig& config) const {
             return first.get_priority() < second.get_priority();
         }
     );
-    return utils::concat_elements(ordered, [](const Executable& executable){
-        return executable.get_path() + " " + utils::concat_elements(
-            executable.get_arguments(), 
-            [](const Argument argument) {
-                return argument.get() + " ";
-            }
+    // Very functional
+    return utils::concat_elements(
+        ordered,
+        [](const Executable& executable){
+        return std::format(
+            "{} {} ",
+            executable.get_path().string(),
+            utils::concat_elements(
+                executable.get_arguments(),
+                [](const Argument& argument){
+                    return std::format(
+                        "{} ",
+                        argument.get()
+                    );
+                }
+            )
         );
     });
 }

@@ -1,10 +1,11 @@
+#include <filesystem>
 #include <string>
 
 #include <libarcherus/log.hpp>
 
 #include "executable.hpp"
 
-Executable::Executable(std::string name, std::string path, std::vector<Argument> arguments, int priority, Environment environment) : name(name), path(path), arguments(arguments), priority(priority), environment(environment) {
+Executable::Executable(std::string name, std::filesystem::path path, std::vector<Argument> arguments, int priority, Environment environment) : name(name), path(path), arguments(arguments), priority(priority), environment(environment) {
     utils::log(Level(Debug), "Constructed executable | {} | {} | {}", name.c_str(), path.c_str(), priority);
 
 }
@@ -13,7 +14,7 @@ const std::string& Executable::get_name() const {
     return name;
 }
 
-const std::string& Executable::get_path() const {
+const std::filesystem::path& Executable::get_path() const {
     return path;
 }
 
