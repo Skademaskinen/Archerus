@@ -20,6 +20,7 @@ inputs:
         dotnet-sdk_8
         unzip
         zip
+        jq
         (pkgs.writeScriptBin "runcpp" ''
             #!/usr/bin/env bash
             FILE=$(mktemp)

@@ -30,6 +30,11 @@
         home.packages = with pkgs; [
             cinny-desktop
             bat
+            archerusPkgs.electronApps.chatgpt
+            archerusPkgs.electronApps.youtube
+            archerusPkgs.electronApps.stregsystemet
+            archerusPkgs.electronApps.fikien
+            archerusPkgs.electronApps.nixosSearch
         ];
         services.swaync = {
             enable = true;

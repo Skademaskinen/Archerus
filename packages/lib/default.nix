@@ -20,6 +20,7 @@ in
     mkOptionsHtml = load ./builders/mkOptionsHtml.nix;
     mkWebServer = load ./builders/mkWebServer.nix;
     mkParallelScripts = load ./builders/mkParallelScripts.nix;
+    mkElectronApp = load ./builders/mkElectronApp.nix;
     images = load ./utils/images.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
