@@ -1,3 +1,5 @@
+inputs:
+
 {pkgs, lib, config, ...}:
 
 "${pkgs.nwg-panel}/bin/nwg-panel -c ${pkgs.writeText "panel.json" (lib.strings.toJSON [
@@ -15,8 +17,8 @@
     button-launcher = {
       command = "${pkgs.callPackage ./drawer.nix {}}";
       css-name = "button-custom";
-      icon = "grid";
-      icon-size = 16;
+      icon = inputs.lib.wallpapers.flogo-inverted;
+      icon-size = 20;
       label = "";
       label-position = "right";
       tooltip = "Application drawer [Alt]+F1";

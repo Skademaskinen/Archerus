@@ -9,9 +9,23 @@
         vesktop
         vimix-cursors
         nextcloud-client
+        protonmail-desktop
+        protonmail-bridge-gui
+        thunderbird
+        keepassxc
+        feh
+        archerusPkgs.chatgpt
     ];
 
     networking.networkmanager.enable = true;
+
+    services.protonmail-bridge = {
+        enable = true;
+        path = with pkgs; [
+            keepassxc
+        ];
+    };
+    programs.thunderbird.enable = true;
 
     services.xserver.enable = true;
     services.displayManager.sddm = {

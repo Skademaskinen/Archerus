@@ -42,7 +42,7 @@ in {
                     "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
                 ];
                 exec = [
-                    "${pkgs.callPackage ../common/nwg/panel-hyprland.nix { inherit config; }}"
+                    "${pkgs.callPackage (inputs.lib.load ../common/nwg/panel-hyprland.nix) { inherit config; }}"
                 ];
                 general = {
                     "col.active_border" = "rgba(ff5500ff) rgba(ff5500ff)";

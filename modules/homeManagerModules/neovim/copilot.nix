@@ -11,7 +11,7 @@
             enable = true;
             autoLoad = true;
             settings.suggestion = {
-                enabled = true;
+                enabled = false;
                 autoTrigger = "always";
                 debounce = 50;
             };
