@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 
 let
+    electron = pkgs.electron_38-bin;
     appName = "chatgpt-electron";
     userDataDir = "$HOME/.local/share/${appName}";
 
@@ -22,7 +23,7 @@ pkgs.stdenv.mkDerivation {
 
     installPhase = ''
         mkdir -p $out/bin
-        makeWrapper ${pkgs.electron}/bin/electron $out/bin/${appName} \
+        makeWrapper ${electron}/bin/electron $out/bin/${appName} \
             --add-flags "https://chat.openai.com" \
             --add-flags "--ozone-platform=wayland" \
             --add-flags "--enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecoder" \
