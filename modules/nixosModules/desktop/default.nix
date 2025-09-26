@@ -14,7 +14,6 @@
         thunderbird
         keepassxc
         feh
-        archerusPkgs.chatgpt
     ];
 
     networking.networkmanager.enable = true;
