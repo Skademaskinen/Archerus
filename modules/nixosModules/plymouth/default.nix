@@ -8,7 +8,7 @@ inputs:
             enable = true;
             theme = "flogo";
             themePackages = [
-                (inputs.self.packages.${inputs.system}.plymouth-theme { logo = inputs.lib.wallpapers.flogo; name = "flogo"; })
+                (inputs.self.packages.${inputs.system}.plymouthTheme { logo = inputs.lib.wallpapers.flogo; name = "flogo"; })
             ];
             font = "${pkgs.fira}/share/fonts/opentype/FiraMono-Medium.otf";
         };

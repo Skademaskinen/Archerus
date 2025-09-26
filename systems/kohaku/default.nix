@@ -25,7 +25,6 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.hyprland
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
-                homeManagerModules.sway
                 homeManagerModules.spotify
                 ./home.nix
             ];
