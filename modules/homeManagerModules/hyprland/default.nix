@@ -90,6 +90,8 @@ in {
         home.packages = with pkgs; [
             hyprpaper
             vimix-cursors
+            wl-clipboard
+            networkmanagerapplet
         ];
 
     };
