@@ -22,4 +22,5 @@ lib.mkElectronApp {
                 console.error(error)
             })
     '';
+    tray = true;
 }
