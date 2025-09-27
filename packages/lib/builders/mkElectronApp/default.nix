@@ -46,34 +46,42 @@ let
             win.webContents.on("did-finish-load", () => {
                 win.webContents.insertCSS("::-webkit-scrollbar { display: none; }");
             });
-            
-            const contextMenu = Menu.buildFromTemplate([
-                {
-                    label: 'Clear Cache',
-                    click: () => {
-                        session.defaultSession.clearStorageData()
-                        app.relaunch();
-                        app.exit();
-                    }
-                },
-                {
-                    label: 'Reload',
-                    click: () => win.reload()
-                },
-                {
-                    label: 'Quit',
-                    type: 'normal',
-                    role: 'quit'
-                }
-            ])
+
             
             ${if tray then ''
+                const contextMenu = Menu.buildFromTemplate([
+                    {
+                        label: 'Clear Cache',
+                        click: () => {
+                            session.defaultSession.clearStorageData()
+                            app.relaunch();
+                            app.exit();
+                        }
+                    },
+                    {
+                        label: 'Reload',
+                        click: () => win.reload()
+                    },
+                    {
+                        label: 'Quit',
+                        type: 'normal',
+                        role: 'quit'
+                    }
+                ])
                 let tray = new Tray("${icon}")
     
                 tray.setToolTip("${appName}")
                 tray.setTitle("${appName}")
                 tray.setContextMenu(contextMenu)
-            '' else ""}
+                tray.on('click', () => {
+                    if (win.isVisible()) {
+                        win.hide();
+                    } else {
+                        win.show();
+                    }
+                })
+                        '' else ""
+            }
         })
     '';
 
