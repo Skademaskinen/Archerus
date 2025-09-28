@@ -3,6 +3,8 @@
 #include <string>
 #include <fstream>
 
+#include <libarcherus/log.hpp>
+
 #include "config.hpp"
 
 // this function should replace all instances of fst with snd in content

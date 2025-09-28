@@ -1,6 +1,5 @@
 #pragma once
 
-#include <format>
 #include <string>
 #include <unistd.h>
 #include <vector>
@@ -14,13 +13,13 @@ namespace utils {
 }
 
 typedef std::vector<std::string> Argv;
-#define Main(name) ErrorCode main_wrapper(const name);      \
+#define Main(name) ErrorCode mainWrapper(const name);       \
     int main(int argc, char* argv[]) {                      \
         std::vector<std::string> args(argv, argv + argc);   \
-        ErrorCode errorCode = main_wrapper(args);           \
+        ErrorCode errorCode = mainWrapper(args);            \
         if (errorCode != ErrorCode::success) {              \
-            log(ERROR, "Error: {}", to_string(errorCode));  \
+            log(ERROR, "Error: {}", toString(errorCode));   \
         }                                                   \
         return errorCode;                                   \
     }                                                       \
-    ErrorCode main_wrapper(const name)
+    ErrorCode mainWrapper(const name)

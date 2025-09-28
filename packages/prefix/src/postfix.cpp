@@ -8,26 +8,28 @@
 #include "prefix.hpp"
 
 
-Postfix::Postfix() {
+Postfix::Postfix(const CommandParts& parts) :
+    parts(parts) {
     log(DEBUG, "Constructed postfix");
 }
 
-void Postfix::execute(const ExecutablesConfig& config, const Prefix& prefix, const CommandParts& args) const {
+void Postfix::execute(const Prefix& prefix) const {
+    log(WARNING, "!!! LAUNCHING !!!");
 
-    if (args.empty()) {
+    if (parts.empty()) {
         log(ERROR, "No executable specified");
         return;
     }
 
     // Start with prefix string as-is
-    std::string cmd = prefix.build(config);
+    std::string cmd = prefix.build();
 
     // Escape the actual executable
-    cmd += " " + utils::escape(args[0]);
+    cmd += " " + utils::escape(parts[0]);
 
     // Escape remaining arguments
     bool first = true;
-    for (const auto& arg : args) {
+    for (const auto& arg : parts) {
         if (first) {
             first = !first;
             continue;
@@ -44,9 +46,9 @@ void Postfix::execute(const ExecutablesConfig& config, const Prefix& prefix, con
     }
 }
 
-const std::string Postfix::represent(const CommandParts& args) const {
+const std::string Postfix::represent() const {
     std::string result;
-    for(const auto& arg : args) {
+    for(const auto& arg : parts) {
         result += arg + " ";
     }
     return result;

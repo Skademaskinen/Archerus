@@ -7,7 +7,7 @@
 
 Webserver::Webserver(Config& config) : config(config) {
     log(DEBUG, "Webserver initialized");
-    if(!config.is_parsed()) {
+    if(!config.isParsed()) {
         log(DEBUG, "Config not yet parsed, exiting");
         exit(1);
     }

@@ -32,7 +32,7 @@ let
         fps_color_change
     '';
 
-    gaming_executables_config = pkgs.writeText "config.json" (builtins.toJSON [
+    prefixConfig = builtins.toJSON [
         {
             name = "wayland";
             priority = 0;
@@ -75,7 +75,7 @@ let
             priority = 10000;
             environment.WINEPREFIX = "/run/prefixes/nixos-wineprefix";
         }
-    ]);
+    ];
 in
 
 {
@@ -84,7 +84,7 @@ in
     programs.steam = {
         enable = true;
         extraPackages = [
-            archerusPkgs.gamingPrefix
+            archerusPkgs.prefix
         ];
     };
     programs.gamescope.enable = true;
@@ -100,14 +100,17 @@ in
 
     users.users.mast3r.extraGroups = [ "gamemode" ];
 
-    environment.variables = {
-        GAMING_PREFIX_ICON = "${archerusPkgs.homepage.src}/static/icon.png";
-        GAMING_EXECUTABLES_CONFIG = gaming_executables_config;
+    environment.etc = {
+        "archerus/prefix.json" = {
+            text = prefixConfig;
+        };
+        "archerus/prefix.png" = {
+            source = "${archerusPkgs.homepage.src}/static/icon.png";
+        };
     };
 
     environment.systemPackages = with pkgs; [
-
-        archerusPkgs.gamingPrefix
+        archerusPkgs.prefix
         lutris
         wine
         protonup-qt

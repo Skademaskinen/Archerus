@@ -7,7 +7,7 @@ pkgs.stdenv.mkDerivation {
 
   src = ./.; # your source with headers + cpp files
 
-  nativeBuildInputs = [ pkgs.cmake pkgs.argparse ];
+  nativeBuildInputs = [ pkgs.cmake pkgs.argparse pkgs.nlohmann_json ];
   buildInputs = [ ];
 
   cmakeFlags = [
