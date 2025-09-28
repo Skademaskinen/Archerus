@@ -13,4 +13,4 @@ enum ErrorCode {
     #undef X
 };
 
-const std::string to_string(const ErrorCode& code);
+const std::string toString(const ErrorCode& code);

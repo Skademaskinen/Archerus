@@ -32,25 +32,23 @@ enum LogLevel {
 typedef std::tuple<std::string, unsigned int, LogLevel> logger_data;
 typedef std::tuple<unsigned int, unsigned int, unsigned int> Color;
 
-const std::string to_string(const LogLevel& level);
+const std::string toString(const LogLevel& level);
 
-const std::string to_string(const ErrorCode& code);
-
-const LogLevel from_string(const std::string& data);
+const LogLevel fromString(const std::string& data);
 
 
-const Color to_color(const LogLevel& level);
+const Color toColor(const LogLevel& level);
 
 inline LogLevel currentLogLevel = LogLevel::info;
 
-void parse_loglevel(argparse::ArgumentParser& parser);
+void parseLoglevel(argparse::ArgumentParser& parser);
 
 template<typename ...T>
 ErrorCode log(logger_data loglevel, std::format_string<T...> fmt, T... values) {
     try {
         const auto& [function, line, level] = loglevel;
         const auto formatted = std::format(fmt, std::forward<T>(values)...);
-        const auto [r, g, b] = to_color(level);
+        const auto [r, g, b] = toColor(level);
         const auto formatted_color = std::format("\033[38;2;{};{};{}m", r, g, b);
 
         if (level < currentLogLevel) {

@@ -5,7 +5,7 @@
 
 
 pkgs.stdenv.mkDerivation rec {
-    pname = "gaming-prefix";
+    pname = "pfx";
     version = "1.0.0";
     src = ./.;
     nativeBuildInputs = [ pkgs.cmake ];
@@ -27,7 +27,6 @@ pkgs.stdenv.mkDerivation rec {
 
     installPhase = ''
         mkdir -p $out/bin
-        cp steam-prefix lutris-prefix $out/bin
-        ln $out/bin/steam-prefix $out/bin/gaming-prefix -s
+        cp pfx $out/bin
     '';
 }

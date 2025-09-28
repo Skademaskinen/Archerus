@@ -23,7 +23,7 @@ class Config : public archerus::BaseConfig {
     std::map<std::string, std::string> routes;
     std::map<std::string, File> extra_route_files;
 
-    void parse_json() override;
+    void parseJson() override;
 public:
     Config();
 

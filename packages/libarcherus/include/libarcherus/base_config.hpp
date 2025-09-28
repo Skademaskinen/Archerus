@@ -1,6 +1,5 @@
 #pragma once
 
-#include "log.hpp"
 #include "utils.hpp"
 #include <argparse/argparse.hpp>
 
@@ -15,11 +14,11 @@ namespace archerus {
         }
     
     public:
-        virtual void parse_json();
+        virtual void parseJson();
         void parse(const int argc, const char* argv[]);
         void parse(const Argv& args);
         ~BaseConfig();
-        bool is_parsed() const;
+        bool isParsed() const;
     };
 
 }

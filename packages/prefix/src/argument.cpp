@@ -2,7 +2,7 @@
 
 #include "argument.hpp"
 
-Argument::Argument(std::string value) : value(value) {
+Argument::Argument(const std::string& value) : value(value) {
     log(DEBUG, "Constructed argument");
 }
 

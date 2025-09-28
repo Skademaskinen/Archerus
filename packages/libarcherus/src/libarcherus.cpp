@@ -2,9 +2,15 @@
 #include "libarcherus/error_handling.hpp"
 #include "libarcherus/log.hpp"
 #include "libarcherus/utils.hpp"
-#include <argparse/argparse.hpp>
+#include "libarcherus/config_file.hpp"
+#include <cstdlib>
+#include <filesystem>
+#include <fstream>
 
-void archerus::BaseConfig::parse_json() {
+#include <argparse/argparse.hpp>
+#include <nlohmann/json.hpp>
+
+void archerus::BaseConfig::parseJson() {
     log(DEBUG, "Running default (empty) parse_json implementation");
 }
 
@@ -15,7 +21,7 @@ void archerus::BaseConfig::parse(const int argc, const char* argv[]) {
         log(DEBUG, "Argument parsing error: {}", err.what());
         exit(1);
     }
-    parse_json();
+    parseJson();
     parsed = true;
 }
 
@@ -26,7 +32,7 @@ void archerus::BaseConfig::parse(const Argv& args) {
         log(DEBUG, "Argument parsing error: {}", err.what());
         exit(1);
     }
-    parse_json();
+    parseJson();
     parsed = true;
 }
 
@@ -34,7 +40,7 @@ archerus::BaseConfig::~BaseConfig() {
     log(DEBUG, "Destroying Base config child");
 }
 
-bool archerus::BaseConfig::is_parsed() const {
+bool archerus::BaseConfig::isParsed() const {
     return parsed;
 }
 
@@ -57,7 +63,7 @@ std::string utils::capitalize(std::string str) {
     return result;
 }
 
-const std::string to_string(LogLevel& level) {
+const std::string toString(LogLevel& level) {
     return (std::map<LogLevel, std::string>) {
         #define X(name,_1,_2,_3) { LogLevel::name, #name },
             LOGLEVEL_DATA
@@ -65,7 +71,7 @@ const std::string to_string(LogLevel& level) {
     }[level];
 }
 
-const LogLevel from_string(const std::string& data) {
+const LogLevel fromString(const std::string& data) {
     return (std::map<std::string, LogLevel>) {
         #define X(name,_1,_2,_3) { #name, LogLevel::name },
             LOGLEVEL_DATA
@@ -73,7 +79,7 @@ const LogLevel from_string(const std::string& data) {
     }[data];
 }
 
-const std::string to_string(const ErrorCode& code) {
+const std::string toString(const ErrorCode& code) {
     return (std::map<ErrorCode, std::string>) {
         #define X(name,str) { ErrorCode::name, str },
             ERROR_DATA
@@ -81,7 +87,7 @@ const std::string to_string(const ErrorCode& code) {
     }[code];
 }
 
-const Color to_color(const LogLevel& level) {
+const Color toColor(const LogLevel& level) {
     return (std::map<LogLevel, Color>) {
         #define X(name,r,g,b) { LogLevel::name, { r, g, b } },
             LOGLEVEL_DATA
@@ -89,7 +95,7 @@ const Color to_color(const LogLevel& level) {
     }[level];
 }
 
-void parse_loglevel(argparse::ArgumentParser& parser) {
+void parseLoglevel(argparse::ArgumentParser& parser) {
     parser.add_argument("-v")
         .action([&](const auto &){
             int val = (int)currentLogLevel;
@@ -112,4 +118,24 @@ void parse_loglevel(argparse::ArgumentParser& parser) {
         .implicit_value(true)
         .help("Decrease verbosity")
         .nargs(0);
+}
+
+ConfigFile::ConfigFile(std::string name) :
+    name(name),
+    etcPath((BASE_CONFIG_PATH / name).replace_extension(".json")),
+    environmentKey("ARCHERUS_" + utils::capitalize(name) + "_CONFIG")
+{
+    auto envConfig = std::getenv(environmentKey.c_str());
+    if (envConfig != nullptr) {
+        data = nlohmann::json::parse(envConfig);
+    } else if (std::filesystem::exists(etcPath)) {
+        std::ifstream ifs(etcPath);
+        std::stringstream ss;
+        ss << ifs.rdbuf();
+        data = nlohmann::json::parse(ss.str());
+    }
+}
+
+nlohmann::json& ConfigFile::get() {
+    return data;
 }

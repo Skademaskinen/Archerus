@@ -13,7 +13,7 @@ class Webserver {
     Config& config;
     httplib::Server server;
     std::map<std::string, handler_t> handlers;
-    std::vector<std::thread> handler_threads;
+    std::vector<std::thread> handlerThreads;
 public:
     Webserver(Config&);
     ~Webserver();

@@ -29,7 +29,7 @@ Config::Config() : BaseConfig("Webserver") {
 }
 
 // This function processes the passed config file, it should be json in the form { "port": 8080, "routes": { "/index.html", "/nix/store/aaaa-index.html"}}
-void Config::parse_json() {
+void Config::parseJson() {
     std::string config_path = parser.get<std::string>("--config");
     log(DEBUG, "Processing config file: %s", config_path.c_str());
     // use nlohhmann_json to parse the json file
