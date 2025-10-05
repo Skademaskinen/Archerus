@@ -21,3 +21,4 @@ jobs:
           for package in comicMonoLiga electronApps.chatgpt electronApps.fikien electronApps.nixosSearch electronApps.stregsystemet electronApps.youtube fPlymouthTheme folkevognen homepage initializer libarcherus prefix putricide warcraftLogsUploader webserver; do
             nix build .\#packages.x86_64-linux.$package
           done
+
