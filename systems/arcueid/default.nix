@@ -20,6 +20,7 @@ nixpkgs.lib.nixosSystem {
             home-manager.users.mast3r.imports = [
                 homeManagerModules.common
                 homeManagerModules.hyprland
+                homeManagerModules.hyprland-themes.main
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.spotify

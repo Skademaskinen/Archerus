@@ -44,6 +44,8 @@
         fira-mono
         nerd-fonts.droid-sans-mono
 	    nerd-fonts.fira-code
+        fira-code-symbols
+        noto-fonts-emoji
     ];
 
     services.pulseaudio.enable = false;
