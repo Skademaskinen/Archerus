@@ -34,9 +34,9 @@ pkgs.stdenv.mkDerivation rec {
     installPhase = ''
         mkdir -p $out/{etc/archerus,bin}
         cp pfx $out/bin
-        echo '${builtins.toJSON config.config}' > $out/etc/archerus/config.json
+        echo '${builtins.toJSON config.config}' > $out/etc/archerus/prefix.json
         ${if config.icon != "" then ''
-            cp ${config.icon} $out/etc/archerus/config.png
+            cp ${config.icon} $out/etc/archerus/prefix.png
         '' else ""}
     '';
 }
