@@ -81,7 +81,9 @@ let
         icon = "${archerusPkgs.homepage.src}/static/icon.png";
     };
     myLutris = pkgs.lutris.override {
-        extraPkgs = pkgs: [ prefix ];
+        extraPkgs = pkgs: [
+            prefix
+        ];
     };
 in
 
@@ -92,6 +94,7 @@ in
         enable = true;
         extraPackages = [
             prefix
+            pkgs.mesa-demos
         ];
     };
     programs.gamescope.enable = true;

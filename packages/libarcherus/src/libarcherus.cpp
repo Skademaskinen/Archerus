@@ -127,14 +127,12 @@ ConfigFile::ConfigFile(std::string name) :
 {
     auto envConfig = std::getenv(environmentKey.c_str());
     if (envConfig != nullptr) {
-        log(DEBUG, "Raw Config: ", envConfig);
         data = nlohmann::json::parse(envConfig);
     } else if (std::filesystem::exists(etcPath)) {
         std::ifstream ifs(etcPath);
         std::stringstream ss;
         ss << ifs.rdbuf();
         std::string rawData = ss.str();
-        log(DEBUG, "Raw Config: ", rawData);
         data = nlohmann::json::parse(rawData);
     }
 }
