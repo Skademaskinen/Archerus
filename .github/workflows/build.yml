@@ -1,63 +1,23 @@
-name: Build all Nix packages
+name: Build packages
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: cachix/install-nix-action@v27
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-
-      - name: Build all derivations (excluding some)
+      - name: Checkout repo
+        uses: actions/checkout@v4.1.1
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: build packages
         run: |
-          set -eu
-
-          # Add packages you don't want to build
-          exclude_list=(
-            "lib"
-            "lsfg-vk"
-            "projectTools"
-            "steamPackages"
-            "plymouthTheme"
-            "curseforge"
-          )
-
-          should_exclude() {
-            for e in "${exclude_list[@]}"; do
-              if [ "$1" = "$e" ]; then
-                return 0
-              fi
-            done
-            return 1
-          }
-
-          build_derivations() {
-            local path="$1"
-            nix eval --json "$path" | jq -r 'keys[]' | while read -r name; do
-              full_path="${path}.${name}"
-              if nix eval --json "${full_path}" 2>/dev/null | jq -e 'type=="set"' >/dev/null; then
-                # Recurse if it's an attrset (like electronApps)
-                build_derivations "${full_path}"
-              else
-                short_name="${full_path#*.x86_64-linux.}"
-                short_name="${short_name#.}"
-                if should_exclude "$short_name"; then
-                  echo "Skipping $short_name (excluded)"
-                  continue
-                fi
-                echo "Building $short_name..."
-                nix build ".#${full_path}"
-              fi
-            done
-          }
-
-          build_derivations ".#packages.x86_64-linux"
-
+          for package in comicMonoLiga electronApps.chatgpu electronApps.fikien electronApps.nixosSearch electronApps.stregsystemet electronApps.youtube fPlymouthTheme folkevognen homepage initializer libarcherus prefix putricide rp-utils warcraftLogsUploader webserver; do
+            nix build .\#packages.x86_64-linux.$package
+          done
