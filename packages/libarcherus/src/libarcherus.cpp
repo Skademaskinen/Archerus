@@ -132,7 +132,8 @@ ConfigFile::ConfigFile(std::string name) :
         std::ifstream ifs(etcPath);
         std::stringstream ss;
         ss << ifs.rdbuf();
-        data = nlohmann::json::parse(ss.str());
+        std::string rawData = ss.str();
+        data = nlohmann::json::parse(rawData);
     }
 }
 

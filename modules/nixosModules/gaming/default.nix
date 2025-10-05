@@ -32,7 +32,7 @@ let
         fps_color_change
     '';
 
-    prefixConfig = builtins.toJSON [
+    prefixConfig = [
         {
             name = "wayland";
             priority = 0;
@@ -76,6 +76,15 @@ let
             environment.WINEPREFIX = "/run/prefixes/nixos-wineprefix";
         }
     ];
+    prefix = archerusPkgs.prefix.withConfig {
+        config = prefixConfig;
+        icon = "${archerusPkgs.homepage.src}/static/icon.png";
+    };
+    myLutris = pkgs.lutris.override {
+        extraPkgs = pkgs: [
+            prefix
+        ];
+    };
 in
 
 {
@@ -84,7 +93,8 @@ in
     programs.steam = {
         enable = true;
         extraPackages = [
-            archerusPkgs.prefix
+            prefix
+            pkgs.mesa-demos
         ];
     };
     programs.gamescope.enable = true;
@@ -102,7 +112,7 @@ in
 
     environment.etc = {
         "archerus/prefix.json" = {
-            text = prefixConfig;
+            text = builtins.toJSON prefixConfig;
         };
         "archerus/prefix.png" = {
             source = "${archerusPkgs.homepage.src}/static/icon.png";
@@ -110,8 +120,8 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-        archerusPkgs.prefix
-        lutris
+        prefix
+        myLutris
         wine
         protonup-qt
         wowup-cf

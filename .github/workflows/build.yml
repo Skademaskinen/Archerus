@@ -8,9 +8,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        package: [plymouth-theme-default, homepage, putricide, lavalink, sketch-bot, folkevognen]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -19,5 +16,9 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
       - name: Nix cache
         uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: build system
-        run: nix build .#${{ matrix.package }}
+      - name: build packages
+        run: |
+          for package in comicMonoLiga electronApps.chatgpt electronApps.fikien electronApps.nixosSearch electronApps.stregsystemet electronApps.youtube fPlymouthTheme folkevognen homepage initializer libarcherus prefix putricide warcraftLogsUploader webserver; do
+            nix build .\#packages.x86_64-linux.$package
+          done
+

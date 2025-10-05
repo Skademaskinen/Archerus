@@ -37,10 +37,10 @@ namespace utils {
         std::vector<T> second;
         bool found = false;
         for(const auto& value : values) {
-            if (value == arg) {
-                found = true;
-            } else if (found) {
+            if (found) {
                 second.push_back(value);
+            } else if (value == arg) {
+                found = true;
             } else {
                 first.push_back(value);
             }

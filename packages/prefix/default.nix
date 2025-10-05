@@ -1,7 +1,8 @@
 # This package will make sure that the gaming prefixes that i define are evaluated at compile time
 # This means that something like 'lutris-prefix --wayland' will only be valid if wayland is enabled or something like that
 # Essentially i'm packaging all my dependencies for gaming prefixes into a single binary
-{ archerusPkgs, pkgs, ...}:
+{ archerusPkgs, pkgs, config?{ config = []; icon = ""; }, ...}:
+
 
 
 pkgs.stdenv.mkDerivation rec {
@@ -21,12 +22,21 @@ pkgs.stdenv.mkDerivation rec {
     ];
     cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
 
-    passthru.devShell = pkgs.mkShellNoCC {
-        packages = buildInputs;
+    passthru = {
+        devShell = pkgs.mkShellNoCC {
+            packages = buildInputs;
+        };
+        withConfig = config: import ./default.nix { inherit archerusPkgs pkgs config; };
     };
 
+
+
     installPhase = ''
-        mkdir -p $out/bin
+        mkdir -p $out/{etc/archerus,bin}
         cp pfx $out/bin
+        echo '${builtins.toJSON config.config}' > $out/etc/archerus/prefix.json
+        ${if config.icon != "" then ''
+            cp ${config.icon} $out/etc/archerus/prefix.png
+        '' else ""}
     '';
 }
