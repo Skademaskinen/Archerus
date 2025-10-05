@@ -18,6 +18,6 @@ jobs:
         uses: DeterminateSystems/flakehub-cache-action@main
       - name: evaluate systems
         run: |
-          for system in Arcueid Laptop Thinkpad Skademaskinen; do
+          for system in Arcueid Kohaku Skademaskinen; do
             nix eval .#nixosConfigurations.$system.config.system.build.nixos-rebuild
           done
