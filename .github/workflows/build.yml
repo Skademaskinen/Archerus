@@ -27,6 +27,7 @@ jobs:
             "projectTools"
             "steamPackages"
             "plymouthTheme"
+            "curseforge"
           )
 
           should_exclude() {
