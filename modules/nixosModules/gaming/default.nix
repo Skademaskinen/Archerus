@@ -125,7 +125,7 @@ in
         wine
         protonup-qt
         wowup-cf
-        bolt-launcher
+        archerusPkgs.boltLauncher
         nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
         archerusPkgs.curseforge
