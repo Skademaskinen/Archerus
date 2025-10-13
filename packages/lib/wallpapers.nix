@@ -9,7 +9,7 @@ let
         url = "https://github.com/Mast3rwaf1z/flogo-spinner";
         rev = "4e995d44febd07cdd41fef466d0404af0e5e3cf0";
     }}/logo_centered.png";
-    flogo-inverted = lib.images.cropToContent "flogo-inverted.png" (lib.images.invert "flogo-intermediate.png" flogo);
+    flogo-inverted = lib.images.cropToContent (lib.images.invert flogo);
 in
 
 {
