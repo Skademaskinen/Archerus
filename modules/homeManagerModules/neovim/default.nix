@@ -49,7 +49,7 @@ in
         inputs.nixvim.homeManagerModules.default
         (import ./keymaps.nix keymaps)
         ./theme.nix
-        ./copilot.nix
+        #./copilot.nix
     ];
     programs.nixvim = {
         enable = true;
@@ -113,7 +113,7 @@ in
                 { name = "nvim_lsp"; priority = 400; }
                 { name = "path"; priority = 300; }
                 { name = "buffer"; priority = 200; }
-                { name = "copilot"; priority = 100; }
+                #{ name = "copilot"; priority = 100; }
             ];
             settings.mapping = {
                 "<C-Space>" = "cmp.mapping.complete()";
