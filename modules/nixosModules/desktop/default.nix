@@ -14,8 +14,6 @@
         thunderbird
         keepassxc
         feh
-        noto-fonts-emoji
-        fira-code-symbols
     ];
 
     networking.networkmanager.enable = true;
@@ -48,6 +46,11 @@
 	    nerd-fonts.fira-code
         fira-code-symbols
         noto-fonts-emoji
+        noto-fonts
+        liberation_ttf
+        mplus-outline-fonts.githubRelease
+        dina-font
+        proggyfonts
     ];
 
     services.pulseaudio.enable = false;

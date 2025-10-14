@@ -40,5 +40,9 @@ inputs:
     
         # Nix has been buggy lately
         nix.package = pkgs.lix;
+
+        nix.extraOptions = ''
+            warn-dirty = false
+        '';
     };
 }
