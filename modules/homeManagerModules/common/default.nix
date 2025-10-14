@@ -38,7 +38,7 @@
         ];
         services.swaync = {
             enable = true;
-            style = builtins.readFile ../common/nwg/swaync.css;
+            style = builtins.readFile ./swaync.css;
         };
     };
 }
