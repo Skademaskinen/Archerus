@@ -13,6 +13,11 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  boot.swraid = {
+    enable = true;
+    mdadmConf = "MAILADDR=mast3r@skade.dev";
+  };
+
   fileSystems."/" =
     { device = "/dev/mapper/root";
       fsType = "ext4";

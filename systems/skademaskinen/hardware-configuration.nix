@@ -7,7 +7,7 @@
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
     boot.swraid.enable = true;
-    boot.swraid.mdadmConf = "MAILADDR mast3r@${config.skade.baseDomain}";
+    boot.swraid.mdadmConf = "MAILADDR=mast3r@${config.skade.baseDomain}";
 
     fileSystems = {
         "/" = { 
