@@ -14,6 +14,8 @@
         thunderbird
         keepassxc
         feh
+        noto-fonts-emoji
+        fira-code-symbols
     ];
 
     networking.networkmanager.enable = true;
