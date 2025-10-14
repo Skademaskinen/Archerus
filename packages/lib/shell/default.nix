@@ -28,7 +28,7 @@ rec {
 
     copy = host: path: target: pkgs.writeShellScript "copy" ''
         #!/usr/bin/env bash
-        ${pkgs.openssh}/bin/scp ${path} ${host}:${target}
+        ${pkgs.openssh}/bin/scp ${path} ${host}:${target} 2>&1 > /dev/null
     '';
 
     remote = host: script: pkgs.writeShellScript "remote" ''
@@ -121,6 +121,13 @@ rec {
                     '
                 '');
             }}
+        '';
+        reboot = pkgs.writeScriptBin "reboot" ''
+            #!/usr/bin/env bash
+            ${remote cfg.skade.baseDomain ''
+                printf "\033[38;2;255;0;0mWARNING: REBOOTING ${cfg.skade.baseDomain}(${cfg.networking.hostName}), WRITE PASSWORD TO CONFIRM\033[0m\n"
+                sudo reboot
+            ''}
         '';
     };
 }
