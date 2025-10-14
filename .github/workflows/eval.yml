@@ -19,5 +19,5 @@ jobs:
       - name: evaluate systems
         run: |
           for system in Arcueid Kohaku Skademaskinen; do
-            nix eval .#nixosConfigurations.$system.config.system.build.nixos-rebuild
+            nix eval .#nixosConfigurations.$system.config.system.build.toplevel
           done
