@@ -23,7 +23,6 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.spotify
-                #homeManagerModules.sway
                 ./home.nix
                 (lib.load ./symlinks.nix)
             ];
@@ -74,6 +73,8 @@ nixpkgs.lib.nixosSystem {
             programs.nix-ld.libraries = with pkgs; [
                 libGL
             ];
+
+            boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
         })
     ];
 }
