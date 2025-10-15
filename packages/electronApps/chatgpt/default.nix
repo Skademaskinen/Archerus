@@ -7,7 +7,6 @@ let
     };
     icon = lib.images.build [
         lib.images.cropToContent
-        lib.images.invert
     ] raw-icon;
 in
 
