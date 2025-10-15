@@ -24,4 +24,5 @@ in
     images = load ./utils/images.nix;
     wallpapers = load ./wallpapers.nix;
     database = load ./utils/database.nix;
+    shell = load ./shell;
 } // load ./utils/if.nix

@@ -1,11 +1,13 @@
 inputs:
 
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, ... }: let
     toStr = builtins.toString;
 in {
-    options.archerus.wallpaper = lib.mkOption {
-        type = lib.types.path;
-        default = inputs.lib.wallpapers.arcueid;
+    options.skade.hyprland = {
+        battery.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+        };
     };
     config = {
         wayland.windowManager.hyprland = {
@@ -16,8 +18,6 @@ in {
                 "$mod" = "SUPER";
                 "$terminal" = "${pkgs.kitty}/bin/kitty";
                 bind = [
-                    "$mod, d, exec, ${pkgs.callPackage ../common/nwg/drawer.nix {}}"
-                    "$mod, k, exec, ${pkgs.callPackage ../common/nwg/drawer.nix {}}"
                     "$mod, Return, exec, ${pkgs.kitty}/bin/kitty"
                     "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
                     "$mod SHIFT, q, killactive"
@@ -30,6 +30,7 @@ in {
 
                 bindm = [
                     "$mod, mouse:272, movewindow"
+                    "$mod ALT, mouse:272, resizewindow"
                 ];
 
                 bindel = [
@@ -41,14 +42,7 @@ in {
                 exec-once = [
                     "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
                 ];
-                exec = [
-                    "${pkgs.callPackage (inputs.lib.load ../common/nwg/panel-hyprland.nix) { inherit config; }}"
-                ];
                 general = {
-                    "col.active_border" = "rgba(ff5500ff) rgba(ff5500ff)";
-                    "col.inactive_border" = "rgba(595959ff) rgba(595959ff)";
-                    "col.nogroup_border" = "rgba(595959ff) rgba(595959ff)";
-                    "col.nogroup_border_active" = "rgba(ff5500ff) rgba(ff5500ff)";
                     gaps_in = "5";
                     gaps_out = "10";
                     border_size = "2";
@@ -79,13 +73,7 @@ in {
         };
         #programs.hyprlock.enable = true;
         #services.hypridle.enable = true;
-        services.hyprpaper = {
-            enable = true;
-            settings = {
-                preload = "${config.archerus.wallpaper}";
-                wallpaper = ", ${config.archerus.wallpaper}";
-            };
-        };
+
 
         home.packages = with pkgs; [
             hyprpaper

@@ -44,6 +44,13 @@
         fira-mono
         nerd-fonts.droid-sans-mono
 	    nerd-fonts.fira-code
+        fira-code-symbols
+        noto-fonts-emoji
+        noto-fonts
+        liberation_ttf
+        mplus-outline-fonts.githubRelease
+        dina-font
+        proggyfonts
     ];
 
     services.pulseaudio.enable = false;

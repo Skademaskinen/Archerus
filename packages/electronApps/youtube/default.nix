@@ -5,11 +5,14 @@ let
         url = "https://upload.wikimedia.org/wikipedia/commons/4/4c/Logo_YouTube_%28en_PNG%29.png";
         sha256 = "sha256-Q7dKipztCaSyLAbBkzbZsjNmZ/s4nVCdKnoFAgT2N64=";
     };
-    icon = lib.images.cropToContent "Youtube.png" raw-icon;
+    icon = lib.images.cropToContent raw-icon;
 in
 
 lib.mkElectronApp {
     inherit icon;
+    iconOperations = [
+        lib.images.cropToContent
+    ];
     appName = "Youtube";
     url = "https://youtube.com";
     description = "Youtube in an electron app";
@@ -22,5 +25,6 @@ lib.mkElectronApp {
                 console.error(error)
             })
     '';
+    adblock = true;
     tray = true;
 }

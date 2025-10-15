@@ -36,9 +36,5 @@
             archerusPkgs.electronApps.fikien
             archerusPkgs.electronApps.nixosSearch
         ];
-        services.swaync = {
-            enable = true;
-            style = builtins.readFile ../common/nwg/swaync.css;
-        };
     };
 }

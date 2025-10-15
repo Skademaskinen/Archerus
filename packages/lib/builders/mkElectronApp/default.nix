@@ -1,14 +1,21 @@
 { lib, pkgs, ... }:
 
-{ appName, url, icon, description ? "An electron app", extraJavascript ? "", tray? false}:
+{ appName, url, iconSha256 ? "", icon ? let
+    domain = builtins.head (builtins.match "https?://([^/]+).*" url);
+in builtins.fetchurl {
+    sha256 = iconSha256;
+    url = "https://www.google.com/s2/favicons?domain=${domain}";
+    name = "${domain}-favicon.ico";
+}, iconOperations ? [], description ? "An electron app", extraJavascript ? "", tray? false, adblock ? false }:
 
 let
+    finalIcon = lib.images.build iconOperations icon;
     electron = pkgs.electron_38;
     name = "${appName}-electron";
     version = "1.0.0";
     userDataDir = "$HOME/.local/share/${name}";
     main = pkgs.writeText "main.js" ''
-        const { app, BrowserWindow, Tray, session, Menu } = require("electron")
+        const { app, BrowserWindow, Tray, session, Menu, shell } = require("electron")
         const { ElectronBlocker } = require('@ghostery/adblocker-electron');
         
         const url = "${url}"
@@ -16,7 +23,7 @@ let
         app.whenReady().then(() => {
             const win = new BrowserWindow({
                 title: '${appName}',
-                icon: __dirname + '${icon}',
+                icon: __dirname + '${finalIcon}',
                 frame: false,       // hides the top bar
                 autoHideMenuBar: true,
                 webPreferences: {
@@ -33,9 +40,11 @@ let
 
             // TODO: Figure out how to declaratively get dependencies to work
             
-            ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
-                blocker.enableBlockingInSession(session.defaultSession);
-            });
+            ${if adblock then ''
+                ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+                    blocker.enableBlockingInSession(session.defaultSession);
+                });
+            '' else ""}
 
             win.webContents.setWindowOpenHandler(({ url }) => {
                 shell.openExternal(url);
@@ -68,7 +77,7 @@ let
                         role: 'quit'
                     }
                 ])
-                let tray = new Tray("${icon}")
+                let tray = new Tray("${finalIcon}")
     
                 tray.setToolTip("${appName}")
                 tray.setTitle("${appName}")
@@ -145,7 +154,7 @@ pkgs.buildNpmPackage (finalAttrs: {
 
         # icon (official logo in PNG/SVG)
         mkdir -p $out/share/icons/hicolor/512x512/apps
-        cp ${icon} $out/share/icons/hicolor/512x512/apps/${name}.png
+        cp ${finalIcon} $out/share/icons/hicolor/512x512/apps/${name}.png
 
         runHook postInstall
     '';
@@ -157,7 +166,8 @@ pkgs.buildNpmPackage (finalAttrs: {
             --add-flags "--user-data-dir=${userDataDir}" \
             --add-flags "--disk-cache-dir=${userDataDir}/cache" \
             --add-flags "--user-agent=Mozilla/5.0 \(X11; Linux x86_64\) AppleWebKit/537.36 \(KHTML, like Gecko\) Chrome/117.0.0.0 Safari/537.36" \
-            --add-flags "--class=${name}"
+            --add-flags "--class=${name}" \
+            --set LD_LIBRARY_PATH "${pkgs.libGL}/lib"
 
     '';
 })

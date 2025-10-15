@@ -20,10 +20,10 @@ nixpkgs.lib.nixosSystem {
             home-manager.users.mast3r.imports = [
                 homeManagerModules.common
                 homeManagerModules.hyprland
+                homeManagerModules.hyprland-themes.fklub
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.spotify
-                #homeManagerModules.sway
                 ./home.nix
                 (lib.load ./symlinks.nix)
             ];
@@ -72,8 +72,10 @@ nixpkgs.lib.nixosSystem {
             programs.nix-ld.enable = true;
 
             programs.nix-ld.libraries = with pkgs; [
-
+                libGL
             ];
+
+            boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
         })
     ];
 }
