@@ -14,7 +14,7 @@ button {
     padding-right: 4px;
 }
 #task-box-focused {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(100, 100, 100, 0.12);
     padding-left: 4px;
     padding-right: 4px;
 }
@@ -30,8 +30,8 @@ button {
 #button-custom:hover {
     border: none;
     border-radius: 3px;
-    background: #222222;
-    color: #fff;
+    background: #aaa;
+    color: #222;
 }
 
 /* Top panel in sample config uses this name */
@@ -54,12 +54,12 @@ button {
 
 /* Controls window in sample config uses this name */
 #controls-window {
-    background-color: rgba(37, 37, 37, 0.95);
+    background-color: #fff;
     border-radius: 0;
     border-style: solid;
     border-width: 1px;
     border-color: rgba(0, 0, 0, 1.0);
-    color: #eeeeee;
+    color: #000;
 }
 
 /* Executors usually behave better in monospace fonts */
@@ -88,24 +88,24 @@ button {
 
 #dwl-tag-occupied {
 	font-family: LigaComicMono;
-	color: #eee;
-    background-color: #006699;
+	color: #000;
+    background-color: #fff;
     padding-left: 3px;
     padding-right: 3px;
 }
 
 #dwl-tag-free {
 	font-family: LigaComicMono;
-	color: #eee;
-    background-color: rgba(32, 50, 90, 1.0);
+	color: #000;
+    background-color: #fff;
     padding-left: 3px;
     padding-right: 3px;
 }
 
 #dwl-tag-urgent {
 	font-family: LigaComicMono;
-	color: #eee;
-    background-color: #ee6600;
+	color: #000;
+    background-color: #fff;
     padding-left: 3px;
     padding-right: 3px;
 }
@@ -120,7 +120,7 @@ button {
     margin: 8px;
     border: none;
     border-radius: 2px;
-    background-color: #222222;
-    color: #fff;
+    background-color: #fff;
+    color: #222;
     border: 2px solid #f00;
 }

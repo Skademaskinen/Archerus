@@ -36,4 +36,8 @@ in
             wallpaper = ", ${lib.wallpapers.arcueid}";
         };
     };
+    services.swaync = {
+        enable = true;
+        style = builtins.readFile ./swaync.css;
+    };
 }
