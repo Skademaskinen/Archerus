@@ -1,4 +1,46 @@
-keymaps: {
+let
+    keymaps = [
+        {
+            key = "<leader>i";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "n";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<A-i>";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "n";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<A-i>";
+            action = "<Cmd>ToggleTerm direction=float<CR>";
+            mode = "t";
+            description = "Toggle terminal in float mode";
+        }
+        {
+            key = "<leader>n";
+            action = "<Cmd>Neotree toggle<CR>";
+            mode = "n";
+            description = "Toggle Neotree";
+        }
+        {
+            key = "<leader>t";
+            action = "<Cmd>Trouble diagnostics toggle<CR>";
+            mode = "n";
+            description = "Toggle Trouble diagnostics";
+        }
+        {
+            key = "<leader>c";
+            action = ":CopilotChatToggle<CR>";
+            mode = "n";
+            description = "Toggle Copilot Chat";
+        }
+
+    ];
+in
+
+{
     programs.nixvim = {
         plugins.which-key = {
             enable = true;
