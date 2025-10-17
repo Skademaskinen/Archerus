@@ -3,5 +3,8 @@
         fugitive = {
             enable = true;
         };
+        gitgutter = {
+            enable = true;
+        };
     };
 }

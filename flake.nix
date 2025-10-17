@@ -8,8 +8,7 @@
         };
         nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
-            url = "github:nix-community/nixvim/nixos-25.05";
-            inputs.nixpkgs.follows = "nixpkgs";
+            url = "github:nix-community/nixvim";
         };
         nixGL = {
             url = "github:nix-community/nixGL";

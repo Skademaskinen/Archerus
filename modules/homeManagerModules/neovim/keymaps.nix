@@ -19,19 +19,13 @@ let
             description = "Toggle terminal in float mode";
         }
         {
-            key = "<leader>n";
+            key = "<A-n>";
             action = "<Cmd>Neotree toggle<CR>";
             mode = "n";
             description = "Toggle Neotree";
         }
         {
-            key = "<leader>t";
-            action = "<Cmd>Trouble diagnostics toggle<CR>";
-            mode = "n";
-            description = "Toggle Trouble diagnostics";
-        }
-        {
-            key = "<leader>c";
+            key = "<A-c>";
             action = ":CopilotChatToggle<CR>";
             mode = "n";
             description = "Toggle Copilot Chat";

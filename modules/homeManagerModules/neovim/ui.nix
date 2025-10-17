@@ -11,6 +11,10 @@
             enable = true;
         };
 
+        nui = {
+            enable = true;
+        };
+
         noice = {
             enable = true;
             settings = {
@@ -40,7 +44,7 @@
                                 { find = "; before #%d+"; }
                             ];
                         };
-                        view = "mini";
+                        view = "notify";
                     }
                 ];
             };
@@ -87,6 +91,10 @@
         };
 
         bufferline = {
+            enable = true;
+        };
+
+        nvim-autopairs = {
             enable = true;
         };
     };

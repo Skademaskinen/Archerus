@@ -2,7 +2,7 @@
 
 {
     imports = [
-        nixvim.homeManagerModules.default
+        nixvim.homeModules.default
         ./theme.nix
         ./lsp-cmp.nix
         ./ui.nix
