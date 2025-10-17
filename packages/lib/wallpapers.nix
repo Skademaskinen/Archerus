@@ -5,6 +5,10 @@ let
         url = "https://rare-gallery.com/mocahbig/20952-Arcueid-BrunestudArcueid-Brunestud-HD-Wallpaper.png";
         sha256 = "sha256:1qyafdhn64khnzqfwr8pnnvrddzwk9gsv59m7h8cp7s4kvki0vc2";
     };
+    kohaku = builtins.fetchurl {
+        url = "https://static.wikia.nocookie.net/typemoon/images/a/aa/MeltyBlood_CUT_Kohaku.png";
+        sha256 = "sha256:1ni9nlqpx41hm5bqp4bzgap4w0laab7nkij0786psrj35q6vp9k9";
+    };
     flogo-repo = builtins.fetchGit {
         url = "https://github.com/Mast3rwaf1z/flogo-spinner";
         rev = "4e995d44febd07cdd41fef466d0404af0e5e3cf0";
@@ -31,6 +35,6 @@ let
 in
 
 {
-    inherit arcueid flogo flogo-inverted fklub fklub-padded-filled flogo-white-background;
+    inherit arcueid kohaku flogo flogo-inverted fklub fklub-padded-filled flogo-white-background;
 }
 

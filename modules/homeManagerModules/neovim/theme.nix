@@ -1,3 +1,5 @@
+inputs:
+
 {
     programs.nixvim = {
             plugins.transparent = {

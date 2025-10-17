@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, archerusPkgs, ... }:
 
 { config, ... }:
 
@@ -39,5 +39,49 @@ in
     services.swaync = {
         enable = true;
         style = builtins.readFile ./swaync.css;
+    };
+
+    programs.fastfetch = {
+        enable = true;
+        settings = {
+            logo = {
+                source = archerusPkgs.lib.images.resize "256x256" archerusPkgs.lib.wallpapers.flogo-inverted;
+            };
+            modules = [
+                "title"
+                "os"
+                "kernel"
+                "uptime"
+                "shell"
+                {
+                    "type" = "display";
+                    "key" = "Resolution";
+                    "compactType" = "original";
+                }
+                "wm"
+                "wmtheme"
+                {
+                    "type" = "terminalfont";
+                    "key" = "font";
+                }
+                "cpu"
+                "gpu"
+                {
+                    "type" = "memory";
+                    "key" = "RAM";
+                    "percent" = {
+                        "type" = 3;
+                    };
+                }
+                {
+                    "type" = "disk";
+                    "folders" = "/";
+                    "key" = "Disk";
+                    "percent" = {
+                        "type" = 3;
+                    };
+                }
+            ];
+        };
     };
 }

@@ -2,13 +2,13 @@
 
 {
     imports = [
-        nixvim.homeManagerModules.default
-        ./theme.nix
-        ./lsp-cmp.nix
-        ./ui.nix
-        ./keymaps.nix
-        ./git.nix
-        ./copilot.nix
+        nixvim.homeModules.default
+        (lib.load ./theme.nix)
+        (lib.load ./lsp-cmp.nix)
+        (lib.load ./ui.nix)
+        (lib.load ./keymaps.nix)
+        (lib.load ./git.nix)
+        (lib.load ./copilot.nix)
     ];
     programs.nixvim = {
         enable = true;

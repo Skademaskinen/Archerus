@@ -1,3 +1,5 @@
+inputs:
+
 {
     programs.nixvim.plugins = {
         lsp = {
@@ -31,6 +33,21 @@
 
         lsp-signature = {
             enable = true;
+            settings = {
+                extra_trigger_chars = [
+                    "("
+                    ","
+                ];
+                hint_prefix = {
+                    above = "↙ ";
+                    below = "↖ ";
+                    current = "← ";
+                };
+                padding = " ";
+                shadow_guibg = "#121315";
+                toggle_key = "<M-x>";
+                floating_window = false;
+            };
         };
 
         cmp = {
@@ -40,7 +57,6 @@
                 { name = "nvim_lsp"; priority = 400; }
                 { name = "path"; priority = 300; }
                 { name = "buffer"; priority = 200; }
-                { name = "copilot"; priority = 100; }
             ];
             settings.mapping = {
                 "<C-Space>" = "cmp.mapping.complete()";

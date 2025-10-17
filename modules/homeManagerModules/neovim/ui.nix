@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, archerusPkgs, ... }:
 
 {
     programs.nixvim.plugins = {
@@ -8,6 +8,13 @@
         };
 
         notify = {
+            enable = true;
+            settings = {
+                background_colour = "#000000";
+            };
+        };
+
+        nui = {
             enable = true;
         };
 
@@ -40,7 +47,7 @@
                                 { find = "; before #%d+"; }
                             ];
                         };
-                        view = "mini";
+                        view = "notify";
                     }
                 ];
             };
@@ -64,7 +71,8 @@
             enable = true;
             settings.config = {
                 header = pkgs.lib.splitString "\n" (builtins.readFile (pkgs.runCommand "header.txt" {} ''
-                    ${pkgs.figlet}/bin/figlet -f speed neovim > $out
+                    cat ${archerusPkgs.lib.images.toAscii 40 "${pkgs.neovim}/share/icons/hicolor/128x128/apps/nvim.png"} > $out
+                    ${pkgs.figlet}/bin/figlet -f speed neovim >> $out
                 ''));
             };
         };
@@ -87,6 +95,10 @@
         };
 
         bufferline = {
+            enable = true;
+        };
+
+        nvim-autopairs = {
             enable = true;
         };
     };
