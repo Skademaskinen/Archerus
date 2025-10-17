@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, archerusPkgs, ... }:
 
 {
     programs.nixvim.plugins = {
@@ -71,7 +71,8 @@
             enable = true;
             settings.config = {
                 header = pkgs.lib.splitString "\n" (builtins.readFile (pkgs.runCommand "header.txt" {} ''
-                    ${pkgs.figlet}/bin/figlet -f speed neovim > $out
+                    cat ${archerusPkgs.lib.images.toAscii 40 "${pkgs.neovim}/share/icons/hicolor/128x128/apps/nvim.png"} > $out
+                    ${pkgs.figlet}/bin/figlet -f speed neovim >> $out
                 ''));
             };
         };

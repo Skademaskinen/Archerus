@@ -21,5 +21,8 @@
                 enabled = true;
             };
         };
+        plugins.copilot-chat = {
+            enable = true;
+        };
     };
 }

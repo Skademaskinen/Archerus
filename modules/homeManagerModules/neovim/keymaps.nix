@@ -1,3 +1,5 @@
+inputs:
+
 let
     keymaps = [
         {

@@ -21,6 +21,10 @@ let
     pad           = percent: mkOp "-set option:pad ${toString percent}% -bordercolor none -border ${toString percent}%";
     fill          = color: mkOp "-background ${color} -alpha remove -alpha off";
 
+    toAscii       = width: path: pkgs.runCommand "image.txt" {} ''
+        ${pkgs.jp2a}/bin/jp2a --width=${builtins.toString width} "${path}" > $out
+    '';
+
     # build: foldr over ops to compose them
     build = ops: (path:
         pkgs.lib.lists.foldr (op: acc: op acc) path ops
@@ -28,6 +32,6 @@ let
 
 in {
     inherit mkOp build
-        negate invert crop cropToContent resize pad fill;
+        negate invert crop cropToContent resize pad fill toAscii;
 }
 
