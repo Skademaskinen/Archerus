@@ -1,4 +1,4 @@
-{ nixos-generators, nixpkgs, system, self, home-manager, pkgs, ... }:
+{ nixos-generators, archerusPkgs, nixpkgs, system, self, home-manager, pkgs, ... }:
 
 
 let
