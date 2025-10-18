@@ -1,4 +1,4 @@
-inputs @ { self, nixpkgs, lib, system, ... }:
+inputs @ { self, nixpkgs, archerusPkgs, lib, system, ... }:
 
 
 
@@ -55,6 +55,17 @@ nixpkgs.lib.nixosSystem {
             hardware.graphics.enable = true;
 
             services.xserver.videoDrivers = [ "nvidia" ];
+
+            environment.systemPackages = [
+                archerusPkgs.electronApps.chatgpt
+                archerusPkgs.electronApps.youtube
+                archerusPkgs.electronApps.stregsystemet
+                archerusPkgs.electronApps.fikien
+                archerusPkgs.electronApps.nixosSearch
+                pkgs.vesktop
+                pkgs.firefox
+                pkgs.discord
+            ];
 
         })
     ];

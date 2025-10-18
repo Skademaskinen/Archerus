@@ -4,15 +4,7 @@
 
 {
     environment.systemPackages = with pkgs; [
-        firefox
-        discord
-        vesktop
         vimix-cursors
-        nextcloud-client
-        protonmail-desktop
-        protonmail-bridge-gui
-        thunderbird
-        keepassxc
         feh
     ];
 
