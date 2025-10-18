@@ -3,7 +3,7 @@
 
 nixos-generators.nixosGenerate {
     inherit system;
-    format = "iso";
+    format = "install-iso";
 modules = with self.nixosModules; [
         common
         desktop
@@ -35,6 +35,8 @@ modules = with self.nixosModules; [
                     home.stateVersion = "25.05";
                 }
             ];
+
+            networking.networkmanager.enable = pkgs.lib.mkForce false;
         }
     ];
 }

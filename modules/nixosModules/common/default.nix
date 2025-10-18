@@ -15,7 +15,7 @@ inputs:
             vim
             fastfetch
         ];
-        networking.networkmanager.enable = true;
+        networking.networkmanager.enable = lib.mkDefault true;
     
         nixpkgs.config.allowUnfree = true;
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
