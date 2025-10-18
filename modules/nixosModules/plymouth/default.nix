@@ -14,7 +14,7 @@ inputs:
         };
         consoleLogLevel = 0;
         initrd.verbose = false;
-        initrd.systemd.enable = true;
+        initrd.systemd.enable = pkgs.lib.mkDefault true;
         kernelParams = [
             "quiet"
             "splash"

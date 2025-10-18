@@ -28,7 +28,6 @@
         };
 
         home.packages = with pkgs; [
-            cinny-desktop
             bat
             archerusPkgs.electronApps.chatgpt
             archerusPkgs.electronApps.youtube

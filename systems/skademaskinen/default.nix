@@ -23,7 +23,6 @@ nixpkgs.lib.nixosSystem {
 
         # Hosted projects
         nixosModules.server.base
-        nixosModules.server.dummyProject
         nixosModules.server.homepage
         nixosModules.server.folkevognen
         nixosModules.server.putricide

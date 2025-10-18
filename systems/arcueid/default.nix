@@ -1,4 +1,4 @@
-inputs @ { self, nixpkgs, lib, system, ... }:
+inputs @ { self, nixpkgs, lib, archerusPkgs, system, ... }:
 
 nixpkgs.lib.nixosSystem {
     inherit system;
@@ -20,7 +20,7 @@ nixpkgs.lib.nixosSystem {
             home-manager.users.mast3r.imports = [
                 homeManagerModules.common
                 homeManagerModules.hyprland
-                homeManagerModules.hyprland-themes.fklub
+                homeManagerModules.hyprland-themes.main
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.spotify
@@ -67,7 +67,16 @@ nixpkgs.lib.nixosSystem {
                 trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
                 trusted-users = [ "root" "mast3r" ];
             };
-            environment.systemPackages = [ pkgs.cachix ];
+            environment.systemPackages = [
+                archerusPkgs.electronApps.chatgpt
+                archerusPkgs.electronApps.youtube
+                archerusPkgs.electronApps.stregsystemet
+                archerusPkgs.electronApps.fikien
+                archerusPkgs.electronApps.nixosSearch
+                pkgs.vesktop
+                pkgs.firefox
+                pkgs.discord
+            ];
 
             programs.nix-ld.enable = true;
 

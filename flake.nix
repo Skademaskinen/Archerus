@@ -14,6 +14,10 @@
             url = "github:nix-community/nixGL";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nixos-generators = {
+            url = "github:nix-community/nixos-generators";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
         nix-gaming = {
             url = "github:fufexan/nix-gaming";
             inputs.nixpkgs.follows = "nixpkgs";

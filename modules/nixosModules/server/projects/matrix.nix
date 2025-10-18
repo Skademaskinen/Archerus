@@ -38,7 +38,7 @@ in
         settings.global.port = cfg.port;
         settings.global.server_name = "${config.skade.baseDomain}";
         settings.global.database_backend = "rocksdb";
-        settings.global.allow_registration = true;
+        settings.global.allow_registration = false;
         settings.global.trusted_servers = ["matrix.org"];
     };
     config.services.nginx.virtualHosts."matrix.${config.skade.baseDomain}" = mkProxy config {

@@ -4,15 +4,7 @@
 
 {
     environment.systemPackages = with pkgs; [
-        firefox
-        discord
-        vesktop
         vimix-cursors
-        nextcloud-client
-        protonmail-desktop
-        protonmail-bridge-gui
-        thunderbird
-        keepassxc
         feh
     ];
 
@@ -64,11 +56,5 @@
 
     environment.variables = {
         NIXOS_OZONE_WL = "1";
-        SUDO_PROMPT="[🔒 | %u] Password: ";
     };
-
-    security.sudo.extraConfig = ''
-        Defaults pwfeedback
-    '';
-
 }

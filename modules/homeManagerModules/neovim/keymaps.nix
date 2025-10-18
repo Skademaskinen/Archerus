@@ -10,13 +10,13 @@ let
         }
         {
             key = "<A-i>";
-            action = "<Cmd>ToggleTerm direction=float<CR>";
+            action = "<Cmd>ToggleTerm direction=float name=Terminal<CR>";
             mode = "n";
             description = "Toggle terminal in float mode";
         }
         {
             key = "<A-i>";
-            action = "<Cmd>ToggleTerm direction=float<CR>";
+            action = "<Cmd>ToggleTerm direction=float name=Terminal<CR>";
             mode = "t";
             description = "Toggle terminal in float mode";
         }
@@ -27,8 +27,8 @@ let
             description = "Toggle Neotree";
         }
         {
-            key = "<A-c>";
-            action = ":CopilotChatToggle<CR>";
+            key = "<A-u>";
+            action = "<Cmd>CopilotChatToggle<CR>";
             mode = "n";
             description = "Toggle Copilot Chat";
         }

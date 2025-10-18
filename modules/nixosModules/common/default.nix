@@ -15,10 +15,10 @@ inputs:
             vim
             fastfetch
         ];
-        networking.networkmanager.enable = true;
+        networking.networkmanager.enable = lib.mkDefault true;
     
         nixpkgs.config.allowUnfree = true;
-        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+        nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operator" ];
     
         time.timeZone = "Europe/Copenhagen";
     
@@ -43,6 +43,14 @@ inputs:
 
         nix.extraOptions = ''
             warn-dirty = false
+        '';
+
+        environment.variables = {
+            SUDO_PROMPT="[🔒 | %u] Password: ";
+        };
+    
+        security.sudo.extraConfig = ''
+            Defaults pwfeedback
         '';
     };
 }
