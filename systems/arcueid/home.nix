@@ -3,8 +3,8 @@
 {
 
     wayland.windowManager.hyprland.extraConfig = ''
-        monitor = DP-1, 3840x2160, 1920x0, 2
-        monitor = DP-3, 3840x2160, 0x0, 2
+        monitor = DP-3, 3840x2160, 1920x0, 2
+        monitor = DP-1, 3840x2160, 0x0, 2
         exec-once = ${pkgs.ckb-next}/bin/ckb-next -b
         exec-once = ${pkgs.openrgb}/bin/openrgb --startminimized
         exec-once = ${pkgs.openrgb}/bin/openrgb -d 0 -m direct -c "FF1000"
@@ -22,7 +22,7 @@
             vrr = 1
         }
     '' + builtins.concatStringsSep "\n" (map (index:
-        "workspace = ${builtins.toString index},monitor:DP-${if (lib.mod index 2 == 0) then "1" else "3"}"
+        "workspace = ${builtins.toString index},monitor:DP-${if (lib.mod index 2 == 0) then "3" else "1"}"
     ) (lib.lists.range 1 10));
 
     skade.hyprland.battery.enable = false;
