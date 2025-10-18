@@ -23,6 +23,23 @@
         };
         plugins.copilot-chat = {
             enable = true;
+            settings = {
+                window = {
+                    layout = "float";
+                    border = "rounded";
+                    title = "🤖 AI Assistant";
+                    zindex = 100;
+                };
+
+                headers = {
+                    user = "👤 You";
+                    assistant = "🤖 Copilot";
+                    tool = "🔧 Tool";
+                };
+
+                separator = "━━";
+                auto_fold = true;
+            };
         };
     };
 }

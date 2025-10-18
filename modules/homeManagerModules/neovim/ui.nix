@@ -92,6 +92,10 @@
                     return fmt("%d: %s", term.id, term:_display_name())
                 end
             '';
+            settings.float_opts = {
+                border = "curved";
+
+            };
         };
 
         bufferline = {

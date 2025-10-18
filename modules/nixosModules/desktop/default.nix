@@ -64,11 +64,5 @@
 
     environment.variables = {
         NIXOS_OZONE_WL = "1";
-        SUDO_PROMPT="[🔒 | %u] Password: ";
     };
-
-    security.sudo.extraConfig = ''
-        Defaults pwfeedback
-    '';
-
 }

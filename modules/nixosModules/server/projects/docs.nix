@@ -1,4 +1,4 @@
-{ lib, system, self, ... }:
+{ lib, system, self, archerusPkgs, ... }:
 
 let
     _lib = lib;
@@ -31,11 +31,24 @@ let
                 </html>
             '';
             "/Options" = htmlFile docs;
+            "/fklub" = htmlFile ''
+                <!DOCTYPE HTML>
+                <html>
+                    <h1>F-NixOS</h1>
+                    <a href="F-NixOS.iso">F-NixOS ISO image</a>
+                </html>
+            '';
         };
         port = 8095;
-        extra_files."/architecture-diagram.png" = {
-            path = architectureDiagram;
-            type = "image/png";
+        extra_files = {
+            "/architecture-diagram.png" = {
+                path = architectureDiagram;
+                type = "image/png";
+            };
+            "/F-NixOS.iso" = {
+                path = "${archerusPkgs.fIso}/iso/${archerusPkgs.fIso.isoName}";
+                type = "application/x-iso9660-image";
+            };
         };
     };
 in

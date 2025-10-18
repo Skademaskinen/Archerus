@@ -44,5 +44,13 @@ inputs:
         nix.extraOptions = ''
             warn-dirty = false
         '';
+
+        environment.variables = {
+            SUDO_PROMPT="[🔒 | %u] Password: ";
+        };
+    
+        security.sudo.extraConfig = ''
+            Defaults pwfeedback
+        '';
     };
 }
