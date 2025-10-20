@@ -1,9 +1,12 @@
-inputs @ { self, nixpkgs, lib, archerusPkgs, system, ... }:
+inputs @ { self, nixpkgs, home-manager, chaotic, lib, archerusPkgs, system, ... }:
 
 nixpkgs.lib.nixosSystem {
     inherit system;
     modules = with self; [
-        inputs.home-manager.nixosModules.default
+        home-manager.nixosModules.default
+        chaotic.nixosModules.nyx-cache
+        chaotic.nixosModules.nyx-overlay
+        chaotic.nixosModules.nyx-registry
         nixosModules.common
         nixosModules.desktop
         nixosModules.gaming
@@ -84,7 +87,10 @@ nixpkgs.lib.nixosSystem {
                 libGL
             ];
 
-            boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+            boot.kernelPackages = pkgs.linuxPackages_cachyos;
+            system.modulesTree = [
+                (pkgs.lib.getOutput "modules" pkgs.linuxPackages_cachyos.kernel)
+            ];
         })
     ];
 }
