@@ -125,6 +125,7 @@ in
         wine
         protonup-qt
         wowup-cf
+        prismlauncher
         archerusPkgs.boltLauncher
         nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
