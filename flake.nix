@@ -6,6 +6,7 @@
         nixpkgs = {
             url = "nixpkgs/nixos-25.05";
         };
+        chaotic.url = "github:chaotic-cx/nyx";
         nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
             url = "github:nix-community/nixvim/nixos-25.05";
