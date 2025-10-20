@@ -6,6 +6,7 @@
         nixpkgs = {
             url = "nixpkgs/nixos-25.05";
         };
+        chaotic.url = "github:chaotic-cx/nyx";
         nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
             url = "github:nix-community/nixvim/nixos-25.05";
@@ -20,6 +21,10 @@
         };
         nix-gaming = {
             url = "github:fufexan/nix-gaming";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        nix-minecraft = {
+            url = "github:Infinidoge/nix-minecraft";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         home-manager = {
