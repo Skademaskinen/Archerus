@@ -14,13 +14,23 @@ let
     whitelist = {
         mast3r_waf1z = "cb7971ff-7089-429b-ad5f-609ffbcd2ddb";
         Power_Supply = "010e5ef3-a1fb-4c2e-819c-35c96285fc1e";
+        DBurley93 = "fad4dfbc-c577-4d7e-ac1d-cf7f74229c07";
+        Jinxy_93 = "6983cea2-891d-487b-9334-74cf827baf9e";
     };
-    ops = {
-        uuid = "cb7971ff-7089-429b-ad5f-609ffbcd2ddb";
-        name = "mast3r_waf1z";
-        level = 4;
-        bypassesPlayerLimit = true;
-    };
+    ops = [
+        {
+            uuid = "cb7971ff-7089-429b-ad5f-609ffbcd2ddb";
+            name = "mast3r_waf1z";
+            level = 4;
+            bypassesPlayerLimit = true;
+        }
+        {
+            uuid = "010e5ef3-a1fb-4c2e-819c-35c96285fc1e";
+            name = "Power_Supply";
+            level = 4;
+            bypassesPlayerLimit = true;
+        }
+    ];
 in
 
 { config, ... }:
@@ -52,8 +62,8 @@ in
                     "velocity.toml".value = {
                         config-version = "2.7";
                         bind = "0.0.0.0:25565";
-                        motd = "<<#ff5500>${config.networking.hostName} <reset>>                       <u>https://${config.skade.baseDomain}</u>
-                        Minecraft";
+                        motd = "< <#ff5500>${config.networking.hostName} <reset>>                      <u>https://${config.skade.baseDomain}</u>
+                        Minecraft on NixOS";
                         show-max-players = 50;
                         online-mode = true;
                         force-key-authentication = true;
@@ -121,6 +131,7 @@ in
                 serverProperties = {
                     server-port = 25570;
                     online-mode = false;
+                    force-gamemode = true;
                     gamemode = "adventure";
                     allow-nether = false;
                     difficulty = "peaceful";
@@ -133,6 +144,16 @@ in
                     view-distance = 20;
                     enforce-whitelist = true;
                     white-list = true;
+                    level-type = "FLAT";
+                    generator-settings = builtins.toJSON {
+                        layers = [
+                            {
+                                block = "air";
+                                height = "1";
+                            }
+                        ];
+                        biome = "the_void";
+                    };
                 };
                 files = {
                     "ops.json".value = ops;
@@ -165,12 +186,12 @@ in
                     server-port = 25571;
                     online-mode = false;
                     gamemode = "survival";
-                    allow-nether = false;
+                    allow-nether = true;
                     difficulty = "hard";
-                    pvp = false;
-                    spawn-animals = false;
-                    spawn-monsters = false;
-                    spawn-npcs = false;
+                    pvp = true;
+                    spawn-animals = true;
+                    spawn-monsters = true;
+                    spawn-npcs = true;
                     spawn-protection = 256;
                     simulation-distance = 8;
                     view-distance = 20;
@@ -199,12 +220,12 @@ in
                     server-port = 25572;
                     online-mode = false;
                     gamemode = "survival";
-                    allow-nether = false;
+                    allow-nether = true;
                     difficulty = "hard";
-                    pvp = false;
-                    spawn-animals = false;
-                    spawn-monsters = false;
-                    spawn-npcs = false;
+                    pvp = true;
+                    spawn-animals = true;
+                    spawn-monsters = true;
+                    spawn-npcs = true;
                     spawn-protection = 256;
                     simulation-distance = 8;
                     view-distance = 20;
