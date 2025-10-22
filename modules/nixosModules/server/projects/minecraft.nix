@@ -1,9 +1,9 @@
-{ pkgs, system, nix-minecraft, ... }:
+{ pkgs, lib, system, nix-minecraft, ... }:
 
 let
     servers = nix-minecraft.legacyPackages.${system};
     secret = "velocity-secret";
-
+    mkProxy = lib.mkProxy;
     proxies = {
         velocity = {
             inherit secret;
@@ -16,6 +16,9 @@ let
         Power_Supply = "010e5ef3-a1fb-4c2e-819c-35c96285fc1e";
         DBurley93 = "fad4dfbc-c577-4d7e-ac1d-cf7f74229c07";
         Jinxy_93 = "6983cea2-891d-487b-9334-74cf827baf9e";
+        herpinmaderp = "9c0c8e6c-ee7b-429b-a690-83f93495fe44";
+        Wesant = "712af801-9089-4a52-b8bb-3dfff399bdc3";
+        EpiLunaria = "51f39653-bdfb-4149-8841-3caef174aeb7";
     };
     ops = [
         {
@@ -34,6 +37,10 @@ let
 in
 
 { config, ... }:
+
+let
+    secure = config.skade.baseDomain != "localhost";
+in
 
 {
     imports = [
@@ -312,8 +319,12 @@ in
                         sha256 = "sha256-z1qsXFV5sc6xsr0loV8eLcySJvV2cBY60fhBsvkFuC4=";
                     };
                     "mods/dynmap.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/fRQREgAc/versions/UVyr4lHI/Dynmap-3.7-beta-4-fabric-1.20.jar";
-                        sha256 = "sha256-Zmo3ugxmAtWu2HIf3JtOALvNfm3NWdOPVRjmS7HFkzU=";
+                        url = "https://cdn.modrinth.com/data/fRQREgAc/versions/IIQSYMHC/Dynmap-3.7-beta-6-fabric-1.20.jar";
+                        sha256 = "sha256-iDtnQSFzRkvaaNGr6Bjm4EbdJQZB0u75JpiPTsrF+is=";
+                    };
+                    "mods/jei.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/u6dRKJwZ/versions/ziulPKuI/jei-1.20.1-fabric-15.20.0.116.jar";
+                        sha256 = "sha256-/B6JyHTjHm8MO5qaHacOpJw9ae4oQDsrgIBRpfGMgac=";
                     };
                 };
             };
@@ -343,4 +354,11 @@ in
             guest.port = 25572;
         }
     ];
+    services.nginx.virtualHosts."modded.${config.skade.baseDomain}" = mkProxy config {
+        inherit secure;
+        path = "/";
+        location = "http://localhost:8123";
+    };
+    skade.docs.vhosts."modded.${config.skade.baseDomain}".port = 8123;
+
 }
