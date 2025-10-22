@@ -166,9 +166,9 @@ in
                         url = "https://github.com/DecentSoftware-eu/DecentHolograms/releases/download/2.8.9/DecentHolograms-2.8.9.jar";
                         sha256 = "sha256-rEV5rbPXA5WFPwU+K3XO0LMC2i0PvTA0SYtE/1wTMbA=";
                     };
-                    "plugins/stargate.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/kS8Pugaw/versions/Moh1fu3y/Stargate-0.11.5.10.jar";
-                        sha256 = "sha256-hoqfEsDCML8EULlBp3hNOJhPUIdZKDNk4lTi5fDqVlw=";
+                    "plugins/iportal.jar" = pkgs.fetchurl {
+                        url = "https://github.com/JuL1En1997/Iportal/releases/download/major-update/Iportal-Updated-2.0.jar";
+                        sha256 = "sha256-uF4Izym8nvQVo8jhm41AG5re4RrUYUmVjFPsHIuBiyI=";
                     };
                 };
             };
@@ -311,10 +311,10 @@ in
                         url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/dJioNlO8/crossstitch-0.1.6.jar";
                         sha256 = "sha256-z1qsXFV5sc6xsr0loV8eLcySJvV2cBY60fhBsvkFuC4=";
                     };
-                    #"mods/dynmap.jar" = pkgs.fetchurl {
-                    #    url = "https://cdn.modrinth.com/data/fRQREgAc/versions/ipBhc6VW/Dynmap-3.7-beta-6-fabric-1.21.jar";
-                    #    sha256 = "sha256-zcNNfJkuQTW3WCh4peU94P7KasGNBoma4FyrOH0BYfw=";
-                    #};
+                    "mods/dynmap.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/fRQREgAc/versions/UVyr4lHI/Dynmap-3.7-beta-4-fabric-1.20.jar";
+                        sha256 = "sha256-Zmo3ugxmAtWu2HIf3JtOALvNfm3NWdOPVRjmS7HFkzU=";
+                    };
                 };
             };
         };
