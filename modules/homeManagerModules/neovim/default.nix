@@ -25,5 +25,10 @@
             vim.g.pyindent_close_paren = 0
             vim.o.number = true
         '';
+
+        extraPlugins = [
+            pkgs.vimPlugins.haskell-vim
+            pkgs.vimPlugins.haskell-tools-nvim
+        ];
     };
 }

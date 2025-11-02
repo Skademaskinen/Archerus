@@ -45,6 +45,13 @@ let
                     <a href="F-NixOS.iso">F-NixOS ISO image</a>
                 </html>
             '';
+            "/ModdedMinecraft" = htmlFile ''
+                <!DOCTYPE HTML>
+                <html>
+                    This is just a short page to download my minecraft modpack.<br>
+                    <a href="modded.skade.dev.json">Download import list for prismlauncher</a>
+                </html>
+            '';
         };
         port = 8095;
         extra_files = {
@@ -55,6 +62,55 @@ let
             "/F-NixOS.iso" = {
                 path = "${archerusPkgs.fNixos}/iso/${archerusPkgs.fNixos.isoName}";
                 type = "application/x-iso9660-image";
+            };
+            "/modded.skade.dev.json" = {
+                path = pkgs.writeText "modded.skade.dev.json" (builtins.toJSON [
+                    {
+                        name = "Botarium";
+                        version = "2.3.4";
+                    }
+                    {
+                        name = "Create";
+                        version = "0.5.1-j-build.1631+mc1.20.1";
+                    }
+                    {
+                        name = "Create Crafts & Additions";
+                        version = "NONE";
+                    }
+                    {
+                        name = "Create Enchantment Industry";
+                        version = "1.2.16";
+                    }
+                    {
+                        name = "Create Nuclear";
+                        version = "1.20.1";
+                    }
+                    {
+                        name = "Create Ore Excavation";
+                        version = "1.5.4";
+                    }
+                    {
+                        name = "Create: New Age";
+                        version = "1.1.2";
+                    }
+                    {
+                        name = "Create: Steam 'n' Rails";
+                        version = "1.6.9+fabric-mc1.20.1";
+                    }
+                    {
+                        name = "Create: Structures";
+                        version = "1.1.0";
+                    }
+                    {
+                        name = "Fabric API";
+                        version = "0.92.6+1.20.1";
+                    }
+                    {
+                        name = "Immersive Portals";
+                        version = "3.3.9";
+                    }
+                ]);
+                type = "text/plain";
             };
         };
     };

@@ -1,4 +1,4 @@
-inputs:
+{ pkgs, ... }:
 
 {
     programs.nixvim.plugins = {
@@ -70,6 +70,10 @@ inputs:
         };
 
         trouble = {
+            enable = true;
+        };
+
+        haskell-scope-highlighting = {
             enable = true;
         };
     };
