@@ -39,6 +39,7 @@ nixpkgs.lib.nixosSystem {
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             networking.extraHosts = ''
                 10.225.171.51 skade.dev
+                10.225.171.51 modded.skade.dev
             '';
             system.stateVersion = "24.11";
 

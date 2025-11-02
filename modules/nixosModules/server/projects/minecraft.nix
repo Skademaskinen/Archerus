@@ -19,6 +19,7 @@ let
         herpinmaderp = "9c0c8e6c-ee7b-429b-a690-83f93495fe44";
         Wesant = "712af801-9089-4a52-b8bb-3dfff399bdc3";
         EpiLunaria = "51f39653-bdfb-4149-8841-3caef174aeb7";
+        GO_AWAY_77 = "eb8b3aa6-3a1f-4dda-b2f1-a0e05e939f7f";
     };
     ops = [
         {
@@ -223,6 +224,8 @@ in
                 enable = true;
                 package = servers.fabricServers.fabric-1_20_1;
 
+                jvmOpts = "-Xmx4G -Xms2G";
+
                 serverProperties = {
                     server-port = 25572;
                     online-mode = false;
@@ -233,7 +236,7 @@ in
                     spawn-animals = true;
                     spawn-monsters = true;
                     spawn-npcs = true;
-                    spawn-protection = 256;
+                    #spawn-protection = 256;
                     simulation-distance = 8;
                     view-distance = 20;
                     enforce-whitelist = true;
@@ -310,10 +313,10 @@ in
                     #    url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/srWerknn/worldedit-mod-7.3.5.jar";
                     #    sha256 = "sha256-dtJQ9DMZ2RqVlIzUwHRtydFdXpV3c7hDIZhB0ftsn3I=";
                     #};
-                    "mods/immersive-portals.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/zJpHMkdD/versions/155jtqJi/immersive-portals-3.3.9-mc1.20.1-fabric.jar";
-                        sha256 = "sha256-vrNfdLmLU3t7V3Q7aFT88ZAAqabZP2EfZJQBOD5mAE4=";
-                    };
+                    #"mods/immersive-portals.jar" = pkgs.fetchurl {
+                    #    url = "https://cdn.modrinth.com/data/zJpHMkdD/versions/155jtqJi/immersive-portals-3.3.9-mc1.20.1-fabric.jar";
+                    #    sha256 = "sha256-vrNfdLmLU3t7V3Q7aFT88ZAAqabZP2EfZJQBOD5mAE4=";
+                    #};
                     "mods/cross-stitch.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/dJioNlO8/crossstitch-0.1.6.jar";
                         sha256 = "sha256-z1qsXFV5sc6xsr0loV8eLcySJvV2cBY60fhBsvkFuC4=";
