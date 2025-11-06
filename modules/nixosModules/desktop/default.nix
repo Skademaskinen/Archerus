@@ -18,16 +18,20 @@
     };
     programs.thunderbird.enable = true;
 
-    services.xserver.enable = true;
-    services.displayManager.sddm = {
+    services.displayManager.cosmic-greeter = {
         enable = true;
-        wayland.enable = true;
-        wayland.compositor = "weston";
-        theme = "elegant-sddm";
-        extraPackages = [
-            pkgs.elegant-sddm
-        ];
+
     };
+    #services.xserver.enable = true;
+    #services.displayManager.sddm = {
+    #    enable = true;
+    #    wayland.enable = true;
+    #    wayland.compositor = "weston";
+    #    theme = "elegant-sddm";
+    #    extraPackages = [
+    #        pkgs.elegant-sddm
+    #    ];
+    #};
     programs.hyprland.enable = true;
     programs.sway.enable = true;
 
@@ -37,7 +41,7 @@
         nerd-fonts.droid-sans-mono
 	    nerd-fonts.fira-code
         fira-code-symbols
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         noto-fonts
         liberation_ttf
         mplus-outline-fonts.githubRelease

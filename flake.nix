@@ -4,12 +4,12 @@
     inputs = {
         # external depends
         nixpkgs = {
-            url = "nixpkgs/nixos-25.05";
+            url = "nixpkgs/nixos-unstable";
         };
         chaotic.url = "github:chaotic-cx/nyx";
         nixos-hardware.url = "github:nixos/nixos-hardware";
         nixvim = {
-            url = "github:nix-community/nixvim/nixos-25.05";
+            url = "github:nix-community/nixvim/main";
         };
         nixGL = {
             url = "github:nix-community/nixGL";
@@ -28,7 +28,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         home-manager = {
-            url = "github:nix-community/home-manager/release-25.05";
+            url = "github:nix-community/home-manager/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         gradle2nix = {

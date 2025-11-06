@@ -59,7 +59,7 @@ in {
                     kb_layout = "dk";
                 };
                 gestures = {
-                    workspace_swipe = "true";
+                    #workspace_swipe = "true";
                     workspace_swipe_forever = "true";
                 };
 
@@ -71,11 +71,12 @@ in {
                 ];
             };
         };
-        #programs.hyprlock.enable = true;
+        programs.hyprlock.enable = true;
         #services.hypridle.enable = true;
 
 
         home.packages = with pkgs; [
+            hyprlock
             hyprpaper
             vimix-cursors
             wl-clipboard

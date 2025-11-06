@@ -68,9 +68,7 @@ nixpkgs.lib.nixosSystem {
             ];
 
             # wlroots is not perfect, use gnome as a fallback
-            services.xserver = {
-                desktopManager.gnome.enable = true;
-            };
+            services.desktopManager.gnome.enable = true;
         })
     ];
 }
