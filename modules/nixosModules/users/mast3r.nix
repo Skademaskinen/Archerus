@@ -11,13 +11,15 @@
         # run everything in wayland unless i explicitly tell it to run in xwayland
         packages = with pkgs; [
             quickemu
-            (writeScriptBin "x" ''
-                export DISPLAY=:0
-                $@
+            (writeScriptBin "run-x" ''
+                #!/usr/bin/env bash
+                unset WAYLAND_DISPLAY
+                "$@"
             '')
-            (writeScriptBin "w" ''
-                export DISPLAY=""
-                $@
+            (writeScriptBin "run-w" ''
+                #!/usr/bin/env bash
+                unset DISPLAY
+                "$@"
             '')
         ];
     };

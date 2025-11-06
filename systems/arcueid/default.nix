@@ -92,6 +92,9 @@ nixpkgs.lib.nixosSystem {
             system.modulesTree = [
                 (pkgs.lib.getOutput "modules" pkgs.linuxPackages_cachyos.kernel)
             ];
+            nixpkgs.config.permittedInsecurePackages = [
+                "mbedtls-2.28.10"
+            ];
         })
     ];
 }

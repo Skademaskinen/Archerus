@@ -59,10 +59,10 @@ let
                 path = architectureDiagram;
                 type = "image/png";
             };
-            "/F-NixOS.iso" = {
-                path = "${archerusPkgs.fNixos}/iso/${archerusPkgs.fNixos.isoName}";
-                type = "application/x-iso9660-image";
-            };
+            #"/F-NixOS.iso" = {
+            #    path = "${archerusPkgs.fNixos}/iso/${archerusPkgs.fNixos.isoName}";
+            #    type = "application/x-iso9660-image";
+            #};
             "/modded.skade.dev.json" = {
                 path = pkgs.writeText "modded.skade.dev.json" (builtins.toJSON [
                     {
@@ -106,8 +106,44 @@ let
                         version = "0.92.6+1.20.1";
                     }
                     {
-                        name = "Immersive Portals";
-                        version = "3.3.9";
+                        name = "Indium";
+                        version = "1.0.36+mc1.20.1";
+                    }
+                    {
+                        name = "Iris";
+                        version = "1.7.6+mc1.20.1";
+                    }
+                    {
+                        name = "Iris Flywheel Compat";
+                        version = "1.1.4";
+                    }
+                    {
+                        name = "Jade";
+                        version = "11.13.1+fabric";
+                    }
+                    {
+                        name = "Just Enough Items";
+                        version = "15.20.0.116";
+                    }
+                    {
+                        name = "MaLiLib";
+                        version = "0.16.3";
+                    }
+                    {
+                        name = "MiniHUD";
+                        version = "0.27.1";
+                    }
+                    {
+                        name = "Sodium";
+                        version = "0.5.13+mc1.20.1";
+                    }
+                    {
+                        name = "WaylandFix";
+                        version = "1.1";
+                    }
+                    {
+                        name = "Xaero's Minimap";
+                        version = "25.2.10";
                     }
                 ]);
                 type = "text/plain";
