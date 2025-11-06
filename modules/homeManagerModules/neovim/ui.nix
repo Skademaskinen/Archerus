@@ -105,5 +105,10 @@
         nvim-autopairs = {
             enable = true;
         };
+
+        guess-indent = {
+            enable = true;
+        };
     };
+
 }

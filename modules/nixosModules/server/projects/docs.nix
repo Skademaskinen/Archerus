@@ -45,6 +45,13 @@ let
                     <a href="F-NixOS.iso">F-NixOS ISO image</a>
                 </html>
             '';
+            "/ModdedMinecraft" = htmlFile ''
+                <!DOCTYPE HTML>
+                <html>
+                    This is just a short page to download my minecraft modpack.<br>
+                    <a href="modded.skade.dev.json">Download import list for prismlauncher</a>
+                </html>
+            '';
         };
         port = 8095;
         extra_files = {
@@ -52,9 +59,94 @@ let
                 path = architectureDiagram;
                 type = "image/png";
             };
-            "/F-NixOS.iso" = {
-                path = "${archerusPkgs.fNixos}/iso/${archerusPkgs.fNixos.isoName}";
-                type = "application/x-iso9660-image";
+            #"/F-NixOS.iso" = {
+            #    path = "${archerusPkgs.fNixos}/iso/${archerusPkgs.fNixos.isoName}";
+            #    type = "application/x-iso9660-image";
+            #};
+            "/modded.skade.dev.json" = {
+                path = pkgs.writeText "modded.skade.dev.json" (builtins.toJSON [
+                    {
+                        name = "Botarium";
+                        version = "2.3.4";
+                    }
+                    {
+                        name = "Create";
+                        version = "0.5.1-j-build.1631+mc1.20.1";
+                    }
+                    {
+                        name = "Create Crafts & Additions";
+                        version = "NONE";
+                    }
+                    {
+                        name = "Create Enchantment Industry";
+                        version = "1.2.16";
+                    }
+                    {
+                        name = "Create Nuclear";
+                        version = "1.20.1";
+                    }
+                    {
+                        name = "Create Ore Excavation";
+                        version = "1.5.4";
+                    }
+                    {
+                        name = "Create: New Age";
+                        version = "1.1.2";
+                    }
+                    {
+                        name = "Create: Steam 'n' Rails";
+                        version = "1.6.9+fabric-mc1.20.1";
+                    }
+                    {
+                        name = "Create: Structures";
+                        version = "1.1.0";
+                    }
+                    {
+                        name = "Fabric API";
+                        version = "0.92.6+1.20.1";
+                    }
+                    {
+                        name = "Indium";
+                        version = "1.0.36+mc1.20.1";
+                    }
+                    {
+                        name = "Iris";
+                        version = "1.7.6+mc1.20.1";
+                    }
+                    {
+                        name = "Iris Flywheel Compat";
+                        version = "1.1.4";
+                    }
+                    {
+                        name = "Jade";
+                        version = "11.13.1+fabric";
+                    }
+                    {
+                        name = "Just Enough Items";
+                        version = "15.20.0.116";
+                    }
+                    {
+                        name = "MaLiLib";
+                        version = "0.16.3";
+                    }
+                    {
+                        name = "MiniHUD";
+                        version = "0.27.1";
+                    }
+                    {
+                        name = "Sodium";
+                        version = "0.5.13+mc1.20.1";
+                    }
+                    {
+                        name = "WaylandFix";
+                        version = "1.1";
+                    }
+                    {
+                        name = "Xaero's Minimap";
+                        version = "25.2.10";
+                    }
+                ]);
+                type = "text/plain";
             };
         };
     };

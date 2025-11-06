@@ -15,9 +15,6 @@ inputs:
     ];
     programs.git.enable = true;
     environment.systemPackages = with pkgs; [
-        jetbrains.rider
-        jetbrains.idea-community
-        dotnet-sdk_8
         unzip
         zip
         jq

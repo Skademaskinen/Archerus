@@ -1,9 +1,9 @@
-{ pkgs, system, nix-minecraft, ... }:
+{ pkgs, lib, system, nix-minecraft, ... }:
 
 let
     servers = nix-minecraft.legacyPackages.${system};
     secret = "velocity-secret";
-
+    mkProxy = lib.mkProxy;
     proxies = {
         velocity = {
             inherit secret;
@@ -16,6 +16,10 @@ let
         Power_Supply = "010e5ef3-a1fb-4c2e-819c-35c96285fc1e";
         DBurley93 = "fad4dfbc-c577-4d7e-ac1d-cf7f74229c07";
         Jinxy_93 = "6983cea2-891d-487b-9334-74cf827baf9e";
+        herpinmaderp = "9c0c8e6c-ee7b-429b-a690-83f93495fe44";
+        Wesant = "712af801-9089-4a52-b8bb-3dfff399bdc3";
+        EpiLunaria = "51f39653-bdfb-4149-8841-3caef174aeb7";
+        GO_AWAY_77 = "eb8b3aa6-3a1f-4dda-b2f1-a0e05e939f7f";
     };
     ops = [
         {
@@ -34,6 +38,10 @@ let
 in
 
 { config, ... }:
+
+let
+    secure = config.skade.baseDomain != "localhost";
+in
 
 {
     imports = [
@@ -166,9 +174,9 @@ in
                         url = "https://github.com/DecentSoftware-eu/DecentHolograms/releases/download/2.8.9/DecentHolograms-2.8.9.jar";
                         sha256 = "sha256-rEV5rbPXA5WFPwU+K3XO0LMC2i0PvTA0SYtE/1wTMbA=";
                     };
-                    "plugins/stargate.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/kS8Pugaw/versions/Moh1fu3y/Stargate-0.11.5.10.jar";
-                        sha256 = "sha256-hoqfEsDCML8EULlBp3hNOJhPUIdZKDNk4lTi5fDqVlw=";
+                    "plugins/iportal.jar" = pkgs.fetchurl {
+                        url = "https://github.com/JuL1En1997/Iportal/releases/download/major-update/Iportal-Updated-2.0.jar";
+                        sha256 = "sha256-uF4Izym8nvQVo8jhm41AG5re4RrUYUmVjFPsHIuBiyI=";
                     };
                 };
             };
@@ -216,6 +224,8 @@ in
                 enable = true;
                 package = servers.fabricServers.fabric-1_20_1;
 
+                jvmOpts = "-Xmx4G -Xms2G";
+
                 serverProperties = {
                     server-port = 25572;
                     online-mode = false;
@@ -226,7 +236,7 @@ in
                     spawn-animals = true;
                     spawn-monsters = true;
                     spawn-npcs = true;
-                    spawn-protection = 256;
+                    #spawn-protection = 256;
                     simulation-distance = 8;
                     view-distance = 20;
                     enforce-whitelist = true;
@@ -303,18 +313,22 @@ in
                     #    url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/srWerknn/worldedit-mod-7.3.5.jar";
                     #    sha256 = "sha256-dtJQ9DMZ2RqVlIzUwHRtydFdXpV3c7hDIZhB0ftsn3I=";
                     #};
-                    "mods/immersive-portals.jar" = pkgs.fetchurl {
-                        url = "https://cdn.modrinth.com/data/zJpHMkdD/versions/155jtqJi/immersive-portals-3.3.9-mc1.20.1-fabric.jar";
-                        sha256 = "sha256-vrNfdLmLU3t7V3Q7aFT88ZAAqabZP2EfZJQBOD5mAE4=";
-                    };
+                    #"mods/immersive-portals.jar" = pkgs.fetchurl {
+                    #    url = "https://cdn.modrinth.com/data/zJpHMkdD/versions/155jtqJi/immersive-portals-3.3.9-mc1.20.1-fabric.jar";
+                    #    sha256 = "sha256-vrNfdLmLU3t7V3Q7aFT88ZAAqabZP2EfZJQBOD5mAE4=";
+                    #};
                     "mods/cross-stitch.jar" = pkgs.fetchurl {
                         url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/dJioNlO8/crossstitch-0.1.6.jar";
                         sha256 = "sha256-z1qsXFV5sc6xsr0loV8eLcySJvV2cBY60fhBsvkFuC4=";
                     };
-                    #"mods/dynmap.jar" = pkgs.fetchurl {
-                    #    url = "https://cdn.modrinth.com/data/fRQREgAc/versions/ipBhc6VW/Dynmap-3.7-beta-6-fabric-1.21.jar";
-                    #    sha256 = "sha256-zcNNfJkuQTW3WCh4peU94P7KasGNBoma4FyrOH0BYfw=";
-                    #};
+                    "mods/dynmap.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/fRQREgAc/versions/IIQSYMHC/Dynmap-3.7-beta-6-fabric-1.20.jar";
+                        sha256 = "sha256-iDtnQSFzRkvaaNGr6Bjm4EbdJQZB0u75JpiPTsrF+is=";
+                    };
+                    "mods/jei.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/u6dRKJwZ/versions/ziulPKuI/jei-1.20.1-fabric-15.20.0.116.jar";
+                        sha256 = "sha256-/B6JyHTjHm8MO5qaHacOpJw9ae4oQDsrgIBRpfGMgac=";
+                    };
                 };
             };
         };
@@ -343,4 +357,11 @@ in
             guest.port = 25572;
         }
     ];
+    services.nginx.virtualHosts."modded.${config.skade.baseDomain}" = mkProxy config {
+        inherit secure;
+        path = "/";
+        location = "http://localhost:8123";
+    };
+    skade.docs.vhosts."modded.${config.skade.baseDomain}".port = 8123;
+
 }

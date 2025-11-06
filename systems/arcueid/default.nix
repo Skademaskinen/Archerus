@@ -39,6 +39,7 @@ nixpkgs.lib.nixosSystem {
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             networking.extraHosts = ''
                 10.225.171.51 skade.dev
+                10.225.171.51 modded.skade.dev
             '';
             system.stateVersion = "24.11";
 
@@ -90,6 +91,9 @@ nixpkgs.lib.nixosSystem {
             boot.kernelPackages = pkgs.linuxPackages_cachyos;
             system.modulesTree = [
                 (pkgs.lib.getOutput "modules" pkgs.linuxPackages_cachyos.kernel)
+            ];
+            nixpkgs.config.permittedInsecurePackages = [
+                "mbedtls-2.28.10"
             ];
         })
     ];

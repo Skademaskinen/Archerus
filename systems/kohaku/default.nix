@@ -67,6 +67,10 @@ nixpkgs.lib.nixosSystem {
                 pkgs.discord
             ];
 
+            # wlroots is not perfect, use gnome as a fallback
+            services.xserver = {
+                desktopManager.gnome.enable = true;
+            };
         })
     ];
 }
