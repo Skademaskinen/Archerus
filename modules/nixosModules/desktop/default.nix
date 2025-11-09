@@ -1,4 +1,8 @@
-{ archerusPkgs, ... }:
+{ archerusPkgs, lib, ... }:
+
+let
+    archerusLib = lib;
+in
 
 { pkgs, config, ... }:
 
@@ -6,6 +10,12 @@
     environment.systemPackages = with pkgs; [
         vimix-cursors
         feh
+        (elegant-sddm.override {
+            themeConfig.General.background = archerusLib.wallpapers.arcueid;
+        })
+        (sddm-astronaut.override {
+            embeddedTheme = "pixel_sakura";
+        })
     ];
 
     networking.networkmanager.enable = true;
@@ -18,22 +28,19 @@
     };
     programs.thunderbird.enable = true;
 
-    services.displayManager.cosmic-greeter = {
-        enable = true;
 
+    services.displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
+        theme = "sddm-astronaut-theme";
+        extraPackages = with pkgs; [
+            kdePackages.qtmultimedia
+            kdePackages.qtsvg
+            kdePackages.qtvirtualkeyboard
+        ];
     };
-    #services.xserver.enable = true;
-    #services.displayManager.sddm = {
-    #    enable = true;
-    #    wayland.enable = true;
-    #    wayland.compositor = "weston";
-    #    theme = "elegant-sddm";
-    #    extraPackages = [
-    #        pkgs.elegant-sddm
-    #    ];
-    #};
+
     programs.hyprland.enable = true;
-    programs.sway.enable = true;
 
     fonts.packages = with pkgs; [
         archerusPkgs.comicMonoLiga

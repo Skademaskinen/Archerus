@@ -22,6 +22,7 @@ in {
                     "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
                     "$mod SHIFT, q, killactive"
                     "$mod, space, togglefloating"
+                    "$mod, l, exec, ${pkgs.hyprlock}/bin/hyprlock"
                     "$mod SHIFT, f, fullscreen"
                     ''$mod, p, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy''
                 ] ++

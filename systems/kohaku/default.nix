@@ -31,8 +31,8 @@ nixpkgs.lib.nixosSystem {
             ];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
-                user = "mast3r";
-                enable = true;
+                #user = "mast3r";
+                #enable = true;
             };
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             system.stateVersion = "24.11";
