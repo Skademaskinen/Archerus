@@ -145,6 +145,18 @@ let
                         name = "Xaero's Minimap";
                         version = "25.2.10";
                     }
+                    {
+                        name = "Fabric Language Kotlin";
+                        version = "1.13.7+kotlin.2.2.21";
+                    }
+                    {
+                        name = "Create: Power Loader";
+                        version = "1.5.3-mc1.20.1-fabric";
+                    }
+                    {
+                        name = "Create Jetpack";
+                        version = "4.3.0";
+                    }
                 ]);
                 type = "text/plain";
             };

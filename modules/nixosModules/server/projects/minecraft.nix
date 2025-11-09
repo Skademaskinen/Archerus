@@ -329,6 +329,18 @@ in
                         url = "https://cdn.modrinth.com/data/u6dRKJwZ/versions/ziulPKuI/jei-1.20.1-fabric-15.20.0.116.jar";
                         sha256 = "sha256-/B6JyHTjHm8MO5qaHacOpJw9ae4oQDsrgIBRpfGMgac=";
                     };
+                    "mods/create-jetpack.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/UbFnAd4l/versions/lKhjIqZR/create_jetpack-fabric-4.3.0.jar";
+                        sha256 = "sha256-66D9qYHdml4aO8rvoqkimqBMXgY7WHZ3sGYc+RAbp1g=";
+                    };
+                    "mods/create-power-loader.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/E9MuZ1zB/versions/fHsTW7eS/create_power_loader-1.5.3-mc1.20.1-fabric.jar";
+                        sha256 = "sha256-7x3tucq1bVcuYqzYLb4z7LuuRrYaP3hQi4FGndfFZDg=";
+                    };
+                    "mods/fabric-language-kotlin.jar" = pkgs.fetchurl {
+                        url = "https://cdn.modrinth.com/data/Ha28R6CL/versions/a7MqDLdC/fabric-language-kotlin-1.10.20%2Bkotlin.1.9.24.jar";
+                        sha256 = "sha256-ugllaqwKcuGo/caG7M2UVBVXwxTkib0s+7qntzUUkzc=";
+                    };
                 };
             };
         };
