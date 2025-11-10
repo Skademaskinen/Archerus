@@ -28,7 +28,7 @@ nixpkgs.lib.nixosSystem {
                 homeManagerModules.alacritty
                 homeManagerModules.kitty
                 homeManagerModules.spotify
-                ./home.nix
+                (lib.load ./home.nix)
             ];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
@@ -53,11 +53,14 @@ nixpkgs.lib.nixosSystem {
                 archerusPkgs.electronApps.stregsystemet
                 archerusPkgs.electronApps.fikien
                 archerusPkgs.electronApps.nixosSearch
+                archerusPkgs.electronApps.pathbuilder
                 pkgs.vesktop
                 pkgs.firefox
                 pkgs.discord
             ];
 
+            programs.iio-hyprland.enable = true;
+            hardware.sensor.iio.enable = true;
         })
     ];
 }
