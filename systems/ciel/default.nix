@@ -1,6 +1,7 @@
 inputs @ { self, nixpkgs, archerusPkgs, lib, system, ... }:
 
-# This is a custom build lenovo thinkpad l13 gen 6 AMD variant
+# This is a custom build lenovo thinkpad l13 gen 6 AMD 2-in-1 variant
+# Getting this half-tablet to work well will be fun!
 
 nixpkgs.lib.nixosSystem {
     inherit system;
@@ -19,7 +20,6 @@ nixpkgs.lib.nixosSystem {
             imports = [
                 ./hardware-configuration.nix
                 inputs.nixos-hardware.nixosModules.lenovo-thinkpad
-                ./hardware.nix # This is a custom build thinkpad, so nixos-hardware will only do so much...
             ];
             home-manager.users.mast3r.imports = [
                 homeManagerModules.common
@@ -37,6 +37,8 @@ nixpkgs.lib.nixosSystem {
             };
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             system.stateVersion = "25.11";
+
+            services.fprintd.enable = true;
 
             hardware.bluetooth.enable = true;
             services.blueman.enable = true;

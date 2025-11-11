@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, archerusPkgs, lib, ... }:
 
 { battery, drawer }:
 
@@ -54,27 +54,27 @@
             css-name = "controls-window";
             custom-items = [
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --working-directory /etc/nixos --command vim .";
+                    cmd = "${pkgs.alacritty}/bin/alacritty --working-directory /etc/nixos --command vim .";
                     icon = "nix-snowflake-white";
                     name = "Edit NixOS";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --command sudo nix-store --gc";
+                    cmd = "${pkgs.alacritty}/bin/alacritty --command sudo nix-store --gc";
                     icon = "nix-snowflake-white";
                     name = "NixOS Garbage Collection";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --command sudo nix-store --optimize";
+                    cmd = "${pkgs.alacritty}/bin/alacritty --command sudo nix-store --optimize";
                     icon = "nix-snowflake-white";
                     name = "NixOS Store Optimize";
                 }
                 {
-                    cmd = "${pkgs.xdg-utils}/bin/xdg-open https://search.nixos.org/packages";
+                    cmd = "${archerusPkgs.electronApps.nixosSearch}/bin/Nixos-Packages-electron";
                     icon = "search";
                     name = "Search nixpkgs";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --working-directory /etc/nixos --command sh -c 'nix flake update && sudo nixos-rebuild switch'";
+                    cmd = "${pkgs.alacritty}/bin/alacritty --working-directory /etc/nixos --command sh -c 'nix flake update && sudo nixos-rebuild switch'";
                     icon = "nix-snowflake-white";
                     name = "Update NixOS";
                 }

@@ -14,7 +14,7 @@ in
             themeConfig.General.background = archerusLib.wallpapers.arcueid;
         })
         (sddm-astronaut.override {
-            embeddedTheme = "pixel_sakura";
+            embeddedTheme = "hyprland_kath";
         })
     ];
 
