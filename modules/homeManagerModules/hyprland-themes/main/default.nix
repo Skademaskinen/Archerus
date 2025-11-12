@@ -1,4 +1,4 @@
-{ lib, archerusPkgs, ... }:
+{ lib, pkgs, archerusPkgs, ... }:
 
 { config, ... }:
 
@@ -8,6 +8,7 @@ let
     panelConfig = {
         drawer.command = drawer;
         battery.enable = config.skade.hyprland.battery.enable;
+        terminal = config.skade.hyprland.terminal;
     };
 in
 
@@ -83,5 +84,9 @@ in
             ];
         };
     };
+    
+    home.packages = with pkgs; [
+        nwg-displays
+    ];
 
 }

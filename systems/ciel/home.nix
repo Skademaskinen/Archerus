@@ -11,7 +11,7 @@
         ];
         plugin = {
             touch_gestures = {
-                sensitivity = 4.0;
+                sensitivity = 10.0;
                 workspace_swipe_fingers = 3;
                 workspace_swipe_edge = "d";
                 long_press_delay = 400;
@@ -21,20 +21,30 @@
 
                 hyprgrass-bind = [
                     ", edge:u:d, exec, ${archerusPkgs.nwg.drawer (builtins.readFile ../../modules/homeManagerModules/hyprland-themes/main/drawer.css)} "
-                    ", edge:d:u, exec, kill -34 $(ps -C wvkbd-mobintl)"
+                    ", edge:d:u, overview:toggle"
+                    ", tap:3, exec, kill -34 $(ps -C wvkbd-mobintl)"
                     ", tap:4, killactive"
                     ", longpress:1, sendkeystate, , mouse:272, down, active"
                 ];
             };
         };
+        gestures = {
+            #workspace_swipe = true;
+            workspace_swipe_cancel_ratio = 0.15;
+        };
     };
     # hyprgrass is a nice plugin that enables proper touchscreen support on hyprland
-    wayland.windowManager.hyprland.plugins = [
-        pkgs.hyprlandPlugins.hyprgrass
+    wayland.windowManager.hyprland.plugins = with pkgs.hyprlandPlugins; [
+        hyprgrass
+        hyprspace
     ];
 
 
     home.file = {
         ".local/share/bolt-launcher/runelite.jar".source = "${pkgs.runelite}/share/RuneLite.jar";
+    };
+
+    skade.hyprland.terminal = {
+        package = pkgs.kitty;
     };
 }
