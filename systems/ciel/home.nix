@@ -36,6 +36,9 @@
             #workspace_swipe = true;
             workspace_swipe_cancel_ratio = 0.15;
         };
+        decoration = {
+            inactive_opacity = 0.99;
+        };
     };
     # hyprgrass is a nice plugin that enables proper touchscreen support on hyprland
     wayland.windowManager.hyprland.plugins = with pkgs.hyprlandPlugins; [

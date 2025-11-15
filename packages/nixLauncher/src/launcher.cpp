@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <format>
 #include <libarcherus/log.hpp>
+#include <qnamespace.h>
 #include <string_view>
 
 constexpr std::string_view SEARCH_STYLESHEET = R"(
@@ -34,14 +35,28 @@ constexpr std::string_view MAIN_STYLESHEET = R"(
     border: none;
 )";
 
-Launcher::Launcher(QApplication& app) :
-    shouldHide(true),
-    toggleCli("Hide?"),
+Launcher::Launcher(QApplication& app, argparse::ArgumentParser& parser) :
+    hidden(true),
+    unfree(false),
+    hideButton("Hide overlay"),
+    unfreeButton("Allow Unfree"),
+    parser(parser),
     app(app),
     buildProcess(this),
     runProcess(this),
-    mainLabel("Launch a nix program")
+    mainLabel("Launch a nix program"),
+    memory("nix-launcher")
 {
+    if(!memory.create(1) && !parser.get<bool>("--force")) {
+        log(WARNING, "Another instance is already running, toggling it");
+        quitFlag.signalQuit();
+        exit(0);
+    }
+
+    quitTimer.setInterval(500);
+    connect(&quitTimer, &QTimer::timeout, std::bind(&Launcher::quitTimeout, this));
+    quitTimer.start();
+
     mainLayout.setAlignment(Qt::AlignmentFlag::AlignTop);
 
     searchField.setPlaceholderText("Filter packages");
@@ -61,9 +76,16 @@ Launcher::Launcher(QApplication& app) :
         buttons[item] = ptr;
         ptr->setStyleSheet(QString::fromStdString(std::string(BUTTON_STYLESHEET)));
         ptr->setIcon(placeholderIcon);
+        ptr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         buttonLayout.addWidget(ptr);
         QObject::connect(ptr, &QPushButton::clicked, std::bind(&Launcher::launchCallback, this, item));
     }
+    scrollArea.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    scrollWidget.setMinimumWidth(scrollArea.width());
+    scrollWidget.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    buttonLayout.setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
     scrollArea.setAttribute(Qt::WA_AcceptTouchEvents);
     scrollArea.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     QScroller::grabGesture(scrollArea.viewport(), QScroller::TouchGesture);
@@ -71,16 +93,25 @@ Launcher::Launcher(QApplication& app) :
     commandOutput.setReadOnly(true);
     commandOutput.setMaximumHeight(96);
 
-    toggleCli.toggle();
-    connect(&toggleCli, &QRadioButton::toggled, std::bind(&Launcher::hideCallback, this, std::placeholders::_1));
-    toggleCli.setFont(font);
-    toggleCli.setMinimumHeight(48);
-    toggleCli.setStyleSheet(QString::fromStdString(std::string(RADIOBUTTON_STYLESHEET)));
+    hideButton.toggle();
+    connect(&hideButton, &QCheckBox::checkStateChanged, std::bind(&Launcher::hideCallback, this, std::placeholders::_1));
+    hideButton.setFont(font);
+    hideButton.setMinimumHeight(48);
+    hideButton.setStyleSheet(QString::fromStdString(std::string(RADIOBUTTON_STYLESHEET)));
+
+    connect(&unfreeButton, &QCheckBox::checkStateChanged, std::bind(&Launcher::unfreeCallback, this, std::placeholders::_1));
+    unfreeButton.setFont(font);
+    unfreeButton.setMinimumHeight(48);
+    unfreeButton.setStyleSheet(QString::fromStdString(std::string(RADIOBUTTON_STYLESHEET)));
+
+    optionsLayout.addWidget(&hideButton);
+    optionsLayout.addWidget(&unfreeButton);
+    optionsLayout.setAlignment(Qt::AlignmentFlag::AlignTop);
 
     scrollWidget.setLayout(&buttonLayout);
     scrollArea.setWidget(&scrollWidget);
     buttonHLayout.addWidget(&scrollArea);
-    buttonHLayout.addWidget(&toggleCli);
+    buttonHLayout.addLayout(&optionsLayout);
 
     mainLayout.addWidget(&mainLabel);
     mainLayout.addWidget(&searchField);
@@ -103,15 +134,17 @@ void Launcher::run()
 {
     log(INFO, "Running Launcher");
 
-    show();
+    showFullScreen();
     app.exec();
 }
 
 void Launcher::launchCallback(QString name) {
     log(WARNING, "Launching {}", name.toStdString());
-    auto formattedCommand = std::format("sh -c \"nix build nixpkgs#{0} && echo '{0}'\"", name.toStdString());
-    log(INFO, "Command: {}", formattedCommand);
-    buildProcess.startCommand(formattedCommand.c_str());
+    //auto formattedCommand = std::format("sh -c \"nix build nixpkgs#{0} && echo '{0}'\"", name.toStdString());
+    auto command = buildCommand(name.toStdString());
+    log(INFO, "Command: {}", command);
+
+    buildProcess.startCommand(command.c_str());
     connect(&buildProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), std::bind(&Launcher::monitorCallback, this, std::placeholders::_1, std::placeholders::_2));
     connect(&buildProcess, &QProcess::readyReadStandardError, std::bind(&Launcher::errorCallback, this, &buildProcess));
     connect(&buildProcess, &QProcess::finished, std::bind(&Launcher::buildFinished, this, std::placeholders::_1, std::placeholders::_2));
@@ -161,10 +194,11 @@ void Launcher::buildFinished(int exitCode, QProcess::ExitStatus status) {
         return;
     }
     auto name = buildProcess.readAllStandardOutput();
-    auto formattedCommand = std::format("nix run nixpkgs#{}", name.toStdString());
-    runProcess.startCommand(formattedCommand.c_str());
+    auto command = runCommand(name.toStdString());
+    runProcess.startCommand(command.c_str());
+    log(INFO, "Command: {}", command);
     connect(&runProcess, &QProcess::finished, std::bind(&Launcher::runFinished, this, std::placeholders::_1, std::placeholders::_2));
-    if(shouldHide) {
+    if(hidden) {
         hide();
     } else {
         connect(&runProcess, &QProcess::readyReadStandardOutput, std::bind(&Launcher::outputCallback, this, &runProcess));
@@ -172,12 +206,39 @@ void Launcher::buildFinished(int exitCode, QProcess::ExitStatus status) {
 }
 
 void Launcher::runFinished(int exitCode, QProcess::ExitStatus status) {
-    if(shouldHide) {
+    if(hidden) {
         exit(exitCode);
     }
 }
 
-void Launcher::hideCallback(bool toggled) {
-    log(DEBUG, "New hide value: {}", toggled);
-    shouldHide = toggled;
+void Launcher::hideCallback(const Qt::CheckState toggled) {
+    log(DEBUG, "New toggle value: {}", toggled != Qt::Unchecked);
+    hidden = toggled != Qt::Unchecked;
+}
+
+void Launcher::unfreeCallback(const Qt::CheckState toggled) {
+    log(DEBUG, "New toggle value: {}", toggled != Qt::Unchecked);
+    unfree = toggled != Qt::Unchecked;
+}
+
+std::string Launcher::buildCommand(const std::string& name) {
+    if (unfree) {
+        return std::format("sh -c \"NIXPKGS_ALLOW_UNFREE=1 nix build nixpkgs#{0} --impure && echo '{0}'\"", name);
+    } else {
+        return std::format("sh -c \"nix build nixpkgs#{0} && echo '{0}'\"", name);
+    }
+}
+
+std::string Launcher::runCommand(const std::string& name) {
+    if (unfree) {
+        return std::format("NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#{} --impure", name);
+    } else {
+        return std::format("nix run nixpkgs#{}", name);
+    }
+}
+
+void Launcher::quitTimeout() {
+    if(quitFlag.shouldQuit()) {
+        app.quit();
+    }
 }

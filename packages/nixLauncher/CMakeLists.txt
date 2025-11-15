@@ -5,6 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(PROJECT_IMPLEMENTATIONS
     src/config.cpp
     src/launcher.cpp
+    src/shared_memory_manager.cpp
 )
 
 include_directories(include)
