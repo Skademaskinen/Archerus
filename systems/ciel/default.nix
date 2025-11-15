@@ -40,9 +40,6 @@ nixpkgs.lib.nixosSystem {
 
             services.fprintd.enable = true;
 
-            hardware.bluetooth.enable = true;
-            services.blueman.enable = true;
-
             nixpkgs.config.allowUnfree = true;
 
             programs.nix-ld.enable = true;
@@ -56,6 +53,7 @@ nixpkgs.lib.nixosSystem {
                 archerusPkgs.electronApps.fikien
                 archerusPkgs.electronApps.nixosSearch
                 archerusPkgs.electronApps.pathbuilder
+                archerusPkgs.nixLauncher
                 pkgs.vesktop
                 pkgs.firefox
                 pkgs.discord
@@ -63,6 +61,68 @@ nixpkgs.lib.nixosSystem {
 
             programs.iio-hyprland.enable = true;
             hardware.sensor.iio.enable = true;
+
+            # suspend bug workaround
+            # The wifi module is the same as one of the newer framework AI laptops, so this is copied from there
+            # see https://community.frame.work/t/framework-13-ryzen-ai-350-wont-suspend-in-linux-due-to-mt7925e/70830/4
+            systemd.services = {
+                mt7925e-sleep = {
+                     description = "Unload mt7925e wifi driver before sleep";
+                     before = [
+                        "hibernate.target"
+                        "suspend.target"
+                     ];
+                     wantedBy = [
+                        "hibernate.target"
+                        "suspend.target"
+                     ];
+                     serviceConfig = {
+                        ExecStart = "${pkgs.kmod}/bin/modprobe -r mt7925e";
+                     };
+                };
+                mt7925e-resume = {
+                    description = "Reload mt7925e wifi driver after resume from sleep";
+                    after = [
+                        "hibernate.target"
+                        "suspend.target"
+                    ];
+                    wantedBy = [
+                        "hibernate.target"
+                        "suspend.target"
+                    ];
+                    serviceConfig = {
+                        ExecStartPre = "${pkgs.kmod}/bin/modprobe -r mt7925e";
+                        ExecStart = "${pkgs.kmod}/bin/modprobe mt7925e";
+                    };
+                };
+            };
+
+            # Gaming
+            # Since this is a personal laptop just for on the go gaming and programming, i thin its fine to have some gaming setup
+            hardware.bluetooth = {
+                enable = true;
+                powerOnBoot = true;
+                settings.General = {
+                    experimental = true;
+                    Privacy = "device";
+                    JurtWorksRepairing = "always";
+                    Class = "0x000100";
+                    FastConnectable = true;
+                };
+            };
+            services.blueman.enable = true;
+
+            hardware.xpadneo.enable = true;
+            boot.extraModulePackages = [
+                config.boot.kernelPackages.xpadneo
+            ];
+            boot.extraModprobeConfig = ''
+                options bluetooth disable_ertm=Y
+            '';
+
+            programs.steam.gamescopeSession = {
+                enable = true;
+            };
         })
     ];
 }

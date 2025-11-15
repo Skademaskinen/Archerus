@@ -7,7 +7,9 @@
     wayland.windowManager.hyprland.settings = {
         exec-once = [
             "${pkgs.iio-hyprland}/bin/iio-hyprland"
-            "${pkgs.wvkbd}/bin/wvkbd-mobintl"
+            "${pkgs.wvkbd}/bin/wvkbd-mobintl -L 240 --hidden"
+            "${pkgs.blueman}/bin/blueman-applet"
+            
         ];
         plugin = {
             touch_gestures = {
@@ -20,11 +22,13 @@
                 emulate_touchpad_swipe = true;
 
                 hyprgrass-bind = [
-                    ", edge:u:d, exec, ${archerusPkgs.nwg.drawer (builtins.readFile ../../modules/homeManagerModules/hyprland-themes/main/drawer.css)} "
+                    ", edge:u:d, exec, ${archerusPkgs.nwg.drawer (builtins.readFile ../../modules/homeManagerModules/hyprland-themes/main/drawer.css)}"
                     ", edge:d:u, overview:toggle"
+                    ", tap:2, exec, ${archerusPkgs.nwg.drawer (builtins.readFile ../../modules/homeManagerModules/hyprland-themes/main/drawer.css)}"
                     ", tap:3, exec, kill -34 $(ps -C wvkbd-mobintl)"
                     ", tap:4, killactive"
                     ", longpress:1, sendkeystate, , mouse:272, down, active"
+                    ", edge:l:r, exec, ${archerusPkgs.nixLauncher}/bin/nix-launcher"
                 ];
             };
         };
@@ -44,7 +48,23 @@
         ".local/share/bolt-launcher/runelite.jar".source = "${pkgs.runelite}/share/RuneLite.jar";
     };
 
+    home.packages = [
+        pkgs.gimp3
+        pkgs.krita
+    ];
+
     skade.hyprland.terminal = {
         package = pkgs.kitty;
+    };
+
+
+    programs.fastfetch.settings.logo.source = archerusPkgs.lib.images.resize "256x256" archerusPkgs.lib.wallpapers.ciel;
+
+    services.hyprpaper = {
+        enable = true;
+        settings = {
+            preload = archerusPkgs.lib.wallpapers.ciel-big;
+            wallpaper = ", ${archerusPkgs.lib.wallpapers.ciel-big}";
+        };
     };
 }
