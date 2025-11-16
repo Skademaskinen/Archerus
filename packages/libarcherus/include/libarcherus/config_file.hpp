@@ -13,7 +13,7 @@ class ConfigFile {
     const std::string environmentKey;
     nlohmann::json data;
 public:
-    ConfigFile(std::string);
+    ConfigFile(std::filesystem::path);
 
     nlohmann::json& get();
 };

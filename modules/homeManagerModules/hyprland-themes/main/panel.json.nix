@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, archerusPkgs, lib, ... }:
 
-{ battery, drawer }:
+{ battery, drawer, terminal }:
 
 [
     {
@@ -54,27 +54,27 @@
             css-name = "controls-window";
             custom-items = [
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --working-directory /etc/nixos --command vim .";
+                    cmd = terminal.run "/etc/nixos" "vim .";
                     icon = "nix-snowflake-white";
                     name = "Edit NixOS";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --command sudo nix-store --gc";
+                    cmd = terminal.run "." "sudo nix-store --gc";
                     icon = "nix-snowflake-white";
                     name = "NixOS Garbage Collection";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --command sudo nix-store --optimize";
+                    cmd = terminal.run "." "sudo nix-store --optimize";
                     icon = "nix-snowflake-white";
                     name = "NixOS Store Optimize";
                 }
                 {
-                    cmd = "${pkgs.xdg-utils}/bin/xdg-open https://search.nixos.org/packages";
+                    cmd = "${archerusPkgs.electronApps.nixosSearch}/bin/Nixos-Packages-electron";
                     icon = "search";
                     name = "Search nixpkgs";
                 }
                 {
-                    cmd = "${pkgs.alacritty}/bin/alacritty} --working-directory /etc/nixos --command sh -c 'nix flake update && sudo nixos-rebuild switch'";
+                    cmd = terminal.run "/etc/nixos" "sh -c 'nix flake update && sudo nixos-rebuild switch'";
                     icon = "nix-snowflake-white";
                     name = "Update NixOS";
                 }
@@ -97,19 +97,19 @@
                 icon = "system-shutdown-symbolic";
                 items = [
                     {
-                        cmd = "nwg-lock";
+                        cmd = "hyprlock";
                         name = "Lock";
                     }
                     {
-                        cmd = ''${pkgs.sway}/bin/swaynag -t warning  -m "Exit hyprland?" -b "yes" "${pkgs.hyprland}/bin/hyprctl dispatch exit"'';
-                        name = "Exit sway session";
+                        cmd = "${archerusPkgs.dialog "Exit Hyprland?" "${pkgs.hyprland}/bin/hyprctl dispatch exit"}";
+                        name = "Log out";
                     }
                     {
-                        cmd = ''${pkgs.sway}/bin/swaynag -t warning  -m "Reboot?" -b "yes" "reboot"'';
+                        cmd = "${archerusPkgs.dialog "Reboot System?" "reboot"}";
                         name = "Restart";
                     }
                     {
-                        cmd = "nwg-dialog -p shutdown -c \"shutdown now\"";
+                        cmd = "${archerusPkgs.dialog "Shutdown System?" "shutdown now"}";
                         name = "Shutdown";
                     }
                 ];

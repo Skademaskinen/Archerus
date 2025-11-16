@@ -1,13 +1,14 @@
-{ lib, archerusPkgs, ... }:
+{ pkgs, archerusPkgs, ... }:
 
-{ config, ... }:
+{ config, lib, ... }:
 
 let 
-    drawer = lib.load ./drawer.nix;
+    drawer = archerusPkgs.lib.load ./drawer.nix;
 
     panelConfig = {
         drawer.command = drawer;
         battery.enable = config.skade.hyprland.battery.enable;
+        terminal = config.skade.hyprland.terminal;
     };
 in
 
@@ -22,7 +23,7 @@ in
         };
 
         exec = [
-            ((lib.load ./panel.nix) panelConfig)
+            ((archerusPkgs.lib.load ./panel.nix) panelConfig)
         ];
 
         bind = [
@@ -32,8 +33,8 @@ in
     services.hyprpaper = {
         enable = true;
         settings = {
-            preload = "${lib.wallpapers.arcueid}";
-            wallpaper = ", ${lib.wallpapers.arcueid}";
+            preload = lib.mkDefault "${archerusPkgs.lib.wallpapers.arcueid}";
+            wallpaper = lib.mkDefault ", ${archerusPkgs.lib.wallpapers.arcueid}";
         };
     };
     services.swaync = {
@@ -44,7 +45,7 @@ in
         enable = true;
         settings = {
             logo = {
-                source = archerusPkgs.lib.images.resize "256x256" archerusPkgs.lib.wallpapers.kohaku;
+                source = lib.mkDefault (archerusPkgs.lib.images.resize "256x256" archerusPkgs.lib.wallpapers.kohaku);
             };
             modules = [
                 "title"
@@ -83,5 +84,9 @@ in
             ];
         };
     };
+    
+    home.packages = with pkgs; [
+        nwg-displays
+    ];
 
 }
