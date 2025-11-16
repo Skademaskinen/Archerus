@@ -21,9 +21,10 @@ Launcher::Launcher(QApplication& app, argparse::ArgumentParser& parser) :
     app(app),
     options(std::bind(&Launcher::hide, this)),
     mainLabel("Launch a nix program"),
-    memory("nix-launcher")
+    lock(QDir::temp().filePath("nix-launcher.lock"))
 {
-    if(!memory.create(1) && !parser.get<bool>("--force")) {
+    lock.setStaleLockTime(0); // treat stale locks as invalid
+    if(!lock.tryLock() && !parser.get<bool>("--force")) {
         log(WARNING, "Another instance is already running, toggling it");
         quitFlag.signalQuit();
         exit(0);

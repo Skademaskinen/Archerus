@@ -47,7 +47,7 @@ private:
     QPlainTextEdit commandOutput;
     QLineEdit searchField;
 
-    QSharedMemory memory;
+    QLockFile lock;
     QTimer quitTimer;
     SharedQuitFlag quitFlag;
 };
