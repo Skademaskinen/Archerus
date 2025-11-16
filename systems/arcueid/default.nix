@@ -33,8 +33,8 @@ nixpkgs.lib.nixosSystem {
             users.groups.input.members = ["mast3r"];
             services.displayManager.defaultSession = "hyprland";
             services.displayManager.autoLogin = {
-                user = "mast3r";
-                enable = true;
+                #user = "mast3r";
+                #enable = true;
             };
             networking.hostName = lib.capitalize (builtins.baseNameOf ./.);
             networking.extraHosts = ''

@@ -120,7 +120,7 @@ void parseLoglevel(argparse::ArgumentParser& parser) {
         .nargs(0);
 }
 
-ConfigFile::ConfigFile(std::string name) :
+ConfigFile::ConfigFile(std::filesystem::path name) :
     name(name),
     etcPath((BASE_CONFIG_PATH / name).replace_extension(".json")),
     environmentKey("ARCHERUS_" + utils::capitalize(name) + "_CONFIG")
@@ -132,7 +132,19 @@ ConfigFile::ConfigFile(std::string name) :
         std::ifstream ifs(etcPath);
         std::stringstream ss;
         ss << ifs.rdbuf();
-        std::string rawData = ss.str();
+        auto rawData = ss.str();
+        data = nlohmann::json::parse(rawData);
+    } else {
+        std::filesystem::path exe = "/proc/self/exe";
+        auto target = std::filesystem::read_symlink(exe);
+        auto bin = target.parent_path();
+        auto package = bin.parent_path();
+        auto localPath = (package / "etc" / "archerus" / name).replace_extension(".json");
+        log(DEBUG, "local path: {}", localPath.string());
+        std::ifstream ifs(localPath);
+        std::stringstream ss;
+        ss << ifs.rdbuf();
+        auto rawData = ss.str();
         data = nlohmann::json::parse(rawData);
     }
 }

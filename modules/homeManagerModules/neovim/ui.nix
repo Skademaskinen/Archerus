@@ -61,10 +61,12 @@
         };
         neo-tree = {
             enable = true;
-            closeIfLastWindow = true;
-            sourceSelector = {
-                winbar = true;
-                statusline = true;
+            settings = {
+                closeIfLastWindow = true;
+                sourceSelector = {
+                    winbar = true;
+                    statusline = true;
+                };
             };
         };
         dashboard = {

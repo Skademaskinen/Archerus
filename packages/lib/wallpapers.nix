@@ -9,6 +9,16 @@ let
         url = "https://static.wikia.nocookie.net/typemoon/images/a/aa/MeltyBlood_CUT_Kohaku.png";
         sha256 = "sha256:1ni9nlqpx41hm5bqp4bzgap4w0laab7nkij0786psrj35q6vp9k9";
     };
+
+    ciel-big = builtins.fetchurl {
+        url = "https://junktheeater.wordpress.com/wp-content/uploads/2021/07/e3808ce69c88e5a7ab-a-piece-of-blue-glass-moon-e3808de7acac3e5bcbepv-loz0ewjxmes.mkv_snapshot_00.48.130.jpg";
+        sha256 = "sha256-7Cx9oYooRmCRz/XajUMkwhSFreIjyDjSkrTI9Rnb9BU=";
+    };
+    ciel = builtins.fetchurl {
+        url = "https://static.wikia.nocookie.net/murderseries/images/8/87/Ciel.png";
+        sha256 = "sha256-7u/g4Wu+EAYIT+6R3q2M7S/o2qpWugv6EwIjrCP7fv8=";
+    };
+
     flogo-repo = builtins.fetchGit {
         url = "https://github.com/Mast3rwaf1z/flogo-spinner";
         rev = "4e995d44febd07cdd41fef466d0404af0e5e3cf0";
@@ -35,6 +45,6 @@ let
 in
 
 {
-    inherit arcueid kohaku flogo flogo-inverted fklub fklub-padded-filled flogo-white-background;
+    inherit arcueid kohaku ciel-big ciel flogo flogo-inverted fklub fklub-padded-filled flogo-white-background;
 }
 

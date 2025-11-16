@@ -122,16 +122,16 @@ in
     environment.systemPackages = with pkgs; [
         prefix
         myLutris
-        wine
-        protonup-qt
-        wowup-cf
+        #wine
+        #protonup-qt
+        #wowup-cf
         prismlauncher
         archerusPkgs.boltLauncher
-        nix-gaming.packages.${system}.wine-discord-ipc-bridge
+        #nix-gaming.packages.${system}.wine-discord-ipc-bridge
         mangohud
-        archerusPkgs.curseforge
-        archerusPkgs.warcraftLogsUploader
-        shadps4
+        #archerusPkgs.curseforge
+        #archerusPkgs.warcraftLogsUploader
+        #shadps4
         mesa-demos
         (runelite.overrideAttrs {
             postInstall = ''

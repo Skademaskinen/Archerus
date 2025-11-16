@@ -13,12 +13,14 @@
         gtk = {
             enable = true;
             cursorTheme.name = "Adwaita";
-            cursorTheme.package = pkgs.vimix-cursors;
+            cursorTheme.package = pkgs.adwaita-icon-theme;
             
-            font.name = "LigaComicMono, 10";
-            font.package = archerusPkgs.comicMonoLiga;
-            iconTheme.name = "breeze-dark";
-            iconTheme.package = pkgs.kdePackages.breeze;
+            #font.name = "LigaComicMono, 10";
+            font.name = "FiraCode Nerd Font Mono Medium, 10";
+            #font.package = archerusPkgs.comicMonoLiga;
+            font.package = pkgs.nerd-fonts.fira-mono;
+            iconTheme.name = "Papirus-Dark";
+            iconTheme.package = pkgs.papirus-icon-theme;
             theme.name = "Adwaita-dark";
             theme.package = pkgs.gnome-themes-extra;
         };

@@ -1,12 +1,36 @@
-inputs:
+{ archerusPkgs, ... }:
 
-{ pkgs, lib, ... }: let
+{ pkgs, lib, config, ... }: let
     toStr = builtins.toString;
+    terminal = config.skade.hyprland.terminal;
 in {
     options.skade.hyprland = {
         battery.enable = lib.mkOption {
             type = lib.types.bool;
             default = true;
+        };
+        terminal = {
+            package = lib.mkOption {
+                type = lib.types.package;
+                default = pkgs.kitty;
+            };
+            arguments = {
+                workingDirectory = lib.mkOption {
+                    type = lib.types.str;
+                    default = "--working-directory";
+                };
+                command = lib.mkOption {
+                    type = lib.types.str;
+                    default = "";
+                };
+            };
+            executable = lib.mkOption {
+                type = lib.types.str;
+                default = "${terminal.package}/bin/${terminal.package.meta.mainProgram}";
+            };
+            run = lib.mkOption {
+                default = wd: cmd: "${terminal.executable} ${terminal.arguments.workingDirectory} ${wd} ${terminal.arguments.command} ${cmd}";
+            };
         };
     };
     config = {
@@ -16,12 +40,13 @@ in {
             systemd.enable = true;
             settings = {
                 "$mod" = "SUPER";
-                "$terminal" = "${pkgs.kitty}/bin/kitty";
+                "$terminal" = "${terminal.executable}";
                 bind = [
-                    "$mod, Return, exec, ${pkgs.kitty}/bin/kitty"
-                    "$mod SHIFT, e, exec, ${pkgs.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut, are you sure you want to exit hyprland?' -b 'Yes, exit hyprland' '${pkgs.hyprland}/bin/hyprctl dispatch exit'"
+                    "$mod, Return, exec, ${terminal.executable}"
+                    "$mod SHIFT, e, exec, ${archerusPkgs.dialog "You pressed the exit shortcut, are you sure you want to exit hyprland?" "${pkgs.hyprland}/bin/hyprctl dispatch exit"}"
                     "$mod SHIFT, q, killactive"
                     "$mod, space, togglefloating"
+                    "$mod, l, exec, ${pkgs.hyprlock}/bin/hyprlock"
                     "$mod SHIFT, f, fullscreen"
                     ''$mod, p, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp -d)" - | ${pkgs.wl-clipboard}/bin/wl-copy''
                 ] ++
@@ -59,7 +84,7 @@ in {
                     kb_layout = "dk";
                 };
                 gestures = {
-                    workspace_swipe = "true";
+                    #workspace_swipe = "true";
                     workspace_swipe_forever = "true";
                 };
 
@@ -71,11 +96,12 @@ in {
                 ];
             };
         };
-        #programs.hyprlock.enable = true;
+        programs.hyprlock.enable = true;
         #services.hypridle.enable = true;
 
 
         home.packages = with pkgs; [
+            hyprlock
             hyprpaper
             vimix-cursors
             wl-clipboard

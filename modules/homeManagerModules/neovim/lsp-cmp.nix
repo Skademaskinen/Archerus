@@ -9,10 +9,6 @@
                 servers = {
                     pyright.enable = true;
                     nixd.enable = true;
-                    hls = {
-                        enable = true;
-                        installGhc = false;
-                    };
                     cmake.enable = true;
                     clangd.enable = true;
                 };
@@ -74,15 +70,14 @@
                 enable = true;
             };
 
+            haskell-tools = {
+                enable = true;
+            };
+
             #haskell-scope-highlighting = {
             #    enable = true;
             #};
         };
-
-        extraPlugins = [
-            pkgs.vimPlugins.haskell-tools-nvim
-        ];
-
     };
 
 }

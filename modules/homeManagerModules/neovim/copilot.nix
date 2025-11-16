@@ -26,6 +26,8 @@
             settings = {
                 window = {
                     layout = "float";
+                    width = 187;
+                    height = 45;
                     border = "rounded";
                     title = "🤖 AI Assistant";
                     zindex = 100;

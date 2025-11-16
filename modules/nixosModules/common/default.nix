@@ -14,6 +14,7 @@ inputs:
         environment.systemPackages = with pkgs; [
             vim
             fastfetch
+            htop
         ];
         networking.networkmanager.enable = lib.mkDefault true;
     
