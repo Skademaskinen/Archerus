@@ -3,8 +3,13 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(PROJECT_IMPLEMENTATIONS
+    src/build_process.cpp
     src/config.cpp
     src/launcher.cpp
+    src/launcher_button.cpp
+    src/launcher_option.cpp
+    src/options.cpp
+    src/run_process.cpp
     src/shared_memory_manager.cpp
 )
 

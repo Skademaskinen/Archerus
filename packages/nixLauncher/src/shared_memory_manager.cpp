@@ -1,5 +1,3 @@
-#pragma once
-
 #include "shared_memory_manager.hpp"
 
 SharedQuitFlag::SharedQuitFlag() {

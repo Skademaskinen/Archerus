@@ -2,6 +2,8 @@
 
 #include "config.hpp"
 #include "shared_memory_manager.hpp"
+#include "options.hpp"
+#include "launcher_button.hpp"
 
 #include <QtWidgets/QtWidgets>
 #include <argparse/argparse.hpp>
@@ -28,8 +30,7 @@ private:
     std::string runCommand(const std::string&);
 
     LauncherConfig launcherConfig;
-    bool hidden;
-    bool unfree;
+    Options options;
 
     argparse::ArgumentParser& parser;
 
@@ -37,10 +38,7 @@ private:
     QVBoxLayout mainLayout;
     QLabel mainLabel;
 
-    std::map<QString, QPushButton*> buttons;
-    std::map<QString, QAction*> actions;
-    QProcess buildProcess;
-    QProcess runProcess;
+    QList<LauncherButton*> buttons;
     QVBoxLayout buttonLayout;
     QVBoxLayout optionsLayout;
     QHBoxLayout buttonHLayout;
@@ -48,8 +46,6 @@ private:
     QWidget scrollWidget;
     QPlainTextEdit commandOutput;
     QLineEdit searchField;
-    QCheckBox hideButton;
-    QCheckBox unfreeButton;
 
     QSharedMemory memory;
     QTimer quitTimer;

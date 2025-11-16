@@ -4,7 +4,7 @@ pkgs.stdenv.mkDerivation rec {
     pname = "nix-launcher";
     version = "1.0.0";
     src = ./.;
-    nativeBuildInputs = [ pkgs.cmake pkgs.qt6.wrapQtAppsHook ];
+    nativeBuildInputs = [ pkgs.cmake pkgs.qt6.wrapQtAppsHook pkgs.papirus-icon-theme ];
     buildInputs = with pkgs; [
         argparse
         cmake
@@ -21,8 +21,6 @@ pkgs.stdenv.mkDerivation rec {
         };
         withPackages = packages: import ./default.nix { inherit archerusPkgs pkgs packages; };
     };
-
-
 
     installPhase = ''
         mkdir -p $out/{etc/archerus,bin}
